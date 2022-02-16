@@ -1,4 +1,4 @@
-# Test
+# Test and Start Git & Github Repository
 It is Test Repository 
 
 # 샾을 붙이면 붙일 수록
@@ -8,8 +8,9 @@ It is Test Repository
 ##### 니다
 ###### 뾰로로롱
 
+
+# 안에 코드를 적어 두는 방법
 ```c
-//```뒤에 자신이 원하는 언어 (생략 가능)
 #include <stdio.h>
 int main(void) {
   printf("Hell World so i use C");
