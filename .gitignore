@@ -31,7 +31,6 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
-sang.txt
 # End of https://www.toptal.com/developers/gitignore/api/java
 
 # 이그노어가 안먹힐 경우 or 이미 Push 된 경우 
