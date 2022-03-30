@@ -2,11 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kyonggi.eku">
 
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCEPT_NETWORK_STATE"/>
 
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true"/>
 
     <application
         android:allowBackup="true"
@@ -16,19 +22,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eku">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name="com.kyonggi.eku.MainActivity"
+            android:screenOrientation="portrait"
+            android:exported="true"
+            >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <service android:name="com.minew.beacon.ScanService"
+            android:exported="true"/>
+        <receiver android:name="com.minew.beacon.BluetoothChangedReceiver"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED"/>
+            </intent-filter>
+        </receiver>
         <activity
             android:name=".Request"
             android:exported="true" />
-
-
     </application>
 
 </manifest>
