@@ -16,4 +16,5 @@ public class CustomProperty {
     private String testURL;
     private String compTestURL;
     private String googleAPIKey;
+    private String googleClientId;
 }
