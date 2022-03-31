@@ -17,4 +17,5 @@ public class CustomProperty {
     private String compTestURL;
     private String googleAPIKey;
     private String googleClientId;
+    private String aesSecretKey;
 }

@@ -5,16 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class OcrResponseForm {
-    private String version;
+public class ClientOcrRequestForm {
+    private String version="V2";
     private String requestId;
-    private int timestamp;
-    private ArrayList<ImageResponse> images;
-
+    private int timestamp=0;
+    private String lang = "ko";
+    private List<OcrImagesData> images;
 }
