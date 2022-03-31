@@ -1,13 +1,10 @@
 package com.kyonggi.eku;
 
-import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,7 +23,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int REQUEST_ACCESS_FINE_LOCATION = 1000;
+    private PermissionSupport permission;
+
     private MinewBeaconManager mMinewBeaconManager;
     private RecyclerView mRecycle;
     private BeaconListAdapter mAdapter;
@@ -37,52 +35,50 @@ public class MainActivity extends AppCompatActivity {
     private TextView mStart_scan;
     private boolean mIsRefreshing;
     private int state;
-
+    final int  PERMISSION_REQUEST_COARSE_LOCATION = 1008;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        permissionCheck();
 
         initView();
         //툴바 생성하고 리사이클 바 연결
         initManager();
         //매니저 초기화
-        checkBluetooth();
-        //블루투스 되는지 확인
-        checkLocationPermition();
+
+
         //권한체크
         initListener();
         //리슨
 
     }
 
-    private void checkLocationPermition() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-            int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+    // 권한 체크
+    private void permissionCheck() {
 
-            if(permissionCheck == PackageManager.PERMISSION_DENIED){
+        // PermissionSupport.java 클래스 객체 생성
+        permission = new PermissionSupport(this, this);
 
-                // 권한 없음
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        REQUEST_ACCESS_FINE_LOCATION);
-
-
-            } else{
-
-                // ACCESS_FINE_LOCATION 에 대한 권한이 이미 있음.
-
-            }
-
-
-        }
-
-// OS가 Marshmallow 이전일 경우 권한체크를 하지 않는다.
-        else{
-
+        // 권한 체크 후 리턴이 false로 들어오면
+        if (!permission.checkPermission()){
+            //권한 요청
+            permission.requestPermission();
         }
     }
+    // Request Permission에 대한 결과 값 받아와
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //여기서도 리턴이 false로 들어온다면 (사용자가 권한 허용 거부)
+        if (!permission.permissionResult(requestCode, permissions, grantResults)) {
+            // 다시 permission 요청
+            permission.requestPermission();
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
 
     /**
      * 초기 블루투스 스캔을 체크함
@@ -100,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 showBLEDialog();
                 break;
             case BluetoothStatePowerOn:
+                Toast.makeText(this, "ON", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -196,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
              */
             @Override
             public void onAppearBeacons(List<MinewBeacon> minewBeacons) {
-
+                Toast.makeText(getApplicationContext(),  "비콘나타났슈", Toast.LENGTH_SHORT).show();
             }
 
             /**
@@ -275,16 +272,4 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
     }
 
-
-    /**
-     * ㅁㄹ?
-     * **/
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case REQUEST_ENABLE_BT:
-                break;
-        }
-    }
 }
