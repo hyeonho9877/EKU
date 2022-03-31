@@ -5,13 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Bounding {
-    private float top;
-    private float left;
-    private float width;
-    private float height;
+public class BoundingPoly {
+    private ArrayList<Vertices> vertices;
 }

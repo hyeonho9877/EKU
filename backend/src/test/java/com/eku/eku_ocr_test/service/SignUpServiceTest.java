@@ -1,21 +1,15 @@
 package com.eku.eku_ocr_test.service;
 
-import com.eku.eku_ocr_test.form.Bounding;
-import com.eku.eku_ocr_test.form.ImageField;
-import com.eku.eku_ocr_test.form.OcrForm;
-import com.eku.eku_ocr_test.form.OcrImagesData;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.assertj.core.api.Assertions;
+import com.eku.eku_ocr_test.domain.Student;
+import com.eku.eku_ocr_test.repository.MappingKeyRepository;
+import com.eku.eku_ocr_test.repository.StudentRepository;
+import com.eku.eku_ocr_test.secure.KeyGen;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.ArrayList;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
-
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -26,7 +20,13 @@ class SignUpServiceTest {
     @Autowired
     private SignUpService signUpService;
 
-    @Test
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private MappingKeyRepository mappingKeyRepository;
+
+    /*@Test
     void ocrCardImage() {
         try {
             File file = new File("C:\\Users\\Hyeonho\\Documents\\카카오톡 받은 파일\\studCard_card_resized.jpg");
@@ -47,9 +47,9 @@ class SignUpServiceTest {
         } catch (IOException e) {
             fail();
         }
-    }
+    }*/
 
-    @Test
+    /*@Test
     void ocrMobileImage() {
         try {
             File file = new File("C:\\Users\\Hyeonho\\Documents\\카카오톡 받은 파일\\studCard_mobile.png");
@@ -70,10 +70,10 @@ class SignUpServiceTest {
         } catch (IOException e) {
             fail();
         }
-    }
+    }*/
 
     @Test
-    void apiTest(){
+    void apiTest() {
         try {
             signUpService.apiTest();
         } catch (Exception e) {
@@ -89,4 +89,52 @@ class SignUpServiceTest {
             fail();
         }
     }
+
+    @Test
+    void enrollKeyMemberTest() {
+        Student student = Student.builder()
+                .studNo((long) 201713883)
+                .email("ruldarm00@kyonggi.ac.kr")
+                .name("신현호")
+                .authenticated(false)
+                .department("컴퓨터공학부")
+                .build();
+        try {
+            String secretKey = Base64.getEncoder().encodeToString(KeyGen.generateKey(KeyGen.AES_192).getEncoded());
+            signUpService.enrollClient(student, secretKey);
+
+            String authKey = mappingKeyRepository.findMappingKeyByStudent(student)
+                    .orElseThrow()
+                    .getAuthKey();
+
+            assertThat(authKey).isEqualTo(secretKey);
+        } catch (NoSuchAlgorithmException e) {
+            fail();
+        }
+    }
+
+    @Test
+    void emailAuthTest() {
+        try {
+            Student student = Student.builder()
+                    .studNo((long) 201713883)
+                    .email("ruldarm00@kyonggi.ac.kr")
+                    .name("신현호")
+                    .authenticated(false)
+                    .department("컴퓨터공학부")
+                    .build();
+            Student target = studentRepository.findById(student.getStudNo())
+                    .orElseThrow();
+            String authKey = mappingKeyRepository.findMappingKeyByStudent(target)
+                    .orElseThrow()
+                    .getAuthKey();
+
+            assertThat(signUpService.authEmail(authKey)).isTrue();
+            //assertThat(studentRepository.findById(student.getStudNo()).orElseThrow().isAuthenticated()).isTrue();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+
 }
