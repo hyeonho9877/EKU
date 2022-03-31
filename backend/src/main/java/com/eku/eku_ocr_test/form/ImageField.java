@@ -14,7 +14,5 @@ public class ImageField {
     private String valueType;
     private String inferText;
     private float inferConfidence;
-    private BoundingPoly boundingPoly;
-    private String type;
-    private boolean lineBreak;
+    private Bounding bounding;
 }

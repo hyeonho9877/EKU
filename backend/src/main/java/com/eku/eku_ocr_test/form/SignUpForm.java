@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SignUpForm {
-    private Long studNo;
+    private int studNo;
     private String name;
     private String department;
     private String email;

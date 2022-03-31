@@ -35,6 +35,21 @@ public class WebClientConfig {
         return WebClient.builder()
                 .baseUrl(customProperty.getClovaOcrUri())
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
+                /*.filter(
+                        (req, next) -> next.exchange(
+                                ClientRequest.from(req).header("from","webclient").build()
+                        )
+                )
+                .filter(
+                        ExchangeFilterFunction.ofRequestProcessor(
+                                Mono::just
+                        )
+                )
+                .filter(
+                        ExchangeFilterFunction.ofResponseProcessor(
+                                    Mono::just
+                        )
+                )*/
                 .exchangeStrategies(exchangeStrategies)
                 .build();
     }
