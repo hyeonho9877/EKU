@@ -2,17 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kyonggi.eku">
 
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCEPT_NETWORK_STATE"/>
+    <uses-permission android:name="permission.BLUETOOTH_SCAN"/>
 
-    <uses-feature
-        android:name="android.hardware.bluetooth_le"
-        android:required="true"/>
+    <uses-feature android:name="android.hardware.bluetooth" android:required="false"/>
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
 
     <application
         android:allowBackup="true"
@@ -22,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eku">
         <activity
-            android:name="com.kyonggi.eku.MainActivity"
+            android:name="com.kyonggi.eku.MainBoard"
             android:screenOrientation="portrait"
             android:exported="true"
             >
@@ -45,6 +46,7 @@
         <activity
             android:name=".Request"
             android:exported="true" />
+        <activity android:name=".WriteBoard" />
     </application>
 
 </manifest>
