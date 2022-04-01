@@ -2,36 +2,43 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kyonggi.eku">
 
-    <uses-permission android:name="android.permission.BLUETOOTH"  android:maxSdkVersion="30"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30"/>
-
-    <!-- android 12 add -->
-    <!-- Needed only if your app looks for Bluetooth devices.
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" /> <!-- android 12 add -->
+    <!--
+ Needed only if your app looks for Bluetooth devices.
              If your app doesn't use Bluetooth scan results to derive physical
              location information, you can strongly assert that your app
-             doesn't derive physical location. -->
+             doesn't derive physical location.
+    -->
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
-    <!-- Needed only if your app makes the device discoverable to Bluetooth
-      devices. -->
+    <!--
+ Needed only if your app makes the device discoverable to Bluetooth
+      devices.
+    -->
     <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-    <!-- Needed only if your app communicates with already-paired Bluetooth
-           devices. -->
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <!--bibo01 : hardware option-->
-    <uses-feature android:name="android.hardware.bluetooth" android:required="false"/>
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
-    <!-- android 12 add -->
+    <!--
+ Needed only if your app communicates with already-paired Bluetooth
+           devices.
+    -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" /> <!-- bibo01 : hardware option -->
+    <uses-feature
+        android:name="android.hardware.bluetooth"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="false" /> <!-- android 12 add -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCEPT_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCEPT_NETWORK_STATE"/>
-
-
-
-
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:allowBackup="true"
@@ -40,31 +47,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Eku">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".SignInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignPhotoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.kyonggi.eku.MainBoard"
-            android:screenOrientation="portrait"
+            android:name=".MainBoard"
             android:exported="true"
-            >
+            android:screenOrientation="portrait" />
 
-        </activity>
+        <service
+            android:name="com.minew.beacon.ScanService"
+            android:exported="true" />
 
-        <service android:name="com.minew.beacon.ScanService"
-            android:exported="true"/>
-        <receiver android:name="com.minew.beacon.BluetoothChangedReceiver"
-            android:exported="true"
-            >
+        <receiver
+            android:name="com.minew.beacon.BluetoothChangedReceiver"
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED"/>
+                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
             </intent-filter>
         </receiver>
+
         <activity
             android:name=".Request"
             android:exported="true" />
