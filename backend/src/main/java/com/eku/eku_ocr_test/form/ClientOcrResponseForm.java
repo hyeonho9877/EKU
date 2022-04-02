@@ -6,11 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
-public class OcrImagesData {
-    private String format;
-    private byte[] data;
+@NoArgsConstructor
+@AllArgsConstructor
+public class ClientOcrResponseForm {
     private String name;
+    private String department;
+    private int studNo;
 }

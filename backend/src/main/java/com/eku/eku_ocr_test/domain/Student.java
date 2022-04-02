@@ -1,30 +1,38 @@
 package com.eku.eku_ocr_test.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Formatter;
+import java.io.Serializable;
 
+/**
+ * 가입된 학생의 정보를 저장하는 테이블
+ */
 @Entity
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
-public class Member {
+public class Student implements Serializable {
     @Id
-    @Column(name = "stud_no", nullable = false)
-    private int studNo;
-    @Column(name="stud_name", nullable = false)
+    @Column(name = "no", nullable = false)
+    private Long studNo;
+    @Column(name="name", nullable = false)
     private String name;
     @Column(name = "department", nullable = false)
     private String department;
     @Column(name = "email", nullable = false)
     private String email;
+    // 이메일 인증 성공 여부
+    @Column(name = "authenticated", nullable = false)
+    private boolean authenticated;
 
-
-    public Member() {
+    public Student() {
 
     }
 
