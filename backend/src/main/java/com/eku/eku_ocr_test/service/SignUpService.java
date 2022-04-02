@@ -20,6 +20,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/**
+ * 회원 가입에 관련된 기능을 담당하는 서비스 클래스
+ */
 @Service
 public class SignUpService {
     private final CustomProperty customProperty;
@@ -35,6 +38,11 @@ public class SignUpService {
         this.webClient = webClient;
     }
 
+    /**
+     * 특정 학생에 대한 데이터를 DB에 저장하고 1대1로 매핑되는 키를 발행하여 다른 DB에 저장하는 메소드
+     * @param student 대상 학생
+     * @return 정상적인 종료시 Optional<Student> 객체를 반환, 반대의 경우 Optional.empty() 반환
+     */
     public Optional<Student> enrollClient(Student student) {
         try {
             studentRepository.save(student);
@@ -45,6 +53,12 @@ public class SignUpService {
         }
     }
 
+    /**
+     * 특정 학생에게 임의의 키가 아닌 특정 키를 발행하고 저장하는 메소드, 테스트목적으로 작성
+     * @param student 대상 학생
+     * @param authKey 특정 키
+     * @return 정상적인 종료시 Optional<Student> 객체를 반환, 반대의 경우 Optional.empty() 반환
+     */
     public Optional<Student> enrollClient(Student student, String authKey) {
         try {
             studentRepository.save(student);
@@ -55,6 +69,11 @@ public class SignUpService {
         }
     }
 
+    /**
+     * 특정 학생에 대한 임의의 Key를 발행하고 MappingKey 테이블에 저장하는 메소드
+     * @param student 대상 학생
+     * @throws NoSuchAlgorithmException
+     */
     private void enrollMappingKey(Student student) throws NoSuchAlgorithmException {
         MappingKey mappingKey = new MappingKey();
         mappingKey.setAuthKey(Base64.getEncoder().encodeToString(KeyGen.generateKey(KeyGen.AES_192).getEncoded()));
@@ -62,6 +81,11 @@ public class SignUpService {
         mappingKeyRepository.save(mappingKey);
     }
 
+    /**
+     * 특정 학생에 대한 특정한 Key를 발행하고 MappingKey 테이블에 저장하는 메소드
+     * @param student 대상 학생
+     * @param authKey 특정 키
+     */
     private void enrollMappingKey(Student student, String authKey) {
         MappingKey mappingKey = new MappingKey();
         mappingKey.setAuthKey(authKey);
@@ -69,9 +93,14 @@ public class SignUpService {
         mappingKeyRepository.save(mappingKey);
     }
 
-    public boolean authEmail(String id) {
+    /**
+     * 서버에서 발송한 이메일을 사용자가 누를 경우, 해당 이메일을 검증하는 메소드
+     * @param key 서버에서 발행한 key값
+     * @return 성공적으로 학생의 Authenticated 속성을 True로 바꾼 경우 True 리턴, 반대의 경우 False 리턴
+     */
+    public boolean authEmail(String key) {
         try {
-            Long studNo = mappingKeyRepository.findById(id)
+            Long studNo = mappingKeyRepository.findById(key)
                     .orElseThrow()
                     .getStudent()
                     .getStudNo();
@@ -225,6 +254,4 @@ public class SignUpService {
             return "";
         }
     }
-
-
 }

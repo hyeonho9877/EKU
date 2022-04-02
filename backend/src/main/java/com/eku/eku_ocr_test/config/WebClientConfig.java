@@ -10,6 +10,9 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
 
+/**
+ * WebClient에 대한 설정을 수행하는 클래스
+ */
 @Configuration
 public class WebClientConfig {
 
@@ -19,6 +22,10 @@ public class WebClientConfig {
         this.customProperty = customProperty;
     }
 
+    /**
+     * 스프링 컨테이너에 WebClient를 Bean으로 등록하는 메소드
+     * @return 내부 코드에 의해 미리 정의된 WebClient 객체
+     */
     @Bean
     public WebClient webClient(){
         HttpClient httpClient = HttpClient.create()

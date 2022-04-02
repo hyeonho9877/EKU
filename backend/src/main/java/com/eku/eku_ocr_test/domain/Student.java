@@ -10,6 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
 
+/**
+ * 가입된 학생의 정보를 저장하는 테이블
+ */
 @Entity
 @Getter
 @Setter
@@ -25,6 +28,7 @@ public class Student implements Serializable {
     private String department;
     @Column(name = "email", nullable = false)
     private String email;
+    // 이메일 인증 성공 여부
     @Column(name = "authenticated", nullable = false)
     private boolean authenticated;
 
