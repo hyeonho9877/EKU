@@ -14,7 +14,12 @@ import java.util.List;
 public class ClientOcrRequestForm {
     private String version="V2";
     private String requestId;
-    private int timestamp=0;
+    private long timestamp=0;
     private String lang = "ko";
     private List<OcrImagesData> images;
+
+    @Override
+    public String toString(){
+        return String.format("{\"version\":\"%s\", \"requestId\":\"%s\", \"timestamp\":%d, \"images\":%s}", version, requestId, timestamp, images);
+    }
 }

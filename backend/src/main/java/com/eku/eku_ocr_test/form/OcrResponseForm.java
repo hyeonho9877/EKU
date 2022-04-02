@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class OcrResponseForm {
     private String version;
     private String requestId;
-    private int timestamp;
+    private long timestamp;
     private ArrayList<ImageResponse> images;
-
 }

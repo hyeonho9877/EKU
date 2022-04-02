@@ -9,11 +9,18 @@ import com.eku.eku_ocr_test.repository.MappingKeyRepository;
 import com.eku.eku_ocr_test.repository.StudentRepository;
 import com.eku.eku_ocr_test.secure.KeyGen;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -29,7 +36,7 @@ public class SignUpService {
     private final StudentRepository studentRepository;
     private final MappingKeyRepository mappingKeyRepository;
     private final WebClient webClient;
-
+    private final String upDir = "d:\\dir\\";
 
     public SignUpService(CustomProperty customProperty, StudentRepository studentRepository, MappingKeyRepository mappingKeyRepository, WebClient webClient) {
         this.customProperty = customProperty;
@@ -40,6 +47,7 @@ public class SignUpService {
 
     /**
      * 특정 학생에 대한 데이터를 DB에 저장하고 1대1로 매핑되는 키를 발행하여 다른 DB에 저장하는 메소드
+     *
      * @param student 대상 학생
      * @return 정상적인 종료시 Optional<Student> 객체를 반환, 반대의 경우 Optional.empty() 반환
      */
@@ -55,6 +63,7 @@ public class SignUpService {
 
     /**
      * 특정 학생에게 임의의 키가 아닌 특정 키를 발행하고 저장하는 메소드, 테스트목적으로 작성
+     *
      * @param student 대상 학생
      * @param authKey 특정 키
      * @return 정상적인 종료시 Optional<Student> 객체를 반환, 반대의 경우 Optional.empty() 반환
@@ -71,6 +80,7 @@ public class SignUpService {
 
     /**
      * 특정 학생에 대한 임의의 Key를 발행하고 MappingKey 테이블에 저장하는 메소드
+     *
      * @param student 대상 학생
      * @throws NoSuchAlgorithmException
      */
@@ -83,6 +93,7 @@ public class SignUpService {
 
     /**
      * 특정 학생에 대한 특정한 Key를 발행하고 MappingKey 테이블에 저장하는 메소드
+     *
      * @param student 대상 학생
      * @param authKey 특정 키
      */
@@ -95,6 +106,7 @@ public class SignUpService {
 
     /**
      * 서버에서 발송한 이메일을 사용자가 누를 경우, 해당 이메일을 검증하는 메소드
+     *
      * @param key 서버에서 발행한 key값
      * @return 성공적으로 학생의 Authenticated 속성을 True로 바꾼 경우 True 리턴, 반대의 경우 False 리턴
      */
@@ -116,43 +128,45 @@ public class SignUpService {
         }
     }
 
-    /*    public Object ocrImage(OcrForm form, OcrCallBack callBack) {
-            try {
-                *//*File file = new File("C:\\Users\\Hyeonho\\Documents\\카카오톡 받은 파일\\studCard_card_resized.jpg");
-            Base64.Encoder encoder = Base64.getEncoder();
-            String encode = encoder.encodeToString(Files.readAllBytes(file.toPath()));*//*
+    public void ocrImage(OcrForm form, MultipartFile img, OcrCallBack callBack) {
+        try {
+            Path tmp = Files.createTempDirectory("tmp");
+            System.out.println(tmp.toString());
+            System.out.println(Files.exists(tmp.toAbsolutePath()));
 
-            ObjectMapper mapper = new ObjectMapper();
-            String jsonString = mapper.writeValueAsString(form);
+            String imgName = img.getOriginalFilename();
+            String imgFullPath = tmp+"\\"+imgName;
+            System.out.println(imgFullPath);
+            File imgFile = new File(imgFullPath);
+            img.transferTo(imgFile);
 
-            System.out.println(jsonString);
+            ClientOcrRequestForm requestForm = ClientOcrRequestForm.builder()
+                    .version("V2")
+                    .requestId(form.getName())
+                    .timestamp(0)
+                    .images(Collections.singletonList(OcrImagesData.builder().format("jpg").name(form.getName()).build()))
+                    .build();
 
-            AtomicBoolean taskDone = new AtomicBoolean(false);
+            MultipartBodyBuilder builder = new MultipartBodyBuilder();
+            String imageHeader = String.format("form-data; name=%s; filename=%s", "file", imgFullPath);
+            String jsonHeader = String.format("form-data; name=%s;", "message");
+
+            System.out.println(requestForm);
+            builder.part("file", new FileSystemResource(imgFile)).header("Content-Disposition", imageHeader);
+            builder.part("message", requestForm.toString()).header("Content-Disposition", jsonHeader);
+
             webClient
                     .post()
-                    .accept(MediaType.APPLICATION_JSON)
                     .header(customProperty.getOcrKeyHeader(), customProperty.getOcrKey())
-                    .body(BodyInserters.fromValue(jsonString))
+                    .body(BodyInserters.fromMultipartData(builder.build()))
                     .retrieve()
                     .bodyToMono(OcrResponseForm.class)
-                    .subscribe(result ->
-                            {
-                                callBack.onSuccess(result);
-                            }
-                    );
-
-            while (!taskDone.get()) {
-
-            }
-            return null;
-        *//*} catch (FileNotFoundException e) {
-            System.out.println("failed file not found");
-            return "failed file not found";*//*
+                    .subscribe(System.out::println);
         } catch (IOException e) {
-            System.out.println("failed io exception");
-            return "failed io exception";
+            e.printStackTrace();
         }
-    }*/
+    }
+
     public void apiTest() {
         AtomicBoolean taskDone = new AtomicBoolean(false);
         WebClient client = webClient
@@ -199,7 +213,7 @@ public class SignUpService {
         }
     }
 
-    public void compCompsApiTest(OcrForm form, OcrCallBack callBack) throws IOException {
+    /*public void compCompsApiTest(OcrForm form, MultipartFile img, OcrCallBack callBack) throws IOException {
         OcrImagesData imagesData = OcrImagesData.builder()
                 .format(form.getFormat())
                 .name(form.getName())
@@ -226,7 +240,7 @@ public class SignUpService {
                         }
                 );
 
-    }
+    }*/
 
     public String parseOcrResponse(OcrResponseForm responseForm) {
         Pattern namePattern = Pattern.compile("^[김|신|박|이|정|고|방|][가-힣]{1,4}");

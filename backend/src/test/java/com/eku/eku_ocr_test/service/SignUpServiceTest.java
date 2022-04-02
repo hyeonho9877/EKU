@@ -7,7 +7,16 @@ import com.eku.eku_ocr_test.secure.KeyGen;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.mock.web.MockMultipartHttpServletRequest;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.ServletContext;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
@@ -25,6 +34,12 @@ class SignUpServiceTest {
 
     @Autowired
     private MappingKeyRepository mappingKeyRepository;
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    @Autowired
+    private ApplicationContext applicationContext;
 
     /*@Test
     void ocrCardImage() {
@@ -135,6 +150,15 @@ class SignUpServiceTest {
             e.printStackTrace();
             fail();
         }
+    }
+
+    @Test
+    public void whenFileUploaded_thenVerifyStatus() throws Exception{
+        MockMultipartFile file = new MockMultipartFile("file", "hello.txt", MediaType.TEXT_PLAIN_VALUE, "Hello, World!".getBytes(StandardCharsets.UTF_8));
+
+        MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        mockMvc.perform(new MockMultipartHttpServletRequest(applicationContext)).andExpect();
+        ServletContext
     }
 
 }

@@ -11,6 +11,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class OcrImagesData {
     private String format;
-    private byte[] data;
     private String name;
+
+    @Override
+    public String toString(){
+        return String.format("{\"format\":\"%s\", \"name\":\"%s\"}", format, name);
+    }
 }

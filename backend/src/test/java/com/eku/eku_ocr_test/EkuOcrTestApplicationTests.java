@@ -2,12 +2,17 @@ package com.eku.eku_ocr_test;
 
 import com.eku.eku_ocr_test.config.CustomProperty;
 import com.eku.eku_ocr_test.secure.KeyGen;
+import org.imgscalr.Scalr;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.crypto.SecretKey;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
@@ -47,6 +52,22 @@ class EkuOcrTestApplicationTests {
             System.out.println(encode);
         } catch (NoSuchAlgorithmException e) {
             Assertions.fail();
+        }
+    }
+
+    @Test
+    void imageResize(){
+        File imgFile = new File("C:\\Users\\Hyeonho\\Documents\\카카오톡 받은 파일\\studCard_card.jpg");
+        BufferedImage bi=null;
+        try {
+            bi = ImageIO.read(imgFile);
+            assert bi != null;
+            BufferedImage resize = Scalr.resize(bi, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC, 256, Scalr.OP_ANTIALIAS);
+
+            File resizedFile = new File("C:\\Users\\Hyeonho\\Documents\\카카오톡 받은 파일\\studCard_card_javaResized.jpg");
+            ImageIO.write(resize, "jpg", resizedFile);
+        } catch (IOException e) {
+
         }
     }
 
