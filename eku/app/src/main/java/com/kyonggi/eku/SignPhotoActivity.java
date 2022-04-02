@@ -68,7 +68,7 @@ public class SignPhotoActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent cancleIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivityForResult(cancleIntent, 101);
+                    startActivity(cancleIntent);
                     finish();
                 }
             });
@@ -77,10 +77,12 @@ public class SignPhotoActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent signInfoIntent = new Intent(getApplicationContext(), SignInfoActivity.class);
-                    startActivityForResult(signInfoIntent, 101);
+                    startActivity(signInfoIntent);
                         // 사진이 있을경우 다음 화면으로 가져감
                     if(file.exists()) {
-
+                        startActivityForResult(signInfoIntent, file.hashCode());
+                    } else {
+                        startActivity(signInfoIntent);
                     }
                     finish();
                 }

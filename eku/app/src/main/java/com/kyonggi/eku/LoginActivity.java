@@ -21,7 +21,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SignPhotoActivity.class);
-                startActivityForResult(intent, 101);
+                startActivity(intent);
                 finish();
             }
         });
