@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class DonanBagGi extends AppCompatActivity {
+    //무야호
     private PermissionSupport permission;
     private MinewBeaconManager mMinewBeaconManager;
     private BeaconListAdapter mAdapter;
