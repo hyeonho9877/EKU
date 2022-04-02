@@ -146,7 +146,7 @@ public class DonanBagGi extends AppCompatActivity {
                 audio.setStreamVolume(AudioManager.STREAM_MUSIC,15,AudioManager.FLAG_PLAY_SOUND);
                 Vibrator vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
                 vibrator.vibrate(new long[]{50,300},0); // 0.5초간 진동
-                MediaPlayer player = MediaPlayer.create(getBaseContext(),R.raw.siren);
+                MediaPlayer player = MediaPlayer.create(getBaseContext(),R.raw.sirenWon);
                 player.setLooping(true);
                 player.start();
                 Button offButton = findViewById(R.id.Donan_Off);
