@@ -18,7 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
-import java.io.File; import java.io.IOException;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -26,9 +27,11 @@ import java.util.Date;
 public class SignPhotoActivity extends AppCompatActivity {
 
         final String TAG = getClass().getSimpleName();
+        File file;
         ImageView imageView;
         Button cameraBtn;
         Button cancleBtn;
+        Button infoBtn;
         final static int TAKE_PICTURE = 1;
 
         @Override
@@ -37,9 +40,10 @@ public class SignPhotoActivity extends AppCompatActivity {
             setContentView(R.layout.activity_sign_photo);
 
             // 레이아웃과 변수 연결
-            imageView = findViewById(R.id.image_photo);
-            cameraBtn = findViewById(R.id.btn_camera);
-            cancleBtn = findViewById(R.id.btn_cancle);
+            imageView = (ImageView) findViewById(R.id.image_photo);
+            cameraBtn = (Button) findViewById(R.id.btn_camera);
+            cancleBtn = (Button) findViewById(R.id.btn_cancle);
+            infoBtn = (Button) findViewById(R.id.btn_info_sign);
 
             // 카메라 버튼에 리스터 추가
             cameraBtn.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +67,21 @@ public class SignPhotoActivity extends AppCompatActivity {
             cancleBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent cancleIntent = new Intent(getApplicationContext(), SignPhotoActivity.class);
+                    Intent cancleIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivityForResult(cancleIntent, 101);
+                    finish();
+                }
+            });
+
+            infoBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent signInfoIntent = new Intent(getApplicationContext(), SignInfoActivity.class);
+                    startActivityForResult(signInfoIntent, 101);
+                        // 사진이 있을경우 다음 화면으로 가져감
+                    if(file.exists()) {
+
+                    }
                     finish();
                 }
             });
