@@ -48,13 +48,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eku">
         <activity
+            android:name=".MainCommunity"
+            android:exported="true" />
+        <activity
             android:name=".SignInfoActivity"
             android:exported="false" />
         <activity
             android:name=".SignPhotoActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".MainBoard"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,7 +66,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainBoard"
+            android:name=".LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
 
