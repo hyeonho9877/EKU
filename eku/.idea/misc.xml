@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <entry key="..\:/GitHub/Test/eku/app/src/main/res/layout/activity_login.xml" value="0.19157608695652173" />
         <entry key="..\:/GitHub/Test/eku/app/src/main/res/layout/activity_sign_info.xml" value="0.19157608695652173" />
         <entry key="..\:/GitHub/Test/eku/app/src/main/res/layout/activity_sign_photo.xml" value="0.19157608695652173" />
@@ -16,6 +17,16 @@
         <entry key="..\:/Test/eku/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Test/eku/app/src/main/res/layout/activity_request.xml" value="0.10280797101449275" />
         <entry key="..\:/Test/eku/app/src/main/res/layout/main_item.xml" value="0.22" />
+=======
+        <entry key="..\:/Test/eku/app/src/main/res/layout/activity_donan_bag_gi.xml" value="0.2078125" />
+        <entry key="..\:/Test/eku/app/src/main/res/layout/activity_login.xml" value="0.2078125" />
+        <entry key="..\:/Test/eku/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Test/eku/app/src/main/res/layout/activity_request.xml" value="0.10280797101449275" />
+        <entry key="..\:/Test/eku/app/src/main/res/layout/main_item.xml" value="0.22" />
+        <entry key="..\:/Users/KGU/Documents/GitHub/Test/eku/app/src/main/res/layout/activity_login.xml" value="0.18" />
+        <entry key="..\:/Users/KGU/Documents/GitHub/Test/eku/app/src/main/res/layout/activity_sign_info.xml" value="0.25" />
+        <entry key="..\:/Users/KGU/Documents/GitHub/Test/eku/app/src/main/res/layout/activity_sign_photo.xml" value="0.16590678824721378" />
+>>>>>>> 8bc1653f0b92b29bcd5f2e5635a400a4b1ec59ee
         <entry key="..\:/Users/jihyk/Documents/GitHub/Test/eku/app/src/main/res/drawable/round_shape.xml" value="0.108" />
         <entry key="..\:/Users/jihyk/Documents/GitHub/Test/eku/app/src/main/res/layout/activity_main.xml" value="0.18614130434782608" />
         <entry key="..\:/Users/jihyk/Documents/GitHub/Test/eku/app/src/main/res/layout/activity_main_board.xml" value="0.22" />

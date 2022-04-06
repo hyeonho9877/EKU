@@ -79,7 +79,7 @@
             android:name=".SignPhotoActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name="com.kyonggi.eku.LoginActivity"
             android:exported="true">
 
         </activity>

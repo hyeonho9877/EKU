@@ -17,7 +17,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="30dip"
         android:orientation="horizontal">
 
         <TextView
@@ -35,15 +35,15 @@
             android:layout_weight="1"
             android:gravity="center"
             android:hint="이름을 입력하세요"
-            android:textSize="24sp"
-            android:inputType="text"/>
+            android:inputType="text"
+            android:textSize="24sp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="30dip"
         android:orientation="horizontal">
 
         <TextView
@@ -61,16 +61,16 @@
             android:layout_weight="1"
             android:gravity="center"
             android:hint="학번을 입력하세요"
+            android:inputType="number"
             android:numeric="integer"
             android:textSize="24sp"
-            tools:ignore="Deprecated"
-            android:inputType="number"/>
+            tools:ignore="Deprecated" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="30dip"
         android:orientation="horizontal">
 
         <TextView
