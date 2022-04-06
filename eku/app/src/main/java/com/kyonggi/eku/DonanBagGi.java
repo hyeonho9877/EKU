@@ -24,6 +24,8 @@ import com.minew.beacon.BluetoothState;
 import com.minew.beacon.MinewBeacon;
 import com.minew.beacon.MinewBeaconManager;
 import com.minew.beacon.MinewBeaconManagerListener;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class DonanBagGi extends AppCompatActivity {
     private boolean isScanning;
     UserRssi comp = new UserRssi();
     private int state;
-
+    boolean stealing=false;
     TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,11 +80,13 @@ public class DonanBagGi extends AppCompatActivity {
                 }
                 //스캔 발견하면 스캔시작되었다고 말해줌
                 if (isScanning) {
-                    textView.setText("도난방지 해제됨");
+
                     isScanning = false;
+                    textView.setText("도난방지 해제됨");
                     if (mMinewBeaconManager != null) {
                         mMinewBeaconManager.stopScan();
                     }
+                    stealing=false;
                 } else {
                     //아니었으면 멈춰싿고 함
                     isScanning = true;
@@ -126,6 +130,8 @@ public class DonanBagGi extends AppCompatActivity {
 
     private void initListener() {
         mMinewBeaconManager.setDeviceManagerDelegateListener(new MinewBeaconManagerListener() {
+
+
             /**
              *   비콘 새로 등판시 하는일.
              *  @param minewBeacons  new beacons the manager scanned
@@ -133,6 +139,7 @@ public class DonanBagGi extends AppCompatActivity {
             @Override
             public void onAppearBeacons(List<MinewBeacon> minewBeacons) {
                 Toast.makeText(getApplicationContext(),  "비콘나타났슈", Toast.LENGTH_SHORT).show();
+
             }
             /**
              *  if a beacon didn't update data in 10 seconds, we think this beacon is out of rang, the manager will call back this method.
@@ -141,31 +148,59 @@ public class DonanBagGi extends AppCompatActivity {
              */
             @Override
             public void onDisappearBeacons(List<MinewBeacon> minewBeacons) {
-                textView.setText("훔쳐진 디바이스 입니다!!!!!");
-                AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-                audio.setStreamVolume(AudioManager.STREAM_MUSIC,15,AudioManager.FLAG_PLAY_SOUND);
-                Vibrator vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
-                vibrator.vibrate(new long[]{50,300},0); // 0.5초간 진동
-                MediaPlayer player = MediaPlayer.create(getBaseContext(),R.raw.siren);
-                player.setLooping(true);
-                player.start();
-                Button offButton = findViewById(R.id.Donan_Off);
-                offButton.setVisibility(View.VISIBLE);
 
-                offButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        offButton.setVisibility(View.INVISIBLE);
-                        player.stop();
-                        vibrator.cancel();
-                        player.release();
-                    }
-                });
 
             }
 
             @Override
             public void onRangeBeacons(List<MinewBeacon> minewBeacons) {
+
+                for(MinewBeacon m :minewBeacons) {
+                    String temp = m.getBeaconValue(BeaconValueIndex.MinewBeaconValueIndex_UUID).getStringValue();
+                    String rssi = m.getBeaconValue(BeaconValueIndex.MinewBeaconValueIndex_RSSI).getStringValue();
+                    double iRssi = 0;
+                    try {
+                        iRssi = Double.valueOf(rssi);
+                    } catch (Exception e) {
+                        iRssi = 0;
+                    }
+                    if (temp.equals("E2C56DB5-DFFB-48D2-B060-D0F5A71096E0") && iRssi < -80) {
+                        if (stealing == true)
+                        {
+                        }
+                        else{
+                            stealing=true;
+                            textView.setText("훔쳐진 디바이스 입니다!!!!!");
+                            AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                            audio.setStreamVolume(AudioManager.STREAM_MUSIC,15,AudioManager.FLAG_PLAY_SOUND);
+                            Vibrator vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+                            vibrator.vibrate(new long[]{50,300},0); // 0.5초간 진동
+                            MediaPlayer player = MediaPlayer.create(getBaseContext(),R.raw.sirent);
+                            player.setLooping(true);
+                            player.start();
+                            Button offButton = findViewById(R.id.Donan_Off);
+                            offButton.setVisibility(View.VISIBLE);
+
+                            offButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    offButton.setVisibility(View.INVISIBLE);
+                                    player.stop();
+                                    vibrator.cancel();
+                                    player.release();
+                                    stealing=false;
+                                    textView.setText("도난방지 해제됨");
+                                    if (mMinewBeaconManager != null) {
+                                        mMinewBeaconManager.stopScan();
+                                    }
+                                    return;
+                                }
+                            });
+                        }
+
+
+                    }
+                }
                 //Toast.makeText(getApplicationContext(),  "비콘개수==>"+list.size(), Toast.LENGTH_SHORT).show();
              /*   if(minewBeacons.size()>=1)
                 {
@@ -190,6 +225,7 @@ public class DonanBagGi extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         //stop scan
         if (isScanning) {
             mMinewBeaconManager.stopScan();
