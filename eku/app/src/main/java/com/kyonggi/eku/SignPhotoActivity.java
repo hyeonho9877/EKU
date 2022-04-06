@@ -28,8 +28,6 @@ public class SignPhotoActivity extends AppCompatActivity {
             }
         });
         cancleBtn = (Button) findViewById(R.id.btn_cancle);
-
     }
-
 }
 
