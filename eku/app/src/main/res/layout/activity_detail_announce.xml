@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailAnnounce">
+
+    <Spinner
+        android:id="@+id/detail_announce_Spinner"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="#F6A788"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/detail_announce_building"
+        android:layout_width="328dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="강의동"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.337"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_announce_Spinner" />
+
+    <TextView
+        android:id="@+id/detail_announce_title"
+        android:layout_width="328dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="제목"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.337"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_announce_building" />
+
+    <TextView
+        android:id="@+id/detail_announce_writer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="60dp"
+        android:text="작성자"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_announce_content" />
+
+    <TextView
+        android:id="@+id/detail_announce_content"
+        android:layout_width="328dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="내용"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.337"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_announce_title" />
+
+    <TextView
+        android:id="@+id/detail_announce_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="12dp"
+        android:text="시간"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_announce_content" />
+
+    <Button
+        android:id="@+id/detail_announce_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="닫기"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        tools:layout_editor_absoluteX="147dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="331dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="88dp"
+        android:gravity="center"
+        android:text="공지에는 댓글을 입력할 수 없습니다"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.312"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_announce_content" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
