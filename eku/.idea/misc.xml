@@ -3,17 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
         <entry key="..\:/GitHub/Test/eku/app/src/main/res/layout/activity_login.xml" value="0.19157608695652173" />
         <entry key="..\:/GitHub/Test/eku/app/src/main/res/layout/activity_sign_info.xml" value="0.19157608695652173" />
         <entry key="..\:/GitHub/Test/eku/app/src/main/res/layout/activity_sign_photo.xml" value="0.19157608695652173" />
         <entry key="..\:/GitHub/Test/eku/app/src/main/res/layout/activity_test.xml" value="0.19157608695652173" />
         <entry key="..\:/GitHub/Test/eku/app/src/main/res/xml/file_path.xml" value="0.1752786220871327" />
+=======
+        <entry key="..\:/Test/eku/app/src/main/res/layout/activity_donan_bag_gi.xml" value="0.2078125" />
+        <entry key="..\:/Test/eku/app/src/main/res/layout/activity_login.xml" value="0.2078125" />
+>>>>>>> main
         <entry key="..\:/Test/eku/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Test/eku/app/src/main/res/layout/activity_request.xml" value="0.10280797101449275" />
         <entry key="..\:/Test/eku/app/src/main/res/layout/main_item.xml" value="0.22" />
-        <entry key="..\:/Users/Woong/Documents/GitHub/Test/eku/app/src/main/res/layout/activity_main.xml" value="0.2046875" />
-        <entry key="..\:/Users/Woong/Documents/GitHub/Test/eku/app/src/main/res/layout/activity_main_board.xml" value="0.36614583333333334" />
-        <entry key="..\:/Users/Woong/Documents/GitHub/Test/eku/app/src/main/res/layout/activity_main_community.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/jihyk/Documents/GitHub/Test/eku/app/src/main/res/drawable/round_shape.xml" value="0.108" />
         <entry key="..\:/Users/jihyk/Documents/GitHub/Test/eku/app/src/main/res/layout/activity_main.xml" value="0.18614130434782608" />
         <entry key="..\:/Users/jihyk/Documents/GitHub/Test/eku/app/src/main/res/layout/activity_main_board.xml" value="0.22" />
