@@ -17,12 +17,14 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
     Button btn_sign;
     Button btn_login;
     EditText user_email, user_pw;
+    private Map<String,String>map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 
         user_email = (EditText) findViewById(R.id.user_email);
         user_pw = (EditText)  findViewById(R.id.user_pw);   // 8자 이상, 특수문자 포함
+
 
         btn_sign = (Button) findViewById(R.id.btn_photo_sign);
         btn_sign.setOnClickListener(new View.OnClickListener() {
@@ -47,14 +50,15 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String std_email = user_email.toString();
-                String std_pw = user_pw.toString();
+                String std_email = user_email.getText().toString();
+                String std_pw = user_pw.getText().toString();
 
                 int status = NetworkStatus.getConnectivityStatus(getApplicationContext());
                 if(status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
 
                     // 프로그래스바 보이게 처리
                     findViewById(R.id.cpb).setVisibility(View.VISIBLE);
+
 
                     // HttpUrlConnection
                     final Thread th = new Thread(new Runnable() {
@@ -69,7 +73,8 @@ public class LoginActivity extends AppCompatActivity {
                                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 
                                 // Post 파라미터
-                                String params = std_email + std_pw;
+                                String params = "param=" + std_email
+                                        + "&param2=" + std_pw;
                                 // 결과값 저장 문자열
                                 final StringBuilder sb = new StringBuilder();
                                 // 연결되면
@@ -79,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                                     conn.setRequestProperty("Accept", "application/json");
                                     conn.setConnectTimeout(10000);
                                     // POST 요청방식
-                                    conn.setRequestMethod("POST");
+                                    conn.setRequestMethod("GET");
                                     // 포스트 파라미터 전달
                                     conn.getOutputStream().write(params.getBytes("utf-8"));
                                     // url에 접속 성공하면 (200)
@@ -136,8 +141,8 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "인터넷 연결을 확인해주세요.", Toast.LENGTH_SHORT).show();
                 }
 
-                Intent intent = new Intent(getApplicationContext(), MainBoard.class);
-                finish();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
             }
         });
 

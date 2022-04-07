@@ -1,13 +1,11 @@
 package com.kyonggi.eku;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Response;
-import com.android.volley.toolbox.StringRequest;
+import android.widget.EditText;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegisterRequest{
+public class RegisterRequest {
 
-
+    private EditText mEditUserID;
 }

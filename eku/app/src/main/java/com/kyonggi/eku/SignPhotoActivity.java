@@ -22,9 +22,8 @@ public class SignPhotoActivity extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SignInfoActivity.class);
+                Intent intent = new Intent(getApplicationContext(),SignInfoActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
         cancleBtn = (Button) findViewById(R.id.btn_cancle);
