@@ -75,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                                 // Post 파라미터
                                 String params = "email=" + std_email
                                         + "&password=" + std_pw;
+
                                 // 결과값 저장 문자열
                                 final StringBuilder sb = new StringBuilder();
                                 // 연결되면
