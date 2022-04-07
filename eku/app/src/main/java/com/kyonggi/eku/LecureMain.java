@@ -58,7 +58,7 @@ public class LecureMain extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), WriteActivity.class);
+                Intent intent = new Intent(getApplicationContext(), LectureWrite.class);
                 startActivity(intent);
                 finish();
             }
@@ -145,7 +145,7 @@ public class LecureMain extends AppCompatActivity {
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
+                Intent intent = new Intent(getApplicationContext(),LectureDetail.class);
                 int Lid = view.getId();
                 intent.putExtra("key",Lid);
                 // Toast.makeText(getApplicationContext(),String.valueOf(Lid), Toast.LENGTH_SHORT).show();
