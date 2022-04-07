@@ -1,5 +1,6 @@
 package com.kyonggi.eku;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -10,6 +11,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -44,6 +46,18 @@ public class MainFreeCommunity extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.FreeCommunity_navigationView);
         navigationView.setItemIconTintList(null);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.lectureMain) {
+                    Intent intent = new Intent(getApplicationContext(), LecureMain.class);
+                    startActivity(intent);
+                    finish();
+                }
+                return false;
+            }
+        });
 
         Spinner spinner = (Spinner)findViewById(R.id.FreeCommunity_Spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
