@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">http://49.174.169.48:13883/</domain>
+    </domain-config>
+</network-security-config>
+
