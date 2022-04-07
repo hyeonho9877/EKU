@@ -3,6 +3,7 @@ package com.kyonggi.eku;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
@@ -71,6 +73,10 @@ public class LoginActivity extends AppCompatActivity {
                                 URL url = new URL(page);
                                 // 연결 객체 생성
                                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+
+                                Map<String, Object> map = new HashMap<>();
+                                map.put("email", std_email);
+                                map.put("password", std_pw);
 
                                 // Post 파라미터
                                 String params = "email=" + std_email
@@ -141,6 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                 }else {
                     Toast.makeText(getApplicationContext(), "인터넷 연결을 확인해주세요.", Toast.LENGTH_SHORT).show();
                 }
+
 
                 Intent intent = new Intent(getApplicationContext(), MainBoard.class);
                 startActivity(intent);
