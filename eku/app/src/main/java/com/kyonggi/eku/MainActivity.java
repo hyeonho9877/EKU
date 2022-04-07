@@ -2,7 +2,6 @@ package com.kyonggi.eku;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
-import android.graphics.Camera;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 
@@ -10,8 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
-
-import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -27,11 +24,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private PermissionSupport permission;
+
     private MinewBeaconManager mMinewBeaconManager;
     private RecyclerView mRecycle;
     private BeaconListAdapter mAdapter;
     private static final int REQUEST_ENABLE_BT = 2;
     private boolean isScanning;
+
     UserRssi comp = new UserRssi();
     private TextView mStart_scan;
     private boolean mIsRefreshing;
@@ -39,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     final int  PERMISSION_REQUEST_COARSE_LOCATION = 1008;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         permissionCheck();

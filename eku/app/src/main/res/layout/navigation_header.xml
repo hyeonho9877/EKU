@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp">
+    //android:background="@drawable/back">
+
+    <ImageView
+        android:id="@+id/eku_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <View
+        android:id="@+id/viewSupporter"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/eku_image"
+        app:layout_constraintEnd_toEndOf="@id/eku_image"
+        app:layout_constraintStart_toStartOf="@id/eku_image"
+        app:layout_constraintTop_toTopOf="@id/eku_image"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="45dp"
+        android:text="EKU"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/viewSupporter"
+        app:layout_constraintStart_toEndOf="@id/eku_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="16dp"
+        android:text="Everewhere Kyonggi Up"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/eku_image"
+        app:layout_constraintTop_toBottomOf="@id/viewSupporter" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
