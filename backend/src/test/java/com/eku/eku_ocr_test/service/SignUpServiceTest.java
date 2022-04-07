@@ -1,6 +1,7 @@
 package com.eku.eku_ocr_test.service;
 
 import com.eku.eku_ocr_test.domain.Student;
+import com.eku.eku_ocr_test.form.SignUpForm;
 import com.eku.eku_ocr_test.repository.MappingKeyRepository;
 import com.eku.eku_ocr_test.repository.StudentRepository;
 import com.eku.eku_ocr_test.secure.KeyGen;
@@ -38,52 +39,6 @@ class SignUpServiceTest {
 
     @Autowired
     private ApplicationContext applicationContext;
-
-    /*@Test
-    void ocrCardImage() {
-        try {
-            File file = new File("C:\\Users\\Hyeonho\\Documents\\카카오톡 받은 파일\\studCard_card_resized.jpg");
-            Base64.Encoder encoder = Base64.getEncoder();
-            String encode= encoder.encodeToString(Files.readAllBytes(file.toPath()));
-
-            OcrForm ocrForm = new OcrForm();
-            OcrImagesData testImageData = new OcrImagesData("jpg", encode, "test");
-            ArrayList<OcrImagesData> ocrImagesData = new ArrayList<>();
-            ocrImagesData.add(testImageData);
-            ocrForm.setImages(ocrImagesData);
-
-            ocrForm.setRequestId("0");
-            ocrForm.setTimestamp(0);
-
-            signUpService.ocrImage(ocrForm);
-
-        } catch (IOException e) {
-            fail();
-        }
-    }*/
-
-    /*@Test
-    void ocrMobileImage() {
-        try {
-            File file = new File("C:\\Users\\Hyeonho\\Documents\\카카오톡 받은 파일\\studCard_mobile.png");
-            Base64.Encoder encoder = Base64.getEncoder();
-            String encode= encoder.encodeToString(Files.readAllBytes(file.toPath()));
-
-            OcrForm ocrForm = new OcrForm();
-            OcrImagesData testImageData = new OcrImagesData("png", encode, "test");
-            ArrayList<OcrImagesData> ocrImagesData = new ArrayList<>();
-            ocrImagesData.add(testImageData);
-            ocrForm.setImages(ocrImagesData);
-
-            ocrForm.setRequestId("0");
-            ocrForm.setTimestamp(0);
-
-            signUpService.ocrImage(ocrForm);
-
-        } catch (IOException e) {
-            fail();
-        }
-    }*/
 
     @Test
     void apiTest() {
@@ -155,6 +110,23 @@ class SignUpServiceTest {
         MockMultipartFile file = new MockMultipartFile("file", "hello.txt", MediaType.TEXT_PLAIN_VALUE, "Hello, World!".getBytes(StandardCharsets.UTF_8));
 
         MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
+
+    @Test
+    void enrollStudent(){
+        SignUpForm signUpForm = new SignUpForm();
+        signUpForm.setStudNo((long)201713883);
+        signUpForm.setDepartment("컴퓨터공학부");
+        signUpForm.setEmail("ruldarm00@kyonggi.ac.kr");
+        signUpForm.setName("신현호");
+        signUpForm.setPassword("qlalfqjsgh");
+
+        try {
+            Student student = signUpService.enrollClient(signUpForm).get();
+            assertThat(student.getStudNo()).isEqualTo(201713883);
+        } catch (Exception e) {
+            fail();
+        }
     }
 
 }

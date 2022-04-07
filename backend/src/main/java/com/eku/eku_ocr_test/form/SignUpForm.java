@@ -1,12 +1,14 @@
 package com.eku.eku_ocr_test.form;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+/**
+ * 회원가입시에 사용되는 Form 객체
+ */
+@Data
 public class SignUpForm {
     private Long studNo;
+    private String password;
     private String name;
     private String department;
     private String email;

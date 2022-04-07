@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * ocr 리퀘스트에 포함되는 json object
+ */
 @Builder
 @Data
 @AllArgsConstructor

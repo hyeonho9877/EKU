@@ -1,29 +1,36 @@
 package com.eku.eku_ocr_test.service;
 
-import com.eku.eku_ocr_test.callbacks.OcrCallBack;
 import com.eku.eku_ocr_test.config.CustomProperty;
 import com.eku.eku_ocr_test.domain.MappingKey;
 import com.eku.eku_ocr_test.domain.Student;
+import com.eku.eku_ocr_test.exceptions.NoSuchAuthKeyException;
+import com.eku.eku_ocr_test.exceptions.NoSuchStudentException;
 import com.eku.eku_ocr_test.form.*;
 import com.eku.eku_ocr_test.repository.MappingKeyRepository;
 import com.eku.eku_ocr_test.repository.StudentRepository;
 import com.eku.eku_ocr_test.secure.KeyGen;
+import com.eku.eku_ocr_test.secure.SecurityManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -36,27 +43,42 @@ public class SignUpService {
     private final StudentRepository studentRepository;
     private final MappingKeyRepository mappingKeyRepository;
     private final WebClient webClient;
+    private final SecurityManager securityManager;
     private final String upDir = "d:\\dir\\";
 
-    public SignUpService(CustomProperty customProperty, StudentRepository studentRepository, MappingKeyRepository mappingKeyRepository, WebClient webClient) {
+    public SignUpService(CustomProperty customProperty, StudentRepository studentRepository, MappingKeyRepository mappingKeyRepository, WebClient webClient, SecurityManager securityManager) {
         this.customProperty = customProperty;
         this.studentRepository = studentRepository;
         this.mappingKeyRepository = mappingKeyRepository;
         this.webClient = webClient;
+        this.securityManager = securityManager;
     }
 
     /**
      * 특정 학생에 대한 데이터를 DB에 저장하고 1대1로 매핑되는 키를 발행하여 다른 DB에 저장하는 메소드
      *
-     * @param student 대상 학생
+     * @param form 대상 학생의 정보가 담긴 폼
      * @return 정상적인 종료시 Optional<Student> 객체를 반환, 반대의 경우 Optional.empty() 반환
      */
-    public Optional<Student> enrollClient(Student student) {
+    public Optional<Student> enrollClient(SignUpForm form) {
         try {
-            studentRepository.save(student);
+            byte[] encryptedPasswordBytes = securityManager.encryptWithPrefixIV(form.getPassword().getBytes(StandardCharsets.UTF_8), KeyGen.getKeyFromPassword(form.getPassword(), form.getName()), KeyGen.generateGCM().getIV());
+            System.out.println(Arrays.toString(encryptedPasswordBytes));
+            Student student = Student.builder()
+                    .studNo(form.getStudNo())
+                    .authenticated(false)
+                    .password(Base64.getEncoder().encodeToString(encryptedPasswordBytes))
+                    .email(form.getEmail())
+                    .department(form.getDepartment())
+                    .name(form.getName())
+                    .salt(form.getName())
+                    .build();
+
+            Student result = studentRepository.save(student);
             this.enrollMappingKey(student);
-            return Optional.of(student);
-        } catch (IllegalArgumentException | NoSuchAlgorithmException e) {
+            return Optional.of(result);
+        } catch (IllegalArgumentException | InvalidKeySpecException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException | InvalidKeyException | InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
             return Optional.empty();
         }
     }
@@ -113,30 +135,27 @@ public class SignUpService {
     public boolean authEmail(String key) {
         try {
             Long studNo = mappingKeyRepository.findById(key)
-                    .orElseThrow()
+                    .orElseThrow(NoSuchAuthKeyException::new)
                     .getStudent()
                     .getStudNo();
 
             Student student = studentRepository.findById(studNo)
-                    .orElseThrow();
+                    .orElseThrow(NoSuchStudentException::new);
 
             student.setAuthenticated(true);
             studentRepository.save(student);
             return true;
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchStudentException| NoSuchAuthKeyException| NoSuchElementException e) {
             return false;
         }
     }
 
-    public void ocrImage(OcrForm form, MultipartFile img, OcrCallBack callBack) {
+    public OcrResponseForm ocrImage(OcrForm form, MultipartFile img) {
         try {
             Path tmp = Files.createTempDirectory("tmp");
-            System.out.println(tmp.toString());
-            System.out.println(Files.exists(tmp.toAbsolutePath()));
 
             String imgName = img.getOriginalFilename();
-            String imgFullPath = tmp+"\\"+imgName;
-            System.out.println(imgFullPath);
+            String imgFullPath = tmp + "\\" + imgName;
             File imgFile = new File(imgFullPath);
             img.transferTo(imgFile);
 
@@ -155,93 +174,25 @@ public class SignUpService {
             builder.part("file", new FileSystemResource(imgFile)).header("Content-Disposition", imageHeader);
             builder.part("message", requestForm.toString()).header("Content-Disposition", jsonHeader);
 
-            webClient
+            return webClient
                     .post()
                     .header(customProperty.getOcrKeyHeader(), customProperty.getOcrKey())
                     .body(BodyInserters.fromMultipartData(builder.build()))
                     .retrieve()
                     .bodyToMono(OcrResponseForm.class)
-                    .subscribe(System.out::println);
+                    .onErrorStop()
+                    .block();
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
-    public void apiTest() {
-        AtomicBoolean taskDone = new AtomicBoolean(false);
-        WebClient client = webClient
-                .mutate()
-                .baseUrl(customProperty.getTestURL())
-                .build();
-        client
-                .get()
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .bodyToMono(OcrResponseForm.class)
-                .subscribe(result ->
-                        {
-                            System.out.println(result);
-                            taskDone.set(true);
-                        }
-                );
-
-        while (!taskDone.get()) {
-
-        }
-    }
-
-    public void comApiTest() {
-        AtomicBoolean taskDone = new AtomicBoolean(false);
-        WebClient client = webClient
-                .mutate()
-                .baseUrl(customProperty.getCompTestURL())
-                .build();
-        client
-                .get()
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .bodyToMono(OcrResponseForm.class)
-                .subscribe(result ->
-                        {
-                            System.out.println(result);
-                            taskDone.set(true);
-                        }
-                );
-
-        while (!taskDone.get()) {
-
-        }
-    }
-
-    /*public void compCompsApiTest(OcrForm form, MultipartFile img, OcrCallBack callBack) throws IOException {
-        OcrImagesData imagesData = OcrImagesData.builder()
-                .format(form.getFormat())
-                .name(form.getName())
-                .data(form.getData())
-                .build();
-        ClientOcrRequestForm requestForm = ClientOcrRequestForm.builder()
-                .images(Collections.singletonList(imagesData))
-                .requestId(form.getName())
-                .build();
-
-        webClient
-                .post()
-                .header(customProperty.getOcrKeyHeader(), customProperty.getOcrKey())
-                .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(new ObjectMapper().writeValueAsString(requestForm))
-                .retrieve()
-                .bodyToMono(OcrResponseForm.class)
-                .subscribe(
-                        result -> {
-                            try {
-                                callBack.onSuccess(result);
-                            } catch (IOException e) {
-                            }
-                        }
-                );
-
-    }*/
-
+    /**
+     * 네이버에서 받은 OCR 결과를 이름, 학과, 학번으로 파싱하는 메소드
+     * @param responseForm OCR 결과를 담고 있는 Form 객체
+     * @return 파싱된 String
+     */
     public String parseOcrResponse(OcrResponseForm responseForm) {
         Pattern namePattern = Pattern.compile("^[김|신|박|이|정|고|방|][가-힣]{1,4}");
         Pattern deptPattern = Pattern.compile("[가-힣]{4,8}학[과|부]$");

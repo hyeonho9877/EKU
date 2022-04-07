@@ -19,7 +19,7 @@ public class MappingKey implements Serializable {
 
     // 사용자의 학번
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "no")
+    @JoinColumn(name = "stud_no")
     private Student student;
 
     // 서버가 발행한 사용자의 key

@@ -22,6 +22,10 @@ public class Student implements Serializable {
     @Id
     @Column(name = "no", nullable = false)
     private Long studNo;
+    @Column(name = "password", nullable = false)
+    private String password;
+    @Column(name = "salt", nullable = false)
+    private String salt;
     @Column(name="name", nullable = false)
     private String name;
     @Column(name = "department", nullable = false)

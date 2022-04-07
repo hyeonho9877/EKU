@@ -19,8 +19,6 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.imgscalr:imgscalr-lib:4.2'
-    implementation group: 'com.google.guava', name: 'guava', version: '11.0.2'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.6.5'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     implementation 'org.springframework.boot:spring-boot-starter-webflux:2.6.5'

@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * 네이버에 ocr 리퀘스트를 보낼 때 사용하는 Form 객체
+ */
 @Data
 @Builder
 @AllArgsConstructor

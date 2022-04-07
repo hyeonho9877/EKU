@@ -29,7 +29,7 @@ public class MailService {
      * @param email 학생의 이메일 주소
      * @return 메일을 성공적으로 발송한 경우 True를 리턴, 반대의 경우 False 리턴
      */
-    public boolean sendAuthMail(Student student, String email){
+    public void sendAuthMail(Student student, String email){
         try {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             String authKey = mappingKeyRepository.findMappingKeyByStudent(student)
@@ -41,9 +41,8 @@ public class MailService {
             mailMessage.setText("인증 링크 : " + authLink);
             mailSender.send(mailMessage);
         } catch (MailException exception) {
-            return false;
+            exception.printStackTrace();
         }
-        return true;
     }
 
     /**
