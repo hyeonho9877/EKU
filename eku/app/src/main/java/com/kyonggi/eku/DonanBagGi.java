@@ -224,6 +224,7 @@ public class DonanBagGi extends AppCompatActivity {
      * */
     @Override
     protected void onDestroy() {
+
         super.onDestroy();
 
         //stop scan
