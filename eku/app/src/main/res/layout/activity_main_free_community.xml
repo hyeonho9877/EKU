@@ -2,17 +2,17 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawerLayout"
+    android:id="@+id/FreeCommunity_drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainCommunity">
+    tools:context=".MainFreeCommunity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <Spinner
-            android:id="@+id/community_Spinner"
+            android:id="@+id/FreeCommunity_Spinner"
             android:layout_width="358dp"
             android:layout_height="41dp"
             android:background="#FFFFFF"
@@ -21,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/community_Menu"
+            android:id="@+id/FreeCommunity_Menu"
             android:layout_width="50dp"
             android:layout_height="42dp"
             android:backgroundTint="#F6A788"
@@ -30,53 +30,51 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/announce_button"
+            android:id="@+id/FreeCommunity_announce_button"
             android:layout_width="205dp"
             android:layout_height="wrap_content"
-            android:text="공지"
+            android:hint="공지"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/community_Spinner" />
+            app:layout_constraintTop_toBottomOf="@+id/FreeCommunity_Spinner" />
 
         <Button
-            android:id="@+id/free_button"
+            android:id="@+id/FreeCommunity_free_button"
             android:layout_width="205dp"
             android:layout_height="wrap_content"
-            android:hint="자유"
+            android:text="자유"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/community_Spinner" />
+            app:layout_constraintTop_toBottomOf="@+id/FreeCommunity_Spinner" />
 
         <EditText
-            android:id="@+id/community_Searchtext"
+            android:id="@+id/FreeCommunity_Searchtext"
             android:layout_width="360dp"
             android:layout_height="50dp"
             android:hint="검색"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/announce_button" />
+            app:layout_constraintTop_toBottomOf="@+id/FreeCommunity_announce_button" />
 
         <ImageButton
-            android:id="@+id/community_Search"
+            android:id="@+id/FreeCommunity_Search"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="centerInside"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/community_Searchtext"
-            app:layout_constraintTop_toBottomOf="@+id/free_button"
+            app:layout_constraintStart_toEndOf="@+id/FreeCommunity_Searchtext"
+            app:layout_constraintTop_toBottomOf="@+id/FreeCommunity_free_button"
             app:srcCompat="@drawable/search"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <ScrollView
-            android:id="@+id/community_ScrollView"
-            android:layout_width="410dp"
+            android:id="@+id/FreeCommunity_ScrollView"
+            android:layout_width="match_parent"
             android:layout_height="590dp"
-            android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/community_Searchtext"
+            app:layout_constraintTop_toBottomOf="@+id/FreeCommunity_Searchtext"
             tools:ignore="SpeakableTextPresentCheck">
 
             <LinearLayout
-                android:id="@+id/community_scroll"
+                android:id="@+id/FreeCommunity_scroll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -85,7 +83,7 @@
         </ScrollView>
 
         <ImageButton
-            android:id="@+id/community_Write"
+            android:id="@+id/FreeCommunity_Write"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginEnd="15dp"
@@ -101,7 +99,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigationView"
+        android:id="@+id/FreeCommunity_navigationView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:headerLayout="@layout/navigation_header"

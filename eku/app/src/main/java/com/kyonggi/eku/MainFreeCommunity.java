@@ -18,25 +18,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class MainCommunity extends AppCompatActivity {
-
+public class MainFreeCommunity extends AppCompatActivity {
     String[] items = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_community);
+        setContentView(R.layout.activity_main_free_community);
 
-        final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
+        final DrawerLayout drawerLayout = findViewById(R.id.FreeCommunity_drawerLayout);
 
-        findViewById(R.id.community_Menu).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.FreeCommunity_Menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -44,10 +42,10 @@ public class MainCommunity extends AppCompatActivity {
             }
         });
 
-        NavigationView navigationView = findViewById(R.id.navigationView);
+        NavigationView navigationView = findViewById(R.id.FreeCommunity_navigationView);
         navigationView.setItemIconTintList(null);
 
-        Spinner spinner = (Spinner)findViewById(R.id.community_Spinner);
+        Spinner spinner = (Spinner)findViewById(R.id.FreeCommunity_Spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item,items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -64,27 +62,17 @@ public class MainCommunity extends AppCompatActivity {
                 //없음
             }
         });
-        ImageButton imageButton = (ImageButton)findViewById(R.id.community_Write);
+        ImageButton imageButton = (ImageButton)findViewById(R.id.FreeCommunity_Write);
         imageButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), WriteAnnounce.class);
+                Intent intent = new Intent(getApplicationContext(), WriteFreeCommunity.class);
                 startActivity(intent);
                 finish();
             }
         });
 
-        Button moveButton = (Button)findViewById(R.id.free_button);
-        moveButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainFreeCommunity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        EditText searchText = (EditText)findViewById(R.id.community_Searchtext);
+        EditText searchText = (EditText)findViewById(R.id.FreeCommunity_Searchtext);
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int s, int s1, int s2) {
@@ -93,18 +81,17 @@ public class MainCommunity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int s, int s1, int s2) {
-                LinearLayout sc = (LinearLayout)findViewById(R.id.community_scroll);
+                LinearLayout sc = (LinearLayout)findViewById(R.id.FreeCommunity_scroll);
                 sc.removeAllViews();
                 ///바꾸셈
-                int count = PreferenceManagers.getInt(getApplicationContext(), "announce_count");
-
+                int count = PreferenceManagers.getInt(getApplicationContext(), "FreeCommunity_count");
                 for (int i = count; i >= 1; i--) {
-                    if (PreferenceManagers.getString(getApplicationContext(), "announce_title" + String.valueOf(i)).contains(charSequence)) {
+                    if (PreferenceManagers.getString(getApplicationContext(), "FreeCommunity_title" + String.valueOf(i)).contains(charSequence)) {
 
-                        String str = "announce_title" + i;
+                        String str = "FreeCommunity_title" + i;
                         String title = PreferenceManagers.getString(getApplicationContext(), str);
 
-                        str = "announce_writer" + i;
+                        str = "FreeCommunity_writer" + i;
                         String professor = PreferenceManagers.getString(getApplicationContext(), str);
 
                         ///강의동 체크
@@ -120,26 +107,36 @@ public class MainCommunity extends AppCompatActivity {
             }
         });
 
-        ImageButton imageButton1 = (ImageButton)findViewById(R.id.community_Search);
+        ImageButton imageButton1 = (ImageButton)findViewById(R.id.FreeCommunity_Search);
         imageButton1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 //?????????????????
             }
         });
+        Button moveButton = (Button)findViewById(R.id.FreeCommunity_announce_button);
+        moveButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainCommunity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         //initialize();
-        int count = PreferenceManagers.getInt(getApplicationContext(), "announce_count");
+        int count = PreferenceManagers.getInt(getApplicationContext(), "FreeCommunity_count");
         if (count==-1){
-            PreferenceManagers.setInt(getApplicationContext(), "announce_count", 0);
+            PreferenceManagers.setInt(getApplicationContext(), "FreeCommunity_count", 0);
         }
-        Toast.makeText(getApplicationContext(),"작성"+count, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"자유작성"+count, Toast.LENGTH_SHORT).show();
         if (count >0){
             for (int i = count;i>=1;i--){
-                if(!PreferenceManagers.getString(getApplicationContext(),"announce_title"+String.valueOf(i)).equals("")) {
-                    String str = "announce_title" + i;
+                if(!PreferenceManagers.getString(getApplicationContext(),"FreeCommunity_title"+String.valueOf(i)).equals("")) {
+                    String str = "FreeCommunity_title" + i;
                     String title = PreferenceManagers.getString(getApplicationContext(), str);
 
-                    str = "announce_writer" + i;
+                    str = "FreeCommunity_writer" + i;
                     String professor = PreferenceManagers.getString(getApplicationContext(), str);
 
                     write_Lecture(title, professor, i);
@@ -149,7 +146,7 @@ public class MainCommunity extends AppCompatActivity {
     }
 
     public void write_Lecture(String Title, String writer, int count){
-        LinearLayout sc = (LinearLayout)findViewById(R.id.community_scroll);
+        LinearLayout sc = (LinearLayout)findViewById(R.id.FreeCommunity_scroll);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout .setOrientation(LinearLayout.VERTICAL);
 
@@ -163,9 +160,9 @@ public class MainCommunity extends AppCompatActivity {
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),DetailAnnounce.class);
+                Intent intent = new Intent(getApplicationContext(),DetailFreeCommunity.class);
                 int Lid = view.getId();
-                intent.putExtra("announce_key",Lid);
+                intent.putExtra("FreeCommunity_key",Lid);
                 // Toast.makeText(getApplicationContext(),String.valueOf(Lid), Toast.LENGTH_SHORT).show();
                 startActivity(intent);
                 finish();;
@@ -197,14 +194,12 @@ public class MainCommunity extends AppCompatActivity {
 
     }
     public void initialize() { //초기화
-        int i = PreferenceManagers.getInt(getApplicationContext(), "announce_count");
+        int i = PreferenceManagers.getInt(getApplicationContext(), "FreeCommunity_count");
         for (int j=0;j<=i;j++){
-            PreferenceManagers.removeKey(getApplicationContext(),"announce_name"+j);
-            PreferenceManagers.removeKey(getApplicationContext(),"announce_writer"+j);
+            PreferenceManagers.removeKey(getApplicationContext(),"FreeCommunity_name"+j);
+            PreferenceManagers.removeKey(getApplicationContext(),"FreeCommunity_writer"+j);
         }
-        PreferenceManagers.setInt(getApplicationContext(), "announce_count", 0);
+        PreferenceManagers.setInt(getApplicationContext(), "FreeCommunity_count", 0);
         Toast.makeText(getApplicationContext(),"초기화 켜져있어요", Toast.LENGTH_SHORT).show();
     }
-
-
 }
