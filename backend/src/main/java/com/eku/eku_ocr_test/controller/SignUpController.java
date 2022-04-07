@@ -1,6 +1,5 @@
 package com.eku.eku_ocr_test.controller;
 
-import com.eku.eku_ocr_test.form.OcrForm;
 import com.eku.eku_ocr_test.form.OcrResponseForm;
 import com.eku.eku_ocr_test.form.SignUpForm;
 import com.eku.eku_ocr_test.service.MailService;
@@ -43,14 +42,13 @@ public class SignUpController {
 
     /**
      * 카드형 학생증, 모바일 학생증에 대한 ocr 서비스 요청
-     * @param form
      * @param img ocr을 수행해야하는 이미지
      * @return 성공시 OcrResponseForm 객체를 담은 ok, 아닐 경우 internalService error 리턴
      */
     @PostMapping("/signUp/ocr")
-    public ResponseEntity<?> ocr(@RequestPart OcrForm form, @RequestPart MultipartFile img) {
+    public ResponseEntity<?> ocr(@RequestPart MultipartFile img) {
         try {
-            OcrResponseForm response = signUpService.ocrImage(form, img);
+            OcrResponseForm response = signUpService.ocrImage(img);
             System.out.println(response);
             String clientResponse = signUpService.parseOcrResponse(response);
             System.out.println(clientResponse);

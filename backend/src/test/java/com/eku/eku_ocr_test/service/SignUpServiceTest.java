@@ -41,24 +41,6 @@ class SignUpServiceTest {
     private ApplicationContext applicationContext;
 
     @Test
-    void apiTest() {
-        try {
-            signUpService.apiTest();
-        } catch (Exception e) {
-            fail();
-        }
-    }
-
-    @Test
-    void comApiTest() {
-        try {
-            signUpService.comApiTest();
-        } catch (Exception e) {
-            fail();
-        }
-    }
-
-    @Test
     void enrollKeyMemberTest() {
         Student student = Student.builder()
                 .studNo((long) 201713883)

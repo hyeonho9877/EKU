@@ -16,4 +16,5 @@ public class CommentForm {
     @DateTimeFormat(pattern = "YYYY-MM-dd HH:mm")
     private LocalDateTime time;
     private String writer;
+    private long articleID;
 }

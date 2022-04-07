@@ -150,27 +150,28 @@ public class SignUpService {
         }
     }
 
-    public OcrResponseForm ocrImage(OcrForm form, MultipartFile img) {
+    public OcrResponseForm ocrImage(MultipartFile img) {
         try {
             Path tmp = Files.createTempDirectory("tmp");
 
             String imgName = img.getOriginalFilename();
+            assert imgName != null;
+            String[] split = imgName.split("\\.");
             String imgFullPath = tmp + "\\" + imgName;
             File imgFile = new File(imgFullPath);
             img.transferTo(imgFile);
 
             ClientOcrRequestForm requestForm = ClientOcrRequestForm.builder()
                     .version("V2")
-                    .requestId(form.getName())
+                    .requestId(split[0])
                     .timestamp(0)
-                    .images(Collections.singletonList(OcrImagesData.builder().format("jpg").name(form.getName()).build()))
+                    .images(Collections.singletonList(OcrImagesData.builder().format(split[1]).name(split[0]).build()))
                     .build();
 
             MultipartBodyBuilder builder = new MultipartBodyBuilder();
             String imageHeader = String.format("form-data; name=%s; filename=%s", "file", imgFullPath);
             String jsonHeader = String.format("form-data; name=%s;", "message");
 
-            System.out.println(requestForm);
             builder.part("file", new FileSystemResource(imgFile)).header("Content-Disposition", imageHeader);
             builder.part("message", requestForm.toString()).header("Content-Disposition", jsonHeader);
 

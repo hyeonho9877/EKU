@@ -1,6 +1,7 @@
 package com.eku.eku_ocr_test;
 
 import com.eku.eku_ocr_test.config.CustomProperty;
+import com.eku.eku_ocr_test.domain.Grade;
 import com.eku.eku_ocr_test.secure.KeyGen;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -50,4 +51,11 @@ class EkuOcrTestApplicationTests {
         }
     }
 
+    @Test
+    void enumToCodeTest(){
+        for(Grade g: Grade.values()){
+            System.out.println(g.getScore());
+            System.out.println(g.name());
+        }
+    }
 }
