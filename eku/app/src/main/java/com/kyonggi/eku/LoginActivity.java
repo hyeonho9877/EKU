@@ -73,8 +73,8 @@ public class LoginActivity extends AppCompatActivity {
                                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 
                                 // Post 파라미터
-                                String params = "param=" + std_email
-                                        + "&param2=" + std_pw;
+                                String params = "email=" + std_email
+                                        + "&password=" + std_pw;
                                 // 결과값 저장 문자열
                                 final StringBuilder sb = new StringBuilder();
                                 // 연결되면

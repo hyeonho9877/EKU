@@ -43,7 +43,7 @@ public class SignInfoActivity extends AppCompatActivity {
                 String user_pw = user_sign_pw.getText().toString();
                 String user_name = user_sign_name.getText().toString();
                 String user_major = user_sign_major.getText().toString();
-                String user_no = user_sign_no.getText().toString();
+                int user_no = Integer.parseInt(String.valueOf(user_sign_no));
 
 
                     int status = NetworkStatus.getConnectivityStatus(getApplicationContext());
@@ -66,11 +66,11 @@ public class SignInfoActivity extends AppCompatActivity {
                                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                                     // Post 파라미터
-                                    String params = "param=" + user_email
-                                            + "&param2=" + user_pw
-                                            + "&param3=" + user_name
-                                            + "&param4=" + user_no
-                                            + "&param5=" + user_major;
+                                    String params = "email=" + user_email
+                                            + "&password=" + user_pw
+                                            + "&name=" + user_name
+                                            + "&studNo=" + user_no
+                                            + "&department=" + user_major;
                                     // 결과값 저장 문자열
                                     final StringBuilder sb = new StringBuilder();
                                     // 연결되면
@@ -80,7 +80,7 @@ public class SignInfoActivity extends AppCompatActivity {
                                         conn.setRequestProperty("Accept", "application/json");
                                         conn.setConnectTimeout(10000);
                                         // POST 요청방식
-                                        conn.setRequestMethod("GET");
+                                        conn.setRequestMethod("POST");
                                         // 포스트 파라미터 전달
                                         conn.getOutputStream().write(params.getBytes("utf-8"));
                                         // url에 접속 성공하면 (200)
