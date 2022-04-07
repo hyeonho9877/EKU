@@ -82,4 +82,3 @@ public class PhotoServeActivity extends AppCompatActivity {
 
     }
 }
-
