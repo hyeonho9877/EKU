@@ -45,6 +45,8 @@ public class WriteAnnounce extends AppCompatActivity {
                 int count = PreferenceManagers.getInt(getApplicationContext(), "announce_count");
                 // Toast.makeText(getApplicationContext(),String.valueOf(count), Toast.LENGTH_SHORT).show();
                 count++;
+                PreferenceManagers.setInt(getApplicationContext(),"announce_count", count);
+
 
                 String title = "announce_title"+count;
                 EditText text = findViewById(R.id.write_announce_title);
@@ -112,7 +114,7 @@ public class WriteAnnounce extends AppCompatActivity {
         closeButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(),MainCommunity.class);
                 startActivity(intent);
                 finish();
             }

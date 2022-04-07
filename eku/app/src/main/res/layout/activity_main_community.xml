@@ -66,12 +66,11 @@
 
         <ScrollView
             android:id="@+id/community_ScrollView"
-            android:layout_width="match_parent"
+            android:layout_width="410dp"
             android:layout_height="590dp"
-            android:layout_marginTop="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/community_Searchtext"
             tools:ignore="SpeakableTextPresentCheck">

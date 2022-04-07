@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,10 +39,11 @@ public class WriteFreeCommunity extends AppCompatActivity {
         saveButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainCommunity.class);
+                Intent intent = new Intent(getApplicationContext(), MainFreeCommunity.class);
                 int count = PreferenceManagers.getInt(getApplicationContext(), "FreeCommunity_count");
                 // Toast.makeText(getApplicationContext(),String.valueOf(count), Toast.LENGTH_SHORT).show();
                 count++;
+                PreferenceManagers.setInt(getApplicationContext(),"FreeCommunity_count", count);
 
                 String title = "FreeCommunity_title"+count;
                 EditText text = findViewById(R.id.write_free_title);
@@ -92,6 +94,8 @@ public class WriteFreeCommunity extends AppCompatActivity {
 
 
                 String buildingtext = "FreeCommunity_building"+count;
+                Toast.makeText(getApplicationContext(),buildingtext, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),building, Toast.LENGTH_SHORT).show();
                 PreferenceManagers.setString(getApplicationContext(), building, buildingtext);
 
                 long now = System.currentTimeMillis();
@@ -109,7 +113,7 @@ public class WriteFreeCommunity extends AppCompatActivity {
         closeButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(),MainFreeCommunity.class);
                 startActivity(intent);
                 finish();
             }

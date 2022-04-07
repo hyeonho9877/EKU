@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -113,11 +114,22 @@ public class MainFreeCommunity extends AppCompatActivity {
                 //?????????????????
             }
         });
+        Button moveButton = (Button)findViewById(R.id.FreeCommunity_announce_button);
+        moveButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainCommunity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         //initialize();
         int count = PreferenceManagers.getInt(getApplicationContext(), "FreeCommunity_count");
         if (count==-1){
             PreferenceManagers.setInt(getApplicationContext(), "FreeCommunity_count", 0);
         }
+        Toast.makeText(getApplicationContext(),"자유작성"+count, Toast.LENGTH_SHORT).show();
         if (count >0){
             for (int i = count;i>=1;i--){
                 if(!PreferenceManagers.getString(getApplicationContext(),"FreeCommunity_title"+String.valueOf(i)).equals("")) {
@@ -148,7 +160,7 @@ public class MainFreeCommunity extends AppCompatActivity {
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),DetailAnnounce.class);
+                Intent intent = new Intent(getApplicationContext(),DetailFreeCommunity.class);
                 int Lid = view.getId();
                 intent.putExtra("FreeCommunity_key",Lid);
                 // Toast.makeText(getApplicationContext(),String.valueOf(Lid), Toast.LENGTH_SHORT).show();

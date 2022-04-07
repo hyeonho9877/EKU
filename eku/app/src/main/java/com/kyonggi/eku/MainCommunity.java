@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -73,6 +74,16 @@ public class MainCommunity extends AppCompatActivity {
             }
         });
 
+        Button moveButton = (Button)findViewById(R.id.free_button);
+        moveButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainFreeCommunity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         EditText searchText = (EditText)findViewById(R.id.community_Searchtext);
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -86,6 +97,7 @@ public class MainCommunity extends AppCompatActivity {
                 sc.removeAllViews();
                 ///바꾸셈
                 int count = PreferenceManagers.getInt(getApplicationContext(), "announce_count");
+
                 for (int i = count; i >= 1; i--) {
                     if (PreferenceManagers.getString(getApplicationContext(), "announce_title" + String.valueOf(i)).contains(charSequence)) {
 
@@ -120,6 +132,7 @@ public class MainCommunity extends AppCompatActivity {
         if (count==-1){
             PreferenceManagers.setInt(getApplicationContext(), "announce_count", 0);
         }
+        Toast.makeText(getApplicationContext(),"작성"+count, Toast.LENGTH_SHORT).show();
         if (count >0){
             for (int i = count;i>=1;i--){
                 if(!PreferenceManagers.getString(getApplicationContext(),"announce_title"+String.valueOf(i)).equals("")) {
@@ -192,4 +205,6 @@ public class MainCommunity extends AppCompatActivity {
         PreferenceManagers.setInt(getApplicationContext(), "announce_count", 0);
         Toast.makeText(getApplicationContext(),"초기화 켜져있어요", Toast.LENGTH_SHORT).show();
     }
+
+
 }

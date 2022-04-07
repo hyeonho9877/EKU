@@ -49,7 +49,8 @@
         android:theme="@style/Theme.Eku">
         <activity
             android:name=".DetailFreeCommunity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".WriteFreeCommunity"
             android:exported="false" />

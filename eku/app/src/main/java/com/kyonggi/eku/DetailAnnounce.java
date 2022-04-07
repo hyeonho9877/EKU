@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -75,15 +76,39 @@ public class DetailAnnounce extends AppCompatActivity {
         }
         textView.setText(buildingtemp);
 
-        Button closeButton = (Button) findViewById(R.id.detail_announce_close);
+        LinearLayout buttonLayout =  (LinearLayout) findViewById(R.id.detail_announce_button);
+        buttonLayout.setGravity(Gravity.CENTER);
+        if (PreferenceManagers.getString(getApplicationContext(), "announce_writer"+Lid).equals("고일석")){
+            Button modifyButton = new Button(getApplicationContext());
+            modifyButton.setText("수정");
+            modifyButton.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getApplicationContext(),"수정", Toast.LENGTH_SHORT).show();
+                }
+            });
+            Button deleteButton = new Button(getApplicationContext());
+            deleteButton.setText("삭제");
+            deleteButton.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getApplicationContext(),"삭제", Toast.LENGTH_SHORT).show();
+                }
+            });
+            buttonLayout.addView(modifyButton);
+            buttonLayout.addView(deleteButton);
+        }
+        Button closeButton = new Button(getApplicationContext());
+        closeButton.setText("닫기");
         closeButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(),MainCommunity.class);
                 startActivity(intent);
                 finish();
             }
         });
+        buttonLayout.addView(closeButton);
 
     }
 
