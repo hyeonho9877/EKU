@@ -58,6 +58,10 @@
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3daedb8d89d10c9b0e54fb3f7f3d849a2fb85a19
     <application
         android:usesCleartextTraffic='true'
         android:allowBackup="true"
@@ -72,8 +76,14 @@
         <activity
             android:name=".LoginActivity"
             android:parentActivityName=".LoginActivity"
+<<<<<<< HEAD
             android:exported="true">
 
+=======
+            android:exported="true"
+            android:name=".PhotoServeActivity"
+            android:exported="true">
+>>>>>>> 3daedb8d89d10c9b0e54fb3f7f3d849a2fb85a19
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -95,6 +105,9 @@
         <!--
         <activity
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3daedb8d89d10c9b0e54fb3f7f3d849a2fb85a19
             android:name=".LoginActivity"
             android:exported="true">
         </activity>
@@ -105,12 +118,19 @@
             android:exported="true">
 
         </activity>
+<<<<<<< HEAD
 
             <!--
         <activity
             android:name=".MainActivity"
             android:exported="true"></activity>
             -->
+=======
+        
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"></activity>
+>>>>>>> 3daedb8d89d10c9b0e54fb3f7f3d849a2fb85a19
         <activity
             android:name=".MainBoard"
             android:exported="true"
