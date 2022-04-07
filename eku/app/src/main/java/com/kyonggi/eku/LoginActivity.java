@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void run() {
                             try {
                                 //  String page = "http://10.0.2.2:8080/JSPBook/ch05/response4.jsp";
-                                String page= "http://49.174.169.48:13883";
+                                String page= "http://49.174.169.48:13883/signIn";
                                 // URL 객체 생성
                                 URL url = new URL(page);
                                 // 연결 객체 생성
@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                                     conn.setRequestProperty("Accept", "application/json");
                                     conn.setConnectTimeout(10000);
                                     // POST 요청방식
-                                    conn.setRequestMethod("GET");
+                                    conn.setRequestMethod("POST");
                                     // 포스트 파라미터 전달
                                     conn.getOutputStream().write(params.getBytes("utf-8"));
                                     // url에 접속 성공하면 (200)
@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "인터넷 연결을 확인해주세요.", Toast.LENGTH_SHORT).show();
                 }
 
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainBoard.class);
                 startActivity(intent);
             }
         });
