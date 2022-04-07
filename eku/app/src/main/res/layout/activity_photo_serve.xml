@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_x="316dp"
         android:layout_y="682dp"
-        android:text="이미지 선택"
+        android:text="카메라켜기"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="667dp" />
@@ -44,13 +44,4 @@
         tools:layout_editor_absoluteY="13dp"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="664dp"
-        android:text="Button"
-        app:layout_constraintStart_toEndOf="@+id/btnImageSelection"
-        app:layout_constraintTop_toTopOf="@+id/imgVwSelected" />
 </androidx.constraintlayout.widget.ConstraintLayout>
