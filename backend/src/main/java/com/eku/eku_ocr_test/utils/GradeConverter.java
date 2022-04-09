@@ -4,6 +4,10 @@ import com.eku.eku_ocr_test.domain.Grade;
 
 import javax.persistence.AttributeConverter;
 
+/**
+ * Grade를 DB에 저장하거나 DB에서 읽어올 때 매핑해주는 클래스
+ * 예) DB에는 4.5라고 저장 돼 있으면 이를 자바 Enum 클래스인 Grade의 AP로 매핑시켜줌
+ */
 public class GradeConverter implements AttributeConverter<Grade, Double> {
 
     @Override

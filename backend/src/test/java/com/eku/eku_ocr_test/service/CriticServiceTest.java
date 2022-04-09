@@ -1,6 +1,7 @@
 package com.eku.eku_ocr_test.service;
 
 import com.eku.eku_ocr_test.domain.Critic;
+import com.eku.eku_ocr_test.domain.CriticResponse;
 import com.eku.eku_ocr_test.domain.Grade;
 import com.eku.eku_ocr_test.exceptions.NoSuchStudentException;
 import com.eku.eku_ocr_test.form.CriticForm;
@@ -37,14 +38,13 @@ public class CriticServiceTest {
         criticForm.setGrade(Grade.A);
         criticForm.setLectureName("소프트웨어 공학");
         criticForm.setProfName("권기현");
-        Critic critic = criticService.applyCritic(criticForm);
+        CriticResponse response = criticService.applyCritic(criticForm);
 
         SoftAssertions soft = new SoftAssertions();
-        soft.assertThat(critic.getContent()).isEqualTo(criticForm.getContent());
-        soft.assertThat(critic.getLectureName()).isEqualTo(criticForm.getLectureName());
-        soft.assertThat(critic.getProfName()).isEqualTo(criticForm.getProfName());
-        soft.assertThat(critic.getGrade()).isEqualTo(criticForm.getGrade());
-        soft.assertThat(critic.getWriter().getEmail()).isEqualTo(criticForm.getEmail());
+        soft.assertThat(response.getContent()).isEqualTo(criticForm.getContent());
+        soft.assertThat(response.getLectureName()).isEqualTo(criticForm.getLectureName());
+        soft.assertThat(response.getProfName()).isEqualTo(criticForm.getProfName());
+        soft.assertThat(response.getGrade()).isEqualTo(criticForm.getGrade());
         soft.assertAll();
     }
 

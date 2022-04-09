@@ -44,7 +44,6 @@ public class SignUpService {
     private final MappingKeyRepository mappingKeyRepository;
     private final WebClient webClient;
     private final SecurityManager securityManager;
-    private final String upDir = "d:\\dir\\";
 
     public SignUpService(CustomProperty customProperty, StudentRepository studentRepository, MappingKeyRepository mappingKeyRepository, WebClient webClient, SecurityManager securityManager) {
         this.customProperty = customProperty;
@@ -63,7 +62,6 @@ public class SignUpService {
     public Optional<Student> enrollClient(SignUpForm form) {
         try {
             byte[] encryptedPasswordBytes = securityManager.encryptWithPrefixIV(form.getPassword().getBytes(StandardCharsets.UTF_8), KeyGen.getKeyFromPassword(form.getPassword(), form.getName()), KeyGen.generateGCM().getIV());
-            System.out.println(Arrays.toString(encryptedPasswordBytes));
             Student student = Student.builder()
                     .studNo(form.getStudNo())
                     .authenticated(false)
@@ -150,6 +148,11 @@ public class SignUpService {
         }
     }
 
+    /**
+     * 네이버에 OCR 이미지 요청함
+     * @param img 요청하려는 IMG 파일
+     * @return OCR을 수행한 결과
+     */
     public OcrResponseForm ocrImage(MultipartFile img) {
         try {
             Path tmp = Files.createTempDirectory("tmp");

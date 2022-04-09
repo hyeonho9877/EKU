@@ -5,6 +5,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * 강의평가 DB 저장 객체
+ */
 @Entity
 @Getter
 @Setter

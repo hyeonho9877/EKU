@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
+
 
 /**
  * 회원가입 요청에 응답하는 컨트롤러
@@ -30,7 +33,13 @@ public class SignUpController {
      * @return DB에 성공적으로 데이터가 저장되고 이메일이 발송되었을 경우 True를 리턴하며, 그렇지 못할 경우 False를 리턴한다.
      */
     @PostMapping("/signUp")
-    public ResponseEntity<?> signUp(@RequestBody SignUpForm form) {
+    public ResponseEntity<?> signUp(@RequestBody SignUpForm form, HttpServletRequest request) {
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            System.out.println(headerName + " : " + request.getHeader(headerName));
+            System.out.println(form);
+        }
         if (mailService.validateEmail(form.getEmail())) {
             signUpService.enrollClient(form)
                     .ifPresent(c -> {
@@ -46,8 +55,13 @@ public class SignUpController {
      * @return 성공시 OcrResponseForm 객체를 담은 ok, 아닐 경우 internalService error 리턴
      */
     @PostMapping("/signUp/ocr")
-    public ResponseEntity<?> ocr(@RequestPart MultipartFile img) {
+    public ResponseEntity<?> ocr(@RequestPart MultipartFile img, HttpServletRequest request) {
         try {
+            Enumeration<String> headerNames = request.getHeaderNames();
+            while (headerNames.hasMoreElements()) {
+                String s = headerNames.nextElement();
+                System.out.println(s + " : " + request.getHeader(s));
+            }
             OcrResponseForm response = signUpService.ocrImage(img);
             System.out.println(response);
             String clientResponse = signUpService.parseOcrResponse(response);
