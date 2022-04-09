@@ -51,7 +51,7 @@ public class MainFreeCommunity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.lectureMain) {
-                    Intent intent = new Intent(getApplicationContext(), LecureMain.class);
+                    Intent intent = new Intent(getApplicationContext(), LectureMain.class);
                     startActivity(intent);
                     finish();
                 }

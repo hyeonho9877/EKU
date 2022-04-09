@@ -4,12 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".LecureMain">
+    android:background="@color/white">
 
 
     <Spinner
-        android:id="@+id/LectureMain_spinner"
+        android:id="@+id/Lecture_Main_spinner"
         android:layout_width="415dp"
         android:layout_height="48dp"
         android:background="#FFFFFF"
@@ -21,28 +20,28 @@
 
 
     <EditText
-        android:id="@+id/LectureMain_searchtext"
+        android:id="@+id/Lecture_Main_searchtext"
         android:layout_width="360dp"
         android:layout_height="50dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:hint="검색"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LectureMain_spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/Lecture_Main_spinner" />
 
     <ScrollView
-        android:id="@+id/LectureMain_ScrollView"
+        android:id="@+id/Lecture_Main_ScrollView"
         android:layout_width="match_parent"
         android:layout_height="617dp"
         android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LectureMain_searchtext"
+        app:layout_constraintTop_toBottomOf="@+id/Lecture_Main_searchtext"
         tools:ignore="SpeakableTextPresentCheck">
 
         <LinearLayout
-            android:id="@+id/LectureMain_scroll"
+            android:id="@+id/Lecture_Main_scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -51,7 +50,7 @@
     </ScrollView>
 
     <ImageButton
-        android:id="@+id/LectureMain_WriteButton"
+        android:id="@+id/Lecture_Main_WriteButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="15dp"
@@ -64,15 +63,15 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageButton
-        android:id="@+id/LectureMain_searchButton"
+        android:id="@+id/Lecture_Main_searchButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="4dp"
         android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/LectureMain_searchtext"
-        app:layout_constraintTop_toBottomOf="@+id/LectureMain_spinner"
+        app:layout_constraintStart_toEndOf="@+id/Lecture_Main_searchtext"
+        app:layout_constraintTop_toBottomOf="@+id/Lecture_Main_spinner"
         app:srcCompat="@drawable/search"
         tools:ignore="SpeakableTextPresentCheck" />
 

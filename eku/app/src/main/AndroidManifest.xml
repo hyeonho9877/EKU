@@ -53,13 +53,13 @@
         android:theme="@style/Theme.Eku"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".LectureMain"
+            android:exported="true" />
+        <activity
             android:name=".LectureWrite"
             android:exported="false" />
         <activity
             android:name=".LectureDetail"
-            android:exported="false" />
-        <activity
-            android:name=".LecureMain"
             android:exported="false" />
         <activity
             android:name=".DetailFreeCommunity"
@@ -93,13 +93,14 @@
             android:name=".SignPhotoActivity"
             android:exported="false" />
         <activity
-            android:name=".MainBoard"
+            android:name=".ScheduleTable"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".MainActivity"

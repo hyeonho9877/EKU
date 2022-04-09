@@ -1,6 +1,5 @@
 package com.kyonggi.eku;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -25,8 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class LecureMain extends AppCompatActivity {
-
+public class LectureMain extends AppCompatActivity {
 
     ImageButton imageButton;
     ImageButton imageButton1;
@@ -35,9 +33,9 @@ public class LecureMain extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_lecture_main);
 
-        Spinner spinner = (Spinner)findViewById(R.id.LectureMain_spinner);
+        Spinner spinner = (Spinner)findViewById(R.id.Lecture_Main_spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item,items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -54,7 +52,7 @@ public class LecureMain extends AppCompatActivity {
                 //없음
             }
         });
-        imageButton = (ImageButton)findViewById(R.id.LectureMain_WriteButton);
+        imageButton = (ImageButton)findViewById(R.id.Lecture_Main_WriteButton);
         imageButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -64,7 +62,7 @@ public class LecureMain extends AppCompatActivity {
             }
         });
 
-        EditText searchText = (EditText)findViewById(R.id.LectureMain_searchtext);
+        EditText searchText = (EditText)findViewById(R.id.Lecture_Main_searchtext);
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int s, int s1, int s2) {
@@ -73,7 +71,7 @@ public class LecureMain extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int s, int s1, int s2) {
-                LinearLayout sc = (LinearLayout)findViewById(R.id.LectureMain_scroll);
+                LinearLayout sc = (LinearLayout)findViewById(R.id.Lecture_Main_scroll);
                 sc.removeAllViews();
                 int count = PreferenceManagers.getInt(getApplicationContext(), "count");
                 for (int i = count; i >= 1; i--) {
@@ -100,7 +98,7 @@ public class LecureMain extends AppCompatActivity {
             }
         });
 
-        imageButton1 = (ImageButton)findViewById(R.id.LectureMain_searchButton);
+        imageButton1 = (ImageButton)findViewById(R.id.Lecture_Main_searchButton);
         imageButton1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -131,7 +129,7 @@ public class LecureMain extends AppCompatActivity {
     }
 
     public void write_Lecture(String Title, String professor, float rating, int count){
-        LinearLayout sc = (LinearLayout)findViewById(R.id.LectureMain_scroll);
+        LinearLayout sc = (LinearLayout)findViewById(R.id.Lecture_Main_scroll);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout .setOrientation(LinearLayout.VERTICAL);
 
