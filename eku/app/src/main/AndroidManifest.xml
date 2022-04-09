@@ -37,34 +37,45 @@
     <uses-permission android:name="android.permission.ACCEPT_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:required="true" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:required="true"/>
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
+
+
+
+
     <application
+        android:usesCleartextTraffic='true'
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Eku"
-        android:usesCleartextTraffic="true">
-        <activity
-            android:name=".LectureMain"
-            android:exported="true" />
-        <activity
-            android:name=".LectureWrite"
-            android:exported="false" />
-        <activity
-            android:name=".LectureDetail"
-            android:exported="false" />
+        android:theme="@style/Theme.Eku">
         <activity
             android:name=".DetailFreeCommunity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".WriteFreeCommunity"
+            android:exported="false" />
+        <activity
+            android:name=".MainFreeCommunity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailAnnounce"
+            android:exported="true" />
+        <activity
+            android:name=".WriteAnnounce"
+            android:name=".MainCommunity"
+            android:exported="true" />
+        <activity
+            android:name=".PhotoServeActivity"
+            android:exported="true">
+            android:name=".DetailFreeCommunity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".WriteFreeCommunity"
             android:exported="false" />
@@ -79,10 +90,17 @@
             android:exported="true" />
         <activity
             android:name=".PhotoServeActivity"
-            android:exported="true" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".DonanBagGi"
-            android:exported="true" />
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".MainCommunity"
             android:exported="true" />
@@ -91,20 +109,44 @@
             android:exported="false" />
         <activity
             android:name=".SignPhotoActivity"
-            android:exported="false" />
+            android:exported="true" />
+        <!--
         <activity
-            android:name=".ScheduleTable"
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3daedb8d89d10c9b0e54fb3f7f3d849a2fb85a19
+            android:name=".LoginActivity"
+            android:exported="true">
+        </activity>
+        -->
+
+        <activity
+            android:name=".MainBoard"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="true">
+
+        </activity>
+            <activity
+            android:name=".MainBoard"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".LoginActivity"
             android:exported="true"
