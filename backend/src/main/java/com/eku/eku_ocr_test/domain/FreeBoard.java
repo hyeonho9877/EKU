@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.sql.Date;
 
 
 
@@ -36,7 +35,7 @@ public class FreeBoard implements Serializable{
     @Column(name = "total_view", nullable = false)
     private int view;
     @Column(name = "written_time", nullable = false)
-    private Date time;
+    private String time;
 
     public FreeBoard() {
 
