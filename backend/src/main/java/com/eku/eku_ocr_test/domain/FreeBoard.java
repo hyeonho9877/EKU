@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.Builder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 
@@ -24,8 +22,9 @@ public class FreeBoard implements Serializable{
     @Id
     @Column(name = "f_id", nullable = false)
     private Long id;
-    @Column(name = "student_no", nullable = false)
-    private Long studNo;
+    @ManyToOne
+    @JoinColumn(name = "student_no")
+    private Student student;
     @Column(name = "student_department", nullable = false)
     private String department;
     @Column(name = "title", nullable = false)
@@ -42,6 +41,6 @@ public class FreeBoard implements Serializable{
     }
     @Override
     public String toString(){
-        return String.format("id=%d\nno=%d\ndep=%s\ntitle=%s\ncontent=%s\nview=%d\ntime=%s",id,studNo,department,title,content,view, time.toString());
+        return String.format("id=%d\nno=%d\ndep=%s\ntitle=%s\ncontent=%s\nview=%d\ntime=%s",id,student,department,title,content,view, time.toString());
     }
 }

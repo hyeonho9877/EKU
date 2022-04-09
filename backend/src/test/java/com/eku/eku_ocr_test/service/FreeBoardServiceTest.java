@@ -1,6 +1,7 @@
 package com.eku.eku_ocr_test.service;
 
 import com.eku.eku_ocr_test.domain.FreeBoard;
+import com.eku.eku_ocr_test.domain.Student;
 import com.eku.eku_ocr_test.repository.FreeBoardRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +23,14 @@ public class FreeBoardServiceTest {
                 new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = sdf.format(dt);
         freeBoard = FreeBoard.builder()
-                .id(Long.parseLong("1"))
-                .studNo(Long.parseLong("201611843"))
-                .department("컴퓨터공학과")
+                .id(Long.parseLong("4"))
+                .student(Student.builder().studNo((long)201713883).name("dd").department("dd").email("dd").build())
+                .department("컴퓨터공학부")
                 .title("제목")
                 .content("내용")
                 .time(currentTime)
                 .build();
-        System.out.println(freeBoard);
-        freeBoardRepository.delete(freeBoardRepository.findFreeBoardById((long) 1).get());
+        freeBoardRepository.save(freeBoard);
     }
 
     @Test
