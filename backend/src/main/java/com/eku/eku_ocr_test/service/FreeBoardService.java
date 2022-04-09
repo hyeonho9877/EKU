@@ -1,5 +1,7 @@
 package com.eku.eku_ocr_test.service;
 
+import com.eku.eku_ocr_test.domain.FreeBoard;
+import com.eku.eku_ocr_test.form.FreeBoardForm;
 import com.eku.eku_ocr_test.repository.FreeBoardRepository;
 import com.eku.eku_ocr_test.repository.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -20,5 +22,9 @@ public class FreeBoardService {
     /**
      * 게시판정보 삽입
      */
+    //public boolean insertBoard(FreeBoardForm form){
+        //FreeBoard freeBoard = FreeBoard.builder().id(form.getId()).student()
+      //  return false;
+    //}
 
 }

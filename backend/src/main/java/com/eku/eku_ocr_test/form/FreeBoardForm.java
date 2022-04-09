@@ -3,7 +3,6 @@ package com.eku.eku_ocr_test.form;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.text.SimpleDateFormat;
 
 @Getter
 @Setter
@@ -14,5 +13,5 @@ public class FreeBoardForm {
     private String title;
     private String content;
     private int view;
-    private SimpleDateFormat time;
+    private String time;
 }

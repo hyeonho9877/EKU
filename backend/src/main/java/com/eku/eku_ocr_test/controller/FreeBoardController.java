@@ -1,6 +1,7 @@
 package com.eku.eku_ocr_test.controller;
 
 import com.eku.eku_ocr_test.service.FreeBoardService;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,5 +15,11 @@ public class FreeBoardController {
     public FreeBoardController(FreeBoardService boardService) {
         this.boardService = boardService;
     }
-
+    /**
+     * 게시물 삽입
+     */
+    @PostMapping("/insertBoard")
+    public boolean insertBoard(){
+        return false;
+    }
 }

@@ -3,6 +3,7 @@ package com.eku.eku_ocr_test.service;
 import com.eku.eku_ocr_test.domain.FreeBoard;
 import com.eku.eku_ocr_test.domain.Student;
 import com.eku.eku_ocr_test.repository.FreeBoardRepository;
+import com.eku.eku_ocr_test.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +15,8 @@ import java.util.Date;
 public class FreeBoardServiceTest {
     @Autowired
     private FreeBoardRepository freeBoardRepository;
-
+    @Autowired
+    private StudentRepository studentRepository;
     @Test
     public void testDB() {
         FreeBoard freeBoard;
@@ -23,11 +25,12 @@ public class FreeBoardServiceTest {
                 new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = sdf.format(dt);
         freeBoard = FreeBoard.builder()
-                .id(Long.parseLong("4"))
+                .id((long)1)
                 .student(Student.builder().studNo((long)201713883).name("dd").department("dd").email("dd").build())
                 .department("컴퓨터공학부")
                 .title("제목")
                 .content("내용")
+                .view(1)
                 .time(currentTime)
                 .build();
         freeBoardRepository.save(freeBoard);
@@ -35,7 +38,7 @@ public class FreeBoardServiceTest {
 
     @Test
     public void testDB2() {
-        FreeBoard freeBoard = freeBoardRepository.findFreeBoardById((long) 1).orElseThrow();
-        System.out.println(freeBoard);
+        FreeBoard freeBoard = freeBoardRepository.findFreeBoardById((long) 2).orElseThrow();
+        System.out.println(freeBoard.getStudent().getStudNo());
     }
 }
