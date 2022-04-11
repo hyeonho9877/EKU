@@ -54,6 +54,9 @@
         android:theme="@style/Theme.Eku"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".TodoActivity"
+            android:exported="false" />
+        <activity
             android:name=".DetailFreeCommunity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
@@ -90,17 +93,8 @@
             android:exported="true" />
         -->
         <activity
-            android:name=".TodolistActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".DonanBagGi"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".MainCommunity"
             android:exported="true" />
