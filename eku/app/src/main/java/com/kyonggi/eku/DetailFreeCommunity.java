@@ -88,7 +88,7 @@ public class DetailFreeCommunity extends AppCompatActivity {
             update_comment(count);
         }
 
-                ImageButton writeButton = (ImageButton) findViewById(R.id.detail_Free_Write_Comment_button);
+        ImageButton writeButton = (ImageButton) findViewById(R.id.detail_Free_Write_Comment_button);
         writeButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
