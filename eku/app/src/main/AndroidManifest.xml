@@ -55,7 +55,12 @@
         android:theme="@style/Theme.Eku">
         <activity android:name=".cameraTest"
             android:exported="true"
-            />
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".DetailFreeCommunity"
             android:exported="false"
@@ -71,17 +76,15 @@
             android:exported="true" />
         <activity
             android:name=".WriteAnnounce"
+            android:exported="true" />
+        <activity
             android:name=".MainCommunity"
             android:exported="true" />
         <activity
             android:name=".PhotoServeActivity"
-            android:exported="true">
-            android:name=".DetailFreeCommunity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity
-            android:name=".WriteAnnounce"
-            android:exported="true" />
+            android:exported="true"/>
+
+
         <activity
             android:name=".DonanBagGi"
             android:exported="true">
@@ -100,10 +103,7 @@
             android:name=".MainActivity"
             android:exported="true"
             >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
 
 
