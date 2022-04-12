@@ -43,7 +43,6 @@ public class FreeBoardCommentService {
                 .orElseThrow(NoSuchStudentException::new);
         FreeBoard originalArticle = freeBoardRepository.findById(form.getArticleID()).orElseThrow();
         FreeBoardComment comment = FreeBoardComment.builder()
-                .title(form.getTitle())
                 .content((form.getContent()))
                 .writtenTime(form.getTime())
                 .writer(writer)
@@ -73,9 +72,6 @@ public class FreeBoardCommentService {
         FreeBoardComment target = freeBoardCommentRepository.findById(form.getCommentId()).orElseThrow();
         if (form.getContent() != null) {
             target.setContent(form.getContent());
-        }
-        if (form.getTitle() != null) {
-            target.setTitle(form.getTitle());
         }
     }
 }
