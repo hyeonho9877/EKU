@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="게시글 제목"
+            android:text="해야할 일"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="112dp"
-            android:text="게시글 내용"
+            android:text="상세 내용"
             app:layout_constraintStart_toStartOf="@+id/et_title"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,8 +51,8 @@
 
         <EditText
             android:id="@+id/et_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="309dp"
+            android:layout_height="47dp"
             android:layout_marginTop="16dp"
             android:ems="10"
             android:inputType="textPersonName"

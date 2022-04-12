@@ -35,6 +35,7 @@
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="E"
                 android:textColor="@color/kyonggi_color4"
                 android:textSize="36sp" />
@@ -51,6 +52,7 @@
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="K"
                 android:textColor="@color/kyonggi_color3"
                 android:textSize="36sp" />
@@ -67,6 +69,7 @@
                 android:id="@+id/textView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="U"
                 android:textColor="@color/kyonggi_color2"
                 android:textSize="36sp" />
