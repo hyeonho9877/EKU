@@ -1,26 +1,11 @@
 package com.eku.eku_ocr_test.service;
 
-import com.eku.eku_ocr_test.domain.Student;
-import com.eku.eku_ocr_test.form.SignUpForm;
 import com.eku.eku_ocr_test.repository.MappingKeyRepository;
 import com.eku.eku_ocr_test.repository.StudentRepository;
-import com.eku.eku_ocr_test.secure.KeyGen;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
 
 @SpringBootTest
 class SignUpServiceTest {
@@ -40,7 +25,7 @@ class SignUpServiceTest {
     @Autowired
     private ApplicationContext applicationContext;
 
-    @Test
+    /*@Test
     void enrollKeyMemberTest() {
         Student student = Student.builder()
                 .studNo((long) 201713883)
@@ -61,9 +46,9 @@ class SignUpServiceTest {
         } catch (NoSuchAlgorithmException e) {
             fail();
         }
-    }
+    }*/
 
-    @Test
+    /*@Test
     void emailAuthTest() {
         try {
             Student student = Student.builder()
@@ -85,16 +70,16 @@ class SignUpServiceTest {
             e.printStackTrace();
             fail();
         }
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void whenFileUploaded_thenVerifyStatus() throws Exception{
         MockMultipartFile file = new MockMultipartFile("file", "hello.txt", MediaType.TEXT_PLAIN_VALUE, "Hello, World!".getBytes(StandardCharsets.UTF_8));
 
         MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    }
+    }*/
 
-    @Test
+    /*@Test
     void enrollStudent(){
         SignUpForm signUpForm = new SignUpForm();
         signUpForm.setStudNo((long)201713883);
@@ -109,6 +94,6 @@ class SignUpServiceTest {
         } catch (Exception e) {
             fail();
         }
-    }
+    }*/
 
 }

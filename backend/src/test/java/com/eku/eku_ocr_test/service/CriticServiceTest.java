@@ -1,22 +1,9 @@
 package com.eku.eku_ocr_test.service;
 
-import com.eku.eku_ocr_test.domain.Critic;
-import com.eku.eku_ocr_test.domain.CriticResponse;
-import com.eku.eku_ocr_test.domain.Grade;
-import com.eku.eku_ocr_test.exceptions.NoSuchStudentException;
-import com.eku.eku_ocr_test.form.CriticForm;
 import com.eku.eku_ocr_test.repository.CriticRepository;
 import com.eku.eku_ocr_test.repository.StudentRepository;
-import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.EmptyResultDataAccessException;
-
-import java.util.NoSuchElementException;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 
 @SpringBootTest
 public class CriticServiceTest {
@@ -30,7 +17,7 @@ public class CriticServiceTest {
     @Autowired
     CriticRepository criticRepository;
 
-    @Test
+    /*@Test
     void applyTest() {
         CriticForm criticForm = new CriticForm();
         criticForm.setEmail("ruldarm00@kyonggi.ac.kr");
@@ -46,9 +33,9 @@ public class CriticServiceTest {
         soft.assertThat(response.getProfName()).isEqualTo(criticForm.getProfName());
         soft.assertThat(response.getGrade()).isEqualTo(criticForm.getGrade());
         soft.assertAll();
-    }
+    }*/
 
-    @Test
+    /*@Test
     void applyTestNotValidWriter() {
         CriticForm criticForm = new CriticForm();
         criticForm.setEmail("notvalid@kyonggi.ac.kr");
@@ -57,9 +44,9 @@ public class CriticServiceTest {
         criticForm.setLectureName("소프트웨어 공학");
         criticForm.setProfName("권기현");
         org.junit.jupiter.api.Assertions.assertThrows(NoSuchStudentException.class, () -> criticService.applyCritic(criticForm));
-    }
+    }*/
 
-    @Test
+    /*@Test
     void removeCriticSuccess() {
         try {
             Critic target = criticRepository.findAll().stream().findFirst().orElseThrow();
@@ -67,14 +54,14 @@ public class CriticServiceTest {
         } catch (Exception e) {
             fail();
         }
-    }
+    }*/
 
-    @Test
+    /*@Test
     void removeCriticFailNotExistsID() {
         assertThrows(EmptyResultDataAccessException.class, () -> criticService.removeCritic(Long.MAX_VALUE));
-    }
+    }*/
 
-    @Test
+    /*@Test
     void updateCriticSuccess() {
         try {
             Critic target = criticRepository.findAll().stream().findFirst().orElseThrow();
@@ -88,22 +75,22 @@ public class CriticServiceTest {
         } catch (Exception e) {
             fail();
         }
-    }
+    }*/
 
-    @Test
+    /*@Test
     void updateCriticFailNoId() {
         CriticForm criticForm = new CriticForm();
         criticForm.setContent("헉 너무 재밌었어요 ㅠㅠ");
 
         assertThrows(NoSuchElementException.class, () -> criticService.updateCritic(criticForm));
-    }
+    }*/
 
-    @Test
+    /*@Test
     void updateCriticFailNotValidId() {
         CriticForm criticForm = new CriticForm();
         criticForm.setCriticId(Long.MAX_VALUE);
         criticForm.setContent("헉 너무 재밌었어요 ㅠㅠ");
 
         assertThrows(NoSuchElementException.class, () -> criticService.updateCritic(criticForm));
-    }
+    }*/
 }

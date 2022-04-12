@@ -81,7 +81,7 @@ public class CriticController {
         try {
             return ResponseEntity.ok(criticService.readRecentCritic());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(false);
+            return ResponseEntity.badRequest().body(null);
         }
     }
 }

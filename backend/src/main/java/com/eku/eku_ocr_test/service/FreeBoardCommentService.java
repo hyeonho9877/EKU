@@ -2,6 +2,7 @@ package com.eku.eku_ocr_test.service;
 
 import com.eku.eku_ocr_test.domain.FreeBoard;
 import com.eku.eku_ocr_test.domain.FreeBoardComment;
+import com.eku.eku_ocr_test.domain.FreeBoardCommentResponse;
 import com.eku.eku_ocr_test.domain.Student;
 import com.eku.eku_ocr_test.exceptions.NoSuchStudentException;
 import com.eku.eku_ocr_test.form.CommentForm;
@@ -9,8 +10,9 @@ import com.eku.eku_ocr_test.repository.FreeBoardCommentRepository;
 import com.eku.eku_ocr_test.repository.FreeBoardRepository;
 import com.eku.eku_ocr_test.repository.StudentRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 /**
  * 자유 게시판 댓글 작성의 로직을 구현하는 Service 클래스
@@ -36,8 +38,8 @@ public class FreeBoardCommentService {
      * @throws NoSuchStudentException
      * @throws IllegalStateException
      */
-    public Optional<FreeBoardComment> writeComment(CommentForm form) throws NoSuchStudentException, IllegalStateException {
-        Student writer = studentRepository.findStudentByEmail(form.getWriter())
+    public FreeBoardCommentResponse writeComment(CommentForm form) throws NoSuchStudentException, IllegalStateException {
+        Student writer = studentRepository.findById(form.getWriter())
                 .orElseThrow(NoSuchStudentException::new);
         FreeBoard originalArticle = freeBoardRepository.findById(form.getArticleID()).orElseThrow();
         FreeBoardComment comment = FreeBoardComment.builder()
@@ -47,6 +49,33 @@ public class FreeBoardCommentService {
                 .writer(writer)
                 .original(originalArticle)
                 .build();
-        return Optional.of(freeBoardCommentRepository.save(comment));
+        return new FreeBoardCommentResponse(freeBoardCommentRepository.save(comment));
+    }
+
+    /**
+     * 자유게시판댓글 db에서 요청한 댓글 삭제
+     * @param form 삭제할 댓글의 정보가 들어있는 Form 객체
+     * @throws IllegalArgumentException
+     * @throws NoSuchElementException
+     */
+    public void deleteComment(CommentForm form) throws IllegalArgumentException, NoSuchElementException {
+        freeBoardCommentRepository.deleteById(form.getCommentId());
+    }
+
+    /**
+     * 자유게시판댓글 db에서 요청한 댓글 수정
+     * @param form 수정할 댓글의 정보가 들어있는 Form 객체
+     * @throws IllegalArgumentException
+     * @throws NoSuchElementException
+     */
+    @Transactional
+    public void updateComment(CommentForm form) throws IllegalArgumentException, NoSuchElementException {
+        FreeBoardComment target = freeBoardCommentRepository.findById(form.getCommentId()).orElseThrow();
+        if (form.getContent() != null) {
+            target.setContent(form.getContent());
+        }
+        if (form.getTitle() != null) {
+            target.setTitle(form.getTitle());
+        }
     }
 }

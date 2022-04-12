@@ -1,7 +1,7 @@
 package com.eku.eku_ocr_test.form;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -10,11 +10,11 @@ import java.time.LocalDateTime;
  */
 @Data
 public class CommentForm {
-    private long fId;
+    private long commentId;
     private String title;
     private String content;
-    @DateTimeFormat(pattern = "YYYY-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime time;
-    private String writer;
+    private long writer;
     private long articleID;
 }
