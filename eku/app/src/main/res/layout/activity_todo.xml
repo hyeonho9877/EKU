@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/_todo"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TodoActivity">
@@ -14,6 +15,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:clickable="true"
+        app:backgroundTint="@color/kyonggi_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_control_point_24" />
