@@ -26,6 +26,14 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+/*
+*제목
+* 자유게시판
+*
+*내용
+* 자유게시판판* *
+*
+ */
 public class MainFreeCommunity extends AppCompatActivity {
     String[] items = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
 

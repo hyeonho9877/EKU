@@ -10,6 +10,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class GridListAdapter extends BaseAdapter {
+    /*
+    *
+    * 낙서저장하는 어댑터
+     */
     ArrayList<ListItem> items = new ArrayList<ListItem>();
     Context context;
 
