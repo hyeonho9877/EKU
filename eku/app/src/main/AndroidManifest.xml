@@ -53,99 +53,60 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Eku">
-        <activity
-            android:name=".DetailFreeCommunity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity
-            android:name=".WriteFreeCommunity"
-            android:exported="false" />
-        <activity
-            android:name=".MainFreeCommunity"
-            android:exported="false" />
-        <activity
-            android:name=".DetailAnnounce"
-            android:exported="true" />
-        <activity
-            android:name=".WriteAnnounce"
-            android:name=".MainCommunity"
-            android:exported="true" />
-        <activity
-            android:name=".PhotoServeActivity"
-            android:exported="true">
-            android:name=".DetailFreeCommunity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity
-            android:name=".WriteFreeCommunity"
-            android:exported="false" />
-        <activity
-            android:name=".MainFreeCommunity"
-            android:exported="false" />
-        <activity
-            android:name=".DetailAnnounce"
-            android:exported="true" />
-        <activity
-            android:name=".WriteAnnounce"
-            android:exported="true" />
-        <activity
-            android:name=".PhotoServeActivity"
-            android:exported="true">
+        <activity android:name=".cameraTest"
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".DetailFreeCommunity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".WriteFreeCommunity"
+            android:exported="false" />
+        <activity
+            android:name=".MainFreeCommunity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailAnnounce"
+            android:exported="true" />
+        <activity
+            android:name=".WriteAnnounce"
+            android:exported="true" />
+        <activity
+            android:name=".MainCommunity"
+            android:exported="true" />
+        <activity
+            android:name=".PhotoServeActivity"
+            android:exported="true"/>
+
+
         <activity
             android:name=".DonanBagGi"
             android:exported="true">
 
         </activity>
-        <activity
-            android:name=".MainCommunity"
-            android:exported="true" />
+
         <activity
             android:name=".SignInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".SignPhotoActivity"
-            android:exported="true" />
-        <!--
-        <activity
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 3daedb8d89d10c9b0e54fb3f7f3d849a2fb85a19
-            android:name=".LoginActivity"
-            android:exported="true">
-        </activity>
-        -->
-
-        <activity
             android:name=".MainBoard"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            >
 
         </activity>
-            <activity
-            android:name=".MainBoard"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+
 
         <activity
             android:name=".LoginActivity"
