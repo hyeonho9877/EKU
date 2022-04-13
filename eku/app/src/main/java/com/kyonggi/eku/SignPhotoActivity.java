@@ -9,6 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SignPhotoActivity extends AppCompatActivity {
 
+    /*
+     *
+     * 더미코드
+     * 동엽이의 정성이 담겼습니다.
+     * */
     Button nextBtn;
     Button cancleBtn;
 

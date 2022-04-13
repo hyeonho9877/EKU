@@ -18,6 +18,13 @@ import java.net.URL;
 public class SignInfoActivity extends AppCompatActivity {
 
 
+    /*
+     *
+     * 제목
+     * 회원가입 정보 작성해서 넘기는거
+     * 기능
+     *
+     * */
     Button btn_back;
     Button btn_submit;
     EditText user_sign_name, user_sign_pw, user_sign_major, user_sign_email, user_sign_no;

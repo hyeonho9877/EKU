@@ -25,6 +25,10 @@ import java.util.HashMap;
 
 public class cameraTest extends AppCompatActivity {
 
+    /**
+     * SendTool 더미코드
+     * SendTool 사용법이 적혀있습니다 ^^
+     */
     Button btnCamera;
 
     @Override protected void onCreate(Bundle savedInstanceState)

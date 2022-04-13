@@ -21,6 +21,13 @@ import java.util.Date;
 
 
 public class WriteBoard extends AppCompatActivity {
+    /*
+     *
+     * 제목
+     * 메인게시판(강의동 게시판 낙서) 작성
+     * 기능
+     * 낙서하는 기능
+     * */
     //작성 화면
     ActivityResultLauncher<Intent> activityResultLauncher;
     @Override

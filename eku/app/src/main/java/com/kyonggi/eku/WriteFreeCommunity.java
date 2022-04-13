@@ -19,6 +19,13 @@ import java.util.Date;
 
 public class WriteFreeCommunity extends AppCompatActivity {
 
+    /*
+    *
+    * 제목
+    * 자유게시판 작성
+    * 기능
+    * ㅈㄱㄴ
+    * */
     ActivityResultLauncher<Intent> activityResultLauncher;
 
     @Override
