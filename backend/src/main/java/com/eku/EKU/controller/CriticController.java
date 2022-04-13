@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.NoSuchElementException;
-
 /**
  * 강의평가에 대한 컨트롤러
  */
@@ -33,7 +31,7 @@ public class CriticController {
         try {
             System.out.println(form);
             return ResponseEntity.ok(criticService.applyCritic(form));
-        } catch (NoSuchStudentException | NoSuchElementException | IllegalStateException exception) {
+        } catch (NoSuchStudentException | IllegalStateException exception) {
             exception.printStackTrace();
             return ResponseEntity.badRequest().body(false);
         }

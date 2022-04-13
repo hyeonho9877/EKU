@@ -11,10 +11,9 @@ import java.time.LocalDateTime;
 @Data
 public class CommentForm {
     private long commentId;
-    private String title;
     private String content;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime time;
+    private LocalDateTime writtenTime;
     private long writer;
     private long articleID;
 }

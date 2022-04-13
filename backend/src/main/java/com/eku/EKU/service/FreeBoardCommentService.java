@@ -43,7 +43,7 @@ public class FreeBoardCommentService {
         FreeBoard originalArticle = freeBoardRepository.findById(form.getArticleID()).orElseThrow();
         FreeBoardComment comment = FreeBoardComment.builder()
                 .content((form.getContent()))
-                .writtenTime(form.getTime())
+                .writtenTime(form.getWrittenTime())
                 .writer(writer)
                 .original(originalArticle)
                 .build();

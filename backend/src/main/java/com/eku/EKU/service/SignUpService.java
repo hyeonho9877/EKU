@@ -30,7 +30,10 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.*;
+import java.util.Base64;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -143,7 +146,7 @@ public class SignUpService {
             student.setAuthenticated(true);
             studentRepository.save(student);
             return true;
-        } catch (NoSuchStudentException| NoSuchAuthKeyException| NoSuchElementException e) {
+        } catch (NoSuchStudentException| NoSuchAuthKeyException e) {
             return false;
         }
     }
