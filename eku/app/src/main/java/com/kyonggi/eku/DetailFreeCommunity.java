@@ -20,9 +20,6 @@ import android.widget.Toast;
 
 public class DetailFreeCommunity extends AppCompatActivity {
 
-    /**
-     * 자유게시판 세부화면
-     */
     String[] items = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
     int Lid;
     int count;

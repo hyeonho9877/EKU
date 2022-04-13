@@ -16,10 +16,6 @@ import java.util.List;
 public class BeaconListAdapter extends RecyclerView.Adapter<BeaconListAdapter.MyViewHolder> {
     /**
      * 리사이클뷰를 확장한 어댑터
-     *
-     * 블투 더미코드
-     * 건들지마세요
-     * 괜히 터집니다 ㅡㅡ
      */
     private List<MinewBeacon> mMinewBeacons = new ArrayList<>();
 
