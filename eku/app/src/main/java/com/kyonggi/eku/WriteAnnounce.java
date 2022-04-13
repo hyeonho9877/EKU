@@ -20,7 +20,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class WriteAnnounce extends AppCompatActivity {
-
+    /*
+     *
+     * 제목
+     * 공지 게시판 작성
+     * 기능
+     * ㅈㄱㄴ
+     * */
     ActivityResultLauncher<Intent> activityResultLauncher;
 
     @Override

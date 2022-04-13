@@ -6,6 +6,10 @@ import android.net.NetworkInfo;
 
 
 public class NetworkStatus {
+    /*
+    * 냅둘것
+    *
+     */
     public static final int TYPE_WIFI = 1;
     public static final int TYPE_MOBILE = 2;
     public static final int TYPE_NOT_CONNECTED = 3;

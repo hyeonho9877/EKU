@@ -20,6 +20,13 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
 
     /**
+     *
+     * 비콘 코드
+     * 절대 건들지마세요
+     * 괜히 에러남
+     *
+     */
+    /**
      * 기본분할선：높이为2px，색상은 회색
      *
      * @param context

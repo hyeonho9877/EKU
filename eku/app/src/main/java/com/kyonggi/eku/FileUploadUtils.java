@@ -13,7 +13,10 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class FileUploadUtils {
-
+    /**
+     * 이거 그 그림 넘기고 받는거임
+     * @param file
+     */
     public static void goSend(File file){
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)

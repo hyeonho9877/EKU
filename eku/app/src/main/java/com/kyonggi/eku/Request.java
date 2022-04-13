@@ -24,7 +24,10 @@ public class Request extends AppCompatActivity {
     // 에딧텍스트
     EditText edt_1;
     EditText edt_2;
-
+    /*
+    * 더미코드
+    * 버리세요
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
