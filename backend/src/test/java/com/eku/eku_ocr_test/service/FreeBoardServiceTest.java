@@ -25,7 +25,7 @@ public class FreeBoardServiceTest {
                 new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = sdf.format(dt);
         freeBoard = FreeBoard.builder()
-                .id((long)1)
+                .id((long)5)
                 .student(Student.builder().studNo((long)201713883).name("dd").department("dd").email("dd").build())
                 .department("컴퓨터공학부")
                 .title("제목")
@@ -38,7 +38,8 @@ public class FreeBoardServiceTest {
 
     @Test
     public void testDB2() {
-        FreeBoard freeBoard = freeBoardRepository.findFreeBoardById((long) 2).orElseThrow();
-        System.out.println(freeBoard.getStudent().getStudNo());
+        Student student = Student.builder().studNo((long)201661843).name("이현규").department("컴퓨터공학부").email("iz100412@gmail.com").authenticated(true).build();
+
+        studentRepository.save(student);
     }
 }
