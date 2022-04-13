@@ -1,7 +1,9 @@
 package com.eku.eku_ocr_test.controller;
 
+import com.eku.eku_ocr_test.form.FreeBoardForm;
 import com.eku.eku_ocr_test.service.FreeBoardService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -19,7 +21,7 @@ public class FreeBoardController {
      * 게시물 삽입
      */
     @PostMapping("/insertBoard")
-    public boolean insertBoard(){
+    public boolean insertBoard(@RequestBody FreeBoardForm form){
         return false;
     }
 }
