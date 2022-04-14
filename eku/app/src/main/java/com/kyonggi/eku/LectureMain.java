@@ -26,6 +26,10 @@ import android.widget.Toast;
 
 public class LectureMain extends AppCompatActivity {
 
+    /*
+    * 강의평가 메인
+    *
+     */
     ImageButton imageButton;
     ImageButton imageButton1;
     String[] items = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};

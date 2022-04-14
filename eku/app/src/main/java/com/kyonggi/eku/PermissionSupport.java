@@ -14,6 +14,11 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/*
+* 권한 설정
+* 여따가 넣으면 권한을 물어봅니다
+ */
 public class PermissionSupport {
 
     private Context context;
@@ -24,8 +29,8 @@ public class PermissionSupport {
             Manifest.permission.BLUETOOTH_CONNECT,
             Manifest.permission.BLUETOOTH_SCAN,
             Manifest.permission.BLUETOOTH_ADVERTISE,
-            Manifest.permission.ACCESS_FINE_LOCATION
-
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_NETWORK_STATE
     };
     private List permissionList;
 

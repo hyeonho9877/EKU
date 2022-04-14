@@ -8,7 +8,9 @@ import java.util.Comparator;
 public class UserRssi implements Comparator<MinewBeacon> {
 
     /*
-     * 대충 보여주는 순서 체크할라고 만들어놓은듯?
+     * 블루투스 Legacy
+     * 지우지 마세요 ㅠㅠ
+     *
      * */
     @Override
     public int compare(MinewBeacon minewBeacon, MinewBeacon t1) {

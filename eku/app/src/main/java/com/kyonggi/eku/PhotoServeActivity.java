@@ -18,6 +18,12 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/*
+* 제목
+* 사진을 불러와서 OCR로 체크
+* 기능
+* 나중에 넘겨줘야함 intent로 해야할듯?
+ */
 public class PhotoServeActivity extends AppCompatActivity {
     ImageView imgVwSelected;
     Button btnImageSend, btnImageSelection;

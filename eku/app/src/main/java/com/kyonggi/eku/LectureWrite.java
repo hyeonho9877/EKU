@@ -25,6 +25,10 @@ import java.net.URL;
 
 public class LectureWrite extends AppCompatActivity {
 
+    /**
+     * 강의 평가 작성 기능
+     *
+     */
     //작성 화면
     ActivityResultLauncher<Intent> activityResultLauncher;
     @Override

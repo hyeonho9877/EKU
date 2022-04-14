@@ -22,7 +22,10 @@ import com.minew.beacon.MinewBeaconManagerListener;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    /*
+    *   블루투스 기능확인 더미코드
+    *   블루투스 기능을 해보고 싶을때 쓰세요
+     */
     private PermissionSupport permission;
 
     private MinewBeaconManager mMinewBeaconManager;

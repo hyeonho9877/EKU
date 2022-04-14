@@ -22,7 +22,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
-
+    /*
+       로그인 한값을
+    * 넘겨주는 코드
+    *
+     */
     Button btn_sign;
     Button btn_login;
     EditText user_email, user_pw;
