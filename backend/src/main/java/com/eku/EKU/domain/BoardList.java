@@ -1,6 +1,5 @@
-package com.eku.EKU.form;
+package com.eku.EKU.domain;
 
-import jdk.jfr.BooleanFlag;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +7,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class BoardListForm {
+public class BoardList {
     private Long id;
     private String title;
 }
