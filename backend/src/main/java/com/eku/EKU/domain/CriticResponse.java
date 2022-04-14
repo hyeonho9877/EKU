@@ -15,6 +15,7 @@ public class CriticResponse {
     private String grade;
     private String studNo;
     private String department;
+    private float star;
 
     public CriticResponse(Critic critic) {
         this.cId = critic.getCId();
@@ -24,5 +25,6 @@ public class CriticResponse {
         this.grade = GradeResponseConverter.convert(critic.getGrade());
         this.studNo = String.valueOf(critic.getWriter().getStudNo()).substring(2, 4);
         this.department = critic.getWriter().getDepartment();
+        this.star = critic.getStar();
     }
 }

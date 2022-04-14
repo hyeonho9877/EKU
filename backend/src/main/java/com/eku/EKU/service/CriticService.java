@@ -46,6 +46,7 @@ public class CriticService {
                 .profName(form.getProfName())
                 .content(form.getContent())
                 .grade(form.getGrade())
+                .star(form.getStar())
                 .writer(writer)
                 .build();
 
@@ -80,6 +81,8 @@ public class CriticService {
             target.setLectureName(form.getLectureName());
         } else if (form.getProfName() != null) {
             target.setProfName(form.getProfName());
+        } else if (form.getStar() != 0) {
+            target.setStar(form.getStar());
         }
     }
 
