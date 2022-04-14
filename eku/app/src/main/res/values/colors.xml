@@ -11,6 +11,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="btn_press_color">#661737CD</color>
-    <color name="kyonggi_color">#091C75</color>
+    <color name="kyonggi_color">#0150a3</color>
+    <color name="kyonggi_color2">#00a05c</color>
+    <color name="kyonggi_color3">#f49e01</color>
+    <color name="kyonggi_color4">#eb5815</color>
 
 </resources>
