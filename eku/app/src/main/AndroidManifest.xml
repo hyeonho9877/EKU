@@ -53,7 +53,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".VerfityActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".DetailFreeCommunity"
             android:exported="false"
@@ -96,15 +104,15 @@
             android:exported="true" />
         <activity
             android:name=".SignInfoActivity"
-            android:exported="false" />
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".SignPhotoActivity"
             android:exported="false" />
         <activity
             android:name=".TodoActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <!--
         <activity
             android:name=".MainActivity"
@@ -113,12 +121,8 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:screenOrientation="portrait">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <service
@@ -137,10 +141,12 @@
             android:name=".Request"
             android:exported="true" />
         <activity android:name=".WriteBoard" />
-
         <activity
             android:name=".MainBoard"
-            android:exported="true"/>
+            android:exported="true" />
+        <activity
+            android:name=".PhotoServeActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

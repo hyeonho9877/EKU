@@ -7,11 +7,12 @@ public class UserInformation {
     private Context getApplicationContext;
     String password ="";
     boolean postLogin=false;
-
+    boolean verify =false;
     public void toPhone(Context getAppliactionContext,String email,String password){
         PreferenceManagers.setString(getAppliactionContext,"email",email);
         PreferenceManagers.setString(getAppliactionContext,"password",password);
         PreferenceManagers.setBoolean(getAppliactionContext,"postLogin",postLogin);
+        PreferenceManagers.setBoolean(getAppliactionContext,"verify",verify);
     }
 
     public String fromPhoneEmail(Context getApplicationContext) {
@@ -33,5 +34,9 @@ public class UserInformation {
     public boolean fromPhonePostLogin(Context getApplicationContext){
         postLogin = PreferenceManagers.getBoolean(getApplicationContext,"postLogin");
         return postLogin;
+    }
+    public boolean fromPhoneVerify(Context getApplicationContext){
+        verify = PreferenceManagers.getBoolean(getApplicationContext,"verify");
+        return verify;
     }
 }

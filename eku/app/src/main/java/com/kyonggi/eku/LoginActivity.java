@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         btn_sign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SignPhotoActivity.class);
+                Intent intent = new Intent(getApplicationContext(), PhotoServeActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -78,7 +78,10 @@ public class LoginActivity extends AppCompatActivity {
                                         userInformation.toPhone(getApplicationContext(),std_email,std_pw);
                                         Intent intent = new Intent(getApplicationContext(), MainBoard.class);
                                         startActivity(intent);
-
+                                        /*
+                                        *   이메일 검증 페이지 메인보드 가기전에 만들기
+                                        *  shared에 기타 데이터 저장하기를 만들어놔야합니다.
+                                         */
 
                                     }
                             }
@@ -105,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // 비밀번호 8자 이상시 활성화되는 버튼 이벤트
+        // 비밀번호 8자 이상시 활성화되는 버튼 이벤트 지금 6자
         user_pw.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
