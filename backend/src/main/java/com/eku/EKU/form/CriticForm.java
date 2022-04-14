@@ -11,4 +11,5 @@ public class CriticForm {
     private Grade grade;
     private String profName;
     private String lectureName;
+    private float star;
 }

@@ -28,6 +28,8 @@ public class Critic {
     @Column(name = "grade", nullable = false)
     @Convert(converter = GradeConverter.class)
     private Grade grade;
+    @Column(name = "star", nullable = false)
+    private float star;
 
     @ManyToOne
     private Student writer;
