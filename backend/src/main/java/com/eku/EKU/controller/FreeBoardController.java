@@ -78,7 +78,7 @@ public class FreeBoardController {
      * @return
      */
     @GetMapping("/board/free")
-    public ResponseEntity<?> board(@RequestBody FreeBoardForm form){
+    public ResponseEntity<?> loadBoard(@RequestBody FreeBoardForm form){
         FreeBoard board = boardService.loadBoard(form);
         if(board!=null)
             return ResponseEntity.ok(board);

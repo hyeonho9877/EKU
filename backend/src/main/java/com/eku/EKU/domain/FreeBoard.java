@@ -41,6 +41,6 @@ public class FreeBoard implements Serializable{
     }
     @Override
     public String toString(){
-        return String.format("id=%d\nno=%d\ndep=%s\ntitle=%s\ncontent=%s\nview=%d\ntime=%s",id,student,department,title,content,view, time.toString());
+        return String.format("id=%d\nno=%d\ndep=%s\ntitle=%s\ncontent=%s\nview=%d\ntime=%s",id,student.getStudNo(),department,title,content,view, time.toString());
     }
 }

@@ -1,7 +1,9 @@
 package com.eku.EKU.service;
 
+import com.eku.EKU.controller.FreeBoardController;
 import com.eku.EKU.domain.FreeBoard;
 import com.eku.EKU.domain.Student;
+import com.eku.EKU.form.FreeBoardForm;
 import com.eku.EKU.repository.FreeBoardRepository;
 import com.eku.EKU.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
@@ -18,24 +20,25 @@ public class FreeBoardServiceTest {
     private FreeBoardRepository freeBoardRepository;
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private FreeBoardService boardService;
+    @Autowired
+    private FreeBoardController boardController;
     @Test
     public void testDB() {
-        FreeBoard freeBoard;
-        java.util.Date dt = new java.util.Date();
-        java.text.SimpleDateFormat sdf =
-                new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String currentTime = sdf.format(dt);
-        freeBoard = FreeBoard.builder()
-                .id((long)2)
-                .student(Student.builder().studNo((long)201713883).name("dd").department("dd").email("dd").build())
-                .department("컴퓨터공학부")
-                .title("제목")
-                .content("내용")
-                .time(currentTime)
-                .build();
-        freeBoardRepository.save(freeBoard);
+        FreeBoardForm freeBoard = new FreeBoardForm();
+        //freeBoard.setId((long) 1);
+        freeBoard.setTitle("title");
+        freeBoard.setContent("dd");
+        freeBoard.setDepartment("컴공");
+        freeBoard.setStudNo((long) 201713883);
+        freeBoard.setTime(boardService.currentTime());
+        System.out.println(boardController.insertBoard(freeBoard));
+        //System.out.println(boardController.updateBoard(freeBoard));
+        //System.out.println(boardController.loadBoard(freeBoard));
+        //System.out.println(boardController.boardList().getBody());
+        //System.out.println(boardController.deleteBoard(freeBoard));
     }
-
     @Test
     public void testDB2() {
         List<FreeBoard> list = freeBoardRepository.findAll();

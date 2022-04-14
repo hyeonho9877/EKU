@@ -29,12 +29,14 @@ public class FreeBoardService {
     }
 
     /**
-     * 게시물 호출
+     * 게시물 불러오기
      * @param form
      * @return
      */
     public FreeBoard loadBoard(FreeBoardForm form)throws IllegalArgumentException, NoSuchElementException{
         FreeBoard board = freeBoardRepository.findFreeBoardById(form.getId()).get();
+        board.setView(board.getView()+1);
+        freeBoardRepository.save(board);
         return board;
     }
     /**
@@ -59,6 +61,7 @@ public class FreeBoardService {
         if(form.getTitle()!=null&&form.getContent()!=null) {
             board.setContent(form.getContent());
             board.setTitle(form.getTitle());
+            freeBoardRepository.save(board);
         }
     }
 
