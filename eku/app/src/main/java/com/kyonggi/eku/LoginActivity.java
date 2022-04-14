@@ -3,6 +3,7 @@ package com.kyonggi.eku;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,9 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -27,17 +32,18 @@ public class LoginActivity extends AppCompatActivity {
     * 넘겨주는 코드
     *
      */
+
     Button btn_sign;
     Button btn_login;
     EditText user_email, user_pw;
+    UserInformation userInformation;
     private Map<String,String>map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
+        userInformation = new UserInformation();
         user_email = (EditText) findViewById(R.id.user_email);
         user_pw = (EditText)  findViewById(R.id.user_pw);   // 8자 이상, 특수문자 포함
 
@@ -58,8 +64,86 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String std_email = user_email.getText().toString();
                 String std_pw = user_pw.getText().toString();
+                if ( std_email.length() == 0 ||std_pw.length()==0) {
+                    Toast.makeText(getBaseContext(),"ID와 PASSWORD 입력을 확인해 주세요",Toast.LENGTH_SHORT);
+                } else {
+                    Handler handler = new Handler(){
+                        public void handleMessage(@NonNull Message msg){
+                            switch(msg.what){
+                                case 0:
+                                    String responseResult=(String)msg.obj;
+                                    if (responseResult.equals("SignIn Success."))
+                                    {
 
-                int status = NetworkStatus.getConnectivityStatus(getApplicationContext());
+                                        userInformation.toPhone(getApplicationContext(),std_email,std_pw);
+                                        Intent intent = new Intent(getApplicationContext(), MainBoard.class);
+                                        startActivity(intent);
+
+
+                                    }
+                            }
+                        }
+                    };
+                    SendTool sendTool = new SendTool(handler);
+                    HashMap<String,String> temp = new HashMap<>();
+                    temp.put("email",std_email);
+                    temp.put("password",std_pw);
+                    try {
+                        sendTool.request("http://115.85.182.126:8080/signIn","POST",temp);
+                    } catch (IOException e) {
+                        Toast.makeText(getBaseContext(),"서버에러!",Toast.LENGTH_SHORT);
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        Toast.makeText(getBaseContext(),"JSON에러!",Toast.LENGTH_SHORT);
+                        e.printStackTrace();
+                    }
+
+
+                }
+
+
+            }
+        });
+
+        // 비밀번호 8자 이상시 활성화되는 버튼 이벤트
+        user_pw.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                btn_login.setVisibility(View.GONE);
+            }
+
+            
+            //나중에 수정필요
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String inputPw = user_pw.getText().toString();
+                if(inputPw.length() >= 6){
+                    btn_login.setVisibility(View.VISIBLE);
+                }   else {
+                    btn_login.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                /*
+                if (editable.length() >= 8) {
+                    btn_login.setClickable(true);
+                    btn_login.setBackgroundColor(Color.BLUE);
+                    //btn_login.setTextColor(Color.WHITE);
+                } else {
+                    btn_login.setClickable(false);
+                    btn_login.setBackgroundColor(Color.GRAY);
+                    //btn_login.setTextColor(Color.BLACK);
+                }
+                 */
+            }
+        });
+
+    }
+}
+
+/*  int status = NetworkStatus.getConnectivityStatus(getApplicationContext());
                 if(status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
 
                     // 프로그래스바 보이게 처리
@@ -150,46 +234,4 @@ public class LoginActivity extends AppCompatActivity {
 
                 }else {
                     Toast.makeText(getApplicationContext(), "인터넷 연결을 확인해주세요.", Toast.LENGTH_SHORT).show();
-                }
-
-
-                Intent intent = new Intent(getApplicationContext(), MainBoard.class);
-                startActivity(intent);
-            }
-        });
-
-        // 비밀번호 8자 이상시 활성화되는 버튼 이벤트
-        user_pw.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                btn_login.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String inputPw = user_pw.getText().toString();
-                if(inputPw.length() >= 8){
-                    btn_login.setVisibility(View.VISIBLE);
-                }   else {
-                    btn_login.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                /*
-                if (editable.length() >= 8) {
-                    btn_login.setClickable(true);
-                    btn_login.setBackgroundColor(Color.BLUE);
-                    //btn_login.setTextColor(Color.WHITE);
-                } else {
-                    btn_login.setClickable(false);
-                    btn_login.setBackgroundColor(Color.GRAY);
-                    //btn_login.setTextColor(Color.BLACK);
-                }
-                 */
-            }
-        });
-
-    }
-}
+                }*/

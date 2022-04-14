@@ -80,6 +80,9 @@ public class SendTool {
     *
     */
 
+
+
+
     public void request(String detailURL, String getPost, HashMap<String,String> contents) throws IOException, JSONException {
         final Thread th = new Thread(new Runnable() {
             @Override
@@ -107,7 +110,7 @@ public class SendTool {
         final Thread th = new Thread(new Runnable() {
             @Override
             public void run() {
-                postServer(detailURL, getPost, contents,lecture);
+                postServerLecture(detailURL, getPost, contents,lecture);
             }
         });
         th.start();
@@ -120,7 +123,7 @@ public class SendTool {
     }
 
 
-    private void postServer(String detailURL, String getPost, HashMap<String,String> contents,HashMap<String, ArrayList<String>> lecture){
+    private void postServerLecture(String detailURL, String getPost, HashMap<String,String> contents,HashMap<String, ArrayList<String>> lecture){
         try {
             for (String key : contents.keySet()) {
                 jsonInput.put(key, contents.get(key));
@@ -152,6 +155,8 @@ public class SendTool {
 
     }
 
+
+
     private void postServer(String detailURL, String getPost, HashMap<String,String> contents){
         try {
             for (String key : contents.keySet()) {
@@ -180,6 +185,8 @@ public class SendTool {
         }
 
     }
+
+
 }
 
 
