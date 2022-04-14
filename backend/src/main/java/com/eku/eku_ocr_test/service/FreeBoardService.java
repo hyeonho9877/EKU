@@ -7,6 +7,9 @@ import com.eku.eku_ocr_test.repository.FreeBoardRepository;
 import com.eku.eku_ocr_test.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * 게시판 정보를 불러오거나 수정, 삽입, 삭제하는 기능담당
@@ -20,25 +23,54 @@ public class FreeBoardService {
         this.freeBoardRepository = freeBoardRepository;
         this.studentRepository = studentRepository;
     }
+    public ArrayList<FreeBoard> boardList(){
+        return null;
+    }
+
     /**
      * 게시판정보 삽입
      * @param form 삽입할 게시판의 정보
+     * @return 성공시 true, 실패시 false 반환
      */
-    public void insertBoard(FreeBoardForm form){
+   public boolean insertBoard(FreeBoardForm form){
+        Student studNo = Student.builder().studNo(form.getStudNo()).name("temp").email("temp").department("temp").build();
+        try {
+            FreeBoard freeBoard = FreeBoard.builder()
+                    .id(newId())
+                    .student(studNo)
+                    .department(form.getDepartment())
+                    .title(form.getTitle())
+                    .content(form.getContent())
+                    .time(form.getTime()).build();
+            freeBoardRepository.save(freeBoard);
+        }catch (IllegalArgumentException e){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 시간함수
+     * @return 현재시간
+     */
+    public String currentTime(){
         java.util.Date dt = new java.util.Date();
         java.text.SimpleDateFormat sdf =
                 new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String currentTime = sdf.format(dt);
-
-        Student studNo = Student.builder().studNo(form.getStudNo()).build();
-        FreeBoard freeBoard = FreeBoard.builder()
-                .id(form.getId())
-                .student(studNo)
-                .department(form.getDepartment())
-                .title(form.getTitle())
-                .content(form.getContent())
-                .time(currentTime).build();
-        freeBoardRepository.save(freeBoard);
+        return sdf.format(dt);
+    }
+    /**
+     * 새로운 게시물 id를 정하는 메소드
+     * @return 마지막게시물의 id+1
+     */
+    public Long newId(){
+        List<FreeBoard> list = freeBoardRepository.findAll();
+        Long Id;
+        if(list.size()==0)
+            Id=(long)1;
+        else
+            Id = (long)list.get(list.size()-1).getId()+1;
+        return Id;
     }
 
 }
