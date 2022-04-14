@@ -1,4 +1,4 @@
-package com.eku.eku_ocr_test.service;
+package com.eku.EKU.service;
 
 import com.eku.EKU.domain.FreeBoard;
 import com.eku.EKU.domain.Student;
