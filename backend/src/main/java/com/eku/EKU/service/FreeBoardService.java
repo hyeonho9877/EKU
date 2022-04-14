@@ -39,7 +39,36 @@ public class FreeBoardService {
         }
         return newList;
     }
+    /**
+     * 게시판정보 삽입
+     * @param form 수정할 게시판의 정보
+     * @return 성공시 true, 실패시 false 반환
+     */
+    public boolean editBoard(FreeBoardForm form){
+        FreeBoard board = freeBoardRepository.findFreeBoardById(form.getId()).get();
+        if (deleteBoard(form.getId())){
+            if(insertBoard(form))
+                return true;
+            return false;
+        }
+        else
+            return false;
+    }
 
+    /**
+     * 게시물 삭제
+     * @param id 해당 게시물 번호
+     * @return 성공시 true, 실패시 false 반환
+     */
+    public boolean deleteBoard(Long id){
+        try{
+            freeBoardRepository.deleteById(id);
+        }catch (IllegalArgumentException e){
+            return false;
+        }
+        return true;
+    }
+    
     /**
      * 게시판정보 삽입
      * @param form 삽입할 게시판의 정보
