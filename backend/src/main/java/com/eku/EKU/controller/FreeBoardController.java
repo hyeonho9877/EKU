@@ -1,9 +1,9 @@
-package com.eku.eku_ocr_test.controller;
+package com.eku.EKU.controller;
 
-import com.eku.eku_ocr_test.domain.FreeBoard;
-import com.eku.eku_ocr_test.form.BoardListForm;
-import com.eku.eku_ocr_test.form.FreeBoardForm;
-import com.eku.eku_ocr_test.service.FreeBoardService;
+import com.eku.EKU.domain.FreeBoard;
+import com.eku.EKU.form.BoardListForm;
+import com.eku.EKU.form.FreeBoardForm;
+import com.eku.EKU.service.FreeBoardService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
