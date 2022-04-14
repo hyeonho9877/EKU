@@ -32,12 +32,12 @@ public class FreeBoardService {
      */
     public ArrayList<BoardListForm> boardList(){
         List<FreeBoard> list = freeBoardRepository.findAll();
-        ArrayList<BoardListForm> = new ArrayList<BoardListForm>newList;
+        ArrayList<BoardListForm> newList = new ArrayList<BoardListForm>();
         for(FreeBoard i : list){
             BoardListForm form = BoardListForm.builder().id(i.getId()).title(i.getTitle()).build();
-
+            newList.add(form);
         }
-
+        return newList;
     }
 
     /**
