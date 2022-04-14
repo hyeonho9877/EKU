@@ -1,12 +1,14 @@
-package com.eku.EKU.service;
+package com.eku.eku_ocr_test.service;
 
-import com.eku.EKU.domain.FreeBoard;
-import com.eku.EKU.domain.Student;
-import com.eku.EKU.repository.FreeBoardRepository;
-import com.eku.EKU.repository.StudentRepository;
+import com.eku.eku_ocr_test.domain.FreeBoard;
+import com.eku.eku_ocr_test.domain.Student;
+import com.eku.eku_ocr_test.repository.FreeBoardRepository;
+import com.eku.eku_ocr_test.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Date;
 
 
 @SpringBootTest

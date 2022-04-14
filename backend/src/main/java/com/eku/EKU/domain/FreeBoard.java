@@ -1,9 +1,9 @@
-package com.eku.EKU.domain;
+package com.eku.eku_ocr_test.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Builder;
 
 import javax.persistence.*;
 import java.io.Serializable;

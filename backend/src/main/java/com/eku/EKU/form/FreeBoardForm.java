@@ -1,4 +1,4 @@
-package com.eku.EKU.form;
+package com.eku.eku_ocr_test.form;
 
 import lombok.Getter;
 import lombok.Setter;
