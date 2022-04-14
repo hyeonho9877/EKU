@@ -1,8 +1,10 @@
 package com.eku.EKU.service;
 
+import com.eku.EKU.domain.BoardList;
 import com.eku.EKU.domain.FreeBoard;
+import com.eku.EKU.domain.FreeBoardResponse;
 import com.eku.EKU.domain.Student;
-import com.eku.EKU.form.BoardListForm;
+import com.eku.EKU.exceptions.NoSuchArticleException;
 import com.eku.EKU.form.FreeBoardForm;
 import com.eku.EKU.repository.FreeBoardRepository;
 import com.eku.EKU.repository.StudentRepository;
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.NoSuchElementException;
 
 
 /**
@@ -27,69 +29,68 @@ public class FreeBoardService {
     }
 
     /**
+     * 게시물 불러오기
+     * @param form
+     * @return
+     */
+    public FreeBoard loadBoard(FreeBoardForm form)throws IllegalArgumentException, NoSuchElementException{
+        FreeBoard board = freeBoardRepository.findFreeBoardById(form.getId()).get();
+        board.setView(board.getView()+1);
+        freeBoardRepository.save(board);
+        return board;
+    }
+    /**
      * 게시물 목록 
      * @return List<FreeBoard>로 목록을 반환
      */
-    public ArrayList<BoardListForm> boardList(){
+    public ArrayList<BoardList> boardList()throws IllegalArgumentException, NoSuchElementException{
         List<FreeBoard> list = freeBoardRepository.findAll();
-        ArrayList<BoardListForm> newList = new ArrayList<BoardListForm>();
+        ArrayList<BoardList> newList = new ArrayList<BoardList>();
         for(FreeBoard i : list){
-            BoardListForm form = BoardListForm.builder().id(i.getId()).title(i.getTitle()).build();
+            BoardList form = BoardList.builder().id(i.getId()).title(i.getTitle()).build();
             newList.add(form);
         }
         return newList;
     }
     /**
-     * 게시판정보 삽입
+     * 게시판정보 수정
      * @param form 수정할 게시판의 정보
-     * @return 성공시 true, 실패시 false 반환
      */
-    public boolean editBoard(FreeBoardForm form){
+    public void updateBoard(FreeBoardForm form) throws IllegalArgumentException, NoSuchElementException{
         FreeBoard board = freeBoardRepository.findFreeBoardById(form.getId()).get();
-        if (deleteBoard(form.getId())){
-            if(insertBoard(form))
-                return true;
-            return false;
+        if(form.getTitle()!=null&&form.getContent()!=null) {
+            board.setContent(form.getContent());
+            board.setTitle(form.getTitle());
+            freeBoardRepository.save(board);
         }
-        else
-            return false;
     }
 
     /**
      * 게시물 삭제
      * @param id 해당 게시물 번호
-     * @return 성공시 true, 실패시 false 반환
      */
-    public boolean deleteBoard(Long id){
-        try{
-            freeBoardRepository.deleteById(id);
-        }catch (IllegalArgumentException e){
-            return false;
-        }
-        return true;
+    public void deleteBoard(Long id) throws IllegalArgumentException, NoSuchElementException {
+        freeBoardRepository.deleteById(id);
     }
     
     /**
      * 게시판정보 삽입
      * @param form 삽입할 게시판의 정보
-     * @return 성공시 true, 실패시 false 반환
+     * @return
      */
-   public boolean insertBoard(FreeBoardForm form){
+     public FreeBoardResponse insertBoard(FreeBoardForm form) throws IllegalArgumentException{
         Student studNo = Student.builder().studNo(form.getStudNo()).name("temp").email("temp").department("temp").build();
-        try {
-            FreeBoard freeBoard = FreeBoard.builder()
-                    .id(newId())
-                    .student(studNo)
-                    .department(form.getDepartment())
-                    .title(form.getTitle())
-                    .content(form.getContent())
-                    .time(form.getTime()).build();
-            freeBoardRepository.save(freeBoard);
-        }catch (IllegalArgumentException e){
-            return false;
-        }
-        return true;
+        FreeBoard freeBoard = FreeBoard.builder()
+                .id(newId())
+                .student(studNo)
+                .department(form.getDepartment())
+                .title(form.getTitle())
+                .content(form.getContent())
+                .time(currentTime()).build();
+        return new FreeBoardResponse(freeBoardRepository.save(freeBoard));
     }
+
+
 
     /**
      * 시간함수
