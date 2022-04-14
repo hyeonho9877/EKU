@@ -1,6 +1,6 @@
-package com.eku.eku_ocr_test.repository;
+package com.eku.EKU.repository;
 
-import com.eku.eku_ocr_test.domain.FreeBoard;
+import com.eku.EKU.domain.FreeBoard;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
