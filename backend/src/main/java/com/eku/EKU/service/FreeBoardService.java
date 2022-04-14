@@ -86,7 +86,7 @@ public class FreeBoardService {
                 .department(form.getDepartment())
                 .title(form.getTitle())
                 .content(form.getContent())
-                .time(form.getTime()).build();
+                .time(currentTime()).build();
         return new FreeBoardResponse(freeBoardRepository.save(freeBoard));
     }
 

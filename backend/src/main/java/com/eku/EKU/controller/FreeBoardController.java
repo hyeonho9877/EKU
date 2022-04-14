@@ -3,6 +3,7 @@ package com.eku.EKU.controller;
 
 import com.eku.EKU.domain.BoardList;
 import com.eku.EKU.domain.FreeBoard;
+import com.eku.EKU.domain.FreeBoardResponse;
 import com.eku.EKU.exceptions.NoSuchBoardException;
 import com.eku.EKU.form.FreeBoardForm;
 import com.eku.EKU.service.FreeBoardService;
@@ -52,10 +53,10 @@ public class FreeBoardController {
     public ResponseEntity<?> updateBoard(@RequestBody FreeBoardForm form){
         try {
             boardService.updateBoard(form);
-            return ResponseEntity.ok(form);
+            return ResponseEntity.ok(form.getId());
         } catch (IllegalArgumentException | NoSuchElementException exception) {
             exception.printStackTrace();
-            return ResponseEntity.internalServerError().body(form);
+            return ResponseEntity.internalServerError().body(form.getId());
         }
     }
 
@@ -63,7 +64,7 @@ public class FreeBoardController {
      * 게시판의 전체목록을 불러오는 메소드
      * @return 게시판목록(제목, id) list 반환
      */
-    @GetMapping("/board/free/list")
+    @GetMapping("/board/free/lists")
     public ResponseEntity<?> boardList(){
         ArrayList<BoardList> list = boardService.boardList();
         if(!list.isEmpty())
@@ -77,18 +78,18 @@ public class FreeBoardController {
      * @param form
      * @return
      */
-    @GetMapping("/board/free")
+    @GetMapping("/board/free/view")
     public ResponseEntity<?> loadBoard(@RequestBody FreeBoardForm form){
-        FreeBoard board = boardService.loadBoard(form);
+        FreeBoardResponse board = new FreeBoardResponse(boardService.loadBoard(form));
         if(board!=null)
             return ResponseEntity.ok(board);
         else
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body(board.getId());
     }
     /**
      * 게시물 삭제 메소드
      * @param form 삭제할 게시물
-     * @return 성공시 true, 실패시 false 반환
+     * @return
      */
     @PostMapping("/board/free/delete")
     public ResponseEntity<?> deleteBoard(@RequestBody FreeBoardForm form){
