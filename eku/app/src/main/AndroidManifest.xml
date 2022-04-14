@@ -53,7 +53,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Eku">
-        <activity android:name=".cameraTest"
+        <activity android:name=".LectureMain"
             android:exported="true"
             >
             <intent-filter>
@@ -82,8 +82,8 @@
             android:exported="true" />
         <activity
             android:name=".PhotoServeActivity"
-            android:exported="true"/>
-
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan"/>
 
         <activity
             android:name=".DonanBagGi"
@@ -106,8 +106,6 @@
 
         </activity>
 
-
-
         <activity
             android:name=".LoginActivity"
             android:exported="true"
@@ -129,6 +127,20 @@
             android:name=".Request"
             android:exported="true" />
         <activity android:name=".WriteBoard" />
+
+        <activity
+            android:name=".SignPhotoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ScheduleTable"
+            android:exported="false" />
+        <activity
+            android:name=".LectureWrite"
+            android:exported="true"/>
+        <activity
+            android:name=".LectureDetail"
+            android:exported="true"/>
+
     </application>
 
 </manifest>
