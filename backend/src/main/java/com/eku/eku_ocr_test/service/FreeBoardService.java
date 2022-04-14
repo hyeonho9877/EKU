@@ -2,6 +2,7 @@ package com.eku.eku_ocr_test.service;
 
 import com.eku.eku_ocr_test.domain.FreeBoard;
 import com.eku.eku_ocr_test.domain.Student;
+import com.eku.eku_ocr_test.form.BoardListForm;
 import com.eku.eku_ocr_test.form.FreeBoardForm;
 import com.eku.eku_ocr_test.repository.FreeBoardRepository;
 import com.eku.eku_ocr_test.repository.StudentRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -23,8 +25,19 @@ public class FreeBoardService {
         this.freeBoardRepository = freeBoardRepository;
         this.studentRepository = studentRepository;
     }
-    public ArrayList<FreeBoard> boardList(){
-        return null;
+
+    /**
+     * 게시물 목록 
+     * @return List<FreeBoard>로 목록을 반환
+     */
+    public ArrayList<BoardListForm> boardList(){
+        List<FreeBoard> list = freeBoardRepository.findAll();
+        ArrayList<BoardListForm> = new ArrayList<BoardListForm>newList;
+        for(FreeBoard i : list){
+            BoardListForm form = BoardListForm.builder().id(i.getId()).title(i.getTitle()).build();
+
+        }
+
     }
 
     /**
