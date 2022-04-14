@@ -11,7 +11,14 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
+    /*
+     제목 : DBhelper
 
+
+     기능 : todolist 조회, 수정, 삭제 기능 수행
+
+
+     */
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "todolist.db";
 

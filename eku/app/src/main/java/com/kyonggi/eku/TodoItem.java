@@ -2,6 +2,14 @@ package com.kyonggi.eku;
 
 public class TodoItem {
 
+    /*
+    제목 : todoitem
+
+
+    기능 : todolist 추가되는 아이템
+
+
+    */
     private int id;
     private String title;
     private String content;

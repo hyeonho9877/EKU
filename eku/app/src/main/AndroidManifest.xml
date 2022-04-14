@@ -74,8 +74,6 @@
         <activity
             android:name=".PhotoServeActivity"
             android:exported="true"
-            android:name=".DetailFreeCommunity"
-            android:exported="false"
             android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".WriteFreeCommunity"

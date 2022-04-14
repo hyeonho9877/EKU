@@ -18,6 +18,15 @@ import java.util.Date;
 
 public class TodoActivity extends AppCompatActivity {
 
+    /*
+     제목 : todolist
+
+
+     기능 : todolist 추가 기능 수행
+
+
+     */
+
     private RecyclerView mRv_todo;
     private FloatingActionButton mBtn_write;
     private ArrayList<TodoItem> mTodoItems;
