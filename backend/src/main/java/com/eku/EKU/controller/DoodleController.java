@@ -5,9 +5,9 @@ import com.eku.EKU.exceptions.NoSuchDoodleException;
 import com.eku.EKU.form.DoodleForm;
 import com.eku.EKU.service.DoodleService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.NoSuchElementException;
@@ -49,10 +49,10 @@ public class DoodleController {
         }
     }
 
-    @GetMapping("/doodle/read")
-    public ResponseEntity<?> readDoodles(@RequestBody DoodleForm form) {
+    @PostMapping("/doodle/read")
+    public ResponseEntity<?> readDoodles(@RequestParam(name = "minor") String minor) {
         try {
-            return ResponseEntity.ok(doodleService.getRecentDoodle(form));
+            return ResponseEntity.ok(doodleService.getRecentDoodle(minor));
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(null);
         }
