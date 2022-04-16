@@ -31,7 +31,6 @@ public class InfoBoardCommentService {
         InfoBoard original = infoBoardRepository.findById(form.getArticleID()).orElseThrow(NoSuchArticleException::new);
         InfoBoardComment comment = InfoBoardComment.builder()
                 .content(form.getContent())
-                .writtenTime(form.getWrittenTime())
                 .writer(writer)
                 .original(original)
                 .build();

@@ -1,5 +1,6 @@
 package com.eku.EKU.controller;
 
+import com.eku.EKU.exceptions.NoAuthExceptions;
 import com.eku.EKU.exceptions.NoSuchStudentException;
 import com.eku.EKU.form.SignInForm;
 import com.eku.EKU.service.SignInService;
@@ -39,13 +40,15 @@ public class SignInController {
         try {
             if (signInService.authStudent(form))
                 return ResponseEntity.ok().body("SignIn Success.");
-            else return ResponseEntity.internalServerError().body("Server in Error.");
+            else return ResponseEntity.badRequest().body("Password not matching");
         } catch (NoSuchStudentException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | InvalidKeySpecException | InvalidKeyException | InvalidAlgorithmParameterException e) {
             e.printStackTrace();
             return ResponseEntity.internalServerError().body("Server in Error.");
         } catch (BadPaddingException e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body("Password not matching.");
+        } catch (NoAuthExceptions exceptions) {
+            return ResponseEntity.badRequest().body("not authorized");
         }
     }
 }

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,6 +47,14 @@ public class MainBoard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_board);
 
+        Button button = findViewById(R.id.donanRun);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), DonanBagGi.class);
+                startActivity(intent);
+            }
+        });
         View gestureView = findViewById(R.id.gestureView);
         gestureView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -164,24 +173,28 @@ public class MainBoard extends AppCompatActivity {
                 switch (msg.what) {
                     case 0:
                         String responseResult = (String) msg.obj;
-                        try {
+                        Log.i("a",responseResult);
+                            /*
                             JSONArray BoardArray = new JSONArray(responseResult);
                             for (int i = 0; i < BoardArray.length(); i++) {
                                 JSONObject BoardObject = BoardArray.getJSONObject(i);
-
+                             */
+                            JSONObject BoardObject = null;
+                            try {
+                                BoardObject = new JSONObject(responseResult);
                                 String content = BoardObject.getString("content");
                                 String time = BoardObject.getString("writtenTime");
-                                gAdapter.addItem(new ListItem(content,time));
+                                gAdapter.addItem(new ListItem(content, time));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
                 }
             }
         };
 
         SendTool sendTool = new SendTool(handler);
         HashMap<String,String> temp = new HashMap<>();
+        temp.put("minor","61686");
         try {
             sendTool.request("http://115.85.182.126:8080/doodle/read", "POST", temp);
         } catch (IOException e) {
