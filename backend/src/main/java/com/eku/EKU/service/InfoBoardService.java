@@ -1,14 +1,18 @@
 package com.eku.EKU.service;
 
-import com.eku.EKU.domain.*;
-import com.eku.EKU.form.FreeBoardForm;
+import com.eku.EKU.domain.BoardList;
+import com.eku.EKU.domain.InfoBoard;
+import com.eku.EKU.domain.InfoBoardResponse;
+import com.eku.EKU.domain.Student;
 import com.eku.EKU.form.InfoBoardForm;
 import com.eku.EKU.repository.InfoBoardRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@Service
 public class InfoBoardService {
     public final InfoBoardRepository infoBoardRepository;
 

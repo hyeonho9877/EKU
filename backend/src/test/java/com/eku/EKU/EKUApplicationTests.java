@@ -3,7 +3,7 @@ package com.eku.EKU;
 import com.eku.EKU.config.CustomProperty;
 import com.eku.EKU.domain.Grade;
 import com.eku.EKU.domain.Lecture;
-import com.eku.EKU.domain.LectureRepository;
+import com.eku.EKU.repository.LectureRepository;
 import com.eku.EKU.secure.KeyGen;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
