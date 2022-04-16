@@ -1,9 +1,12 @@
 package com.kyonggi.eku;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +17,13 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 /*
 * 강의동 낙서게시판
@@ -122,17 +132,41 @@ public class MainBoard extends AppCompatActivity {
                 //없음
             }
         });
-        //initialize();
+
         GridView gridView = (GridView)findViewById(R.id.board_Memo);
         GridListAdapter gAdapter = new GridListAdapter();
 
-        int count = PreferenceManagers.getInt(getApplicationContext(), "board_Count");
+        Handler handler = new Handler() {
+            public void handleMessage(@NonNull Message msg) {
+                switch (msg.what) {
+                    case 0:
+                        String responseResult = (String) msg.obj;
+                        try {
+                            JSONArray BoardArray = new JSONArray(responseResult);
+                            for (int i = 0; i < BoardArray.length(); i++) {
+                                JSONObject BoardObject = BoardArray.getJSONObject(i);
 
-        for (int i=1; i<=count; i++){
-            String content = PreferenceManagers.getString(getApplicationContext(), "board"+i);
-            String time = PreferenceManagers.getString(getApplicationContext(), "time"+i);
-            gAdapter.addItem(new ListItem(content,time));
+                                String content = BoardObject.getString("content");
+                                String time = BoardObject.getString("writtenTime");
+                                gAdapter.addItem(new ListItem(content,time));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                }
+            }
+        };
+
+        SendTool sendTool = new SendTool(handler);
+        HashMap<String,String> temp = new HashMap<>();
+        try {
+            sendTool.request("http://115.85.182.126:8080/doodle/read", "POST", temp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
 
         gridView.setAdapter(gAdapter);
 
@@ -146,14 +180,7 @@ public class MainBoard extends AppCompatActivity {
             }
         });
     }
-    public void initialize() { //데이터 초기화
-        int i = PreferenceManagers.getInt(getApplicationContext(), "board_Count");
-        for (int j=1;j<=i;j++){
-            PreferenceManagers.removeKey(getApplicationContext(),"board"+j);
-            PreferenceManagers.removeKey(getApplicationContext(),"time"+j);
-        }
-        PreferenceManagers.setInt(getApplicationContext(), "board_Count", 0);
-    }
+
     public void onSwipeLeft() {
         Toast.makeText(this,"좌측 스와이프", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), MainCommunity.class);

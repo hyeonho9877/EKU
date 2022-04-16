@@ -147,6 +147,17 @@
         <activity
             android:name=".PhotoServeActivity"
             android:exported="true" />
+
+        <activity
+            android:name=".LectureMain"
+            android:exported="false" />
+        <activity
+            android:name=".LectureDetail"
+            android:exported="false" />
+
+
     </application>
 
 </manifest>
+
+
