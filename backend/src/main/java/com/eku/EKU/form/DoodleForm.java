@@ -6,5 +6,5 @@ import lombok.Data;
 public class DoodleForm {
     private long doodleId;
     private String content;
-    private String uuid;
+    private String minor;
 }

@@ -27,7 +27,7 @@ public class DoodleService {
     }
 
     public DoodleResponse applyDoodle(DoodleForm form) throws IllegalArgumentException, NoSuchBuildingException{
-        Building building = buildingRepository.findById(form.getUuid()).orElseThrow(NoSuchBuildingException::new);
+        Building building = buildingRepository.findById(form.getMinor()).orElseThrow(NoSuchBuildingException::new);
         Doodle doodle = Doodle.builder()
                 .content(form.getContent())
                 .building(building)
@@ -48,8 +48,8 @@ public class DoodleService {
         }
     }
 
-    public List<DoodleResponse> getRecentDoodle(DoodleForm form) throws NoSuchElementException{
-        return doodleRepository.findAllByBuildingBeaconIdEquals(Pageable.ofSize(10), form.getUuid()).getContent()
+    public List<DoodleResponse> getRecentDoodle(String minor) throws NoSuchElementException{
+        return doodleRepository.findAllByBuildingBeaconIdEquals(Pageable.ofSize(10), minor).getContent()
                 .stream()
                 .map(DoodleResponse::new)
                 .collect(Collectors.toList());
