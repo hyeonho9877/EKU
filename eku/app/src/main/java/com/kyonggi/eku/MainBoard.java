@@ -47,6 +47,14 @@ public class MainBoard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_board);
 
+        Button button = findViewById(R.id.donanRun);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), DonanBagGi.class);
+                startActivity(intent);
+            }
+        });
         View gestureView = findViewById(R.id.gestureView);
         gestureView.setOnTouchListener(new View.OnTouchListener() {
             @Override
