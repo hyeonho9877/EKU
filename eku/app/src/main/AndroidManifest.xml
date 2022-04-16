@@ -54,10 +54,17 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".VerfityActivity"
+            android:name=".findGang"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".VerfityActivity"
+            android:exported="true"></activity>
         <activity
             android:name=".DetailFreeCommunity"
             android:exported="false"
@@ -94,21 +101,19 @@
         -->
         <activity
             android:name=".DonanBagGi"
-            android:exported="true" />
+            android:exported="true"></activity>
         <activity
             android:name=".MainCommunity"
             android:exported="true" />
         <activity
             android:name=".SignInfoActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".SignPhotoActivity"
             android:exported="false" />
         <activity
             android:name=".TodoActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <!--
         <activity
             android:name=".MainActivity"
@@ -117,9 +122,7 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <service
             android:name="com.minew.beacon.ScanService"
@@ -139,29 +142,22 @@
         <activity android:name=".WriteBoard" />
         <activity
             android:name=".MainBoard"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".PhotoServeActivity"
             android:exported="true" />
-
         <activity
             android:name=".LectureMain"
             android:exported="false" />
         <activity
             android:name=".LectureDetail"
             android:exported="false" />
-        <activity
-            android:name=".ScheduleTable"
-            android:exported="false" />
-
-
     </application>
 
 </manifest>
-
-

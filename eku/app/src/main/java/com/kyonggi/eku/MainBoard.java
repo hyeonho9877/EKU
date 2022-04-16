@@ -13,21 +13,18 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.HashMap;
+
 
 /*
 * 강의동 낙서게시판
@@ -40,10 +37,15 @@ public class MainBoard extends AppCompatActivity {
     int[] building = {1,2,3,4,5,6,7,8,9,0};
     AlertDialog buildingSelectDialog;
     GestureDetector gestureDetector = null;
-    long backKeyPressedTime;
+
+
+
+
+    TextView BuildingButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_board);
 
@@ -123,7 +125,17 @@ public class MainBoard extends AppCompatActivity {
             }
         });
 
-        TextView BuildingButton = (TextView) findViewById(R.id.board_Spinner);
+        BuildingButton = (TextView) findViewById(R.id.go_Donan);
+        BuildingButton.setText("불러오는중");
+        Intent intent = getIntent();
+        String name;
+        try {
+            name = intent.getExtras().getString("GANG");
+        } catch (Exception e)
+        {
+            name="8강의동";
+        }
+        BuildingButton.setText(name);
         BuildingButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -213,7 +225,6 @@ public class MainBoard extends AppCompatActivity {
         Toast.makeText(this,"좌측 스와이프", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), MainCommunity.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.anim_slide_in_right,0);
         finish();
     }
 
@@ -236,15 +247,5 @@ public class MainBoard extends AppCompatActivity {
         Toast.makeText(this,"하단 스와이프", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onBackPressed() {
-        if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
-            backKeyPressedTime = System.currentTimeMillis();
-            Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
-            finish();
-        }
-    }
+
 }

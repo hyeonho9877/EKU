@@ -4,10 +4,8 @@ import com.eku.EKU.domain.BoardList;
 import com.eku.EKU.domain.FreeBoard;
 import com.eku.EKU.domain.FreeBoardResponse;
 import com.eku.EKU.domain.Student;
-import com.eku.EKU.exceptions.NoSuchArticleException;
 import com.eku.EKU.form.FreeBoardForm;
 import com.eku.EKU.repository.FreeBoardRepository;
-import com.eku.EKU.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,11 +19,9 @@ import java.util.NoSuchElementException;
 @Service
 public class FreeBoardService {
     private final FreeBoardRepository freeBoardRepository;
-    private final StudentRepository studentRepository;
 
-    public FreeBoardService(FreeBoardRepository freeBoardRepository, StudentRepository studentRepository) {
+    public FreeBoardService(FreeBoardRepository freeBoardRepository) {
         this.freeBoardRepository = freeBoardRepository;
-        this.studentRepository = studentRepository;
     }
 
     /**
@@ -47,7 +43,12 @@ public class FreeBoardService {
         List<FreeBoard> list = freeBoardRepository.findAll();
         ArrayList<BoardList> newList = new ArrayList<BoardList>();
         for(FreeBoard i : list){
-            BoardList form = BoardList.builder().id(i.getId()).title(i.getTitle()).build();
+            BoardList form = BoardList.builder()
+                    .id(i.getId())
+                    .title(i.getTitle())
+                    .no(studentNo(i.getStudent().getStudNo()))
+                    .department(i.getDepartment())
+                    .build();
             newList.add(form);
         }
         return newList;
@@ -78,7 +79,7 @@ public class FreeBoardService {
      * @param form 삽입할 게시판의 정보
      * @return
      */
-     public FreeBoardResponse insertBoard(FreeBoardForm form) throws IllegalArgumentException{
+     public FreeBoardResponse insertBoard(FreeBoardForm form) throws IllegalArgumentException, NoSuchElementException{
         Student studNo = Student.builder().studNo(form.getStudNo()).name("temp").email("temp").department("temp").build();
         FreeBoard freeBoard = FreeBoard.builder()
                 .id(newId())
@@ -116,4 +117,13 @@ public class FreeBoardService {
         return Id;
     }
 
+    /**
+     * 학번전체를 받아 3,4번째 자리만 추출
+     * @param no 학번(2016xxxxx)
+     * @return (ex-16)
+     */
+    public Long studentNo(Long no){
+        Long temp = no/100000;
+        return temp-2000;
+    }
 }
