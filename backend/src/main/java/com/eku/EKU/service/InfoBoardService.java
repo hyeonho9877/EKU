@@ -1,14 +1,15 @@
 package com.eku.EKU.service;
 
 import com.eku.EKU.domain.*;
-import com.eku.EKU.form.FreeBoardForm;
 import com.eku.EKU.form.InfoBoardForm;
 import com.eku.EKU.repository.InfoBoardRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@Service
 public class InfoBoardService {
     public final InfoBoardRepository infoBoardRepository;
 
@@ -27,20 +28,23 @@ public class InfoBoardService {
     }
     /**
      * 게시물 목록
+     * @param boardForm 해당 강의동
      * @return List<InfoBoard>로 목록을 반환
      */
-    public ArrayList<BoardList> boardList()throws IllegalArgumentException, NoSuchElementException{
+    public ArrayList<BoardList> boardList(InfoBoardForm boardForm)throws IllegalArgumentException, NoSuchElementException{
         List<InfoBoard> list = infoBoardRepository.findAll();
         ArrayList<BoardList> newList = new ArrayList<BoardList>();
         for(InfoBoard i : list){
-            BoardList form = BoardList.builder()
+            if(isCorrectBuilding(i.getBuilding(), boardForm.getLecture_building())){
+                BoardList form = BoardList.builder()
                     .id(i.getId())
                     .title(i.getTitle())
-                    .name(i.getWriter().getName())
+                    .name(i.getName())
                     .department(i.getDepartment())
-                    .no(i.getWriter().getStudNo())
+                    .no(i.getNo().getStudNo())
                     .build();
-            newList.add(form);
+                newList.add(form);
+            }
         }
         return newList;
     }
@@ -53,13 +57,38 @@ public class InfoBoardService {
         Student studNo = Student.builder().studNo(form.getWriterNo()).name("temp").email("temp").department("temp").build();
         InfoBoard infoBoard = InfoBoard.builder()
                 .id(newId())
-
+                .no(studNo)
+                .name(form.getName())
                 .department(form.getDepartment())
                 .title(form.getTitle())
                 .content(form.getContent())
-                .writtenTime(currentTime()).build();
+                .writtenTime(currentTime())
+                .building(form.getBuilding())
+                .build();
         return new InfoBoardResponse(infoBoardRepository.save(infoBoard));
     }
+    /**
+     * 게시판정보 수정
+     * @param form 수정할 게시판의 정보
+     */
+    public void updateBoard(InfoBoardForm form) throws IllegalArgumentException, NoSuchElementException{
+        InfoBoard board = infoBoardRepository.findInfoBoardById(form.getId()).get();
+        if(form.getTitle()!=null&&form.getContent()!=null) {
+            board.setContent(form.getContent());
+            board.setTitle(form.getTitle());
+            board.setBuilding(form.getBuilding());
+            infoBoardRepository.save(board);
+        }
+    }
+    /**
+     * 게시물 삭제
+     * @param id 해당 게시물 번호
+     */
+    public void deleteBoard(Long id) throws IllegalArgumentException, NoSuchElementException {
+        infoBoardRepository.deleteById(id);
+    }
+
+
     /**
      * 새로운 게시물 id를 정하는 메소드
      * @return 마지막게시물의 id+1
@@ -82,5 +111,16 @@ public class InfoBoardService {
         java.text.SimpleDateFormat sdf =
                 new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(dt);
+    }
+    /**
+     * 1011001010 이런식으로 오는 강의동코드와 목록이 표시되어야할 강의동 번호가 일치하는지 검사하는 함수
+     */
+    public boolean isCorrectBuilding(long code, int no){
+        String codeToString = Long.toString(code);
+        if(no<1||no>10)
+            return false;
+        if(codeToString.substring(no-1,no)=="1")
+            return true;
+        return false;
     }
 }
