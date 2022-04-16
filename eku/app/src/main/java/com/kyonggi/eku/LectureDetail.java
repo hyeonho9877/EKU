@@ -47,18 +47,18 @@ public class LectureDetail extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        int Lid = intent.getIntExtra("key",-1);
+        String title = intent.getStringExtra("Name");
+        String professor = intent.getStringExtra("Prof");
 
         TextView textView = (TextView)findViewById(R.id.lecture_detail_name);
-        String name = PreferenceManagers.getString(getApplicationContext(), "name"+Lid);
-        textView.setText(name);
+        textView.setText(title);
 
         textView = (TextView)findViewById(R.id.lecture_detail_professor);
-        name = PreferenceManagers.getString(getApplicationContext(), "professor"+Lid);
-        textView.setText(name);
+        textView.setText(professor);
 
+        //밑에 전부 수정
         RatingBar ratingStar = findViewById(R.id.lecture_detail_rating);
-        Float rating = PreferenceManagers.getFloat(getApplicationContext(),"rating" + Lid);
+        Float rating = PreferenceManagers.getFloat(getApplicationContext(),"rating" );
         ratingStar.setRating(rating);
 
         Button closeButton = (Button) findViewById(R.id.lecture_detail_CloseButton);
@@ -72,7 +72,7 @@ public class LectureDetail extends AppCompatActivity {
         });
 
 
-        detail_Lecture(Lid);
+        detail_Lecture(0);
     }
 
     public void detail_Lecture(int Lid){

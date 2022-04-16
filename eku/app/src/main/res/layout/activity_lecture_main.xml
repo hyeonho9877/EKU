@@ -32,7 +32,7 @@
     <ScrollView
         android:id="@+id/Lecture_Main_ScrollView"
         android:layout_width="match_parent"
-        android:layout_height="617dp"
+        android:layout_height="580dp"
         android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.125"
