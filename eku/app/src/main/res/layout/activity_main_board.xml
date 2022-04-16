@@ -6,11 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Spinner
+    <TextView
         android:id="@+id/board_Spinner"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:textSize="25dp"
         android:backgroundTint="#F6A788"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
