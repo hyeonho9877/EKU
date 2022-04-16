@@ -1,5 +1,6 @@
 package com.kyonggi.eku;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -21,6 +23,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -141,7 +146,31 @@ public class DetailFreeCommunity extends AppCompatActivity {
             modifyButton.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getApplicationContext(),"수정", Toast.LENGTH_SHORT).show();
+                    Handler handler = new Handler(){
+                        public void handleMessage(@NonNull Message msg){
+                            switch (msg.what) {
+                                case 0:
+                                    String responseResult=(String)msg.obj;
+                                    Toast.makeText(getApplicationContext(), responseResult, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    };
+
+                    SendTool sendTool = new SendTool(handler);
+
+                    HashMap<String,String> temp2 = new HashMap<>();
+                    temp2.put("studNo","201713924");
+                    temp2.put("department","컴퓨터공학과");
+                    temp2.put("title","test제목");
+                    temp2.put("content","test내용");
+
+                    try {
+                        sendTool.request("http://115.85.182.126:8080/board/free/write","POST",temp2);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             Button deleteButton = new Button(getApplicationContext());
@@ -149,7 +178,31 @@ public class DetailFreeCommunity extends AppCompatActivity {
             deleteButton.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getApplicationContext(),"삭제", Toast.LENGTH_SHORT).show();
+                    Handler handler = new Handler(){
+                        public void handleMessage(@NonNull Message msg){
+                            switch (msg.what) {
+                                case 0:
+                                    String responseResult=(String)msg.obj;
+                                    Toast.makeText(getApplicationContext(), responseResult, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    };
+
+                    SendTool sendTool = new SendTool(handler);
+
+                    HashMap<String,String> temp2 = new HashMap<>();
+                    temp2.put("studNo","201713924");
+                    temp2.put("department","컴퓨터공학과");
+                    temp2.put("title","test제목");
+                    temp2.put("content","test내용");
+
+                    try {
+                        sendTool.request("http://115.85.182.126:8080/board/free/write","POST",temp2);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             buttonLayout.addView(modifyButton);

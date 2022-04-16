@@ -118,6 +118,8 @@ public class WriteAnnounce extends AppCompatActivity {
                 PreferenceManagers.setString(getApplicationContext(), "announce_time" + count, time);
 
 
+
+
                 activityResultLauncher.launch(intent);
                 finish();
 
