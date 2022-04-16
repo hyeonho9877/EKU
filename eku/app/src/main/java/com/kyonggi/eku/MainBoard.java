@@ -40,6 +40,7 @@ public class MainBoard extends AppCompatActivity {
     int[] building = {1,2,3,4,5,6,7,8,9,0};
     AlertDialog buildingSelectDialog;
     GestureDetector gestureDetector = null;
+    long backKeyPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,6 +213,7 @@ public class MainBoard extends AppCompatActivity {
         Toast.makeText(this,"좌측 스와이프", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), MainCommunity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.anim_slide_in_right,0);
         finish();
     }
 
@@ -232,5 +234,17 @@ public class MainBoard extends AppCompatActivity {
 
     public void onSwipeBottom() {
         Toast.makeText(this,"하단 스와이프", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
+            backKeyPressedTime = System.currentTimeMillis();
+            Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
+            finish();
+        }
     }
 }
