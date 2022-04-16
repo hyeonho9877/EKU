@@ -85,12 +85,7 @@ public class CriticService {
      * @return 최근 10개의 강의평가 리스트
      */
     public List<CriticResponse> readRecentCritic(CriticForm form){
-        /*if(form.getLectureName() != null && form.getProfName()!=null){
-            return criticRepository.findAllByLectureNameEqualsAndProfNameEquals(form.getLectureName(), form.getProfName())
-                    .stream()
-                    .map(CriticResponse::new)
-                    .collect(Collectors.toList());
-        } else */return criticRepository.findAll(Pageable.ofSize(10)).getContent()
+        return criticRepository.findAll(Pageable.ofSize(10)).getContent()
                 .stream()
                 .map(CriticResponse::new)
                 .collect(Collectors.toList());

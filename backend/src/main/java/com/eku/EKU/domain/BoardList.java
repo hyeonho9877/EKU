@@ -2,8 +2,6 @@ package com.eku.EKU.domain;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Builder
 @Data

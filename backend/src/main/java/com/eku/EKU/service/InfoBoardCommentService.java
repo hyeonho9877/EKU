@@ -1,18 +1,15 @@
 package com.eku.EKU.service;
 
-import com.eku.EKU.domain.InfoBoard;
 import com.eku.EKU.domain.InfoBoardComment;
-import com.eku.EKU.domain.InfoBoardCommentResponse;
-import com.eku.EKU.domain.Student;
-import com.eku.EKU.exceptions.NoSuchArticleException;
 import com.eku.EKU.exceptions.NoSuchCommentException;
-import com.eku.EKU.exceptions.NoSuchStudentException;
 import com.eku.EKU.form.CommentForm;
 import com.eku.EKU.repository.InfoBoardCommentRepository;
 import com.eku.EKU.repository.InfoBoardRepository;
 import com.eku.EKU.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityNotFoundException;
 
 @Service
 public class InfoBoardCommentService {
@@ -26,16 +23,14 @@ public class InfoBoardCommentService {
         this.studentRepository = studentRepository;
     }
 
-    public InfoBoardCommentResponse applyComment(CommentForm form) throws NoSuchStudentException, NoSuchArticleException, IllegalArgumentException {
-        Student writer = studentRepository.findById(form.getWriter()).orElseThrow(NoSuchStudentException::new);
-        InfoBoard original = infoBoardRepository.findById(form.getArticleID()).orElseThrow(NoSuchArticleException::new);
+    public void applyComment(CommentForm form) throws IllegalArgumentException, EntityNotFoundException {
         InfoBoardComment comment = InfoBoardComment.builder()
                 .content(form.getContent())
-                .writer(writer)
-                .original(original)
+                .writer(studentRepository.getById(form.getWriter()))
+                .original(infoBoardRepository.getById(form.getArticleID()))
                 .build();
 
-        return new InfoBoardCommentResponse(commentRepository.save(comment));
+        commentRepository.save(comment);
     }
 
     public void deleteComment(CommentForm form) throws IllegalArgumentException {

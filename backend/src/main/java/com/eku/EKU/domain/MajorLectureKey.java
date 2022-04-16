@@ -5,7 +5,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class LectureKey implements Serializable {
+public class MajorLectureKey implements Serializable {
     private int year;
     private String lectureNo;
+    private int semester;
 }

@@ -1,9 +1,7 @@
 package com.eku.EKU.service;
 
-import com.eku.EKU.domain.Building;
 import com.eku.EKU.domain.Doodle;
 import com.eku.EKU.domain.DoodleResponse;
-import com.eku.EKU.exceptions.NoSuchBuildingException;
 import com.eku.EKU.exceptions.NoSuchDoodleException;
 import com.eku.EKU.form.DoodleForm;
 import com.eku.EKU.repository.BuildingRepository;
@@ -12,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -26,14 +25,13 @@ public class DoodleService {
         this.buildingRepository = buildingRepository;
     }
 
-    public DoodleResponse applyDoodle(DoodleForm form) throws IllegalArgumentException, NoSuchBuildingException{
-        Building building = buildingRepository.findById(form.getMinor()).orElseThrow(NoSuchBuildingException::new);
+    public void applyDoodle(DoodleForm form) throws IllegalArgumentException, EntityNotFoundException {
         Doodle doodle = Doodle.builder()
                 .content(form.getContent())
-                .building(building)
+                .building(buildingRepository.getById(form.getMinor()))
                 .build();
 
-        return new DoodleResponse(doodleRepository.save(doodle));
+        doodleRepository.save(doodle);
     }
 
     public void deleteDoodle(DoodleForm form) throws NoSuchElementException, IllegalArgumentException {
@@ -41,14 +39,14 @@ public class DoodleService {
     }
 
     @Transactional
-    public void updateDoodle(DoodleForm form) throws NoSuchDoodleException, IllegalArgumentException{
+    public void updateDoodle(DoodleForm form) throws NoSuchDoodleException, IllegalArgumentException {
         Doodle target = doodleRepository.findById(form.getDoodleId()).orElseThrow(NoSuchDoodleException::new);
         if (form.getContent() != null) {
             target.setContent(form.getContent());
         }
     }
 
-    public List<DoodleResponse> getRecentDoodle(String minor) throws NoSuchElementException{
+    public List<DoodleResponse> getRecentDoodle(String minor) throws NoSuchElementException {
         return doodleRepository.findAllByBuildingBeaconIdEquals(Pageable.ofSize(10), minor).getContent()
                 .stream()
                 .map(DoodleResponse::new)

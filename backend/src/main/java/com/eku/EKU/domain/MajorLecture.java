@@ -10,23 +10,21 @@ import javax.persistence.IdClass;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-@IdClass(LectureKey.class)
 @ToString
-public class Lecture {
+@IdClass(MajorLectureKey.class)
+public class MajorLecture {
     @Id
-    @Column(name = "lecture_no", nullable = false)
+    private Integer year;
+    @Id
     private String lectureNo;
     @Id
-    @Column(name = "year", nullable = false)
-    private int year;
+    private Integer semester;
 
     @Column(name = "campus", nullable = false)
     private String campus;
-    @Column(name = "lecture_group", nullable = false)
-    private String lectureGroup;
     @Column(name = "lecture_name", nullable = false)
     private String lectureName;
     @Column(name = "grade")
@@ -43,4 +41,6 @@ public class Lecture {
     private String lectureTime;
     @Column(name = "lecture_room")
     private String lectureRoom;
+    @Column(name = "lecture_dept", nullable = false)
+    private String dept;
 }
