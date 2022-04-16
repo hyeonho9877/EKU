@@ -97,6 +97,9 @@ public class SendTool {
 
 
 
+
+
+
     public void request(String detailURL, String getPost, HashMap<String,String> contents) throws IOException, JSONException {
         final Thread th = new Thread(new Runnable() {
             @Override
@@ -225,6 +228,8 @@ public class SendTool {
         }
 
     }
+
+
 }
 
 
