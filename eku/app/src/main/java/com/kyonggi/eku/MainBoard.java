@@ -174,6 +174,20 @@ public class MainBoard extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                UserInformation userInfo = new UserInformation();
+                String check = userInfo.sessionCheck(getApplicationContext());
+                if(check.equals("needLogin"))
+                {
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else if(check.equals("needVerify"))
+                {
+                    Intent intent = new Intent(getApplicationContext(), VerfityActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
                 Intent intent = new Intent(getApplicationContext(), WriteBoard.class);
                 startActivity(intent);
                 finish();
