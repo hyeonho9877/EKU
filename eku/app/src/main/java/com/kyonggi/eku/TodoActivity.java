@@ -39,6 +39,7 @@ public class TodoActivity extends AppCompatActivity {
     int buildingSelected = 0;
     int[] building = {1,2,3,4,5,6,7,8,9,0};
     AlertDialog buildingSelectDialog;
+    long backKeyPressedTime;
 
     private RecyclerView mRv_todo;
     private FloatingActionButton mBtn_write;
@@ -183,6 +184,18 @@ public class TodoActivity extends AppCompatActivity {
             mAdapter = new CustomAdapter(mTodoItems,this);
             mRv_todo.setHasFixedSize(true);
             mRv_todo.setAdapter(mAdapter);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
+            backKeyPressedTime = System.currentTimeMillis();
+            Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
+            finish();
         }
     }
 }
