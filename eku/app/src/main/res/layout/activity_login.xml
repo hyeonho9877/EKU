@@ -35,16 +35,16 @@
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:text="E"
                 android:textColor="@color/kyonggi_color4"
-                android:textSize="36sp" />
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="verybody"
+                android:text="verywhere"
                 android:textColor="@color/white"
                 android:textSize="30sp" />
 
@@ -52,10 +52,10 @@
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:text="K"
                 android:textColor="@color/kyonggi_color3"
-                android:textSize="36sp" />
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView12"
@@ -69,10 +69,10 @@
                 android:id="@+id/textView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:text="U"
                 android:textColor="@color/kyonggi_color2"
-                android:textSize="36sp" />
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView15"
@@ -123,10 +123,10 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="11dp"
         android:background="#B9B7BD"
-        android:visibility="gone"
         android:clickable="false"
         android:text="로그인"
         android:textColor="#000000"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btn_photo_sign"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/user_email"
@@ -145,5 +145,20 @@
         app:layout_constraintHorizontal_bias="0.352"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <TextView
+        android:id="@+id/textView20"
+
+
+        android:layout_width="334dp"
+        android:layout_height="76dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="이메일 인증이 필요합니다 "
+        android:textColor="#FF0000"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_photo_sign" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

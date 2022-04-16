@@ -6,12 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Spinner
-        android:id="@+id/board_Spinner"
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="324dp"
+        android:layout_marginTop="4dp"
+        android:backgroundTint="#3F51B5"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/go_Donan"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="#FFFFFF"
         android:backgroundTint="#F6A788"
+        android:gravity="center_vertical"
+        android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -19,11 +32,12 @@
         android:id="@+id/board_ImageView"
         android:layout_width="409dp"
         android:layout_height="234dp"
+        android:scaleType="fitXY"
         android:src="@drawable/l8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/board_Spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/go_Donan" />
 
     <GridView
         android:id="@+id/board_Memo"
@@ -37,7 +51,9 @@
         android:stretchMode="columnWidth"
         android:verticalSpacing="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/board_ImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/board_ImageView" >
+
+    </GridView>
 
     <ImageButton
         android:id="@+id/board_Write"

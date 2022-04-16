@@ -6,8 +6,8 @@ public class ListItem {
      * 제목
      * 잘모르겠습니다.
      * 내용
-     * 스피너에 있는 어댑터에서 씀
-     */
+     * 스피너 아님 그리드뷰에서 씀
+     **/
     String content;
     String time;
 

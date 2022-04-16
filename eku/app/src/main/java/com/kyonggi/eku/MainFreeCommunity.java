@@ -1,14 +1,19 @@
 package com.kyonggi.eku;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -35,7 +40,11 @@ import com.google.android.material.navigation.NavigationView;
 *
  */
 public class MainFreeCommunity extends AppCompatActivity {
-    String[] items = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
+    String[] showBuilding = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
+    int buildingSelected = 0;
+    int[] building = {1,2,3,4,5,6,7,8,9,0};
+    AlertDialog buildingSelectDialog;
+    long backKeyPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,32 +67,67 @@ public class MainFreeCommunity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if (id == R.id.lectureMain) {
-                    Intent intent = new Intent(getApplicationContext(), LectureMain.class);
-                    startActivity(intent);
-                    finish();
+                Intent intent;
+                switch(id) {
+                    case R.id.Home:
+                        intent = new Intent(getApplicationContext(), MainBoard.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.Announce:
+                        intent = new Intent(getApplicationContext(), MainCommunity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.Free:
+                        intent = new Intent(getApplicationContext(), MainFreeCommunity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.lectureMain:
+                        intent = new Intent(getApplicationContext(), LectureMain.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.ToDo:
+                        intent = new Intent(getApplicationContext(), TodoActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.TimeTable:
+                        intent = new Intent(getApplicationContext(), ScheduleTable.class);
+                        startActivity(intent);
+                        finish();
+                        break;
                 }
                 return false;
             }
         });
 
-        Spinner spinner = (Spinner)findViewById(R.id.FreeCommunity_Spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinner.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        TextView BuildingButton = (TextView) findViewById(R.id.FreeCommunity_Spinner);
+        BuildingButton.setOnClickListener(new Button.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //선택
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                //없음
+            public void onClick(View view) {
+                buildingSelectDialog.show();
             }
         });
+        buildingSelectDialog = new AlertDialog.Builder(MainFreeCommunity.this)
+                .setSingleChoiceItems(showBuilding, buildingSelected, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        buildingSelected = i;
+                    }
+                })
+                .setTitle("강의동")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        BuildingButton.setText(showBuilding[buildingSelected]);
+                    }
+                })
+                .setNegativeButton("취소", null)
+                .create();
+
         ImageButton imageButton = (ImageButton)findViewById(R.id.FreeCommunity_Write);
         imageButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -129,6 +173,18 @@ public class MainFreeCommunity extends AppCompatActivity {
             }
         });
 
+        SwipeRefreshLayout swipe = findViewById(R.id.FreeCommunity_Swipe);
+        swipe.setOnRefreshListener(
+                () -> {
+                    Log.i("TAG", "onRefresh called from SwipeRefreshLayout");
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            swipe.setRefreshing(false);
+                        }
+                    }, 500);
+                });
         ImageButton imageButton1 = (ImageButton)findViewById(R.id.FreeCommunity_Search);
         imageButton1.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -142,6 +198,7 @@ public class MainFreeCommunity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MainCommunity.class);
                 startActivity(intent);
+                overridePendingTransition(0,0);
                 finish();
             }
         });
@@ -223,5 +280,17 @@ public class MainFreeCommunity extends AppCompatActivity {
         }
         PreferenceManagers.setInt(getApplicationContext(), "FreeCommunity_count", 0);
         Toast.makeText(getApplicationContext(),"초기화 켜져있어요", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
+            backKeyPressedTime = System.currentTimeMillis();
+            Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
+            finish();
+        }
     }
 }

@@ -11,21 +11,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Spinner
+        <TextView
             android:id="@+id/community_Spinner"
             android:layout_width="358dp"
             android:layout_height="41dp"
             android:background="#FFFFFF"
+            android:gravity="center_vertical"
+            android:textSize="25dp"
             android:backgroundTint="#F6A788"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <ImageButton
             android:id="@+id/community_Menu"
             android:layout_width="50dp"
             android:layout_height="42dp"
             android:backgroundTint="#F6A788"
-            android:text="三"
+            app:srcCompat="@drawable/menuicon"
+            android:scaleType="centerInside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,25 +67,30 @@
             app:srcCompat="@drawable/search"
             tools:ignore="SpeakableTextPresentCheck" />
 
-        <ScrollView
-            android:id="@+id/community_ScrollView"
-            android:layout_width="410dp"
-            android:layout_height="590dp"
-            android:layout_marginTop="4dp"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/community_Swipe"
+            android:layout_width="408dp"
+            android:layout_height="472dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/community_Searchtext"
-            tools:ignore="SpeakableTextPresentCheck">
+            app:layout_constraintTop_toBottomOf="@+id/community_Searchtext">
 
-            <LinearLayout
-                android:id="@+id/community_scroll"
+            <ScrollView
+                android:id="@+id/community_ScrollView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="590dp"
+                android:fillViewport="true"
+                tools:ignore="SpeakableTextPresentCheck">
 
-            </LinearLayout>
-        </ScrollView>
+                <LinearLayout
+                    android:id="@+id/community_scroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+            </ScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ImageButton
             android:id="@+id/community_Write"

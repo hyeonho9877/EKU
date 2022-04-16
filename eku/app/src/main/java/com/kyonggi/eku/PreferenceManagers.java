@@ -18,8 +18,6 @@ public class PreferenceManagers {
 
     public static final String PREFERENCES_NAME = "rebuild_preference";
 
-
-
     private static final String DEFAULT_VALUE_STRING = "";
 
     private static final boolean DEFAULT_VALUE_BOOLEAN = false;
@@ -32,7 +30,7 @@ public class PreferenceManagers {
 
 
 
-    private static SharedPreferences getPreferences(Context context) {
+    public static SharedPreferences getPreferences(Context context) {
 
         return context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
 

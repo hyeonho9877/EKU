@@ -1,9 +1,6 @@
 package com.eku.EKU.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,14 +11,13 @@ import java.io.Serializable;
  * 자유게시판 정보 저장 테이블
  */
 @Entity
-@Getter
-@Setter
+@Data
 @Builder
 @AllArgsConstructor
 public class FreeBoard implements Serializable{
     @Id
     @Column(name = "f_id", nullable = false)
-    private Long id;
+    private long id;
     @ManyToOne
     @JoinColumn(name = "student_no")
     private Student student;
@@ -38,9 +34,5 @@ public class FreeBoard implements Serializable{
 
     public FreeBoard() {
 
-    }
-    @Override
-    public String toString(){
-        return String.format("id=%d\nno=%d\ndep=%s\ntitle=%s\ncontent=%s\nview=%d\ntime=%s",id,student,department,title,content,view, time.toString());
     }
 }

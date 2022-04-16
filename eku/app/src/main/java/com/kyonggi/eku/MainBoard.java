@@ -1,19 +1,30 @@
 package com.kyonggi.eku;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.IOException;
+import java.util.HashMap;
+
 
 /*
 * 강의동 낙서게시판
@@ -21,11 +32,17 @@ import android.widget.Toast;
  */
 public class MainBoard extends AppCompatActivity {
 
-    String[] items = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
+    String[] showBuilding = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
+    int buildingSelected = 0;
+    int[] building = {1,2,3,4,5,6,7,8,9,0};
+    AlertDialog buildingSelectDialog;
     GestureDetector gestureDetector = null;
+    long backKeyPressedTime;
+    TextView BuildingButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_board);
 
@@ -105,34 +122,74 @@ public class MainBoard extends AppCompatActivity {
             }
         });
 
-        Spinner spinner = (Spinner)findViewById(R.id.board_Spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinner.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        BuildingButton = (TextView) findViewById(R.id.go_Donan);
+        BuildingButton.setText("불러오는중");
+        Intent intent = getIntent();
+        String name;
+        try {
+            name = intent.getExtras().getString("GANG");
+        } catch (Exception e)
+        {
+            name="8강의동";
+        }
+        BuildingButton.setText(name);
+        BuildingButton.setOnClickListener(new Button.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //선택
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                //없음
+            public void onClick(View view) {
+                buildingSelectDialog.show();
             }
         });
-        //initialize();
+        buildingSelectDialog = new AlertDialog.Builder(MainBoard.this)
+                .setSingleChoiceItems(showBuilding, buildingSelected, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        buildingSelected = i;
+                    }
+                })
+                .setTitle("강의동")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        BuildingButton.setText(showBuilding[buildingSelected]);
+                    }
+                })
+                .setNegativeButton("취소", null)
+                .create();
+
         GridView gridView = (GridView)findViewById(R.id.board_Memo);
         GridListAdapter gAdapter = new GridListAdapter();
 
-        int count = PreferenceManagers.getInt(getApplicationContext(), "board_Count");
+        Handler handler = new Handler() {
+            public void handleMessage(@NonNull Message msg) {
+                switch (msg.what) {
+                    case 0:
+                        String responseResult = (String) msg.obj;
+                        try {
+                            JSONArray BoardArray = new JSONArray(responseResult);
+                            for (int i = 0; i < BoardArray.length(); i++) {
+                                JSONObject BoardObject = BoardArray.getJSONObject(i);
 
-        for (int i=1; i<=count; i++){
-            String content = PreferenceManagers.getString(getApplicationContext(), "board"+i);
-            String time = PreferenceManagers.getString(getApplicationContext(), "time"+i);
-            gAdapter.addItem(new ListItem(content,time));
+                                String content = BoardObject.getString("content");
+                                String time = BoardObject.getString("writtenTime");
+                                gAdapter.addItem(new ListItem(content,time));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                }
+            }
+        };
+
+        SendTool sendTool = new SendTool(handler);
+        HashMap<String,String> temp = new HashMap<>();
+        try {
+            sendTool.request("http://115.85.182.126:8080/doodle/read", "POST", temp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
 
         gridView.setAdapter(gAdapter);
 
@@ -140,20 +197,27 @@ public class MainBoard extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                UserInformation userInfo = new UserInformation();
+                String check = userInfo.sessionCheck(getApplicationContext());
+                if(check.equals("needLogin"))
+                {
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else if(check.equals("needVerify"))
+                {
+                    Intent intent = new Intent(getApplicationContext(), VerfityActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
                 Intent intent = new Intent(getApplicationContext(), WriteBoard.class);
                 startActivity(intent);
                 finish();
             }
         });
     }
-    public void initialize() { //데이터 초기화
-        int i = PreferenceManagers.getInt(getApplicationContext(), "board_Count");
-        for (int j=1;j<=i;j++){
-            PreferenceManagers.removeKey(getApplicationContext(),"board"+j);
-            PreferenceManagers.removeKey(getApplicationContext(),"time"+j);
-        }
-        PreferenceManagers.setInt(getApplicationContext(), "board_Count", 0);
-    }
+
     public void onSwipeLeft() {
         Toast.makeText(this,"좌측 스와이프", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), MainCommunity.class);
@@ -178,5 +242,16 @@ public class MainBoard extends AppCompatActivity {
 
     public void onSwipeBottom() {
         Toast.makeText(this,"하단 스와이프", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
+            backKeyPressedTime = System.currentTimeMillis();
+            Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
+            finish();
+        }
     }
 }

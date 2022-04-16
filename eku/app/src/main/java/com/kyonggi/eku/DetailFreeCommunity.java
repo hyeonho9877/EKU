@@ -1,9 +1,12 @@
 package com.kyonggi.eku;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -18,12 +21,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+
 public class DetailFreeCommunity extends AppCompatActivity {
 
     /**
      * 자유게시판 세부화면
      */
-    String[] items = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
+    String[] showBuilding = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
+    int buildingSelected = 0;
+    int[] building = {1,2,3,4,5,6,7,8,9,0};
+    AlertDialog buildingSelectDialog;
     int Lid;
     int count;
     LinearLayout sc;
@@ -33,23 +43,30 @@ public class DetailFreeCommunity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_free_community);
 
-        Spinner spinner = (Spinner)findViewById(R.id.detail_Free_Spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinner.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        TextView BuildingButton = (TextView) findViewById(R.id.detail_Free_Spinner);
+        BuildingButton.setOnClickListener(new Button.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //선택
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                //없음
+            public void onClick(View view) {
+                buildingSelectDialog.show();
             }
         });
+        buildingSelectDialog = new AlertDialog.Builder(DetailFreeCommunity.this)
+                .setSingleChoiceItems(showBuilding, buildingSelected, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        buildingSelected = i;
+                    }
+                })
+                .setTitle("강의동")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        BuildingButton.setText(showBuilding[buildingSelected]);
+                    }
+                })
+                .setNegativeButton("취소", null)
+                .create();
+
 
         Intent intent = getIntent();
         Lid = intent.getIntExtra("FreeCommunity_key",-1);
@@ -98,9 +115,17 @@ public class DetailFreeCommunity extends AppCompatActivity {
                 EditText commentLine = (EditText) findViewById(R.id.detail_Free_Write_Comment);
                 String comment = commentLine.getText().toString();
                 count++;
-                PreferenceManagers.setInt(getApplicationContext(), "FreeCommunity_comment"+Lid, count);
-                PreferenceManagers.setString(getApplicationContext(), "FreeCommunity_comment_content"+ Lid + count, comment);
-                PreferenceManagers.setString(getApplicationContext(), "FreeCommunity_comment_writer"+ Lid + count, "고지웅");
+
+                /*
+                long now = System.currentTimeMillis();
+                Date date = new Date(now);
+                SimpleDateFormat timeFormat = new SimpleDateFormat("MM-dd hh-mm");
+                String time = timeFormat.format(date);
+                 */
+
+
+
+
                 if (count>1)
                     sc.removeAllViews();
                 update_comment(count);

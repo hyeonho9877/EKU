@@ -1,8 +1,11 @@
 package com.kyonggi.eku;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -10,27 +13,38 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 
 public class LectureWrite extends AppCompatActivity {
 
     /**
      * 강의 평가 작성 기능
-     *
      */
     //작성 화면
+    String[] showgrade = {"A+", "A", "B+", "B", "C+", "C", "D+", "D", "F"};
+    int gradeSelected = 0;
+    String[] grade = {"AP", "A", "BP", "B", "CP", "C", "DP", "D", "F"};
     ActivityResultLauncher<Intent> activityResultLauncher;
+    AlertDialog gradeSelectDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,12 +59,22 @@ public class LectureWrite extends AppCompatActivity {
                 }
         );
 
-        EditText titleview = (EditText)findViewById(R.id.lecture_write_NameText);
-        EditText professorview = (EditText)findViewById(R.id.lecture_write_ProfessorText);
-        EditText contentview = (EditText)findViewById(R.id.lecture_write_ContentText);
-        RatingBar ratingview = (RatingBar)findViewById(R.id.lecture_write_ratingBar);
-        RadioGroup scoreGroup = findViewById(R.id.lecture_write_radioGroup);
-        RadioButton scoreview = findViewById(scoreGroup.getCheckedRadioButtonId());
+        Handler handler = new Handler() {
+            public void handleMessage(@NonNull Message msg) {
+                switch (msg.what) {
+                    case 0:
+                        String responseResult = (String) msg.obj;
+                        Log.i("a", responseResult);
+                }
+            }
+        };
+        SendTool sendTool = new SendTool(handler);
+
+
+        EditText titleview = (EditText) findViewById(R.id.lecture_write_NameText);
+        EditText professorview = (EditText) findViewById(R.id.lecture_write_ProfessorText);
+        EditText contentview = (EditText) findViewById(R.id.lecture_write_ContentText);
+        RatingBar ratingview = (RatingBar) findViewById(R.id.lecture_write_ratingBar);
         Button saveButton = (Button) findViewById(R.id.lecture_write_SaveButton);
         saveButton.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -59,58 +83,23 @@ public class LectureWrite extends AppCompatActivity {
                 String professor = professorview.getText().toString();
                 String content = contentview.getText().toString();
                 String rating = String.valueOf(ratingview.getRating());
-                String score = "B";//scoreview.getText().toString();
+                String score = grade[gradeSelected];
+                String user_email = "yas5@kyonggi.ac.kr";
 
-                String user_email = "jiyko7@kyonggi.ac.kr";
+                HashMap<String, String> temp = new HashMap<>();
+                temp.put("email", user_email);
+                temp.put("content", content);
+                temp.put("profName", professor);
+                temp.put("lectureName", title);
+                temp.put("grade", score);
+                temp.put("star", rating);
+
                 try {
-                    //  String page = "http://10.0.2.2:8080/JSPBook/ch05/response4.jsp";
-                    String page = "http://49.174.169.48:13883/critic/apply";
-                    // URL 객체 생성
-                    URL url = new URL(page);
-                    // 연결 객체 생성
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                    // Post 파라미터
-                    String params = "email=" + user_email
-                            + "&content=" + content
-                            + "&profName=" + professor
-                            + "&lectureName=" + title
-                            + "&grade=" + score;
-                    // 결과값 저장 문자열
-                    final StringBuilder sb = new StringBuilder();
-                    // 연결되면
-
-                    Log.i("tag", "conn 연결");
-                    // 응답 타임아웃 설정
-                    conn.setRequestProperty("Content-Type", "application/json");
-                    conn.setRequestProperty("Accept", "application/json");
-                    conn.setConnectTimeout(10000);
-                    // POST 요청방식
-                    conn.setRequestMethod("POST");
-                    // 포스트 파라미터 전달
-                    conn.setDoOutput(true);
-                    conn.getOutputStream().write(params.getBytes("utf-8"));
-                    // url에 접속 성공하면 (200)
-                    if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                        // 결과 값 읽어오는 부분
-                        BufferedReader br = new BufferedReader(new InputStreamReader(
-                                conn.getInputStream(), "utf-8"
-                        ));
-                        String line;
-                        while ((line = br.readLine()) != null) {
-                            sb.append(line);
-                        }
-                        // 버퍼리더 종료
-                        br.close();
-                        Log.i("tag", "결과 문자열 :" + sb.toString());
-                        // 응답 Json 타입일 경우
-                        //JSONArray jsonResponse = new JSONArray(sb.toString());
-                        //Log.i("tag", "확인 jsonArray : " + jsonResponse);
-
-                        conn.disconnect();
-                    }
-                } catch (Exception e) {
-                    Log.i("tag", "error :" + e);
+                    sendTool.request("http://49.174.169.48:13883/critic/apply", "POST", temp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
                 Intent intent = new Intent(getApplicationContext(), LectureMain.class);
@@ -122,12 +111,34 @@ public class LectureWrite extends AppCompatActivity {
         closeButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),LectureMain.class);
+                Intent intent = new Intent(getApplicationContext(), LectureMain.class);
                 startActivity(intent);
                 finish();
             }
         });
 
-
+        TextView GradeButton = (TextView) findViewById(R.id.gradeselect);
+        GradeButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gradeSelectDialog.show();
+            }
+        });
+        gradeSelectDialog = new AlertDialog.Builder(LectureWrite.this)
+                .setSingleChoiceItems(showgrade, gradeSelected, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        gradeSelected = i;
+                    }
+                })
+                .setTitle("강의동")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        GradeButton.setText(showgrade[gradeSelected]);
+                    }
+                })
+                .setNegativeButton("취소", null)
+                .create();
     }
 }

@@ -48,6 +48,7 @@ public class cameraTest extends AppCompatActivity {
                                 String responseResult=(String)msg.obj;
                                 Log.i("Response : ", responseResult);
                                 textView.setText(responseResult);
+
                         }
                     }
                 };
