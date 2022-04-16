@@ -104,26 +104,14 @@ public class DetailFreeCommunity extends AppCompatActivity {
                 String comment = commentLine.getText().toString();
                 count++;
 
-
+                /*
                 long now = System.currentTimeMillis();
                 Date date = new Date(now);
                 SimpleDateFormat timeFormat = new SimpleDateFormat("MM-dd hh-mm");
                 String time = timeFormat.format(date);
+                 */
 
-                Handler handler = new Handler(){
-                  switch(msg.what){
-                        case 0:
-                            String responseResult = (String) msg.obj;
-                            Toast.makeText(getApplicationContext(), responseResult, Toast.LENGTH_SHORT).show();
-                    }
-                };
 
-                HashMap<String,String> temp2 = new HashMap<>();
-                temp2.put("content",);
-                temp2.put("writtenTime","");
-                temp2.put("writer","이동엽");
-                temp2.put("articleID",);
-                SendTool sendTool = new SendTool(Handler);
 
 
                 if (count>1)
