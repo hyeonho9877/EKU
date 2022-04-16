@@ -7,6 +7,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,15 @@ public class findGang extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_gang);
         mMinewBeaconManager.startScan();
+        Button b = findViewById(R.id.skipButton);
+        b.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainBoard.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void permissionCheck() {
@@ -86,7 +97,6 @@ public class findGang extends AppCompatActivity {
                 for(MinewBeacon m :minewBeacons) {
                     String temp = m.getBeaconValue(BeaconValueIndex.MinewBeaconValueIndex_Minor).getStringValue();
                     Intent intent = new Intent(getApplicationContext(), MainBoard.class);
-                    Toast.makeText(getBaseContext(),"안녕",Toast.LENGTH_LONG).show();
                     if(temp.equals("61686"))
                     {
                         intent.putExtra("GANG","8강의동");
