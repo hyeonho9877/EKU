@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class FreeBoard implements Serializable{
     @Id
     @Column(name = "f_id", nullable = false)
-    private Long id;
+    private long id;
     @ManyToOne
     @JoinColumn(name = "student_no")
     private Student student;

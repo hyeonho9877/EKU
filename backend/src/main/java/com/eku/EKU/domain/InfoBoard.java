@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class InfoBoard {
     @Id
     @Column(name = "i_id", nullable = false)
-    private Long id;
+    private long id;
     @Column(name = "title", nullable = false)
     private String title;
     @Column(name = "content", nullable = false)
@@ -22,7 +22,7 @@ public class InfoBoard {
     @Column(name = "written_time", nullable = false)
     private String writtenTime;
     @Column(name = "building", nullable = false)
-    private Long building;
+    private long building;
 
     @ManyToOne
     @JoinColumn(name = "writer_no")

@@ -4,12 +4,14 @@ import lombok.Data;
 
 @Data
 public class InfoBoardResponse {
-    private Long id;
-    private Long studNo;
+    private long id;
+    private long studNo;
     private String department;
     private String title;
     private String content;
     private String time;
+    private long building;
+    private String name;
 
     public InfoBoardResponse(InfoBoard board) {
         this.id= board.getId();
@@ -18,6 +20,7 @@ public class InfoBoardResponse {
         this.title = board.getTitle();
         this.content = board.getContent();
         this.time = board.getWrittenTime();
-
+        this.building = board.getBuilding();
+        this.name = board.getName();
     }
 }

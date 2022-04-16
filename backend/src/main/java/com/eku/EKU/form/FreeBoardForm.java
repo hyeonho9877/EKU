@@ -8,8 +8,8 @@ import lombok.Setter;
 
 @Data
 public class FreeBoardForm {
-    private Long id;
-    private Long studNo;
+    private long id;
+    private long studNo;
     private String department;
     private String title;
     private String content;
