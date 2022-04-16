@@ -20,14 +20,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <ImageButton
             android:id="@+id/FreeCommunity_Menu"
             android:layout_width="50dp"
             android:layout_height="42dp"
             android:backgroundTint="#F6A788"
-            android:text="三"
+            android:scaleType="centerInside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/menuicon" />
 
         <Button
             android:id="@+id/FreeCommunity_announce_button"
