@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.LocationManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -31,6 +32,7 @@ public class DonanBagGi extends AppCompatActivity {
     private int state;
     boolean stealing=false;
     TextView textView;
+    Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         permissionCheck();
@@ -39,7 +41,16 @@ public class DonanBagGi extends AppCompatActivity {
         //리슨
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donan_bag_gi);
-        Button button = findViewById(R.id.Donan_Button);
+        button= findViewById(R.id.Donan_Button);
+        Button b = findViewById(R.id.BackButton);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainBoard.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         textView = findViewById(R.id.Donan_TextView);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +83,8 @@ public class DonanBagGi extends AppCompatActivity {
                 }
                 //스캔 발견하면 스캔시작되었다고 말해줌
                 if (isScanning) {
-
+                    button.setBackgroundColor(Color.BLUE);
+                    button.setText("작동하기");
                     isScanning = false;
                     textView.setText("도난방지 해제됨");
                     if (mMinewBeaconManager != null) {
@@ -80,8 +92,11 @@ public class DonanBagGi extends AppCompatActivity {
                     }
                     stealing=false;
                 } else {
+                    button.setText("해제하기");
+                    button.setBackgroundColor(Color.RED);
                     //아니었으면 멈춰싿고 함
                     isScanning = true;
+
                     textView.setText("도난방지 작동됨");
                     try {
                         mMinewBeaconManager.startScan();
@@ -146,7 +161,6 @@ public class DonanBagGi extends AppCompatActivity {
 
             @Override
             public void onRangeBeacons(List<MinewBeacon> minewBeacons) {
-
                 for(MinewBeacon m :minewBeacons) {
                     String temp = m.getBeaconValue(BeaconValueIndex.MinewBeaconValueIndex_UUID).getStringValue();
                     String rssi = m.getBeaconValue(BeaconValueIndex.MinewBeaconValueIndex_RSSI).getStringValue();
@@ -172,7 +186,6 @@ public class DonanBagGi extends AppCompatActivity {
                             player.start();
                             Button offButton = findViewById(R.id.Donan_Off);
                             offButton.setVisibility(View.VISIBLE);
-
                             offButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {

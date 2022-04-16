@@ -47,7 +47,7 @@ public class findGang extends AppCompatActivity {
         setContentView(R.layout.activity_find_gang);
         mMinewBeaconManager.startScan();
         Button b = findViewById(R.id.skipButton);
-        b.setOnClickListener(new Button.OnClickListener() {
+        b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MainBoard.class);
@@ -55,6 +55,8 @@ public class findGang extends AppCompatActivity {
                 finish();
             }
         });
+
+
     }
 
     private void permissionCheck() {

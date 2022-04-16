@@ -10,6 +10,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -171,7 +173,6 @@ public class SendTool {
         }
 
     }
-
 
 
     private void postServer(String detailURL, String getPost, HashMap<String,String> contents){
