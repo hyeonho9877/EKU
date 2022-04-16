@@ -159,6 +159,9 @@
         <activity
             android:name=".LectureDetail"
             android:exported="false" />
+        <activity
+            android:name=".ScheduleTable"
+            android:exported="false" />
     </application>
 
 </manifest>
