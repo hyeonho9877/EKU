@@ -47,25 +47,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Lecture_Main_spinner" />
 
-        <ScrollView
-            android:id="@+id/Lecture_Main_ScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="580dp"
-            android:layout_marginTop="12dp"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/Lecture_Main_Swipe"
+            android:layout_width="408dp"
+            android:layout_height="472dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.125"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Lecture_Main_searchtext"
-            tools:ignore="SpeakableTextPresentCheck">
+            app:layout_constraintTop_toBottomOf="@+id/Lecture_Main_searchtext">
 
-            <LinearLayout
-                android:id="@+id/Lecture_Main_scroll"
+            <ScrollView
+                android:id="@+id/Lecture_Main_ScrollView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="590dp"
+                android:fillViewport="true"
+                tools:ignore="SpeakableTextPresentCheck">
 
-            </LinearLayout>
-        </ScrollView>
+                <LinearLayout
+                    android:id="@+id/Lecture_Main_scroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+            </ScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ImageButton
             android:id="@+id/Lecture_Main_WriteButton"

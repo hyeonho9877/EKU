@@ -5,12 +5,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -43,6 +46,7 @@ public class MainCommunity extends AppCompatActivity {
     int buildingSelected = 0;
     int[] building = {1,2,3,4,5,6,7,8,9,0};
     AlertDialog buildingSelectDialog;
+    long backKeyPressedTime;
 
 
     @Override
@@ -143,9 +147,23 @@ public class MainCommunity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MainFreeCommunity.class);
                 startActivity(intent);
+                overridePendingTransition(0,0);
                 finish();
             }
         });
+
+        SwipeRefreshLayout swipe = findViewById(R.id.community_Swipe);
+        swipe.setOnRefreshListener(
+                () -> {
+                    Log.i("TAG", "onRefresh called from SwipeRefreshLayout");
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            swipe.setRefreshing(false);
+                        }
+                    }, 500);
+                });
 
         EditText searchText = (EditText)findViewById(R.id.community_Searchtext);
         searchText.addTextChangedListener(new TextWatcher() {
@@ -267,6 +285,18 @@ public class MainCommunity extends AppCompatActivity {
         }
         PreferenceManagers.setInt(getApplicationContext(), "announce_count", 0);
         Toast.makeText(getApplicationContext(),"초기화 켜져있어요", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
+            backKeyPressedTime = System.currentTimeMillis();
+            Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
+            finish();
+        }
     }
 
 

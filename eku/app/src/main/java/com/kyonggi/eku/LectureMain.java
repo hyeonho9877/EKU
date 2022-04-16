@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -52,10 +53,11 @@ public class LectureMain extends AppCompatActivity {
     ImageButton imageButton;
     ImageButton imageButton1;
     LinearLayout sc;
-    String[] showBuilding = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
+    String[] showBuilding = {"1강의동", "2강의동", "3강의동", "4강의동", "5강의동", "6강의동", "7강의동", "8강의동", "9강의동", "제2공학관"};
     int buildingSelected = 0;
-    int[] building = {1,2,3,4,5,6,7,8,9,0};
+    int[] building = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
     AlertDialog buildingSelectDialog;
+    long backKeyPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +81,7 @@ public class LectureMain extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 Intent intent;
-                switch(id) {
+                switch (id) {
                     case R.id.Home:
                         intent = new Intent(getApplicationContext(), MainBoard.class);
                         startActivity(intent);
@@ -139,6 +141,19 @@ public class LectureMain extends AppCompatActivity {
                 .setNegativeButton("취소", null)
                 .create();
 
+        SwipeRefreshLayout swipe = findViewById(R.id.Lecture_Main_Swipe);
+        swipe.setOnRefreshListener(
+                () -> {
+                    Log.i("TAG", "onRefresh called from SwipeRefreshLayout");
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            swipe.setRefreshing(false);
+                        }
+                    }, 500);
+                });
+
         imageButton = (ImageButton) findViewById(R.id.Lecture_Main_WriteButton);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,7 +171,7 @@ public class LectureMain extends AppCompatActivity {
                 switch (msg.what) {
                     case 0:
                         String responseResult = (String) msg.obj;
-                        Log.i("a",responseResult);
+                        Log.i("a", responseResult);
                         try {
                             JSONArray LectureArray = new JSONArray(responseResult);
                             for (int i = 0; i < LectureArray.length(); i++) {
@@ -177,7 +192,7 @@ public class LectureMain extends AppCompatActivity {
         };
 
         SendTool sendTool = new SendTool(handler);
-        HashMap<String,String> temp = new HashMap<>();
+        HashMap<String, String> temp = new HashMap<>();
         try {
             sendTool.request("http://115.85.182.126:8080/critic/read", "POST", temp);
         } catch (IOException e) {
@@ -220,7 +235,7 @@ public class LectureMain extends AppCompatActivity {
                 };
 
                 SendTool sendTool = new SendTool(handler);
-                HashMap<String,String> temp = new HashMap<>();
+                HashMap<String, String> temp = new HashMap<>();
                 try {
                     sendTool.request("http://115.85.182.126:8080/critic/read", "POST", temp);
                 } catch (IOException e) {
@@ -290,5 +305,17 @@ public class LectureMain extends AppCompatActivity {
         linearLayout.addView(contentView);
 
         sc.addView(linearLayout);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
+            backKeyPressedTime = System.currentTimeMillis();
+            Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
+            finish();
+        }
     }
 }

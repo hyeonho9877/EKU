@@ -67,25 +67,30 @@
             app:srcCompat="@drawable/search"
             tools:ignore="SpeakableTextPresentCheck" />
 
-        <ScrollView
-            android:id="@+id/community_ScrollView"
-            android:layout_width="410dp"
-            android:layout_height="590dp"
-            android:layout_marginTop="4dp"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/community_Swipe"
+            android:layout_width="408dp"
+            android:layout_height="472dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/community_Searchtext"
-            tools:ignore="SpeakableTextPresentCheck">
+            app:layout_constraintTop_toBottomOf="@+id/community_Searchtext">
 
-            <LinearLayout
-                android:id="@+id/community_scroll"
+            <ScrollView
+                android:id="@+id/community_ScrollView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="590dp"
+                android:fillViewport="true"
+                tools:ignore="SpeakableTextPresentCheck">
 
-            </LinearLayout>
-        </ScrollView>
+                <LinearLayout
+                    android:id="@+id/community_scroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+            </ScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ImageButton
             android:id="@+id/community_Write"
