@@ -1,6 +1,9 @@
 package com.kyonggi.eku;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,30 +24,39 @@ public class LectureDetail extends AppCompatActivity {
     /**
      * 강의평가 세부화면?
      */
-    String[] items = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
+    String[] showBuilding = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
+    int buildingSelected = 0;
+    int[] building = {1,2,3,4,5,6,7,8,9,0};
+    AlertDialog buildingSelectDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lecture_detail);
 
-        Spinner spinner = (Spinner)findViewById(R.id.lecture_detail_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinner.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        TextView BuildingButton = (TextView) findViewById(R.id.lecture_detail_spinner);
+        BuildingButton.setOnClickListener(new Button.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //선택
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                //없음
+            public void onClick(View view) {
+                buildingSelectDialog.show();
             }
         });
+        buildingSelectDialog = new AlertDialog.Builder(LectureDetail.this)
+                .setSingleChoiceItems(showBuilding, buildingSelected, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        buildingSelected = i;
+                    }
+                })
+                .setTitle("강의동")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        BuildingButton.setText(showBuilding[buildingSelected]);
+                    }
+                })
+                .setNegativeButton("취소", null)
+                .create();
 
         Intent intent = getIntent();
         String title = intent.getStringExtra("Name");

@@ -54,7 +54,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".VerfityActivity"
+            android:name=".MainBoard"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -142,7 +142,7 @@
             android:exported="true" />
         <activity android:name=".WriteBoard" />
         <activity
-            android:name=".MainBoard"
+            android:name=".VerfityActivity"
             android:exported="true" />
         <activity
             android:name=".PhotoServeActivity"
@@ -154,7 +154,9 @@
         <activity
             android:name=".LectureDetail"
             android:exported="false" />
-
+        <activity
+            android:name=".ScheduleTable"
+            android:exported="false" />
 
     </application>
 
