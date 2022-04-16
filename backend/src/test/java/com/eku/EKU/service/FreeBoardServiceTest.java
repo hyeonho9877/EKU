@@ -1,6 +1,6 @@
 package com.eku.EKU.service;
 
-import com.eku.EKU.controller.FreeBoardController;
+import com.eku.EKU.controller.BoardController;
 import com.eku.EKU.form.FreeBoardForm;
 import com.eku.EKU.repository.FreeBoardRepository;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ public class FreeBoardServiceTest {
     @Autowired
     private FreeBoardService boardService;
     @Autowired
-    private FreeBoardController boardController;
+    private BoardController boardController;
     @Test
     public void testDB() {
         FreeBoardForm freeBoard = new FreeBoardForm();

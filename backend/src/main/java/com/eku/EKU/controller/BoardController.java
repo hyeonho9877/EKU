@@ -6,6 +6,7 @@ import com.eku.EKU.domain.FreeBoardResponse;
 import com.eku.EKU.exceptions.NoSuchBoardException;
 import com.eku.EKU.form.FreeBoardForm;
 import com.eku.EKU.service.FreeBoardService;
+import com.eku.EKU.service.InfoBoardService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,10 +20,12 @@ import java.util.NoSuchElementException;
  * 게시판 접근에 응답하는 컨트롤러
  */
 @RestController
-public class FreeBoardController {
-    private final FreeBoardService boardService;
-    public FreeBoardController(FreeBoardService boardService) {
-        this.boardService = boardService;
+public class BoardController {
+    private final FreeBoardService freeBoardServicee;
+    private final InfoBoardService infoBoardService;
+    public BoardController(FreeBoardService boardService, InfoBoardService infoBoardService) {
+        this.freeBoardServicee = boardService;
+        this.infoBoardService = infoBoardService;
     }
 
     /**
@@ -33,7 +36,7 @@ public class FreeBoardController {
     @PostMapping("/board/free/write")
     public ResponseEntity<?> insertBoard(@RequestBody FreeBoardForm form){
         try {
-            return ResponseEntity.ok(boardService.insertBoard(form));
+            return ResponseEntity.ok(freeBoardServicee.insertBoard(form));
         }catch (NoSuchBoardException exception) {
             exception.printStackTrace();
             return ResponseEntity.badRequest().body(null);
@@ -51,7 +54,7 @@ public class FreeBoardController {
     @PostMapping("/board/free/update")
     public ResponseEntity<?> updateBoard(@RequestBody FreeBoardForm form){
         try {
-            boardService.updateBoard(form);
+            freeBoardServicee.updateBoard(form);
             return ResponseEntity.ok(form.getId());
         } catch (IllegalArgumentException | NoSuchElementException exception) {
             exception.printStackTrace();
@@ -65,7 +68,7 @@ public class FreeBoardController {
      */
     @GetMapping("/board/free/lists")
     public ResponseEntity<?> boardList(){
-        ArrayList<BoardList> list = boardService.boardList();
+        ArrayList<BoardList> list = freeBoardServicee.boardList();
         if(!list.isEmpty())
             return ResponseEntity.ok(list);
         else
@@ -79,7 +82,7 @@ public class FreeBoardController {
      */
     @GetMapping("/board/free/view")
     public ResponseEntity<?> loadBoard(@RequestBody FreeBoardForm form){
-        FreeBoardResponse board = new FreeBoardResponse(boardService.loadBoard(form));
+        FreeBoardResponse board = new FreeBoardResponse(freeBoardServicee.loadBoard(form));
         if(board!=null)
             return ResponseEntity.ok(board);
         else
@@ -93,7 +96,7 @@ public class FreeBoardController {
     @PostMapping("/board/free/delete")
     public ResponseEntity<?> deleteBoard(@RequestBody FreeBoardForm form){
         try {
-            boardService.deleteBoard(form.getId());
+            freeBoardServicee.deleteBoard(form.getId());
             return ResponseEntity.ok(form.getId());
         } catch (IllegalArgumentException | NoSuchElementException exception) {
             exception.printStackTrace();
