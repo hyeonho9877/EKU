@@ -3,22 +3,24 @@ package com.eku.EKU.domain;
 import lombok.Data;
 
 @Data
-public class FreeBoardResponse {
+public class InfoBoardResponse {
     private long id;
     private long studNo;
     private String department;
     private String title;
     private String content;
-    private int view;
     private String time;
+    private long building;
+    private String name;
 
-    public FreeBoardResponse(FreeBoard board) {
+    public InfoBoardResponse(InfoBoard board) {
         this.id= board.getId();
-        this.studNo = board.getStudent().getStudNo();
+        this.studNo = board.getWriter().getStudNo();
         this.department = board.getDepartment();
         this.title = board.getTitle();
         this.content = board.getContent();
-        this.time = board.getTime();
-        this.view = board.getView();
+        this.time = board.getWrittenTime();
+        this.building = board.getBuilding();
+        this.name = board.getName();
     }
 }
