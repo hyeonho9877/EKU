@@ -67,23 +67,30 @@
             app:srcCompat="@drawable/search"
             tools:ignore="SpeakableTextPresentCheck" />
 
-        <ScrollView
-            android:id="@+id/FreeCommunity_ScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="590dp"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/FreeCommunity_Swipe"
+            android:layout_width="408dp"
+            android:layout_height="472dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/FreeCommunity_Searchtext"
-            tools:ignore="SpeakableTextPresentCheck">
+            app:layout_constraintTop_toBottomOf="@+id/FreeCommunity_Searchtext">
 
-            <LinearLayout
-                android:id="@+id/FreeCommunity_scroll"
+            <ScrollView
+                android:id="@+id/FreeCommunity_ScrollView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="590dp"
+                android:fillViewport="true"
+                tools:ignore="SpeakableTextPresentCheck">
 
-            </LinearLayout>
-        </ScrollView>
+                <LinearLayout
+                    android:id="@+id/FreeCommunity_scroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+            </ScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ImageButton
             android:id="@+id/FreeCommunity_Write"
