@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -17,6 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 
 public class DetailFreeCommunity extends AppCompatActivity {
 
@@ -98,9 +103,17 @@ public class DetailFreeCommunity extends AppCompatActivity {
                 EditText commentLine = (EditText) findViewById(R.id.detail_Free_Write_Comment);
                 String comment = commentLine.getText().toString();
                 count++;
-                PreferenceManagers.setInt(getApplicationContext(), "FreeCommunity_comment"+Lid, count);
-                PreferenceManagers.setString(getApplicationContext(), "FreeCommunity_comment_content"+ Lid + count, comment);
-                PreferenceManagers.setString(getApplicationContext(), "FreeCommunity_comment_writer"+ Lid + count, "고지웅");
+
+                /*
+                long now = System.currentTimeMillis();
+                Date date = new Date(now);
+                SimpleDateFormat timeFormat = new SimpleDateFormat("MM-dd hh-mm");
+                String time = timeFormat.format(date);
+                 */
+
+
+
+
                 if (count>1)
                     sc.removeAllViews();
                 update_comment(count);

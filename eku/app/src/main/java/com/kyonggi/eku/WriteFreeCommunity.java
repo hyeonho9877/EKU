@@ -105,12 +105,14 @@ public class WriteFreeCommunity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),building, Toast.LENGTH_SHORT).show();
                 PreferenceManagers.setString(getApplicationContext(), building, buildingtext);
 
+                /*
                 long now = System.currentTimeMillis();
                 Date date = new Date(now);
                 SimpleDateFormat timeFormat = new SimpleDateFormat("MM-dd hh-mm");
                 String time = timeFormat.format(date);
                 PreferenceManagers.setString(getApplicationContext(), "FreeCommunity_time" + count, time);
-
+                */
+                
                 activityResultLauncher.launch(intent);
                 finish();
 
