@@ -1,8 +1,10 @@
 package com.kyonggi.eku;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,9 +15,11 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -31,7 +35,10 @@ import java.util.HashMap;
  */
 public class MainBoard extends AppCompatActivity {
 
-    String[] items = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
+    String[] showBuilding = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
+    int buildingSelected = 0;
+    int[] building = {1,2,3,4,5,6,7,8,9,0};
+    AlertDialog buildingSelectDialog;
     GestureDetector gestureDetector = null;
 
     @Override
@@ -115,23 +122,29 @@ public class MainBoard extends AppCompatActivity {
             }
         });
 
-        Spinner spinner = (Spinner)findViewById(R.id.board_Spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinner.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        TextView BuildingButton = (TextView) findViewById(R.id.board_Spinner);
+        BuildingButton.setOnClickListener(new Button.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //선택
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                //없음
+            public void onClick(View view) {
+                buildingSelectDialog.show();
             }
         });
+        buildingSelectDialog = new AlertDialog.Builder(MainBoard.this)
+                .setSingleChoiceItems(showBuilding, buildingSelected, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        buildingSelected = i;
+                    }
+                })
+                .setTitle("강의동")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        BuildingButton.setText(showBuilding[buildingSelected]);
+                    }
+                })
+                .setNegativeButton("취소", null)
+                .create();
 
         GridView gridView = (GridView)findViewById(R.id.board_Memo);
         GridListAdapter gAdapter = new GridListAdapter();
@@ -174,6 +187,20 @@ public class MainBoard extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                UserInformation userInfo = new UserInformation();
+                String check = userInfo.sessionCheck(getApplicationContext());
+                if(check.equals("needLogin"))
+                {
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else if(check.equals("needVerify"))
+                {
+                    Intent intent = new Intent(getApplicationContext(), VerfityActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
                 Intent intent = new Intent(getApplicationContext(), WriteBoard.class);
                 startActivity(intent);
                 finish();

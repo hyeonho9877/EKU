@@ -131,7 +131,7 @@ public class LectureWrite extends AppCompatActivity {
                         gradeSelected = i;
                     }
                 })
-                .setTitle("학점")
+                .setTitle("강의동")
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

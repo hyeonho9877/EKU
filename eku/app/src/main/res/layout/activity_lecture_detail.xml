@@ -8,12 +8,14 @@
     tools:context=".LectureDetail">
 
 
-    <Spinner
+    <TextView
         android:id="@+id/lecture_detail_spinner"
         android:layout_width="415dp"
         android:layout_height="48dp"
         android:background="#FFFFFF"
         android:backgroundTint="#F6A788"
+        android:gravity="center_vertical"
+        android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
