@@ -54,13 +54,9 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MainBoard"
+            android:name=".VerfityActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".DetailFreeCommunity"
@@ -142,8 +138,13 @@
             android:exported="true" />
         <activity android:name=".WriteBoard" />
         <activity
-            android:name=".VerfityActivity"
-            android:exported="true" />
+            android:name=".MainBoard"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".PhotoServeActivity"
             android:exported="true" />
@@ -154,9 +155,7 @@
         <activity
             android:name=".LectureDetail"
             android:exported="false" />
-        <activity
-            android:name=".ScheduleTable"
-            android:exported="false" />
+
 
     </application>
 
