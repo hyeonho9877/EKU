@@ -75,11 +75,18 @@ public class CriticController {
      * @return 성공 -> ok와 함께 조회된 강의평가 리스트, 실패 -> bad request
      */
     @PostMapping("/critic/read")
-    public ResponseEntity<?> readCritic(){
+    public ResponseEntity<?> readCritic(@RequestBody CriticForm form){
         try {
-            return ResponseEntity.ok(criticService.readRecentCritic());
+            return ResponseEntity.ok(criticService.readRecentCritic(form));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
         }
     }
+
+    @PostMapping("/critic/search")
+    public ResponseEntity<?> searchCritic(@RequestBody CriticForm form) {
+        return ResponseEntity.ok(form.getContent());
+    }
+
+
 }

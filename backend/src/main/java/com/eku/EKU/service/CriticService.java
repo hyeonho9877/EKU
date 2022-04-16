@@ -42,8 +42,6 @@ public class CriticService {
 
         Student writer = studentRepository.findStudentByEmail(form.getEmail()).orElseThrow(NoSuchStudentException::new);
         Critic critic = Critic.builder()
-                .lectureName(form.getLectureName())
-                .profName(form.getProfName())
                 .content(form.getContent())
                 .grade(form.getGrade())
                 .star(form.getStar())
@@ -77,10 +75,6 @@ public class CriticService {
             target.setContent(form.getContent());
         } else if (form.getGrade() != null) {
             target.setGrade(form.getGrade());
-        } else if (form.getLectureName() != null) {
-            target.setLectureName(form.getLectureName());
-        } else if (form.getProfName() != null) {
-            target.setProfName(form.getProfName());
         } else if (form.getStar() != 0) {
             target.setStar(form.getStar());
         }
@@ -90,8 +84,13 @@ public class CriticService {
      * 최근 작성된 강의평가를 조회하는 메소드
      * @return 최근 10개의 강의평가 리스트
      */
-    public List<CriticResponse> readRecentCritic(){
-        return criticRepository.findAll(Pageable.ofSize(10)).getContent()
+    public List<CriticResponse> readRecentCritic(CriticForm form){
+        /*if(form.getLectureName() != null && form.getProfName()!=null){
+            return criticRepository.findAllByLectureNameEqualsAndProfNameEquals(form.getLectureName(), form.getProfName())
+                    .stream()
+                    .map(CriticResponse::new)
+                    .collect(Collectors.toList());
+        } else */return criticRepository.findAll(Pageable.ofSize(10)).getContent()
                 .stream()
                 .map(CriticResponse::new)
                 .collect(Collectors.toList());

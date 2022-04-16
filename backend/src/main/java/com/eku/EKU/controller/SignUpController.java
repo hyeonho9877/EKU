@@ -1,5 +1,7 @@
 package com.eku.EKU.controller;
 
+import com.eku.EKU.domain.Student;
+import com.eku.EKU.exceptions.DuplicateEnrollException;
 import com.eku.EKU.form.OcrResponseForm;
 import com.eku.EKU.form.SignUpForm;
 import com.eku.EKU.service.MailService;
@@ -40,17 +42,20 @@ public class SignUpController {
             System.out.println(headerName + " : " + request.getHeader(headerName));
             System.out.println(form);
         }
-        if (mailService.validateEmail(form.getEmail())) {
-            signUpService.enrollClient(form)
-                    .ifPresent(c -> {
-                        mailService.sendAuthMail(c, form.getEmail());
-                    });
-            return ResponseEntity.ok(true);
-        } else return ResponseEntity.badRequest().body(false);
+        try {
+            if (mailService.validateEmail(form.getEmail())) {
+                Student student = signUpService.enrollClient(form).orElseThrow(DuplicateEnrollException::new);
+                mailService.sendAuthMail(student, student.getEmail());
+                return ResponseEntity.ok(true);
+            } else return ResponseEntity.badRequest().body(false);
+        } catch (DuplicateEnrollException e) {
+            return ResponseEntity.badRequest().body(false);
+        }
     }
 
     /**
      * 카드형 학생증, 모바일 학생증에 대한 ocr 서비스 요청
+     *
      * @param img ocr을 수행해야하는 이미지
      * @return 성공시 OcrResponseForm 객체를 담은 ok, 아닐 경우 internalService error 리턴
      */
@@ -81,7 +86,7 @@ public class SignUpController {
      */
     @GetMapping("/signUp/emailAuth")
     public ResponseEntity<?> authIdentity(@RequestParam String key) {
-        if(signUpService.authEmail(key)){
+        if (signUpService.authEmail(key)) {
             return ResponseEntity.ok(true);
         } else return ResponseEntity.badRequest().body(false);
     }

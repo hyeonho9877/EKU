@@ -2,6 +2,7 @@ package com.eku.EKU.service;
 
 import com.eku.EKU.config.CustomProperty;
 import com.eku.EKU.domain.Student;
+import com.eku.EKU.exceptions.NoAuthExceptions;
 import com.eku.EKU.exceptions.NoSuchStudentException;
 import com.eku.EKU.form.SignInForm;
 import com.eku.EKU.repository.StudentRepository;
@@ -51,6 +52,13 @@ public class SignInService {
         String password = target.getPassword();
         byte[] decode = Base64.getDecoder().decode(password);
         String decryptedPassword = securityManager.decryptWithPrefixIV(decode, KeyGen.getKeyFromPassword(form.getPassword(), target.getName()));
-        return form.getPassword().equals(decryptedPassword);
+        if (form.getPassword().equals(decryptedPassword) && target.isAuthenticated()){
+            return true;
+        } else if(!form.getPassword().equals(decryptedPassword)){
+            return false;
+        } else if(form.getPassword().equals(decryptedPassword) && !target.isAuthenticated()){
+            throw new NoAuthExceptions();
+        }
+        return false;
     }
 }

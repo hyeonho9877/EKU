@@ -64,23 +64,10 @@ public class SignUpService {
      */
     public Optional<Student> enrollClient(SignUpForm form) {
         try {
-            byte[] encryptedPasswordBytes = securityManager.encryptWithPrefixIV(form.getPassword().getBytes(StandardCharsets.UTF_8), KeyGen.getKeyFromPassword(form.getPassword(), form.getName()), KeyGen.generateGCM().getIV());
-            Student student = Student.builder()
-                    .studNo(form.getStudNo())
-                    .authenticated(false)
-                    .password(Base64.getEncoder().encodeToString(encryptedPasswordBytes))
-                    .email(form.getEmail())
-                    .department(form.getDepartment())
-                    .name(form.getName())
-                    .salt(form.getName())
-                    .build();
-
-            Student result = studentRepository.save(student);
-            this.enrollMappingKey(student);
-            return Optional.of(result);
-        } catch (IllegalArgumentException | InvalidKeySpecException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException | InvalidKeyException | InvalidAlgorithmParameterException e) {
-            e.printStackTrace();
+            validateDupl(form);
             return Optional.empty();
+        } catch (NoSuchStudentException e) {
+            return saveAsEntity(form);
         }
     }
 
@@ -146,13 +133,14 @@ public class SignUpService {
             student.setAuthenticated(true);
             studentRepository.save(student);
             return true;
-        } catch (NoSuchStudentException| NoSuchAuthKeyException e) {
+        } catch (NoSuchStudentException | NoSuchAuthKeyException e) {
             return false;
         }
     }
 
     /**
      * 네이버에 OCR 이미지 요청함
+     *
      * @param img 요청하려는 IMG 파일
      * @return OCR을 수행한 결과
      */
@@ -197,6 +185,7 @@ public class SignUpService {
 
     /**
      * 네이버에서 받은 OCR 결과를 이름, 학과, 학번으로 파싱하는 메소드
+     *
      * @param responseForm OCR 결과를 담고 있는 Form 객체
      * @return 파싱된 String
      */
@@ -224,6 +213,32 @@ public class SignUpService {
             return new ObjectMapper().writeValueAsString(responseFormBuilder.build());
         } catch (IOException e) {
             return "";
+        }
+    }
+
+    private void validateDupl(SignUpForm form) throws NoSuchStudentException {
+        studentRepository.findById(form.getStudNo()).orElseThrow(NoSuchStudentException::new);
+    }
+
+    private Optional<Student> saveAsEntity(SignUpForm form) {
+        try {
+            byte[] encryptedPasswordBytes = securityManager.encryptWithPrefixIV(form.getPassword().getBytes(StandardCharsets.UTF_8), KeyGen.getKeyFromPassword(form.getPassword(), form.getName()), KeyGen.generateGCM().getIV());
+            Student student = Student.builder()
+                    .studNo(form.getStudNo())
+                    .authenticated(false)
+                    .password(Base64.getEncoder().encodeToString(encryptedPasswordBytes))
+                    .email(form.getEmail())
+                    .department(form.getDepartment())
+                    .name(form.getName())
+                    .salt(form.getName())
+                    .build();
+
+            Student result = studentRepository.save(student);
+            this.enrollMappingKey(student);
+            return Optional.of(result);
+        } catch (IllegalArgumentException | InvalidKeySpecException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException | InvalidKeyException | InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+            return Optional.empty();
         }
     }
 }

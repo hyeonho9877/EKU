@@ -23,6 +23,7 @@ import java.util.NoSuchElementException;
 public class BoardController {
     private final FreeBoardService freeBoardServicee;
     private final InfoBoardService infoBoardService;
+    
     public BoardController(FreeBoardService boardService, InfoBoardService infoBoardService) {
         this.freeBoardServicee = boardService;
         this.infoBoardService = infoBoardService;
