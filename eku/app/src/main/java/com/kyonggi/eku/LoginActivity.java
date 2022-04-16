@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,16 +39,17 @@ public class LoginActivity extends AppCompatActivity {
     EditText user_email, user_pw;
     UserInformation userInformation;
     private Map<String,String>map;
-
+    TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        userInformation = new UserInformation();
+        textView = findViewById(R.id.textView20);
+        textView.setVisibility(View.INVISIBLE);
         user_email = (EditText) findViewById(R.id.user_email);
         user_pw = (EditText)  findViewById(R.id.user_pw);   // 8자 이상, 특수문자 포함
 
-
+        //password1!
         btn_sign = (Button) findViewById(R.id.btn_photo_sign);
         btn_sign.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        UserInformation userInformation = new UserInformation(getApplicationContext());
         btn_login = (Button) findViewById(R.id.btn_login);
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                 String std_pw = user_pw.getText().toString();
                 if ( std_email.length() == 0 ||std_pw.length()==0) {
                     Toast.makeText(getBaseContext(),"ID와 PASSWORD 입력을 확인해 주세요",Toast.LENGTH_SHORT);
+
                 } else {
                     Handler handler = new Handler(){
                         public void handleMessage(@NonNull Message msg){
@@ -75,14 +79,18 @@ public class LoginActivity extends AppCompatActivity {
                                     if (responseResult.equals("SignIn Success."))
                                     {
 
-                                        userInformation.toPhone(getApplicationContext(),std_email,std_pw);
+                                        userInformation.toPhone(getApplicationContext(),std_email,std_pw,true,true);
                                         Intent intent = new Intent(getApplicationContext(), MainBoard.class);
                                         startActivity(intent);
                                         /*
                                         *   이메일 검증 페이지 메인보드 가기전에 만들기
                                         *  shared에 기타 데이터 저장하기를 만들어놔야합니다.
                                          */
-
+                                    }
+                                    else{
+                                        userInformation.toPhone(getApplicationContext(),std_email,std_pw,true,false);
+                                        Toast.makeText(getApplicationContext(),"인증이 필요합니다. 이메일로 인증해주세요!!",Toast.LENGTH_LONG);
+                                        textView.setVisibility(View.VISIBLE);
                                     }
                             }
                         }
