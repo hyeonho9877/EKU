@@ -54,24 +54,9 @@ public class WriteFreeCommunity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MainFreeCommunity.class);
-                int count = PreferenceManagers.getInt(getApplicationContext(), "FreeCommunity_count");
                 // Toast.makeText(getApplicationContext(),String.valueOf(count), Toast.LENGTH_SHORT).show();
-                count++;
-                PreferenceManagers.setInt(getApplicationContext(),"FreeCommunity_count", count);
 
-                String title = "FreeCommunity_title"+count;
-                EditText text = findViewById(R.id.write_free_title);
-                String titletext = text.getText().toString();
-                PreferenceManagers.setString(getApplicationContext(), title, titletext);
 
-                String content = "FreeCommunity_content"+count;
-                text = findViewById(R.id.write_free_content);
-                String contenttext = text.getText().toString();
-                PreferenceManagers.setString(getApplicationContext(), content, contenttext);
-
-                String writer = "FreeCommunity_writer"+count;
-                String writertext = "고지웅";
-                PreferenceManagers.setString(getApplicationContext(), writer, writertext);
 
                 String building = "";
                 String temp = "";
@@ -106,12 +91,6 @@ public class WriteFreeCommunity extends AppCompatActivity {
                 temp = building9.isChecked() ? "1" : "0";
                 building += temp;
 
-
-                String buildingtext = "FreeCommunity_building"+count;
-                Toast.makeText(getApplicationContext(),buildingtext, Toast.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(),building, Toast.LENGTH_SHORT).show();
-                PreferenceManagers.setString(getApplicationContext(), building, buildingtext);
-
                 /*
                 long now = System.currentTimeMillis();
                 Date date = new Date(now);
@@ -128,7 +107,11 @@ public class WriteFreeCommunity extends AppCompatActivity {
                         switch (msg.what) {
                             case 0:
                                 String responseResult=(String)msg.obj;
-                                Toast.makeText(getApplicationContext(), responseResult, Toast.LENGTH_SHORT).show();
+
+                                Toast.makeText(getApplicationContext(), responseResult, Toast.LENGTH_LONG).show();
+                                EditText estudNo = findViewById(R.id.write_free_title);
+                                EditText edepartment =findViewById(R.id.write_free_content);
+
                         }
                     }
                 };
@@ -148,11 +131,8 @@ public class WriteFreeCommunity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
                 activityResultLauncher.launch(intent);
                 finish();
-
             }
         });
         Button closeButton = (Button) findViewById(R.id.write_free_close);

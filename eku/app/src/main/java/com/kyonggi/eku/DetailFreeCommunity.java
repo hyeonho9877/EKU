@@ -165,7 +165,7 @@ public class DetailFreeCommunity extends AppCompatActivity {
                     temp2.put("content","test내용");
 
                     try {
-                        sendTool.request("http://115.85.182.126:8080/board/free/write","POST",temp2);
+                        sendTool.request("http://115.85.182.126:8080/comment/free/update","POST",temp2);
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (JSONException e) {
@@ -191,13 +191,11 @@ public class DetailFreeCommunity extends AppCompatActivity {
                     SendTool sendTool = new SendTool(handler);
 
                     HashMap<String,String> temp2 = new HashMap<>();
-                    temp2.put("studNo","201713924");
-                    temp2.put("department","컴퓨터공학과");
-                    temp2.put("title","test제목");
-                    temp2.put("content","test내용");
+
+                    temp2.put("commentId","1");
 
                     try {
-                        sendTool.request("http://115.85.182.126:8080/board/free/write","POST",temp2);
+                        sendTool.request("http://115.85.182.126:8080/comment/free/delete","POST",temp2);
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (JSONException e) {
