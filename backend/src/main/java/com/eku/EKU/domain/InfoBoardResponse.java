@@ -15,7 +15,7 @@ public class InfoBoardResponse {
 
     public InfoBoardResponse(InfoBoard board) {
         this.id= board.getId();
-        this.studNo = board.getWriter().getStudNo();
+        this.studNo = board.getNo().getStudNo();
         this.department = board.getDepartment();
         this.title = board.getTitle();
         this.content = board.getContent();
