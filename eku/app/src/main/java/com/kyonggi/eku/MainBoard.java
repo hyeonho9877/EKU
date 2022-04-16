@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -172,24 +173,28 @@ public class MainBoard extends AppCompatActivity {
                 switch (msg.what) {
                     case 0:
                         String responseResult = (String) msg.obj;
-                        try {
+                        Log.i("a",responseResult);
+                            /*
                             JSONArray BoardArray = new JSONArray(responseResult);
                             for (int i = 0; i < BoardArray.length(); i++) {
                                 JSONObject BoardObject = BoardArray.getJSONObject(i);
-
+                             */
+                            JSONObject BoardObject = null;
+                            try {
+                                BoardObject = new JSONObject(responseResult);
                                 String content = BoardObject.getString("content");
                                 String time = BoardObject.getString("writtenTime");
-                                gAdapter.addItem(new ListItem(content,time));
+                                gAdapter.addItem(new ListItem(content, time));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
                 }
             }
         };
 
         SendTool sendTool = new SendTool(handler);
         HashMap<String,String> temp = new HashMap<>();
+        temp.put("uuid","E2C56DB5-DFFB-48D2-B060-D0F5A71096E0");
         try {
             sendTool.request("http://115.85.182.126:8080/doodle/read", "POST", temp);
         } catch (IOException e) {

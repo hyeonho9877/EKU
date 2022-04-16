@@ -2,10 +2,14 @@ package com.eku.EKU.service;
 
 import com.eku.EKU.repository.MappingKeyRepository;
 import com.eku.EKU.repository.StudentRepository;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @SpringBootTest
 class SignUpServiceTest {
@@ -96,4 +100,10 @@ class SignUpServiceTest {
         }
     }*/
 
+    @Test
+    void duplTest() {
+        LocalDateTime now = LocalDateTime.now();
+        String format = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        System.out.println(format);
+    }
 }

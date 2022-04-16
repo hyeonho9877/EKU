@@ -19,8 +19,6 @@ public class CriticResponse {
 
     public CriticResponse(Critic critic) {
         this.cId = critic.getCId();
-        this.lectureName = critic.getLectureName();
-        this.profName = critic.getProfName();
         this.content = critic.getContent();
         this.grade = GradeResponseConverter.convert(critic.getGrade());
         this.studNo = String.valueOf(critic.getWriter().getStudNo()).substring(2, 4);

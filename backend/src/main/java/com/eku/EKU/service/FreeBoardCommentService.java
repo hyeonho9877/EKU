@@ -12,6 +12,8 @@ import com.eku.EKU.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.NoSuchElementException;
 
 /**
@@ -43,7 +45,7 @@ public class FreeBoardCommentService {
         FreeBoard originalArticle = freeBoardRepository.findById(form.getArticleID()).orElseThrow();
         FreeBoardComment comment = FreeBoardComment.builder()
                 .content((form.getContent()))
-                .writtenTime(form.getWrittenTime())
+                .writtenTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 .writer(writer)
                 .original(originalArticle)
                 .build();

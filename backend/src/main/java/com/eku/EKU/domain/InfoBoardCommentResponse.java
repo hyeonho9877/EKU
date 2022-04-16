@@ -2,13 +2,11 @@ package com.eku.EKU.domain;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 public class InfoBoardCommentResponse {
     private long iId;
     private String content;
-    private LocalDateTime writtenTime;
+    private String writtenTime;
     private long writer;
 
     public InfoBoardCommentResponse(InfoBoardComment comment) {

@@ -54,7 +54,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".findGang"
+            android:name=".MainFreeCommunity"
             android:exported="true">
 
         </activity>
@@ -65,15 +65,16 @@
             android:name=".DetailFreeCommunity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".WriteFreeCommunity"
-            android:exported="false" />
+        <!--
         <activity
             android:name=".MainFreeCommunity"
             android:exported="false" />
+            -->
         <activity
             android:name=".DetailAnnounce"
             android:exported="true" />
+        <activity android:name=".WriteFreeCommunity"
+            android:exported="true"/>
         <activity
             android:name=".WriteAnnounce"
             android:exported="true" />
@@ -143,7 +144,7 @@
             android:exported="true" />
         <activity android:name=".WriteBoard" />
         <activity
-            android:name=".MainBoard"
+            android:name=".findGang"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -159,6 +160,9 @@
             android:exported="false" />
         <activity
             android:name=".LectureDetail"
+            android:exported="false" />
+        <activity
+            android:name=".ScheduleTable"
             android:exported="false" />
     </application>
 
