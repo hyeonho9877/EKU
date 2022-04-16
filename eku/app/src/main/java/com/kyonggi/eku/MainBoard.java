@@ -186,7 +186,7 @@ public class MainBoard extends AppCompatActivity {
 
         SendTool sendTool = new SendTool(handler);
         HashMap<String,String> temp = new HashMap<>();
-        temp.put("uuid","E2C56DB5-DFFB-48D2-B060-D0F5A71096E0");
+        temp.put("minor","61686");
         try {
             sendTool.request("http://115.85.182.126:8080/doodle/read", "POST", temp);
         } catch (IOException e) {
