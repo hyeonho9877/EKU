@@ -101,7 +101,7 @@
             android:name=".SignPhotoActivity"
             android:exported="false" />
         <activity
-            android:name=".TodoActivity"
+            android:name=".MainBoard"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -135,6 +135,17 @@
             android:name=".Request"
             android:exported="true" />
         <activity android:name=".WriteBoard" />
+
+        <activity
+            android:name=".LectureMain"
+            android:exported="false" />
+        <activity
+            android:name=".LectureDetail"
+            android:exported="false" />
+
+
     </application>
 
 </manifest>
+
+

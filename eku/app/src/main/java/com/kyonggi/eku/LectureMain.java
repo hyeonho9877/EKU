@@ -1,11 +1,15 @@
 package com.kyonggi.eku;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -24,24 +28,32 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.HashMap;
+
 public class LectureMain extends AppCompatActivity {
 
     /*
-    * 강의평가 메인
-    *
+     * 강의평가 메인
+     *
      */
     ImageButton imageButton;
     ImageButton imageButton1;
-    String[] items = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
+    LinearLayout sc;
+    String[] items = {"1강의동", "2강의동", "3강의동", "4강의동", "5강의동", "6강의동", "7강의동", "8강의동", "9강의동", "제2공학관"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lecture_main);
 
-        Spinner spinner = (Spinner)findViewById(R.id.Lecture_Main_spinner);
+        Spinner spinner = (Spinner) findViewById(R.id.Lecture_Main_spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,items);
+                this, android.R.layout.simple_spinner_item, items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
 
@@ -56,8 +68,8 @@ public class LectureMain extends AppCompatActivity {
                 //없음
             }
         });
-        imageButton = (ImageButton)findViewById(R.id.Lecture_Main_WriteButton);
-        imageButton.setOnClickListener(new View.OnClickListener(){
+        imageButton = (ImageButton) findViewById(R.id.Lecture_Main_WriteButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), LectureWrite.class);
@@ -66,76 +78,93 @@ public class LectureMain extends AppCompatActivity {
             }
         });
 
-        EditText searchText = (EditText)findViewById(R.id.Lecture_Main_searchtext);
-        searchText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int s, int s1, int s2) {
+        EditText searchText = (EditText) findViewById(R.id.Lecture_Main_searchtext);
 
-            }
+        Handler handler = new Handler() {
+            public void handleMessage(@NonNull Message msg) {
+                switch (msg.what) {
+                    case 0:
+                        String responseResult = (String) msg.obj;
+                        Log.i("a",responseResult);
+                        try {
+                            JSONArray LectureArray = new JSONArray(responseResult);
+                            for (int i = 0; i < LectureArray.length(); i++) {
+                                JSONObject LectureObject = LectureArray.getJSONObject(i);
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int s, int s1, int s2) {
-                LinearLayout sc = (LinearLayout)findViewById(R.id.Lecture_Main_scroll);
-                sc.removeAllViews();
-                int count = PreferenceManagers.getInt(getApplicationContext(), "count");
-                for (int i = count; i >= 1; i--) {
-                    if (PreferenceManagers.getString(getApplicationContext(), "name" + String.valueOf(i)).contains(charSequence) ||
-                            PreferenceManagers.getString(getApplicationContext(), "professor" + String.valueOf(i)).contains(charSequence)) {
-
-                        String str = "name" + i;
-                        String title = PreferenceManagers.getString(getApplicationContext(), str);
-
-                        str = "professor" + i;
-                        String professor = PreferenceManagers.getString(getApplicationContext(), str);
-
-                        str = "rating" + i;
-                        Float rating = PreferenceManagers.getFloat(getApplicationContext(), str);
-
-                        write_Lecture(title, professor, rating, i);
-                    }
+                                String title = LectureObject.getString("lectureName");
+                                String professor = LectureObject.getString("profName");
+                                String content = LectureObject.getString("content");
+                                String rating = LectureObject.getString("star");
+                                int LectureId = Integer.parseInt(LectureObject.getString("cid"));
+                                write_Lecture(title, professor, rating, content, LectureId);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                 }
             }
+        };
 
-            @Override
-            public void afterTextChanged(Editable editable) {
+        SendTool sendTool = new SendTool(handler);
+        HashMap<String,String> temp = new HashMap<>();
+        try {
+            sendTool.request("http://115.85.182.126:8080/critic/read", "POST", temp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-            }
-        });
-
-        imageButton1 = (ImageButton)findViewById(R.id.Lecture_Main_searchButton);
-        imageButton1.setOnClickListener(new View.OnClickListener(){
+        imageButton1 = (ImageButton) findViewById(R.id.Lecture_Main_searchButton);
+        imageButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //?????????????????
-            }
-        });
-        //initialize();
-        int count = PreferenceManagers.getInt(getApplicationContext(), "count");
-        if (count==-1){
-            PreferenceManagers.setInt(getApplicationContext(), "count", 0);
-        }
-        if (count >0){
-            for (int i = count;i>=1;i--){
-                if(!PreferenceManagers.getString(getApplicationContext(),"name"+String.valueOf(i)).equals("")) {
-                    String str = "name" + i;
-                    String title = PreferenceManagers.getString(getApplicationContext(), str);
+                String search = searchText.getText().toString();
+                sc = (LinearLayout) findViewById(R.id.Lecture_Main_scroll);
+                sc.removeAllViews();
+                Handler handler = new Handler() {
+                    public void handleMessage(@NonNull Message msg) {
+                        switch (msg.what) {
+                            case 0:
+                                String responseResult = (String) msg.obj;
+                                try {
+                                    JSONArray LectureArray = new JSONArray(responseResult);
+                                    for (int i = 0; i < LectureArray.length(); i++) {
+                                        JSONObject LectureObject = LectureArray.getJSONObject(i);
 
-                    str = "professor" + i;
-                    String professor = PreferenceManagers.getString(getApplicationContext(), str);
+                                        String title = LectureObject.getString("lectureName");
+                                        String professor = LectureObject.getString("profName");
+                                        if (title.contains(search) || professor.contains(search)) {
+                                            String content = LectureObject.getString("content");
+                                            String rating = LectureObject.getString("star");
+                                            int LectureId = Integer.parseInt(LectureObject.getString("cid"));
+                                            write_Lecture(title, professor, rating, content, LectureId);
+                                        }
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                        }
+                    }
+                };
 
-                    str = "rating" + i;
-                    Float rating = PreferenceManagers.getFloat(getApplicationContext(), str);
-
-                    write_Lecture(title, professor, rating, i);
+                SendTool sendTool = new SendTool(handler);
+                HashMap<String,String> temp = new HashMap<>();
+                try {
+                    sendTool.request("http://115.85.182.126:8080/critic/read", "POST", temp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
-        }
+        });
     }
 
-    public void write_Lecture(String Title, String professor, float rating, int count){
-        LinearLayout sc = (LinearLayout)findViewById(R.id.Lecture_Main_scroll);
+    public void write_Lecture(String Title, String professor, String rating, String content, int Lectureid) {
+        sc = (LinearLayout) findViewById(R.id.Lecture_Main_scroll);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
-        linearLayout .setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
 
         LinearLayout.LayoutParams linearLayoutParams =
                 new LinearLayout.LayoutParams(
@@ -143,21 +172,17 @@ public class LectureMain extends AppCompatActivity {
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
 
-        linearLayout.setId(count);
+        linearLayout.setId(Lectureid);
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),LectureDetail.class);
-                int Lid = view.getId();
-                intent.putExtra("key",Lid);
-                // Toast.makeText(getApplicationContext(),String.valueOf(Lid), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), LectureDetail.class);
+                intent.putExtra("Name", Title);
+                intent.putExtra("Prof", professor);
                 startActivity(intent);
-                finish();;
-
+                finish();
             }
         });
-
-
 
         TextView textView = new TextView(getApplicationContext());
         textView.setText(Title);
@@ -179,25 +204,20 @@ public class LectureMain extends AppCompatActivity {
         RatingBar Rating = new RatingBar(getApplicationContext());
         Rating.setIsIndicator(true);
         Rating.setNumStars(5);
-        Rating.setRating(rating);
+        Rating.setRating(Float.valueOf(rating));
         LinearLayout.LayoutParams centerParams = new LinearLayout.LayoutParams(linearLayoutParams.WRAP_CONTENT, linearLayoutParams.WRAP_CONTENT);
         centerParams.gravity = Gravity.CENTER;
         Rating.setLayoutParams(centerParams);
-
         linearLayout.addView(Rating);
 
+        TextView contentView = new TextView(getApplicationContext());
+        contentView.setText(content);
+        contentView.setGravity(Gravity.LEFT);
+        contentView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17.0f);
+        contentView.setLayoutParams(linearLayoutParams);
+        contentView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+        linearLayout.addView(contentView);
+
         sc.addView(linearLayout);
-
-
-    }
-    public void initialize() { //일기 초기화
-        int i = PreferenceManagers.getInt(getApplicationContext(), "count");
-        for (int j=0;j<=i;j++){
-            PreferenceManagers.removeKey(getApplicationContext(),"name"+j);
-            PreferenceManagers.removeKey(getApplicationContext(),"writer"+j);
-            PreferenceManagers.removeKey(getApplicationContext(),"professor"+j);
-        }
-        PreferenceManagers.setInt(getApplicationContext(), "count", 0);
-        Toast.makeText(getApplicationContext(),"초기화 켜져있어요", Toast.LENGTH_SHORT).show();
     }
 }
