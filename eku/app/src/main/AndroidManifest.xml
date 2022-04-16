@@ -121,6 +121,9 @@
             android:exported="true"/>
         -->
         <activity
+            android:name=".MainBoard"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait"></activity>
