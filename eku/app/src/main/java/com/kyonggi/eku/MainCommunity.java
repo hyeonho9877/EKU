@@ -254,8 +254,6 @@ public class MainCommunity extends AppCompatActivity {
             }
         });
 
-
-
         TextView textView = new TextView(getApplicationContext());
         textView.setText(Title);
         textView.setGravity(Gravity.LEFT);
