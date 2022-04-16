@@ -13,21 +13,18 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.HashMap;
+
 
 /*
 * 강의동 낙서게시판
@@ -41,8 +38,14 @@ public class MainBoard extends AppCompatActivity {
     AlertDialog buildingSelectDialog;
     GestureDetector gestureDetector = null;
 
+
+
+
+    TextView BuildingButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_board);
 
@@ -122,7 +125,17 @@ public class MainBoard extends AppCompatActivity {
             }
         });
 
-        TextView BuildingButton = (TextView) findViewById(R.id.board_Spinner);
+        BuildingButton = (TextView) findViewById(R.id.go_Donan);
+        BuildingButton.setText("불러오는중");
+        Intent intent = getIntent();
+        String name;
+        try {
+            name = intent.getExtras().getString("GANG");
+        } catch (Exception e)
+        {
+            name="8강의동";
+        }
+        BuildingButton.setText(name);
         BuildingButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -233,4 +246,6 @@ public class MainBoard extends AppCompatActivity {
     public void onSwipeBottom() {
         Toast.makeText(this,"하단 스와이프", Toast.LENGTH_SHORT).show();
     }
+
+
 }
