@@ -4,18 +4,25 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 public class WriteFreeCommunity extends AppCompatActivity {
 
@@ -47,24 +54,9 @@ public class WriteFreeCommunity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MainFreeCommunity.class);
-                int count = PreferenceManagers.getInt(getApplicationContext(), "FreeCommunity_count");
                 // Toast.makeText(getApplicationContext(),String.valueOf(count), Toast.LENGTH_SHORT).show();
-                count++;
-                PreferenceManagers.setInt(getApplicationContext(),"FreeCommunity_count", count);
 
-                String title = "FreeCommunity_title"+count;
-                EditText text = findViewById(R.id.write_free_title);
-                String titletext = text.getText().toString();
-                PreferenceManagers.setString(getApplicationContext(), title, titletext);
 
-                String content = "FreeCommunity_content"+count;
-                text = findViewById(R.id.write_free_content);
-                String contenttext = text.getText().toString();
-                PreferenceManagers.setString(getApplicationContext(), content, contenttext);
-
-                String writer = "FreeCommunity_writer"+count;
-                String writertext = "고지웅";
-                PreferenceManagers.setString(getApplicationContext(), writer, writertext);
 
                 String building = "";
                 String temp = "";
@@ -99,12 +91,6 @@ public class WriteFreeCommunity extends AppCompatActivity {
                 temp = building9.isChecked() ? "1" : "0";
                 building += temp;
 
-
-                String buildingtext = "FreeCommunity_building"+count;
-                Toast.makeText(getApplicationContext(),buildingtext, Toast.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(),building, Toast.LENGTH_SHORT).show();
-                PreferenceManagers.setString(getApplicationContext(), building, buildingtext);
-
                 /*
                 long now = System.currentTimeMillis();
                 Date date = new Date(now);
@@ -112,10 +98,41 @@ public class WriteFreeCommunity extends AppCompatActivity {
                 String time = timeFormat.format(date);
                 PreferenceManagers.setString(getApplicationContext(), "FreeCommunity_time" + count, time);
                 */
-                
+
+
+
+
+                Handler handler = new Handler(){
+                    public void handleMessage(@NonNull Message msg){
+                        switch (msg.what) {
+                            case 0:
+                                String responseResult=(String)msg.obj;
+
+                                Toast.makeText(getApplicationContext(), responseResult, Toast.LENGTH_LONG).show();
+                                EditText estudNo = findViewById(R.id.write_free_title);
+                                EditText edepartment =findViewById(R.id.write_free_content);
+
+                        }
+                    }
+                };
+
+                SendTool sendTool = new SendTool(handler);
+
+                HashMap<String,String> temp2 = new HashMap<>();
+                temp2.put("studNo","201713924");
+                temp2.put("department","컴퓨터공학과");
+                temp2.put("title","test제목");
+                temp2.put("content","test내용");
+
+                try {
+                    sendTool.request("http://115.85.182.126:8080/board/free/write","POST",temp2);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 activityResultLauncher.launch(intent);
                 finish();
-
             }
         });
         Button closeButton = (Button) findViewById(R.id.write_free_close);
