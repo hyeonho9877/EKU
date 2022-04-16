@@ -8,11 +8,13 @@ public class DoodleResponse {
     private String content;
     private String building;
     private String uuid;
+    private String writtenTime;
 
     public DoodleResponse(Doodle doodle) {
         this.doodleId = doodle.getDoodleId();
         this.content = doodle.getContent();
         this.building = doodle.getBuilding().getDesc();
         this.uuid = doodle.getBuilding().getBeaconId();
+        this.writtenTime = doodle.getWrittenTime();
     }
 }

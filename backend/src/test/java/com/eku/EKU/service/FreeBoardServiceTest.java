@@ -1,10 +1,7 @@
 package com.eku.EKU.service;
 
-import com.eku.EKU.domain.FreeBoard;
-import com.eku.EKU.domain.Student;
 import com.eku.EKU.repository.FreeBoardRepository;
 import com.eku.EKU.repository.StudentRepository;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -18,7 +15,7 @@ public class FreeBoardServiceTest {
     @Autowired
     private StudentRepository studentRepository;
 
-    @Test
+    /*@Test
     public void testDB() {
         FreeBoard freeBoard;
         java.util.Date dt = new java.util.Date();
@@ -42,5 +39,5 @@ public class FreeBoardServiceTest {
         Student student = Student.builder().studNo((long)201661843).name("이현규").department("컴퓨터공학부").email("iz100412@gmail.com").authenticated(true).build();
 
         studentRepository.save(student);
-    }
+    }*/
 }
