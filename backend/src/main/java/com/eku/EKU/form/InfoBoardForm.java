@@ -1,18 +1,17 @@
 package com.eku.EKU.form;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
+import lombok.Data;
 
 
 @Data
-public class FreeBoardForm {
+public class InfoBoardForm {
     private Long id;
-    private Long studNo;
+    private Long writerNo;
+    private String name;
     private String department;
     private String title;
     private String content;
-    private int view;
     private String time;
+    private Long building;
 }

@@ -31,19 +31,17 @@ public class FreeBoardServiceTest {
         freeBoard.setTitle("title");
         freeBoard.setContent("content");
         freeBoard.setDepartment("컴공");
-        freeBoard.setStudNo((long) 201713883);
-        freeBoard.setTime(boardService.currentTime());
+        freeBoard.setStudNo((long) 201713924);
+        //freeBoard.setTime(boardService.currentTime());
         System.out.println(boardController.insertBoard(freeBoard).getBody());
         //System.out.println(boardController.updateBoard(freeBoard));
         //System.out.println(boardController.loadBoard(freeBoard));
-        System.out.println(boardController.boardList().getBody());
+        //System.out.println(boardController.boardList().getBody());
         //System.out.println(boardController.deleteBoard(freeBoard));
     }
     @Test
     public void testDB2() {
-        List<FreeBoard> list = freeBoardRepository.findAll();
-        Long id = list.get(list.size()-1).getId();
-        System.out.println(id);
+        System.out.println(boardService.studentNo((long)201611843));
     }
     @Test
     public void testDB3() {
