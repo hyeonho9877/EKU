@@ -2,7 +2,6 @@ package com.eku.EKU.controller;
 
 
 import com.eku.EKU.domain.BoardList;
-import com.eku.EKU.domain.FreeBoard;
 import com.eku.EKU.domain.FreeBoardResponse;
 import com.eku.EKU.exceptions.NoSuchBoardException;
 import com.eku.EKU.form.FreeBoardForm;
@@ -25,6 +24,7 @@ public class FreeBoardController {
     public FreeBoardController(FreeBoardService boardService) {
         this.boardService = boardService;
     }
+
     /**
      * 게시물 삽입 메소드
      * @param form 사용자 입력 폼
@@ -41,7 +41,6 @@ public class FreeBoardController {
             e.printStackTrace();
             return ResponseEntity.internalServerError().body(null);
         }
-
     }
 
     /**
