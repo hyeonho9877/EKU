@@ -2,19 +2,14 @@ package com.kyonggi.eku;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.media.AudioManager;
-import android.media.MediaParser;
 import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,9 +19,6 @@ import com.minew.beacon.BluetoothState;
 import com.minew.beacon.MinewBeacon;
 import com.minew.beacon.MinewBeaconManager;
 import com.minew.beacon.MinewBeaconManagerListener;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class DonanBagGi extends AppCompatActivity {
