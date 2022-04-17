@@ -195,7 +195,7 @@ public class SendTool {
                         .addHeader("key", "Content-Type")
                         .addHeader("value", "application/json")
                         .addHeader("description", "")
-                        .url(detailURL)
+                        .url(getURL)
                         .get()
                         .build();
             }
