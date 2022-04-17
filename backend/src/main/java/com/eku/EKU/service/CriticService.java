@@ -39,7 +39,6 @@ public class CriticService {
      * @throws NoSuchElementException
      */
     public CriticResponse applyCritic(CriticForm form) throws NoSuchStudentException, IllegalArgumentException, NoSuchElementException {
-
         Student writer = studentRepository.findStudentByEmail(form.getEmail()).orElseThrow(NoSuchStudentException::new);
         Critic critic = Critic.builder()
                 .content(form.getContent())
@@ -84,7 +83,7 @@ public class CriticService {
      * 최근 작성된 강의평가를 조회하는 메소드
      * @return 최근 10개의 강의평가 리스트
      */
-    public List<CriticResponse> readRecentCritic(CriticForm form){
+    public List<CriticResponse> readRecentCritic(){
         return criticRepository.findAll(Pageable.ofSize(10)).getContent()
                 .stream()
                 .map(CriticResponse::new)

@@ -5,7 +5,6 @@ import com.eku.EKU.domain.GELecture;
 import com.eku.EKU.domain.Grade;
 import com.eku.EKU.domain.MajorLecture;
 import com.eku.EKU.repository.LectureRepository;
-import com.eku.EKU.repository.MajorLectureRepository;
 import com.eku.EKU.secure.KeyGen;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
