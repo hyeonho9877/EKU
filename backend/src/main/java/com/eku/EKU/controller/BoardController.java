@@ -66,7 +66,7 @@ public class BoardController {
     }
 
     /**
-     * 게시판의 전체목록을 불러오는 메소드
+     * 자유게시판의 전체목록을 불러오는 메소드
      * @return 게시판목록 list 반환
      */
     @PostMapping("/board/free/lists")
@@ -79,7 +79,7 @@ public class BoardController {
     }
 
     /**
-     * 게시물을 불러오는 메소드
+     * 자유 게시판 게시물을 불러오는 메소드
      * @param form
      * @return
      */
@@ -166,7 +166,7 @@ public class BoardController {
             return ResponseEntity.badRequest().body(null);
     }
     /**
-     * 게시물을 불러오는 메소드
+     * 공지 게시판 게시물을 불러오는 메소드
      * @param form
      * @return
      */
