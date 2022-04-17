@@ -176,8 +176,86 @@ public class SendTool {
 
     }
 
-
     private void postServer(String detailURL, String getPost, HashMap<String,String> contents){
+        Request request =null;
+        try {
+            if(getPost.equals("get")||getPost.equals("GET"))
+            {
+                int i=0;
+                String getURL = detailURL+"?";
+                for (String key : contents.keySet()) {
+                    if(i!=0){
+                        getURL=getURL+"&";
+                        i++;
+                    }
+                    getURL=getURL+key+"=";
+                    getURL=getURL+(String)contents.get(key);
+                }
+                request = new Request.Builder()
+                        .addHeader("key", "Content-Type")
+                        .addHeader("value", "application/json")
+                        .addHeader("description", "")
+                        .url(getURL)
+                        .get()
+                        .build();
+            }
+            else{
+                for (String key : contents.keySet()) {
+                    jsonInput.put(key, contents.get(key));
+                }
+                request = new Request.Builder()
+                        .addHeader("key", "Content-Type")
+                        .addHeader("value", "application/json")
+                        .addHeader("description", "")
+                        .url(detailURL)
+                        .post(RequestBody.create(MediaType.parse("application/json"), jsonInput.toString()))
+                        .build();
+            }
+
+            Response response = client.newCall(request).execute();
+            Log.i("request : ", request.toString());
+            //후에 JSON객체로 변환가능
+            String message = response.body().string();
+            mhandler.sendMessage(Message.obtain(mhandler,0,message));
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+    }
+
+
+
+    private void postServerJSON(String detailURL, String getPost, HashMap<String,String> contents){
+        try {
+            for (String key : contents.keySet()) {
+                jsonInput.put(key, contents.get(key));
+            }
+            Request request = new Request.Builder()
+                    .addHeader("key", "Content-Type")
+                    .addHeader("value", "application/json")
+                    .addHeader("description", "")
+                    .url(detailURL)
+                    .post(RequestBody.create(MediaType.parse("application/json"), jsonInput.toString()))
+                    .build();
+
+            Response response = client.newCall(request).execute();
+
+            Log.i("request : ", request.toString());
+            //후에 JSON객체로 변환가능
+            JSONObject message = new JSONObject(response.body().string());
+            mhandler.sendMessage(Message.obtain(mhandler,0,message));
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+    }
+
+
+   /* private void postServer(String detailURL, String getPost, HashMap<String,String> contents){
         try {
             for (String key : contents.keySet()) {
                 jsonInput.put(key, contents.get(key));
@@ -206,6 +284,8 @@ public class SendTool {
 
     }
 
+
+
     private void postServerJSON(String detailURL, String getPost, HashMap<String,String> contents){
         try {
             for (String key : contents.keySet()) {
@@ -231,7 +311,7 @@ public class SendTool {
         }
 
     }
-
+*/
 
 }
 
