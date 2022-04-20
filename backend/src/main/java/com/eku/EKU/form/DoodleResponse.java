@@ -1,6 +1,6 @@
-package com.eku.EKU.domain;
+package com.eku.EKU.form;
 
-import com.eku.EKU.form.DoodleForm;
+import com.eku.EKU.domain.Doodle;
 import lombok.Data;
 
 import java.time.LocalDateTime;

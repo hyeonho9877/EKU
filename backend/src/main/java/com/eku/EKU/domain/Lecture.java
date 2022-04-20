@@ -1,45 +1,45 @@
 package com.eku.EKU.domain;
 
-import com.eku.EKU.utils.LectureTypeConverter;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@IdClass(LectureKey.class)
 @Getter
 @Setter
 @ToString
+@SuperBuilder
+@NoArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Lecture {
-    @Id
-    private Integer year;
-    @Id
-    private String lectureNo;
-    @Id
-    private Integer semester;
-    @Id
-    @Convert(converter = LectureTypeConverter.class)
-    private LectureType lectureType;
 
-    @Column(name = "campus", nullable = false)
-    private String campus;
-    @Column(name = "lecture_name", nullable = false)
-    private String lectureName;
-    @Column(name = "grade")
-    private Short grade;
-    @Column(name = "complete", nullable = false)
-    private String complete;
-    @Column(name = "point", nullable = false)
-    private Short point;
-    @Column(name = "professor", nullable = false)
-    private String professor;
-    @Column(name = "lecture_desc")
-    private String lectureDesc;
-    @Column(name = "lecture_time")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long lectureId;
+
+    @Column(nullable = false)
+    private String lectureNo;
+    @Column(nullable = false)
     private String lectureTime;
-    @Column(name = "lecture_room")
+    @Column(nullable = false)
     private String lectureRoom;
+    @Column(nullable = false)
+    private Short year;
+    @Column(nullable = false)
+    private Short semester;
+    @Column(nullable = false)
+    private String complete;
+    private Short grade;
+    @Column(nullable = false)
+    private String lectureDesc;
+    @Column(nullable = false)
+    private Short point;
+
+    @ManyToOne
+    private LecturePrototype prototype;
+
 }

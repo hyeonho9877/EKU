@@ -1,18 +1,20 @@
 package com.eku.EKU.domain;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @ToString
 public class GELecture extends Lecture {
-    @Column(name = "lecture_group", nullable = false)
-    private String lectureGroup;
+
+    @ManyToOne
+    private LectureSubGroup lectureGroup;
 }

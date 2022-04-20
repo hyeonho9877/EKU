@@ -1,9 +1,9 @@
 package com.eku.EKU.service;
 
 import com.eku.EKU.domain.Doodle;
-import com.eku.EKU.domain.DoodleResponse;
 import com.eku.EKU.exceptions.NoSuchDoodleException;
 import com.eku.EKU.form.DoodleForm;
+import com.eku.EKU.form.DoodleResponse;
 import com.eku.EKU.repository.BuildingRepository;
 import com.eku.EKU.repository.DoodleRepository;
 import org.springframework.data.domain.Pageable;

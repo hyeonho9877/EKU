@@ -1,27 +1,32 @@
 package com.eku.EKU.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * 학부
+ */
 @Entity
 @Getter
+@Setter
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LectureGroup {
+public class Faculty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long lectureGroupId;
+    private long facultyId;
     @Column(nullable = false)
-    private String campusType;
+    private String facultyCode;
     @Column(nullable = false)
-    private String groupCode;
+    private String facultyName;
     @Column(nullable = false)
-    private Short year;
+    private short year;
     @Column(nullable = false)
-    private Short semester;
+    private short semester;
+
+    @ManyToOne
+    private College college;
 }

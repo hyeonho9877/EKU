@@ -1,6 +1,6 @@
 package com.eku.EKU.utils;
 
-import com.eku.EKU.domain.Grade;
+import com.eku.EKU.enums.Grade;
 
 /**
  * AP -> A+
@@ -9,17 +9,12 @@ import com.eku.EKU.domain.Grade;
 public class GradeResponseConverter {
 
     public static String convert(Grade grade) {
-        switch (grade.name()) {
-            case "AP":
-                return "A+";
-            case "BP":
-                return "B+";
-            case "CP":
-                return "C+";
-            case "DP":
-                return "D+";
-            default:
-                return grade.name();
-        }
+        return switch (grade.name()) {
+            case "AP" -> "A+";
+            case "BP" -> "B+";
+            case "CP" -> "C+";
+            case "DP" -> "D+";
+            default -> grade.name();
+        };
     }
 }

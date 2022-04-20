@@ -1,4 +1,4 @@
-package com.eku.EKU.domain;
+package com.eku.EKU.enums;
 
 public enum LectureType {
     GE("GE"), Major("Major");

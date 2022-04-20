@@ -1,10 +1,10 @@
 package com.eku.EKU.controller;
 
-import com.eku.EKU.domain.FreeBoardCommentResponse;
-import com.eku.EKU.domain.InfoBoardCommentResponse;
 import com.eku.EKU.exceptions.NoSuchArticleException;
 import com.eku.EKU.exceptions.NoSuchStudentException;
 import com.eku.EKU.form.CommentForm;
+import com.eku.EKU.form.FreeBoardCommentResponse;
+import com.eku.EKU.form.InfoBoardCommentResponse;
 import com.eku.EKU.service.FreeBoardCommentService;
 import com.eku.EKU.service.InfoBoardCommentService;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,5 @@
-package com.eku.EKU.domain;
+package com.eku.EKU.form;
 
-import com.eku.EKU.form.CommentForm;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,13 +11,6 @@ public class FreeBoardCommentResponse {
     private String content;
     private String writtenTime;
     private long writer;
-
-    public FreeBoardCommentResponse(FreeBoardComment comment) {
-        this.fId = comment.getFId();
-        this.content = comment.getContent();
-        this.writtenTime = comment.getWrittenTime();
-        this.writer = comment.getWriter().getStudNo();
-    }
 
     public FreeBoardCommentResponse(CommentForm form) {
         this.fId = 0;

@@ -1,11 +1,11 @@
 package com.eku.EKU.utils;
 
-import com.eku.EKU.domain.LectureType;
+import com.eku.EKU.enums.LectureType;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-@Converter
+@Converter(autoApply = true)
 public class LectureTypeConverter implements AttributeConverter<LectureType, String> {
     @Override
     public String convertToDatabaseColumn(LectureType attribute) {

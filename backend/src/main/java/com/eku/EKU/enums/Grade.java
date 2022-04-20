@@ -1,4 +1,4 @@
-package com.eku.EKU.domain;
+package com.eku.EKU.enums;
 
 public enum Grade {
     AP(4.5),

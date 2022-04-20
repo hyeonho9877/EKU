@@ -1,9 +1,9 @@
 package com.eku.EKU.controller;
 
-import com.eku.EKU.domain.DoodleResponse;
 import com.eku.EKU.exceptions.NoSuchBuildingException;
 import com.eku.EKU.exceptions.NoSuchDoodleException;
 import com.eku.EKU.form.DoodleForm;
+import com.eku.EKU.form.DoodleResponse;
 import com.eku.EKU.service.DoodleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
