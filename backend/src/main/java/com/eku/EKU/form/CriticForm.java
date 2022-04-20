@@ -1,15 +1,15 @@
 package com.eku.EKU.form;
 
-import com.eku.EKU.domain.Grade;
+import com.eku.EKU.domain.LecturePrototype;
+import com.eku.EKU.enums.Grade;
 import lombok.Data;
 
 @Data
 public class CriticForm {
-    private long criticId;
-    private String email;
+    private Long criticId;
+    private Long studNo;
     private String content;
     private Grade grade;
-    private String profName;
-    private String lectureName;
-    private float star;
+    private Float star;
+    private LecturePrototype lecture;
 }

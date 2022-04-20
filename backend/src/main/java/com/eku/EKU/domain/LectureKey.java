@@ -6,6 +6,6 @@ import java.io.Serializable;
 
 @Data
 public class LectureKey implements Serializable {
-    private int year;
-    private String lectureNo;
+    private Long lectureId;
+    private LecturePrototypeKey prototypeKey;
 }

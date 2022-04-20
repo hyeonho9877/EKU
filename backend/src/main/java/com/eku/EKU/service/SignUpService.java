@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -120,18 +121,16 @@ public class SignUpService {
      * @param key 서버에서 발행한 key값
      * @return 성공적으로 학생의 Authenticated 속성을 True로 바꾼 경우 True 리턴, 반대의 경우 False 리턴
      */
+    @Transactional
     public boolean authEmail(String key) {
         try {
             Long studNo = mappingKeyRepository.findById(key)
                     .orElseThrow(NoSuchAuthKeyException::new)
                     .getStudent()
                     .getStudNo();
-
             Student student = studentRepository.findById(studNo)
                     .orElseThrow(NoSuchStudentException::new);
-
             student.setAuthenticated(true);
-            studentRepository.save(student);
             return true;
         } catch (NoSuchStudentException | NoSuchAuthKeyException e) {
             return false;
