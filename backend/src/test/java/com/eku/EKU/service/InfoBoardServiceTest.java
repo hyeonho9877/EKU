@@ -32,9 +32,14 @@ public class InfoBoardServiceTest {
         form.setDepartment("컴공");
         form.setTitle("제목");
         form.setName("이현규");
-        form.setBuilding((long)1000000000);
+        form.setBuilding(("0000000100"));
         boardController.insertBoard(form);
     }
-
+    @Test
+    public  void test3(){
+        InfoBoardForm form = new InfoBoardForm();
+        form.setId((long)1);
+        System.out.println(boardController.loadBoard(form));
+    }
 
 }

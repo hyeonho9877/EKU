@@ -119,11 +119,11 @@ public class InfoBoardService {
     /**
      * 1011001010 이런식으로 오는 강의동코드와 목록이 표시되어야할 강의동 번호가 일치하는지 검사하는 함수
      */
-    public boolean isCorrectBuilding(long code, int no){
-        String codeToString = Long.toString(code);
+    public boolean isCorrectBuilding(String code, int no){
+
         if(no<1||no>10)
             return false;
-        if(codeToString.substring(no-1,no).equals("1"))
+        if(code.substring(no-1,no).equals("1"))
             return true;
         return false;
     }

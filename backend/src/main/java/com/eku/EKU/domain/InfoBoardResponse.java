@@ -10,7 +10,7 @@ public class InfoBoardResponse {
     private String title;
     private String content;
     private String time;
-    private long building;
+    private String building;
     private String name;
 
     public InfoBoardResponse(InfoBoard board) {
