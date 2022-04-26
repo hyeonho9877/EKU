@@ -69,13 +69,13 @@ public class BoardController {
      * 자유게시판의 전체목록을 불러오는 메소드
      * @return 게시판목록 list 반환
      */
-    @PostMapping("/board/free/lists")
+    @GetMapping("/board/free/lists")
     public ResponseEntity<?> boardList(){
         ArrayList<BoardList> list = freeBoardService.boardList();
         if(!list.isEmpty())
             return ResponseEntity.ok(list);
         else
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body("list is empty");
     }
 
     /**
@@ -83,7 +83,7 @@ public class BoardController {
      * @param form
      * @return
      */
-    @PostMapping("/board/free/view")
+    @GetMapping("/board/free/view")
     public ResponseEntity<?> loadBoard(@RequestBody FreeBoardForm form){
         FreeBoardResponse board = new FreeBoardResponse(freeBoardService.loadBoard(form));
         if(board!=null)
@@ -157,20 +157,20 @@ public class BoardController {
      * 공지게시판의 전체목록을 불러오는 메소드
      * @return 게시판목록 list 반환
      */
-    @PostMapping("/board/info/lists")
+    @GetMapping("/board/info/lists")
     public ResponseEntity<?> boardList(@RequestBody InfoBoardForm form){
         ArrayList<BoardList> list = infoBoardService.boardList(form);
         if(!list.isEmpty())
             return ResponseEntity.ok(list);
         else
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body("list is empty");
     }
     /**
      * 공지 게시판 게시물을 불러오는 메소드
      * @param form
      * @return
      */
-    @PostMapping("/board/info/view")
+    @GetMapping("/board/info/view")
     public ResponseEntity<?> loadBoard(@RequestBody InfoBoardForm form){
         InfoBoardResponse board = new InfoBoardResponse(infoBoardService.loadBoard(form));
         if(board!=null)

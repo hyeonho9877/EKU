@@ -123,7 +123,7 @@ public class InfoBoardService {
         String codeToString = Long.toString(code);
         if(no<1||no>10)
             return false;
-        if(codeToString.substring(no-1,no)=="1")
+        if(codeToString.substring(no-1,no).equals("1"))
             return true;
         return false;
     }
