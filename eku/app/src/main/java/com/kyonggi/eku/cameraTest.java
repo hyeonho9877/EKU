@@ -52,6 +52,7 @@ public class cameraTest extends AppCompatActivity {
                         }
                     }
                 };
+                /*
                 SendTool sendTool = new SendTool(handler);
                 HashMap<String,String> temp = new HashMap<>();
                 temp.put("email","yas5@kyonggi.ac.kr");
@@ -67,6 +68,7 @@ public class cameraTest extends AppCompatActivity {
                     Toast.makeText(getBaseContext(),"JSON에러!",Toast.LENGTH_SHORT);
                     e.printStackTrace();
                 }
+                 */
 
             }
         });

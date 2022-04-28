@@ -59,6 +59,7 @@ public class LectureWrite extends AppCompatActivity {
                 }
         );
 
+        /*
         Handler handler = new Handler() {
             public void handleMessage(@NonNull Message msg) {
                 switch (msg.what) {
@@ -106,6 +107,7 @@ public class LectureWrite extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+         */
 
         Button closeButton = (Button) findViewById(R.id.lecture_write_CloseButton);
         closeButton.setOnClickListener(new Button.OnClickListener() {

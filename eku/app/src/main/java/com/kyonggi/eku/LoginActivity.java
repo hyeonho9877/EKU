@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                 if ( std_email.length() == 0 ||std_pw.length()==0) {
                     Toast.makeText(getBaseContext(),"ID와 PASSWORD 입력을 확인해 주세요",Toast.LENGTH_SHORT);
 
-                } else {
+                } /*else {
                     Handler handler = new Handler(){
                         public void handleMessage(@NonNull Message msg){
                             switch(msg.what){
@@ -83,10 +83,10 @@ public class LoginActivity extends AppCompatActivity {
                                         userInformation.toPhone(getApplicationContext(),std_email,std_pw,true,true);
                                         Intent intent = new Intent(getApplicationContext(), MainBoard.class);
                                         startActivity(intent);
-                                        /*
-                                        *   이메일 검증 페이지 메인보드 가기전에 만들기
-                                        *  shared에 기타 데이터 저장하기를 만들어놔야합니다.
-                                         */
+
+                                          이메일 검증 페이지 메인보드 가기전에 만들기
+                                          shared에 기타 데이터 저장하기를 만들어놔야합니다.
+
                                     }
                                     else{
                                         userInformation.toPhone(getApplicationContext(),std_email,std_pw,true,false);
@@ -116,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+        */
 
         // 비밀번호 8자 이상시 활성화되는 버튼 이벤트 지금 6자
         user_pw.addTextChangedListener(new TextWatcher() {
@@ -138,7 +139,6 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                /*
                 if (editable.length() >= 8) {
                     btn_login.setClickable(true);
                     btn_login.setBackgroundColor(Color.BLUE);
@@ -148,12 +148,13 @@ public class LoginActivity extends AppCompatActivity {
                     btn_login.setBackgroundColor(Color.GRAY);
                     //btn_login.setTextColor(Color.BLACK);
                 }
-                 */
+
             }
         });
 
     }
-}
+});}}
+
 
 /*  int status = NetworkStatus.getConnectivityStatus(getApplicationContext());
                 if(status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {

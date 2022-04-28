@@ -54,7 +54,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MainFreeCommunity"
+            android:name=".WriteFreeCommunity"
             android:exported="true">
 
         </activity>
@@ -73,8 +73,10 @@
         <activity
             android:name=".DetailAnnounce"
             android:exported="true" />
+        <!--
         <activity android:name=".WriteFreeCommunity"
             android:exported="true"/>
+            -->
         <activity
             android:name=".WriteAnnounce"
             android:exported="true" />
@@ -148,7 +150,7 @@
             android:exported="true" />
         <activity android:name=".WriteBoard" />
         <activity
-            android:name=".findGang"
+            android:name=".MainFreeCommunity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

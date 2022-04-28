@@ -52,16 +52,7 @@ public class WriteBoard extends AppCompatActivity {
                 }
         );
 
-        Handler handler = new Handler() {
-            public void handleMessage(@NonNull Message msg) {
-                switch (msg.what) {
-                    case 0:
-                        String responseResult = (String) msg.obj;
-                        Log.i("a", responseResult);
-                }
-            }
-        };
-        SendTool sendTool = new SendTool(handler);
+
 
 
         Button saveButton = (Button) findViewById(R.id.memo_save);
@@ -87,13 +78,7 @@ public class WriteBoard extends AppCompatActivity {
                 temp.put("content", memoText);
                 temp.put("uuid","E2C56DB5-DFFB-48D2-B060-D0F5A71096E0");
 
-                try {
-                    sendTool.request("http://115.85.182.126:8080/doodle/write", "POST", temp);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+
 
                 activityResultLauncher.launch(intent);
                 finish();

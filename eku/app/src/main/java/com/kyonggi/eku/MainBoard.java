@@ -191,6 +191,7 @@ public class MainBoard extends AppCompatActivity {
                 }
             }
         };
+        /*
             SendTool sendTool = new SendTool(handler);
 
 
@@ -201,7 +202,7 @@ public class MainBoard extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+*/
 
         gridView.setAdapter(gAdapter);
 

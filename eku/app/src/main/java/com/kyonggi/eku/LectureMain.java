@@ -166,6 +166,7 @@ public class LectureMain extends AppCompatActivity {
 
         EditText searchText = (EditText) findViewById(R.id.Lecture_Main_searchtext);
 
+        /*
         Handler handler = new Handler() {
             public void handleMessage(@NonNull Message msg) {
                 switch (msg.what) {
@@ -234,6 +235,7 @@ public class LectureMain extends AppCompatActivity {
                     }
                 };
 
+
                 SendTool sendTool = new SendTool(handler);
                 HashMap<String, String> temp = new HashMap<>();
                 try {
@@ -245,6 +247,7 @@ public class LectureMain extends AppCompatActivity {
                 }
             }
         });
+         */
     }
 
     public void write_Lecture(String Title, String professor, String rating, String content, int Lectureid) {

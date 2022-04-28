@@ -20,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,6 +48,24 @@ public class WriteAnnounce extends AppCompatActivity {
                     }
                 }
         );
+
+        Handler handler = new Handler(){
+            public void handleMessage(@NonNull Message msg){
+                switch (msg.what){
+                    case 0:
+                        String responseResult=(String)msg.obj;
+                        Toast.makeText(getApplicationContext(),responseResult,Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        };
+
+
+        try {
+            SendTool.request(SendTool.EMPTY_BODY,"/board/free/lists",null,handler);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         Button saveButton = (Button) findViewById(R.id.write_announce_save);
@@ -117,7 +136,30 @@ public class WriteAnnounce extends AppCompatActivity {
                 String time = timeFormat.format(date);
                 PreferenceManagers.setString(getApplicationContext(), "announce_time" + count, time);
 
+                Handler handler2 = new Handler(){
+                    public void handleMessage(@NonNull Message msg){
+                        switch (msg.what){
+                            case 0:
+                                String responseResult=(String)msg.obj;
+                                Toast.makeText(getApplicationContext(),responseResult,Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                };
 
+
+                HashMap<String,Object> sended2 = new HashMap<>();
+                sended2.put("studNo","201713924");
+                sended2.put("department","컴퓨터공학부");
+                sended2.put("title",title);
+                sended2.put("content",content);
+
+
+
+                try {
+                    SendTool.request(SendTool.APPLICATION_JSON,"/board/free/write",sended2,handler);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
 
                 activityResultLauncher.launch(intent);
