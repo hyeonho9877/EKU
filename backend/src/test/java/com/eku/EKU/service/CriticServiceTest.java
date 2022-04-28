@@ -1,9 +1,13 @@
 package com.eku.EKU.service;
 
+import com.eku.EKU.form.CriticLectureSearchResponse;
 import com.eku.EKU.repository.CriticRepository;
 import com.eku.EKU.repository.StudentRepository;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 @SpringBootTest
 public class CriticServiceTest {
@@ -93,4 +97,10 @@ public class CriticServiceTest {
 
         assertThrows(NoSuchElementException.class, () -> criticService.updateCritic(criticForm));
     }*/
+
+    @Test
+    void searchTest(){
+        List<CriticLectureSearchResponse> result = criticService.searchLectures("소프트웨어 공학");
+        System.out.println(result);
+    }
 }
