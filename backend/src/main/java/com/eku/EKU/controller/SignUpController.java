@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 
 
 /**
@@ -36,12 +35,6 @@ public class SignUpController {
      */
     @PostMapping("/signUp")
     public ResponseEntity<?> signUp(@RequestBody SignUpForm form, HttpServletRequest request) {
-        Enumeration<String> headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String headerName = headerNames.nextElement();
-            System.out.println(headerName + " : " + request.getHeader(headerName));
-            System.out.println(form);
-        }
         try {
             if (mailService.validateEmail(form.getEmail())) {
                 Student student = signUpService.enrollClient(form).orElseThrow(DuplicateEnrollException::new);
@@ -62,15 +55,8 @@ public class SignUpController {
     @PostMapping("/signUp/ocr")
     public ResponseEntity<?> ocr(@RequestPart MultipartFile img, HttpServletRequest request) {
         try {
-            Enumeration<String> headerNames = request.getHeaderNames();
-            while (headerNames.hasMoreElements()) {
-                String s = headerNames.nextElement();
-                System.out.println(s + " : " + request.getHeader(s));
-            }
             OcrResponseForm response = signUpService.ocrImage(img);
-            System.out.println(response);
             String clientResponse = signUpService.parseOcrResponse(response);
-            System.out.println(clientResponse);
             return ResponseEntity.ok(clientResponse);
         } catch (Exception e) {
             e.printStackTrace();

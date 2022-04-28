@@ -1,9 +1,6 @@
 package com.eku.EKU.service;
 
-import com.eku.EKU.domain.FreeBoard;
 import com.eku.EKU.domain.FreeBoardComment;
-import com.eku.EKU.domain.FreeBoardCommentResponse;
-import com.eku.EKU.domain.Student;
 import com.eku.EKU.exceptions.NoSuchStudentException;
 import com.eku.EKU.form.CommentForm;
 import com.eku.EKU.repository.FreeBoardCommentRepository;
@@ -12,8 +9,7 @@ import com.eku.EKU.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import javax.persistence.EntityNotFoundException;
 import java.util.NoSuchElementException;
 
 /**
@@ -39,17 +35,13 @@ public class FreeBoardCommentService {
      * @throws NoSuchStudentException
      * @throws IllegalStateException
      */
-    public FreeBoardCommentResponse writeComment(CommentForm form) throws NoSuchStudentException, IllegalStateException {
-        Student writer = studentRepository.findById(form.getWriter())
-                .orElseThrow(NoSuchStudentException::new);
-        FreeBoard originalArticle = freeBoardRepository.findById(form.getArticleID()).orElseThrow();
+    public void writeComment(CommentForm form) throws IllegalStateException, EntityNotFoundException {
         FreeBoardComment comment = FreeBoardComment.builder()
                 .content((form.getContent()))
-                .writtenTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
-                .writer(writer)
-                .original(originalArticle)
+                .writer(studentRepository.getById(form.getWriter()))
+                .original(freeBoardRepository.getById(form.getArticleID()))
                 .build();
-        return new FreeBoardCommentResponse(freeBoardCommentRepository.save(comment));
+        freeBoardCommentRepository.save(comment);
     }
 
     /**

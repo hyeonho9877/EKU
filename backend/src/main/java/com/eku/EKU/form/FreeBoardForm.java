@@ -1,8 +1,6 @@
 package com.eku.EKU.form;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 
 

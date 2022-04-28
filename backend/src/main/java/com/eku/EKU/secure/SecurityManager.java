@@ -8,7 +8,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 
 /**
  * 암호화와 복호화를 담당하는 클래스, 비밀번호 보안에 사용됨
@@ -51,8 +50,6 @@ public class SecurityManager {
      */
     public byte[] encryptWithPrefixIV(byte[] plain, SecretKey key, byte[] iv) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         byte[] cipherText = encrypt(plain, key, iv);
-        System.out.println("encrypt key : "+Arrays.toString(key.getEncoded()));
-        System.out.println("encrypt iv : "+Arrays.toString(iv));
         byte[] cipherTextWithIv = ByteBuffer.allocate(iv.length + cipherText.length)
                 .put(iv)
                 .put(cipherText)
@@ -77,7 +74,6 @@ public class SecurityManager {
     public String decrypt(byte[] input, SecretKey key, byte[] Iv) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException {
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.DECRYPT_MODE, key, KeyGen.generateGCM(Iv));
-        System.out.println("decrypt key : "+Arrays.toString(key.getEncoded()));
         byte[] plainText = cipher.doFinal(input);
         return new String(plainText, StandardCharsets.UTF_8);
     }
@@ -100,7 +96,6 @@ public class SecurityManager {
 
         byte[] iv = new byte[KeyGen.IV_LENGTH_BYTE];
         bb.get(iv);
-        System.out.println("decrypt iv : "+Arrays.toString(iv));
 
         byte[] cipherText = new byte[bb.remaining()];
         bb.get(cipherText);

@@ -3,6 +3,8 @@ package com.eku.EKU.controller;
 import com.eku.EKU.exceptions.NoSuchArticleException;
 import com.eku.EKU.exceptions.NoSuchStudentException;
 import com.eku.EKU.form.CommentForm;
+import com.eku.EKU.form.FreeBoardCommentResponse;
+import com.eku.EKU.form.InfoBoardCommentResponse;
 import com.eku.EKU.service.FreeBoardCommentService;
 import com.eku.EKU.service.InfoBoardCommentService;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +36,8 @@ public class CommentController {
     @PostMapping("/comment/free/write")
     public ResponseEntity<?> writeFreeComment(@RequestBody CommentForm form) {
         try {
-            return ResponseEntity.ok(freeBoardCommentService.writeComment(form));
+            freeBoardCommentService.writeComment(form);
+            return ResponseEntity.ok(new FreeBoardCommentResponse(form));
         } catch (NoSuchStudentException exception) {
             exception.printStackTrace();
             return ResponseEntity.badRequest().body(null);
@@ -80,7 +83,8 @@ public class CommentController {
     @PostMapping("/comment/info/write")
     public ResponseEntity<?> writeInfoComment(@RequestBody CommentForm form) {
         try {
-            return ResponseEntity.ok(infoBoardCommentService.applyComment(form));
+            infoBoardCommentService.applyComment(form);
+            return ResponseEntity.ok(new InfoBoardCommentResponse(form));
         } catch (NoSuchStudentException | NoSuchArticleException exception) {
             return ResponseEntity.internalServerError().body(null);
         } catch (IllegalArgumentException e) {

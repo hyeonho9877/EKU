@@ -1,6 +1,8 @@
 package com.eku.EKU.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
