@@ -74,42 +74,37 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Handler handler = new Handler(){
                         public void handleMessage(@NonNull Message msg){
-                            switch(msg.what){
-                                case 0:
-                                    String responseResult=(String)msg.obj;
-                                    if (responseResult.equals("SignIn Success."))
-                                    {
+                            Log.i("a",(String)msg.obj);
 
-                                        userInformation.toPhone(getApplicationContext(),std_email,std_pw,true,true);
-                                        Intent intent = new Intent(getApplicationContext(), MainBoard.class);
-                                        startActivity(intent);
-                                        /*
-                                        *   이메일 검증 페이지 메인보드 가기전에 만들기
-                                        *  shared에 기타 데이터 저장하기를 만들어놔야합니다.
-                                         */
-                                    }
-                                    else{
-                                        userInformation.toPhone(getApplicationContext(),std_email,std_pw,true,false);
-                                        Toast.makeText(getApplicationContext(),"인증이 필요합니다. 이메일로 인증해주세요!!",Toast.LENGTH_LONG);
-                                        textView.setVisibility(View.VISIBLE);
-                                    }
+                            String responseResult=(String)msg.obj;
+
+                            if (responseResult.equals("SignIn Success."))
+                            {
+
+                                userInformation.toPhone(getApplicationContext(),std_email,std_pw,true,true);
+                                Intent intent = new Intent(getApplicationContext(), MainBoard.class);
+                                startActivity(intent);
+                                /*
+                                *   이메일 검증 페이지 메인보드 가기전에 만들기
+                                *  shared에 기타 데이터 저장하기를 만들어놔야합니다.
+                                 */
+                            }
+                            else {
+                                userInformation.toPhone(getApplicationContext(), std_email, std_pw, true, false);
+                                Toast.makeText(getApplicationContext(), "인증이 필요합니다. 이메일로 인증해주세요!!", Toast.LENGTH_LONG);
+                                textView.setVisibility(View.VISIBLE);
                             }
                         }
                     };
-                    SendTool sendTool = new SendTool(handler);
-                    HashMap<String,String> temp = new HashMap<>();
+                    HashMap<String,Object> temp = new HashMap<>();
                     temp.put("email",std_email);
                     temp.put("password",std_pw);
                     try {
-                        sendTool.request("http://115.85.182.126:80/signIn","POST",temp);
-                    } catch (IOException e) {
-                        Toast.makeText(getBaseContext(),"서버에러!",Toast.LENGTH_SHORT);
-                        e.printStackTrace();
-                    } catch (JSONException e) {
-                        Toast.makeText(getBaseContext(),"JSON에러!",Toast.LENGTH_SHORT);
+                        SendTool.request(SendTool.APPLICATION_JSON, "/signIn",temp,handler);
+                    }
+                    catch (IOException | NullPointerException e) {
                         e.printStackTrace();
                     }
-
 
                 }
 

@@ -121,7 +121,10 @@
         <activity
             android:name=".MainBoard"
             android:exported="true" >
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".LoginActivity"
@@ -150,17 +153,15 @@
         <activity
             android:name=".findGang"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".PhotoServeActivity"
             android:exported="true" />
         <activity
             android:name=".LectureMain"
+            android:exported="false" />
+        <activity
+            android:name=".LectureWrite"
             android:exported="false" />
         <activity
             android:name=".LectureDetail"
