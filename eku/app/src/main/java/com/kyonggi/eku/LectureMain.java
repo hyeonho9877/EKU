@@ -36,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -169,30 +170,26 @@ public class LectureMain extends AppCompatActivity {
         Handler handler =  new Handler(getMainLooper()){
             @Override
             public void handleMessage(@NonNull Message msg) {
-                Log.i("l", "p");
-                Log.i("l", (String) msg.obj);
-                switch (msg.what) {
-                    case 0:
-                        String responseResult = (String) msg.obj;
-                        Log.i("a", responseResult);
-                        try {
-                            JSONArray LectureArray = new JSONArray(responseResult);
-                            for (int i = 0; i < LectureArray.length(); i++) {
-                                JSONObject LectureObject = LectureArray.getJSONObject(i);
-                                Log.i("c",LectureObject.toString());
-                                /*
-                                String title = LectureObject.getString("lectureName");
-                                String professor = LectureObject.getString("profName");
-                                String content = LectureObject.getString("content");
-                                String rating = LectureObject.getString("star");
-                                int LectureId = Integer.parseInt(LectureObject.getString("cid"));
-                                write_Lecture(title, professor, rating, content, LectureId);
-                                 */
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                Log.i("d", (String) msg.obj);
+                String responseResult = (String) msg.obj;
+                try {
+                    JSONArray LectureArray = new JSONArray(responseResult);
+                    for (int i = 0; i < LectureArray.length(); i++) {
+                        JSONObject LectureObject = LectureArray.getJSONObject(i);
+                        String rating = LectureObject.getString("star");
+                        int LectureId = Integer.parseInt(LectureObject.getString("cid"));
+                        String content = LectureObject.getString("content");
+                        Gson a = new Gson();
+                        Lecture lecture1 = a.fromJson(LectureObject.getString("lecture"), Lecture.class);
+                        String title = lecture1.getLectureName();
+                        String professor = lecture1.getProfessor();
+
+                        write_Lecture(title, professor, rating, content, LectureId);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
             }
         };
 
@@ -220,18 +217,17 @@ public class LectureMain extends AppCompatActivity {
                                     JSONArray LectureArray = new JSONArray(responseResult);
                                     for (int i = 0; i < LectureArray.length(); i++) {
                                         JSONObject LectureObject = LectureArray.getJSONObject(i);
-                                        Log.i("c",LectureObject.toString());
-
-/*
-                                        String title = LectureObject.getString("lectureName");
-                                        String professor = LectureObject.getString("profName");
+                                        Gson a = new Gson();
+                                        Lecture lecture1 = a.fromJson(LectureObject.getString("lecture"), Lecture.class);
+                                        String title = lecture1.getLectureName();
+                                        String professor = lecture1.getProfessor();
                                         if (title.contains(search) || professor.contains(search)) {
-                                            String content = LectureObject.getString("content");
                                             String rating = LectureObject.getString("star");
                                             int LectureId = Integer.parseInt(LectureObject.getString("cid"));
+                                            String content = LectureObject.getString("content");
                                             write_Lecture(title, professor, rating, content, LectureId);
                                         }
-                                    */}
+                                    }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
