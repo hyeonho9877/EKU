@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,6 +47,14 @@ public class MainBoard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_board);
 
+        Button button = findViewById(R.id.donanRun);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), DonanBagGi.class);
+                startActivity(intent);
+            }
+        });
         View gestureView = findViewById(R.id.gestureView);
         gestureView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -164,26 +173,29 @@ public class MainBoard extends AppCompatActivity {
                 switch (msg.what) {
                     case 0:
                         String responseResult = (String) msg.obj;
+                        Log.i("a", responseResult);
+                        JSONArray BoardArray = null;
                         try {
-                            JSONArray BoardArray = new JSONArray(responseResult);
-                            for (int i = 0; i < BoardArray.length(); i++) {
+                            BoardArray = new JSONArray(responseResult);
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
+                        for (int i = 0; i < BoardArray.length(); i++) {
+                            try {
                                 JSONObject BoardObject = BoardArray.getJSONObject(i);
-
-                                String content = BoardObject.getString("content");
-                                String time = BoardObject.getString("writtenTime");
-                                gAdapter.addItem(new ListItem(content,time));
+                                Toast.makeText(getApplicationContext(),BoardObject.toString(),Toast.LENGTH_SHORT).show();
+                            } catch (JSONException jsonException) {
+                                jsonException.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
                 }
             }
         };
+            SendTool sendTool = new SendTool(handler);
 
-        SendTool sendTool = new SendTool(handler);
-        HashMap<String,String> temp = new HashMap<>();
+
         try {
-            sendTool.request("http://115.85.182.126:8080/doodle/read", "POST", temp);
+            sendTool.requestDoodle("http://www.eku.kro.kr/doodle/read", "POST", "61686");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -198,7 +210,7 @@ public class MainBoard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 UserInformation userInfo = new UserInformation();
-                String check = userInfo.sessionCheck(getApplicationContext());
+                String check = userInfo.sessionCheck(getBaseContext());
                 if(check.equals("needLogin"))
                 {
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -211,9 +223,11 @@ public class MainBoard extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-                Intent intent = new Intent(getApplicationContext(), WriteBoard.class);
-                startActivity(intent);
-                finish();
+                else {
+                    Intent intent = new Intent(getApplicationContext(), WriteBoard.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }

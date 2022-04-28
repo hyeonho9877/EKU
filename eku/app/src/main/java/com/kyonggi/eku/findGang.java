@@ -40,14 +40,15 @@ public class findGang extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_find_gang);
+        bluetoothOn();
         permissionCheck();
         initManager();
         initListener();
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_gang);
         mMinewBeaconManager.startScan();
         Button b = findViewById(R.id.skipButton);
-        b.setOnClickListener(new Button.OnClickListener() {
+        b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MainBoard.class);
@@ -55,6 +56,20 @@ public class findGang extends AppCompatActivity {
                 finish();
             }
         });
+
+
+    }
+    private void bluetoothOn(){
+        BluetoothAdapter ap = BluetoothAdapter.getDefaultAdapter();
+        if (ap == null)
+            showToast("bluetooth 를 지원하지 않습니다.");
+        else
+            showToast("bluetooth 를 지원합니다.");
+        ap.enable();
+    }
+
+    private void showToast(String s) {
+        Toast.makeText(this,s, Toast.LENGTH_SHORT).show();
     }
 
     private void permissionCheck() {

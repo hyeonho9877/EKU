@@ -83,7 +83,15 @@ public class SignInfoActivity extends AppCompatActivity {
 
         TextView textView = findViewById(R.id.textView17);
         textView.setVisibility(View.INVISIBLE);
-
+        Button backButton = findViewById(R.id.btn_cancle2);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,7 +119,7 @@ public class SignInfoActivity extends AppCompatActivity {
                     temp.put("department", user_major);
                     temp.put("email", user_email);
                     try {
-                        sendTool.request("http://49.174.169.48:13883/signUp", "POST", temp);
+                        sendTool.request("http://www.eku.kro.kr/signUp", "POST", temp);
 
                     } catch (IOException e) {
                         Toast.makeText(getBaseContext(), "서버에러!", Toast.LENGTH_SHORT);

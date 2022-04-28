@@ -70,7 +70,7 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/community_Swipe"
             android:layout_width="408dp"
-            android:layout_height="472dp"
+            android:layout_height="580dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/community_Searchtext">

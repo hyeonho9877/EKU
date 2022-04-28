@@ -29,7 +29,7 @@ public class InfoBoard {
 
     @ManyToOne
     @JoinColumn(name = "writer_no")
-    private Student writer;
+    private Student no;
     @Column(name = "writer_department", nullable = false)
     private String department;
     @Column(name = "writer_name", nullable = false)

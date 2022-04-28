@@ -32,6 +32,7 @@
             android:layout_height="42dp"
             android:backgroundTint="#F6A788"
             android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="@+id/Lecture_Main_spinner"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/menuicon" />
@@ -50,7 +51,7 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/Lecture_Main_Swipe"
             android:layout_width="408dp"
-            android:layout_height="472dp"
+            android:layout_height="630dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Lecture_Main_searchtext">

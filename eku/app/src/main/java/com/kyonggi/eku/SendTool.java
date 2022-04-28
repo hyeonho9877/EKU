@@ -1,6 +1,130 @@
+
 package com.kyonggi.eku;
+
+
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+public final class SendTool {
+    private static final String TAG = "SendTool";
+    private static final String baseUrl = "https://eku.kro.kr";
+    private static final OkHttpClient client = new OkHttpClient();
+    private static final Gson gson = new Gson();
+
+
+    public static void request(int bodyType, String url, HashMap<String, String> params, Handler handler) throws IOException, NullPointerException {
+
+        if (bodyType == APPLICATION_JSON) {
+            requestForJson(url, params, handler);
+            return;
+        }
+
+        FormBody.Builder builder = new FormBody.Builder();
+
+        if (params != null) {
+            for (String key : params.keySet()) {
+                String value = Objects.requireNonNull(params.get(key));
+                builder.add(key, value);
+            }
+        }
+
+        FormBody body = builder.build();
+
+        Request request = new Request.Builder()
+                .url(baseUrl+url)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d(TAG, "onFailure: ");
+                handler.sendMessage(Message.obtain(handler, CONNECTION_FAILED));
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Log.d(TAG, "onResponse: "+response.code());
+                handler.sendMessage(Message.obtain(handler, response.code(), response.body().string()));
+            }
+        });
+    }
+
+    public static void requestForJson(String url, HashMap<String, String> params, Handler handler) throws IOException, NullPointerException {
+
+        Gson gson = new Gson();
+        String jsonObject = gson.toJson(params);
+
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(jsonObject,JSON);
+        Request request = new Request.Builder()
+                .header("Content-Type","application/json")
+                .url(baseUrl+url)
+                .post(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d(TAG, "onFailure: ");
+                handler.sendMessage(Message.obtain(handler, CONNECTION_FAILED));
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Log.d(TAG, "onResponse: "+response.code());
+                handler.sendMessage(Message.obtain(handler, response.code(), response.body().string()));
+            }
+        });
+    }
+
+    public static <T> T parseToSingleEntity(String targetText, Class<T> t) {
+        return gson.fromJson(targetText, t);
+    }
+
+    public static <T> ArrayList<T> parseToList(String targetText, Class<T> t) {
+        Type type = new TypeToken<ArrayList<T>>() {}.getType();
+        return gson.fromJson(targetText, type);
+    }
+
+    public static final int CONNECTION_FAILED = -1;
+    public static final int HTTP_OK = 200;
+    public static final int HTTP_INTERNAL_SERVER_ERROR = 500;
+    public static final int HTTP_BAD_REQUEST = 400;
+    public static final int EMPTY_BODY = 0x0;
+    public static final int APPLICATION_JSON = 0x1;
+    public static final int POST_PARAM = 0x2;
+}
+
+/*
+Legacy Code...
+Http..
+import android.os.Handler;
+import android.os.Message;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -8,9 +132,14 @@ import androidx.annotation.NonNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
+import okhttp3.FormBody;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -20,13 +149,15 @@ import okhttp3.Response;
 
 public class SendTool {
 
-    /*
+    */
+/*
      *
      * 제목
      * 샌드 툴
      * 기능
      * okhttp3 Request=> 웹에서 처리한거를=> 당신의 Handler로 보냅니다. 끝
-     * */
+     * *//*
+
     OkHttpClient client = new OkHttpClient();
     JSONObject jsonInput = new JSONObject();
     Object send;
@@ -37,7 +168,8 @@ public class SendTool {
     }
 
 
-    /*
+    */
+/*
         SendTool 준비물
         사용할 Activity에
         1. SendTool 객체를 선언하세요
@@ -78,7 +210,8 @@ public class SendTool {
         모르겠다? -> cameratest.activity와 activity_test_json을 참고해주세요
 
     *
-    */
+    *//*
+
     public void requestJSON(String detailURL, String getPost, HashMap<String,String> contents) throws IOException, JSONException {
         final Thread th = new Thread(new Runnable() {
             @Override
@@ -116,13 +249,15 @@ public class SendTool {
         }
     }
 
-    /*
+    */
+/*
      *  매개변수
      *  URL --> 서버가 써다랄고 하는곳
      *  Post --> get post 백에서 요구하는 사항
      *  contents --> 학번, 고유번호 key value인 HashMap
      *  lecture --> 강의, ArrayList
-     */
+     *//*
+
     public void requestLectureTest(String detailURL, String getPost, HashMap<String,String> contents, HashMap<String, ArrayList<String>> lecture) throws IOException, JSONException {
         final Thread th = new Thread(new Runnable() {
             @Override
@@ -172,27 +307,38 @@ public class SendTool {
 
     }
 
-
-
-    private void postServer(String detailURL, String getPost, HashMap<String,String> contents){
-        try {
-            for (String key : contents.keySet()) {
-                jsonInput.put(key, contents.get(key));
+    public void requestDoodle(String detailURL, String getPost, String minor) throws IOException, JSONException {
+        final Thread th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                postDoodle(detailURL, getPost, minor);
             }
-            Request request = new Request.Builder()
-                    .addHeader("key", "Content-Type")
-                    .addHeader("value", "application/json")
-                    .addHeader("description", "")
-                    .url(detailURL)
-                    .post(RequestBody.create(MediaType.parse("application/json"), jsonInput.toString()))
-                    .build();
+        });
+        th.start();
+        try{
+            th.join();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void postDoodle(String detailURL, String getPost, String minor){
+        Request request =null;
+        try {
+                RequestBody formBody = new FormBody.Builder()
+                        .add("minor",minor)
+                        .build();
+
+                request = new Request.Builder()
+                        .url(detailURL)
+                        .post(formBody)
+                        .build();
 
             Response response = client.newCall(request).execute();
-
             Log.i("request : ", request.toString());
             //후에 JSON객체로 변환가능
             String message = response.body().string();
-
             mhandler.sendMessage(Message.obtain(mhandler,0,message));
 
 
@@ -202,6 +348,59 @@ public class SendTool {
         }
 
     }
+
+
+    private void postServer(String detailURL, String getPost, HashMap<String,String> contents){
+        Request request =null;
+        try {
+            if(getPost.equals("get")||getPost.equals("GET"))
+            {
+                int i=0;
+                String getURL = detailURL+"?";
+                for (String key : contents.keySet()) {
+                    if(i!=0){
+                        getURL=getURL+"&";
+                        i++;
+                    }
+                    getURL=getURL+key+"=";
+                    getURL=getURL+(String)contents.get(key);
+                }
+                request = new Request.Builder()
+                        .addHeader("key", "Content-Type")
+                        .addHeader("value", "application/json")
+                        .addHeader("description", "")
+                        .url(getURL)
+                        .get()
+                        .build();
+            }
+            else{
+                for (String key : contents.keySet()) {
+                    jsonInput.put(key, contents.get(key));
+                }
+                request = new Request.Builder()
+                        .addHeader("key", "Content-Type")
+                        .addHeader("value", "application/json")
+                        .addHeader("description", "")
+                        .url(detailURL)
+                        .post(RequestBody.create(MediaType.parse("application/json"), jsonInput.toString()))
+                        .build();
+            }
+
+            Response response = client.newCall(request).execute();
+            Log.i("request : ", request.toString());
+            //후에 JSON객체로 변환가능
+            String message = response.body().string();
+            mhandler.sendMessage(Message.obtain(mhandler,0,message));
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+    }
+
+
 
     private void postServerJSON(String detailURL, String getPost, HashMap<String,String> contents){
         try {
@@ -230,6 +429,66 @@ public class SendTool {
     }
 
 
+   */
+/* private void postServer(String detailURL, String getPost, HashMap<String,String> contents){
+        try {
+            for (String key : contents.keySet()) {
+                jsonInput.put(key, contents.get(key));
+            }
+            Request request = new Request.Builder()
+                    .addHeader("key", "Content-Type")
+                    .addHeader("value", "application/json")
+                    .addHeader("description", "")
+                    .url(detailURL)
+                    .post(RequestBody.create(MediaType.parse("application/json"), jsonInput.toString()))
+                    .build();
+
+            Response response = client.newCall(request).execute();
+
+            Log.i("request : ", request.toString());
+            //후에 JSON객체로 변환가능
+            String message = response.body().string();
+
+            mhandler.sendMessage(Message.obtain(mhandler,0,message));
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+    }
+
+
+
+    private void postServerJSON(String detailURL, String getPost, HashMap<String,String> contents){
+        try {
+            for (String key : contents.keySet()) {
+                jsonInput.put(key, contents.get(key));
+            }
+            Request request = new Request.Builder()
+                    .addHeader("key", "Content-Type")
+                    .addHeader("value", "application/json")
+                    .addHeader("description", "")
+                    .url(detailURL)
+                    .post(RequestBody.create(MediaType.parse("application/json"), jsonInput.toString()))
+                    .build();
+
+            Response response = client.newCall(request).execute();
+
+            Log.i("request : ", request.toString());
+            //후에 JSON객체로 변환가능
+            JSONObject message = new JSONObject(response.body().string());
+            mhandler.sendMessage(Message.obtain(mhandler,0,message));
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+    }
+*//*
+
+
 }
 
 
@@ -244,3 +503,4 @@ public class SendTool {
 
 
 
+*/

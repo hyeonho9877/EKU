@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
         UserInformation userInformation = new UserInformation(getApplicationContext());
         btn_login = (Button) findViewById(R.id.btn_login);
         btn_login.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                     temp.put("email",std_email);
                     temp.put("password",std_pw);
                     try {
-                        sendTool.request("http://115.85.182.126:8080/signIn","POST",temp);
+                        sendTool.request("http://115.85.182.126:80/signIn","POST",temp);
                     } catch (IOException e) {
                         Toast.makeText(getBaseContext(),"서버에러!",Toast.LENGTH_SHORT);
                         e.printStackTrace();
