@@ -59,7 +59,6 @@ public class SignUpController {
             String clientResponse = signUpService.parseOcrResponse(response);
             return ResponseEntity.ok(clientResponse);
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.internalServerError().body("service error");
         }
     }

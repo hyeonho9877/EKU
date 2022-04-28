@@ -33,7 +33,6 @@ public class CriticController {
         try {
             return ResponseEntity.ok(criticService.applyCritic(form));
         } catch (NoSuchStudentException | IllegalStateException | IllegalArgumentException exception) {
-            exception.printStackTrace();
             return ResponseEntity.badRequest().body(false);
         }
     }
@@ -50,7 +49,6 @@ public class CriticController {
             criticService.removeCritic(form.getCriticId());
             return ResponseEntity.ok(form.getCriticId());
         } catch (IllegalArgumentException | EmptyResultDataAccessException e) {
-            e.printStackTrace();
             return ResponseEntity.internalServerError().body(form.getCriticId());
         }
     }
@@ -67,7 +65,6 @@ public class CriticController {
             criticService.updateCritic(form);
             return ResponseEntity.ok(form.getCriticId());
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.internalServerError().body(form.getCriticId());
         }
     }
@@ -82,7 +79,6 @@ public class CriticController {
         try {
             return ResponseEntity.ok(criticService.readRecentCritic());
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.badRequest().body(null);
         }
     }
@@ -92,7 +88,6 @@ public class CriticController {
         try {
             return ResponseEntity.ok(criticService.searchLectures(data.get("keyword")));
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.badRequest().body(null);
         }
     }
@@ -102,7 +97,6 @@ public class CriticController {
         try {
             return ResponseEntity.ok(criticService.getSpecificCritics(form));
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.badRequest().body(null);
         }
     }

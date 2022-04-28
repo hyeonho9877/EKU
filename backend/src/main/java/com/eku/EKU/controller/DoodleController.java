@@ -28,7 +28,6 @@ public class DoodleController {
             doodleService.applyDoodle(form);
             return ResponseEntity.ok(new DoodleResponse(form));
         } catch (IllegalArgumentException | NoSuchBuildingException | EntityNotFoundException e) {
-            e.printStackTrace();
             return ResponseEntity.badRequest().body(null);
         }
     }
@@ -39,7 +38,6 @@ public class DoodleController {
             doodleService.deleteDoodle(form);
             return ResponseEntity.ok(form.getDoodleId());
         } catch (NoSuchElementException | IllegalArgumentException | EntityNotFoundException exception) {
-            exception.printStackTrace();
             return ResponseEntity.badRequest().body(form.getDoodleId());
         }
     }
@@ -50,7 +48,6 @@ public class DoodleController {
             doodleService.updateDoodle(form);
             return ResponseEntity.ok(form.getDoodleId());
         } catch (NoSuchDoodleException | IllegalArgumentException exception) {
-            exception.printStackTrace();
             return ResponseEntity.badRequest().body(form.getDoodleId());
         }
     }
@@ -60,7 +57,6 @@ public class DoodleController {
         try {
             return ResponseEntity.ok(doodleService.getRecentDoodle(minor));
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.internalServerError().body(null);
         }
     }

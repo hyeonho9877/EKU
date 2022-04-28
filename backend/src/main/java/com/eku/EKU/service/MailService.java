@@ -35,7 +35,7 @@ public class MailService {
             String authKey = mappingKeyRepository.findMappingKeyByStudent(student)
                     .orElseThrow()
                     .getAuthKey();
-            String authLink = "http://115.85.182.126:8080/signUp/emailAuth?key=" + authKey.replace("+", "%2B");
+            String authLink = "https://www.eku.kro.kr/signUp/emailAuth?key=" + authKey.replace("+", "%2B");
             mailMessage.setTo(email);
             mailMessage.setSubject("EKU! (Everywhere Kyonggi Up!) 가입 확인 메일입니다.");
             mailMessage.setText("인증 링크 : " + authLink);

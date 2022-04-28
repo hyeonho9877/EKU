@@ -39,10 +39,8 @@ public class CommentController {
             freeBoardCommentService.writeComment(form);
             return ResponseEntity.ok(new FreeBoardCommentResponse(form));
         } catch (NoSuchStudentException exception) {
-            exception.printStackTrace();
             return ResponseEntity.badRequest().body(null);
         } catch (IllegalStateException e) {
-            e.printStackTrace();
             return ResponseEntity.internalServerError().body(null);
         }
     }
@@ -59,7 +57,6 @@ public class CommentController {
             freeBoardCommentService.deleteComment(form);
             return ResponseEntity.ok(form.getCommentId());
         } catch (IllegalArgumentException | NoSuchElementException exception) {
-            exception.printStackTrace();
             return ResponseEntity.internalServerError().body(form.getCommentId());
         }
     }
@@ -75,7 +72,6 @@ public class CommentController {
             freeBoardCommentService.updateComment(form);
             return ResponseEntity.ok(form.getCommentId());
         } catch (IllegalArgumentException | NoSuchElementException exception) {
-            exception.printStackTrace();
             return ResponseEntity.badRequest().body(form.getCommentId());
         }
     }

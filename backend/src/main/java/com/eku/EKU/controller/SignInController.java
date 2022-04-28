@@ -29,7 +29,6 @@ public class SignInController {
         this.signInService = signInService;
     }
 
-
     /**
      * 로그인 요청
      * @param form 로그인 하려는 사용자의 정보가 담긴 Form 객체
@@ -42,10 +41,8 @@ public class SignInController {
                 return ResponseEntity.ok().body("SignIn Success.");
             else return ResponseEntity.badRequest().body("Password not matching");
         } catch (NoSuchStudentException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | InvalidKeySpecException | InvalidKeyException | InvalidAlgorithmParameterException e) {
-            e.printStackTrace();
             return ResponseEntity.internalServerError().body("Server in Error.");
         } catch (BadPaddingException e) {
-            e.printStackTrace();
             return ResponseEntity.badRequest().body("Password not matching.");
         } catch (NoAuthExceptions exceptions) {
             return ResponseEntity.badRequest().body("not authorized");
