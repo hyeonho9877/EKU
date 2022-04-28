@@ -1,5 +1,6 @@
 package com.kyonggi.eku;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +8,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -18,6 +22,15 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 public class LectureDetail extends AppCompatActivity {
 
@@ -60,7 +73,52 @@ public class LectureDetail extends AppCompatActivity {
 
         Intent intent = getIntent();
         String title = intent.getStringExtra("Name");
+
+
         String professor = intent.getStringExtra("Prof");
+
+        Handler handler = new Handler(getMainLooper()){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+
+                String responseResult = (String) msg.obj;
+                Log.i("z", responseResult);
+                try {
+                    JSONObject LectureObject = new JSONObject(responseResult);
+                    Gson a = new Gson();
+
+                    ////여기까지 했음~~~~~~~~~~~~~~~
+
+                    Lecture lecture1 = a.fromJson(LectureObject.getString("lecture"), Lecture.class);
+                    String title = lecture1.getLectureName();
+                    String professor = lecture1.getLectureName();
+
+                    for (int i = 0; i < LectureArray.length(); i++) {
+                        JSONObject LectureObject = LectureArray.getJSONObject(i);
+                        Gson a = new Gson();
+                        Lecture lecture1 = a.fromJson(LectureObject.getString("lecture"), Lecture.class);
+                        String title = lecture1.getLectureName();
+                        String professor = lecture1.getLectureName();
+                        }
+                        */
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+
+        HashMap<String, Object> temp = new HashMap<>();
+        Lecture lecture = new Lecture(title, professor);
+        temp.put("lecture",lecture);
+
+        try {
+            SendTool.request(SendTool.APPLICATION_JSON,"/critic/search/specific", temp, handler);
+        } catch (IOException | NullPointerException e) {
+            e.printStackTrace();
+        }
+
+
 
         TextView textView = (TextView)findViewById(R.id.lecture_detail_name);
         textView.setText(title);

@@ -178,7 +178,6 @@ public class MainBoard extends AppCompatActivity {
                 switch (msg.what) {
                     case 200:
                         String responseResult = (String) msg.obj;
-                        Log.i("a", responseResult);
                         JSONArray BoardArray = null;
                         try {
                             BoardArray = new JSONArray(responseResult);
@@ -188,13 +187,10 @@ public class MainBoard extends AppCompatActivity {
                         for (int i = 0; i < BoardArray.length(); i++) {
                             try {
                                 JSONObject BoardObject = BoardArray.getJSONObject(i);
-                                Log.i("a",BoardObject.toString());
                                 int minor = BoardObject.getInt("minor");
                                 if (minor == Minorcheck) {
                                     String content = BoardObject.getString("content");
-                                    Log.i("a", content);
                                     String time = BoardObject.getString("writtenTime");
-                                    Log.i("a", time);
                                     gAdapter.addItem(new ListItem(content, time));
                                     gridView.setAdapter(gAdapter);
                                 }
