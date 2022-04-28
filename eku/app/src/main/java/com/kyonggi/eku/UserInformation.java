@@ -72,12 +72,13 @@ public class UserInformation {
             finish();
         }
     *
+    * 다시체크
      */
     public String sessionCheck(Context getApplicationContext){
-        if (!PreferenceManagers.getBoolean(getApplicationContext,"postLogin")){
+        if (!(PreferenceManagers.getBoolean(getApplicationContext,"postLogin"))){
             return "needLogin";
         }
-        else if(!PreferenceManagers.getBoolean(getApplicationContext,"postLogin")) {
+        else if(!(PreferenceManagers.getBoolean(getApplicationContext,"postLogin"))) {
             return "needVerify";
         }
         else{

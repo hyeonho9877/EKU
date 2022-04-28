@@ -141,7 +141,7 @@ public class PhotoServeActivity extends AppCompatActivity {
                 .build();
 
         okhttp3.Request request = new Request.Builder()
-                .url("http://49.174.169.48:13883/signUp/ocr")
+                .url("http://www.eku.kro.kr/signUp/ocr")
                 .post(requestBody)
                 .build();
 
