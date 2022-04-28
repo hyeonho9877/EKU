@@ -173,30 +173,29 @@ public class MainBoard extends AppCompatActivity {
                 switch (msg.what) {
                     case 0:
                         String responseResult = (String) msg.obj;
-                        Log.i("a",responseResult);
-                            /*
-                            JSONArray BoardArray = new JSONArray(responseResult);
-                            for (int i = 0; i < BoardArray.length(); i++) {
-                                JSONObject BoardObject = BoardArray.getJSONObject(i);
-                             */
-                            JSONObject BoardObject = null;
+                        Log.i("a", responseResult);
+                        JSONArray BoardArray = null;
+                        try {
+                            BoardArray = new JSONArray(responseResult);
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
+                        for (int i = 0; i < BoardArray.length(); i++) {
                             try {
-                                BoardObject = new JSONObject(responseResult);
-                                String content = BoardObject.getString("content");
-                                String time = BoardObject.getString("writtenTime");
-                                gAdapter.addItem(new ListItem(content, time));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                                JSONObject BoardObject = BoardArray.getJSONObject(i);
+                                Toast.makeText(getApplicationContext(),BoardObject.toString(),Toast.LENGTH_SHORT).show();
+                            } catch (JSONException jsonException) {
+                                jsonException.printStackTrace();
                             }
+                        }
                 }
             }
         };
+            SendTool sendTool = new SendTool(handler);
 
-        SendTool sendTool = new SendTool(handler);
-        HashMap<String,String> temp = new HashMap<>();
-        temp.put("minor","61686");
+
         try {
-            sendTool.request("http://115.85.182.126:8080/doodle/read", "POST", temp);
+            sendTool.requestDoodle("http://www.eku.kro.kr/doodle/read", "POST", "61686");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -211,7 +210,7 @@ public class MainBoard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 UserInformation userInfo = new UserInformation();
-                String check = userInfo.sessionCheck(getApplicationContext());
+                String check = userInfo.sessionCheck(getBaseContext());
                 if(check.equals("needLogin"))
                 {
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -224,9 +223,11 @@ public class MainBoard extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-                Intent intent = new Intent(getApplicationContext(), WriteBoard.class);
-                startActivity(intent);
-                finish();
+                else {
+                    Intent intent = new Intent(getApplicationContext(), WriteBoard.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }

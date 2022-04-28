@@ -1,6 +1,7 @@
 package com.kyonggi.eku;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -175,6 +177,49 @@ public class SendTool {
         }
 
     }
+
+    public void requestDoodle(String detailURL, String getPost, String minor) throws IOException, JSONException {
+        final Thread th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                postDoodle(detailURL, getPost, minor);
+            }
+        });
+        th.start();
+        try{
+            th.join();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void postDoodle(String detailURL, String getPost, String minor){
+        Request request =null;
+        try {
+                RequestBody formBody = new FormBody.Builder()
+                        .add("minor",minor)
+                        .build();
+
+                request = new Request.Builder()
+                        .url(detailURL)
+                        .post(formBody)
+                        .build();
+
+            Response response = client.newCall(request).execute();
+            Log.i("request : ", request.toString());
+            //후에 JSON객체로 변환가능
+            String message = response.body().string();
+            mhandler.sendMessage(Message.obtain(mhandler,0,message));
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+    }
+
 
     private void postServer(String detailURL, String getPost, HashMap<String,String> contents){
         Request request =null;
