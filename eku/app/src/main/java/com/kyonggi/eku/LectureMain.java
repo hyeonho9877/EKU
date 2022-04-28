@@ -166,8 +166,11 @@ public class LectureMain extends AppCompatActivity {
 
         EditText searchText = (EditText) findViewById(R.id.Lecture_Main_searchtext);
 
-        Handler handler = new Handler() {
+        Handler handler =  new Handler(getMainLooper()){
+            @Override
             public void handleMessage(@NonNull Message msg) {
+                Log.i("l", "p");
+                Log.i("l", (String) msg.obj);
                 switch (msg.what) {
                     case 0:
                         String responseResult = (String) msg.obj;
@@ -176,13 +179,15 @@ public class LectureMain extends AppCompatActivity {
                             JSONArray LectureArray = new JSONArray(responseResult);
                             for (int i = 0; i < LectureArray.length(); i++) {
                                 JSONObject LectureObject = LectureArray.getJSONObject(i);
-
+                                Log.i("c",LectureObject.toString());
+                                /*
                                 String title = LectureObject.getString("lectureName");
                                 String professor = LectureObject.getString("profName");
                                 String content = LectureObject.getString("content");
                                 String rating = LectureObject.getString("star");
                                 int LectureId = Integer.parseInt(LectureObject.getString("cid"));
                                 write_Lecture(title, professor, rating, content, LectureId);
+                                 */
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -191,13 +196,10 @@ public class LectureMain extends AppCompatActivity {
             }
         };
 
-        SendTool sendTool = new SendTool(handler);
-        HashMap<String, String> temp = new HashMap<>();
+        HashMap<String, Object> temp = new HashMap<>();
         try {
-            sendTool.request("http://115.85.182.126:8080/critic/read", "POST", temp);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+            SendTool.requestForJson("/critic/read", temp, handler);
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
 
@@ -208,7 +210,8 @@ public class LectureMain extends AppCompatActivity {
                 String search = searchText.getText().toString();
                 sc = (LinearLayout) findViewById(R.id.Lecture_Main_scroll);
                 sc.removeAllViews();
-                Handler handler = new Handler() {
+                Handler handler = new Handler(getMainLooper()){
+                    @Override
                     public void handleMessage(@NonNull Message msg) {
                         switch (msg.what) {
                             case 0:
@@ -217,7 +220,9 @@ public class LectureMain extends AppCompatActivity {
                                     JSONArray LectureArray = new JSONArray(responseResult);
                                     for (int i = 0; i < LectureArray.length(); i++) {
                                         JSONObject LectureObject = LectureArray.getJSONObject(i);
+                                        Log.i("c",LectureObject.toString());
 
+/*
                                         String title = LectureObject.getString("lectureName");
                                         String professor = LectureObject.getString("profName");
                                         if (title.contains(search) || professor.contains(search)) {
@@ -226,7 +231,7 @@ public class LectureMain extends AppCompatActivity {
                                             int LectureId = Integer.parseInt(LectureObject.getString("cid"));
                                             write_Lecture(title, professor, rating, content, LectureId);
                                         }
-                                    }
+                                    */}
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -234,13 +239,11 @@ public class LectureMain extends AppCompatActivity {
                     }
                 };
 
-                SendTool sendTool = new SendTool(handler);
-                HashMap<String, String> temp = new HashMap<>();
+
+                HashMap<String, Object> temp = new HashMap<>();
                 try {
-                    sendTool.request("http://115.85.182.126:8080/critic/read", "POST", temp);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
+                    SendTool.request(SendTool.EMPTY_BODY,"/critic/read", temp, handler);
+                } catch (IOException | NullPointerException e) {
                     e.printStackTrace();
                 }
             }

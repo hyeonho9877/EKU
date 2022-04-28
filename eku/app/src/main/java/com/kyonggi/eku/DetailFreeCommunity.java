@@ -156,19 +156,16 @@ public class DetailFreeCommunity extends AppCompatActivity {
                         }
                     };
 
-                    SendTool sendTool = new SendTool(handler);
-
-                    HashMap<String,String> temp2 = new HashMap<>();
+                    HashMap<String,Object> temp2 = new HashMap<>();
                     temp2.put("studNo","201713924");
                     temp2.put("department","컴퓨터공학과");
                     temp2.put("title","test제목");
                     temp2.put("content","test내용");
 
                     try {
-                        sendTool.request("http://115.85.182.126:8080/comment/free/update","POST",temp2);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (JSONException e) {
+                        SendTool.request(SendTool.APPLICATION_JSON, "/comment/free/update",temp2,handler);
+                    }
+                    catch (IOException | NullPointerException e) {
                         e.printStackTrace();
                     }
                 }
@@ -188,17 +185,14 @@ public class DetailFreeCommunity extends AppCompatActivity {
                         }
                     };
 
-                    SendTool sendTool = new SendTool(handler);
-
-                    HashMap<String,String> temp2 = new HashMap<>();
+                    HashMap<String,Object> temp2 = new HashMap<>();
 
                     temp2.put("commentId","1");
 
                     try {
-                        sendTool.request("http://115.85.182.126:8080/comment/free/delete","POST",temp2);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (JSONException e) {
+                        SendTool.request(0x0, "http://www.eku.kro.kr/comment/free/delete",temp2,handler);
+                    }
+                    catch (IOException | NullPointerException e) {
                         e.printStackTrace();
                     }
                 }

@@ -116,21 +116,21 @@ public class WriteFreeCommunity extends AppCompatActivity {
                     }
                 };
 
-                SendTool sendTool = new SendTool(handler);
 
-                HashMap<String,String> temp2 = new HashMap<>();
+                HashMap<String,Object> temp2 = new HashMap<>();
                 temp2.put("studNo","201713924");
                 temp2.put("department","컴퓨터공학과");
                 temp2.put("title","test제목");
                 temp2.put("content","test내용");
 
+
                 try {
-                    sendTool.request("http://115.85.182.126:8080/board/free/write","POST",temp2);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
+                    SendTool.request(SendTool.APPLICATION_JSON, "/free/write",temp2,handler);
+                }
+                catch (IOException | NullPointerException e) {
                     e.printStackTrace();
                 }
+
                 activityResultLauncher.launch(intent);
                 finish();
             }

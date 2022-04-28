@@ -28,7 +28,7 @@ public class cameraTest extends AppCompatActivity {
     /**
      * SendTool 더미코드
      * SendTool 사용법이 적혀있습니다 ^^
-     */
+
     Button btnCamera;
 
     @Override protected void onCreate(Bundle savedInstanceState)
@@ -52,14 +52,14 @@ public class cameraTest extends AppCompatActivity {
                         }
                     }
                 };
-                SendTool sendTool = new SendTool(handler);
+
                 HashMap<String,String> temp = new HashMap<>();
                 temp.put("email","yas5@kyonggi.ac.kr");
                 temp.put("password","dkssud");
 
 
                 try {
-                    sendTool.request("http://115.85.182.126:8080/signIn","POST",temp);
+                    SendTool.request("http://www.eku.kro.kr/signIn","POST",temp);
                 } catch (IOException e) {
                     Toast.makeText(getBaseContext(),"서버에러!",Toast.LENGTH_SHORT);
                     e.printStackTrace();
@@ -72,6 +72,7 @@ public class cameraTest extends AppCompatActivity {
         });
 
     }
+    */
 
 
 
