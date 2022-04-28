@@ -1,9 +1,9 @@
 package com.eku.EKU.service;
 
 
-import com.eku.EKU.domain.BoardList;
+import com.eku.EKU.form.BoardList;
 import com.eku.EKU.domain.InfoBoard;
-import com.eku.EKU.domain.InfoBoardResponse;
+import com.eku.EKU.form.InfoBoardResponse;
 import com.eku.EKU.domain.Student;
 import com.eku.EKU.form.InfoBoardForm;
 import com.eku.EKU.repository.InfoBoardRepository;
@@ -60,7 +60,6 @@ public class InfoBoardService {
     public InfoBoardResponse insertBoard(InfoBoardForm form) throws IllegalArgumentException{
         Student studNo = Student.builder().studNo(form.getWriterNo()).name("temp").email("temp").department("temp").build();
         InfoBoard infoBoard = InfoBoard.builder()
-                .id(newId())
                 .no(studNo)
                 .name(form.getName())
                 .department(form.getDepartment())
@@ -92,20 +91,6 @@ public class InfoBoardService {
         infoBoardRepository.deleteById(id);
     }
 
-
-    /**
-     * 새로운 게시물 id를 정하는 메소드
-     * @return 마지막게시물의 id+1
-     */
-    public Long newId(){
-        List<InfoBoard> list = infoBoardRepository.findAll();
-        Long Id;
-        if(list.size()==0)
-            Id=(long)1;
-        else
-            Id = (long)list.get(list.size()-1).getId()+1;
-        return Id;
-    }
     /**
      * 시간함수
      * @return 현재시간
@@ -123,7 +108,7 @@ public class InfoBoardService {
 
         if(no<1||no>10)
             return false;
-        if(code.substring(no-1,no).equals("1"))
+        else if(code.substring(no-1,no).equals("1"))
             return true;
         return false;
     }

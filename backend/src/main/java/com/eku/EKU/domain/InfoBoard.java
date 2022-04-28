@@ -17,6 +17,7 @@ import javax.persistence.*;
 public class InfoBoard {
     @Id
     @Column(name = "i_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "title", nullable = false)
     private String title;

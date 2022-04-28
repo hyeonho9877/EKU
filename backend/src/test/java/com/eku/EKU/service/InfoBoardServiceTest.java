@@ -2,6 +2,7 @@ package com.eku.EKU.service;
 
 import com.eku.EKU.controller.BoardController;
 import com.eku.EKU.domain.Student;
+import com.eku.EKU.form.FreeBoardForm;
 import com.eku.EKU.form.InfoBoardForm;
 import com.eku.EKU.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
@@ -19,9 +20,9 @@ public class InfoBoardServiceTest {
 
     @Test
     public void test1(){
-        InfoBoardForm form = new InfoBoardForm();
-        form.setLecture_building(1);
-        System.out.println(boardController.boardList(form));
+        InfoBoardForm infoBoard = new InfoBoardForm();
+        infoBoard.setId((long)6);
+        System.out.println(boardController.loadBoard(infoBoard).getBody());
 
     }
     @Test

@@ -1,8 +1,8 @@
 package com.eku.EKU.service;
 
-import com.eku.EKU.domain.BoardList;
+import com.eku.EKU.form.BoardList;
 import com.eku.EKU.domain.FreeBoard;
-import com.eku.EKU.domain.FreeBoardResponse;
+import com.eku.EKU.form.FreeBoardResponse;
 import com.eku.EKU.domain.Student;
 import com.eku.EKU.form.FreeBoardForm;
 import com.eku.EKU.repository.FreeBoardRepository;
@@ -33,6 +33,7 @@ public class FreeBoardService {
         FreeBoard board = freeBoardRepository.findFreeBoardById(form.getId()).get();
         board.setView(board.getView()+1);
         freeBoardRepository.save(board);
+
         return board;
     }
     /**
@@ -80,9 +81,8 @@ public class FreeBoardService {
      * @return
      */
      public FreeBoardResponse insertBoard(FreeBoardForm form) throws IllegalArgumentException, NoSuchElementException{
-        Student studNo = Student.builder().studNo(form.getStudNo()).name("temp").email("temp").department("temp").build();
+        Student studNo = Student.builder().studNo(form.getWriterNo()).name("temp").email("temp").department("temp").build();
         FreeBoard freeBoard = FreeBoard.builder()
-                .id(newId())
                 .student(studNo)
                 .department(form.getDepartment())
                 .title(form.getTitle())
@@ -102,19 +102,6 @@ public class FreeBoardService {
         java.text.SimpleDateFormat sdf =
                 new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(dt);
-    }
-    /**
-     * 새로운 게시물 id를 정하는 메소드
-     * @return 마지막게시물의 id+1
-     */
-    public Long newId(){
-        List<FreeBoard> list = freeBoardRepository.findAll();
-        Long Id;
-        if(list.size()==0)
-            Id=(long)1;
-        else
-            Id = (long)list.get(list.size()-1).getId()+1;
-        return Id;
     }
 
     /**

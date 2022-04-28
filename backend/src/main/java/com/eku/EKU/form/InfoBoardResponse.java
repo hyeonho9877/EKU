@@ -1,6 +1,9 @@
-package com.eku.EKU.domain;
+package com.eku.EKU.form;
 
+import com.eku.EKU.domain.InfoBoard;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class InfoBoardResponse {
@@ -12,6 +15,7 @@ public class InfoBoardResponse {
     private String time;
     private String building;
     private String name;
+    private List<InfoBoardCommentResponse> commentList;
 
     public InfoBoardResponse(InfoBoard board) {
         this.id= board.getId();
