@@ -1,13 +1,16 @@
 package com.eku.EKU.controller;
 
 
-import com.eku.EKU.domain.BoardList;
-import com.eku.EKU.domain.FreeBoardResponse;
-import com.eku.EKU.domain.InfoBoardResponse;
+import com.eku.EKU.form.BoardList;
+import com.eku.EKU.form.FreeBoardResponse;
+import com.eku.EKU.form.InfoBoardResponse;
+import com.eku.EKU.exceptions.NoSuchArticleException;
 import com.eku.EKU.exceptions.NoSuchBoardException;
-import com.eku.EKU.form.FreeBoardForm;
-import com.eku.EKU.form.InfoBoardForm;
+import com.eku.EKU.exceptions.NoSuchStudentException;
+import com.eku.EKU.form.*;
+import com.eku.EKU.service.FreeBoardCommentService;
 import com.eku.EKU.service.FreeBoardService;
+import com.eku.EKU.service.InfoBoardCommentService;
 import com.eku.EKU.service.InfoBoardService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -25,10 +29,14 @@ import java.util.NoSuchElementException;
 public class BoardController {
     private final FreeBoardService freeBoardService;
     private final InfoBoardService infoBoardService;
+    private final FreeBoardCommentService freeBoardCommentService;
+    private final InfoBoardCommentService infoBoardCommentService;
     
-    public BoardController(FreeBoardService boardService, InfoBoardService infoBoardService) {
+    public BoardController(FreeBoardService boardService, InfoBoardService infoBoardService, FreeBoardCommentService freeBoardCommentService, InfoBoardCommentService infoBoardCommentService) {
         this.freeBoardService = boardService;
         this.infoBoardService = infoBoardService;
+        this.freeBoardCommentService = freeBoardCommentService;
+        this.infoBoardCommentService = infoBoardCommentService;
     }
 
     /**
@@ -66,7 +74,7 @@ public class BoardController {
     }
 
     /**
-     * 게시판의 전체목록을 불러오는 메소드
+     * 자유게시판의 전체목록을 불러오는 메소드
      * @return 게시판목록 list 반환
      */
     @PostMapping("/board/free/lists")
@@ -75,19 +83,22 @@ public class BoardController {
         if(!list.isEmpty())
             return ResponseEntity.ok(list);
         else
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body("list is empty");
     }
 
     /**
-     * 게시물을 불러오는 메소드
+     * 자유 게시판 게시물을 불러오는 메소드
      * @param form
      * @return
      */
     @PostMapping("/board/free/view")
     public ResponseEntity<?> loadBoard(@RequestBody FreeBoardForm form){
         FreeBoardResponse board = new FreeBoardResponse(freeBoardService.loadBoard(form));
-        if(board!=null)
+        if(board!=null) {
+            List<FreeBoardCommentResponse> commentList = freeBoardCommentService.commentList(form.getId());
+            board.setCommentList(commentList);
             return ResponseEntity.ok(board);
+        }
         else
             return ResponseEntity.badRequest().body(board.getId());
     }
@@ -163,20 +174,106 @@ public class BoardController {
         if(!list.isEmpty())
             return ResponseEntity.ok(list);
         else
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body("list is empty");
     }
     /**
-     * 게시물을 불러오는 메소드
+     * 공지 게시판 게시물을 불러오는 메소드
      * @param form
      * @return
      */
     @PostMapping("/board/info/view")
     public ResponseEntity<?> loadBoard(@RequestBody InfoBoardForm form){
         InfoBoardResponse board = new InfoBoardResponse(infoBoardService.loadBoard(form));
-        if(board!=null)
+        if(board!=null) {
+            List<InfoBoardCommentResponse> commentList = infoBoardCommentService.commentList(form.getId());
+            board.setCommentList(commentList);
             return ResponseEntity.ok(board);
+        }
         else
             return ResponseEntity.badRequest().body(board.getId());
+    }
+    /**
+     * 자유 게시판 댓글 작성
+     * @param form 작성하려는 댓글의 정보를 담고 있는 Form 객체
+     * @return 성공적으로 작성되면 HTTP.OK, 아니면 경우에 따라 BADREQUEST 혹은 INTERNAL SERVER ERROR 반환
+     */
+    @PostMapping("/comment/free/write")
+    public ResponseEntity<?> writeFreeComment(@RequestBody CommentForm form) {
+        try {
+            freeBoardCommentService.writeComment(form);
+            return ResponseEntity.ok(new FreeBoardCommentResponse(form));
+        } catch (NoSuchStudentException exception) {
+            exception.printStackTrace();
+            return ResponseEntity.badRequest().body(null);
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(null);
+        }
+    }
+
+    /**
+     * 자유 게시판 댓글 삭제 메소드
+     * @param form 삭제하려는 댓글의 정보가 담긴 Form 객체
+     * @return 성공 -> ok와 함께 삭제한 댓글의 id, 실패 -> internal server error와 함께 삭제에 실패한 댓글의 id
+     */
+    @PostMapping("/comment/free/delete")
+    public ResponseEntity<?> deleteFreeComment(@RequestBody CommentForm form) {
+        System.out.println(form);
+        try {
+            freeBoardCommentService.deleteComment(form);
+            return ResponseEntity.ok(form.getCommentId());
+        } catch (IllegalArgumentException | NoSuchElementException exception) {
+            exception.printStackTrace();
+            return ResponseEntity.internalServerError().body(form.getCommentId());
+        }
+    }
+
+    /**
+     * 자유 게시판 댓글 수정 메소드
+     * @param form 수정하려는 댓글의 정보가 담긴 Form 객체
+     * @return 성공 -> ok와 함께 수정한 댓글의 id, 실패 -> bad request와 함께 수정에 실패한 댓글의 id
+     */
+    @PostMapping("/comment/free/update")
+    public ResponseEntity<?> updateFreeComment(@RequestBody CommentForm form) {
+        try {
+            freeBoardCommentService.updateComment(form);
+            return ResponseEntity.ok(form.getCommentId());
+        } catch (IllegalArgumentException | NoSuchElementException exception) {
+            exception.printStackTrace();
+            return ResponseEntity.badRequest().body(form.getCommentId());
+        }
+    }
+
+    @PostMapping("/comment/info/write")
+    public ResponseEntity<?> writeInfoComment(@RequestBody CommentForm form) {
+        try {
+            infoBoardCommentService.applyComment(form);
+            return ResponseEntity.ok(new InfoBoardCommentResponse(form));
+        } catch (NoSuchStudentException | NoSuchArticleException exception) {
+            return ResponseEntity.internalServerError().body(null);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @PostMapping("/comment/info/delete")
+    public ResponseEntity<?> deleteInfoComment(@RequestBody CommentForm form) {
+        try {
+            infoBoardCommentService.deleteComment(form);
+            return ResponseEntity.ok(form.getCommentId());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(form.getCommentId());
+        }
+    }
+
+    @PostMapping("/comment/info/update")
+    public ResponseEntity<?> updateInfoComment(@RequestBody CommentForm form) {
+        try {
+            infoBoardCommentService.updateComment(form);
+            return ResponseEntity.ok(form.getCommentId());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(form.getCommentId());
+        }
     }
 }
 

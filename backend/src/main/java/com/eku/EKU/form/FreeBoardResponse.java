@@ -1,6 +1,9 @@
-package com.eku.EKU.domain;
+package com.eku.EKU.form;
 
+import com.eku.EKU.domain.FreeBoard;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class FreeBoardResponse {
@@ -11,6 +14,7 @@ public class FreeBoardResponse {
     private String content;
     private int view;
     private String time;
+    private List<FreeBoardCommentResponse> commentList;
 
     public FreeBoardResponse(FreeBoard board) {
         this.id= board.getId();
