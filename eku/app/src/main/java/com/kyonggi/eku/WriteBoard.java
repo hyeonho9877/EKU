@@ -57,11 +57,10 @@ public class WriteBoard extends AppCompatActivity {
                 switch (msg.what) {
                     case 0:
                         String responseResult = (String) msg.obj;
-                        Log.i("a", responseResult);
+                        Log.i("a", "무" + responseResult);
                 }
             }
         };
-        SendTool sendTool = new SendTool(handler);
 
 
         Button saveButton = (Button) findViewById(R.id.memo_save);
@@ -83,15 +82,15 @@ public class WriteBoard extends AppCompatActivity {
                 */
 
 
-                HashMap<String, String> temp = new HashMap<>();
+                HashMap<String, Object> temp = new HashMap<>();
                 temp.put("content", memoText);
-                temp.put("uuid","E2C56DB5-DFFB-48D2-B060-D0F5A71096E0");
+                temp.put("minor","61686");
+
 
                 try {
-                    sendTool.request("http://115.85.182.126:8080/doodle/write", "POST", temp);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
+                    SendTool.request(SendTool.APPLICATION_JSON, "/doodle/write",temp,handler);
+                }
+                catch (IOException | NullPointerException e) {
                     e.printStackTrace();
                 }
 
