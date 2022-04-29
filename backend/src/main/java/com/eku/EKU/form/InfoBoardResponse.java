@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class InfoBoardResponse {
     private long id;
-    private long studNo;
+    private long writerNo;
     private String department;
     private String title;
     private String content;
@@ -19,7 +19,7 @@ public class InfoBoardResponse {
 
     public InfoBoardResponse(InfoBoard board) {
         this.id= board.getId();
-        this.studNo = board.getNo().getStudNo();
+        this.writerNo = board.getNo().getStudNo();
         this.department = board.getDepartment();
         this.title = board.getTitle();
         this.content = board.getContent();

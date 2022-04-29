@@ -12,6 +12,7 @@ import com.eku.EKU.service.FreeBoardCommentService;
 import com.eku.EKU.service.FreeBoardService;
 import com.eku.EKU.service.InfoBoardCommentService;
 import com.eku.EKU.service.InfoBoardService;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -93,14 +94,15 @@ public class BoardController {
      */
     @PostMapping("/board/free/view")
     public ResponseEntity<?> loadBoard(@RequestBody FreeBoardForm form){
-        FreeBoardResponse board = new FreeBoardResponse(freeBoardService.loadBoard(form));
-        if(board!=null) {
+        try {
+            FreeBoardResponse board = new FreeBoardResponse(freeBoardService.loadBoard(form));
             List<FreeBoardCommentResponse> commentList = freeBoardCommentService.commentList(form.getId());
             board.setCommentList(commentList);
             return ResponseEntity.ok(board);
+        }catch (NoSuchElementException exception) {
+            exception.printStackTrace();
+            return ResponseEntity.badRequest().body("no articles");
         }
-        else
-            return ResponseEntity.badRequest().body(board.getId());
     }
     /**
      * 자유게시판 삭제 메소드
@@ -112,7 +114,7 @@ public class BoardController {
         try {
             freeBoardService.deleteBoard(form.getId());
             return ResponseEntity.ok(form.getId());
-        } catch (IllegalArgumentException | NoSuchElementException exception) {
+        } catch (IllegalArgumentException | EmptyResultDataAccessException | NoSuchElementException exception) {
             exception.printStackTrace();
             return ResponseEntity.internalServerError().body(form.getId());
         }
@@ -144,7 +146,10 @@ public class BoardController {
         try {
             infoBoardService.updateBoard(form);
             return ResponseEntity.ok(form.getId());
-        } catch (IllegalArgumentException | NoSuchElementException exception) {
+        }catch(NoSuchElementException exception){
+            exception.printStackTrace();
+            return ResponseEntity.badRequest().body(form.getId());
+        } catch (IllegalArgumentException exception) {
             exception.printStackTrace();
             return ResponseEntity.internalServerError().body(form.getId());
         }
@@ -159,7 +164,10 @@ public class BoardController {
         try {
             infoBoardService.deleteBoard(form.getId());
             return ResponseEntity.ok(form.getId());
-        } catch (IllegalArgumentException | NoSuchElementException exception) {
+        } catch(NoSuchElementException exception){
+            exception.printStackTrace();
+            return ResponseEntity.badRequest().body(form.getId());
+        } catch (IllegalArgumentException | EmptyResultDataAccessException exception) {
             exception.printStackTrace();
             return ResponseEntity.internalServerError().body(form.getId());
         }
@@ -183,14 +191,16 @@ public class BoardController {
      */
     @PostMapping("/board/info/view")
     public ResponseEntity<?> loadBoard(@RequestBody InfoBoardForm form){
-        InfoBoardResponse board = new InfoBoardResponse(infoBoardService.loadBoard(form));
-        if(board!=null) {
+        try {
+            InfoBoardResponse board = new InfoBoardResponse(infoBoardService.loadBoard(form));
             List<InfoBoardCommentResponse> commentList = infoBoardCommentService.commentList(form.getId());
             board.setCommentList(commentList);
             return ResponseEntity.ok(board);
+        }catch (EmptyResultDataAccessException | NoSuchElementException exception){
+            exception.printStackTrace();
+            return ResponseEntity.badRequest().body("no article");
         }
-        else
-            return ResponseEntity.badRequest().body(board.getId());
+
     }
     /**
      * 자유 게시판 댓글 작성

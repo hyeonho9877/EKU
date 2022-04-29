@@ -7,6 +7,7 @@ import com.eku.EKU.form.InfoBoardResponse;
 import com.eku.EKU.domain.Student;
 import com.eku.EKU.form.InfoBoardForm;
 import com.eku.EKU.repository.InfoBoardRepository;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -87,7 +88,7 @@ public class InfoBoardService {
      * 게시물 삭제
      * @param id 해당 게시물 번호
      */
-    public void deleteBoard(Long id) throws IllegalArgumentException, NoSuchElementException {
+    public void deleteBoard(Long id) throws EmptyResultDataAccessException,IllegalArgumentException, NoSuchElementException {
         infoBoardRepository.deleteById(id);
     }
 

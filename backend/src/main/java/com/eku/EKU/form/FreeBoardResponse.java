@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class FreeBoardResponse {
     private long id;
-    private long studNo;
+    private long writerNo;
     private String department;
     private String title;
     private String content;
@@ -18,7 +18,7 @@ public class FreeBoardResponse {
 
     public FreeBoardResponse(FreeBoard board) {
         this.id= board.getId();
-        this.studNo = board.getStudent().getStudNo();
+        this.writerNo = board.getStudent().getStudNo();
         this.department = board.getDepartment();
         this.title = board.getTitle();
         this.content = board.getContent();

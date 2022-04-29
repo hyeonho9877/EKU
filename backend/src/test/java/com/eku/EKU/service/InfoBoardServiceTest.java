@@ -40,7 +40,7 @@ public class InfoBoardServiceTest {
     public  void test3(){
         InfoBoardForm form = new InfoBoardForm();
         form.setId((long)1);
-        System.out.println(boardController.loadBoard(form));
+        boardController.loadBoard(form);
     }
 
 }
