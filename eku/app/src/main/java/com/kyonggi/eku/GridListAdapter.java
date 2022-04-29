@@ -20,7 +20,6 @@ public class GridListAdapter extends BaseAdapter {
 
     public void addItem(ListItem item){
         items.add(item);
-        Log.i("a","추가했음");
     }
 
 
