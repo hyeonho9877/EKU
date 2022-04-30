@@ -3,6 +3,7 @@ package com.kyonggi.eku;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -95,7 +96,9 @@ public class LectureDetailWrite extends AppCompatActivity {
                 String score = grade[gradeSelected];
 
                 HashMap<String, Object> temp = new HashMap<>();
-                temp.put("studNo", 201611772);
+                UserInformation info = new UserInformation(getApplicationContext());
+                String stduNoText = info.fromPhoneStudentNo(getApplicationContext());
+                temp.put("studNo", Integer.parseInt(stduNoText));
                 temp.put("content", content);
                 temp.put("grade", score);
                 temp.put("star", rating);

@@ -85,7 +85,9 @@ public class LectureWrite extends AppCompatActivity {
                 String score = grade[gradeSelected];
 
                 HashMap<String, Object> temp = new HashMap<>();
-                temp.put("studNo", 201611772);
+                UserInformation info = new UserInformation(getApplicationContext());
+                String stduNoText = info.fromPhoneStudentNo(getApplicationContext());
+                temp.put("studNo", Integer.parseInt(stduNoText));
                 temp.put("content", content);
                 temp.put("grade", score);
                 temp.put("star", rating);
@@ -98,7 +100,6 @@ public class LectureWrite extends AppCompatActivity {
                 catch (IOException | NullPointerException e) {
                     e.printStackTrace();
                 }
-
                 Intent intent = new Intent(getApplicationContext(), LectureMain.class);
                 startActivity(intent);
                 finish();

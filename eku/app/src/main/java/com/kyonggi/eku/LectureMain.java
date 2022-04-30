@@ -159,9 +159,16 @@ public class LectureMain extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), LectureWrite.class);
-                startActivity(intent);
-                finish();
+                UserInformation info = new UserInformation(getApplicationContext());
+                if (!info.fromPhoneVerify(getApplicationContext())) {
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), LectureWrite.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 

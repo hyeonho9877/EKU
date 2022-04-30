@@ -1,4 +1,4 @@
-package com.kyonggi.eku;
+/*package com.kyonggi.eku;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -83,3 +83,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 }
+ */

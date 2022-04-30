@@ -132,11 +132,18 @@ public class LectureDetail extends AppCompatActivity {
         WriteButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),LectureDetailWrite.class);
-                intent.putExtra("lectureName",title);
-                intent.putExtra("professor",professor);
-                startActivity(intent);
-                finish();
+                UserInformation info = new UserInformation(getApplicationContext());
+                if (!info.fromPhoneVerify(getApplicationContext())) {
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(),LectureDetailWrite.class);
+                    intent.putExtra("lectureName",title);
+                    intent.putExtra("professor",professor);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 
