@@ -32,8 +32,11 @@ import java.util.HashMap;
 * 강의동 낙서게시판
 * 낙서게시판임
  */
+
+
 public class MainBoard extends AppCompatActivity {
 
+    public static final int Minorcheck = 61686;
     String[] showBuilding = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
     int buildingSelected = 0;
     int[] building = {1,2,3,4,5,6,7,8,9,0};
@@ -41,6 +44,7 @@ public class MainBoard extends AppCompatActivity {
     GestureDetector gestureDetector = null;
     long backKeyPressedTime;
     TextView BuildingButton;
+    GridListAdapter gAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,14 +171,14 @@ public class MainBoard extends AppCompatActivity {
                 .create();
 
         GridView gridView = (GridView)findViewById(R.id.board_Memo);
-        GridListAdapter gAdapter = new GridListAdapter();
+        gAdapter = new GridListAdapter();
 
         Handler handler = new Handler(Looper.getMainLooper()) {
             public void handleMessage(@NonNull Message msg) {
+                Log.i("a", String.valueOf(msg.what));
                 switch (msg.what) {
-                    case 0:
+                    case 200:
                         String responseResult = (String) msg.obj;
-                        Log.i("a", responseResult);
                         JSONArray BoardArray = null;
                         try {
                             BoardArray = new JSONArray(responseResult);
@@ -184,7 +188,13 @@ public class MainBoard extends AppCompatActivity {
                         for (int i = 0; i < BoardArray.length(); i++) {
                             try {
                                 JSONObject BoardObject = BoardArray.getJSONObject(i);
-                                Toast.makeText(getApplicationContext(),BoardObject.toString(),Toast.LENGTH_SHORT).show();
+                                int minor = BoardObject.getInt("minor");
+                                if (minor == Minorcheck) {
+                                    String content = BoardObject.getString("content");
+                                    String time = BoardObject.getString("writtenTime");
+                                    gAdapter.addItem(new ListItem(content, time));
+                                    gridView.setAdapter(gAdapter);
+                                }
                             } catch (JSONException jsonException) {
                                 jsonException.printStackTrace();
                             }
@@ -192,20 +202,19 @@ public class MainBoard extends AppCompatActivity {
                 }
             }
         };
-        /*
-            SendTool sendTool = new SendTool(handler);
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("minor", "61686");
 
 
         try {
-            sendTool.requestDoodle("http://www.eku.kro.kr/doodle/read", "POST", "61686");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+            SendTool.request(SendTool.POST_PARAM,"/doodle/read", params, handler);
+        } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }
-*/
 
-        gridView.setAdapter(gAdapter);
+
+
 
         ImageButton imageButton = (ImageButton)findViewById(R.id.board_Write);
         imageButton.setOnClickListener(new View.OnClickListener(){

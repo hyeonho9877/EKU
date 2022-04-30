@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="#AC2C2C">
+
+    <ScrollView
+        android:layout_width="313dp"
+        android:layout_height="595dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/dialog_LectureTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="강의명" />
+
+                <EditText
+                    android:id="@+id/timeTableTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:id="@+id/dialog_Professor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="교수명" />
+
+                <EditText
+                    android:id="@+id/timeTableProfessor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:id="@+id/dialog_Building"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="강의교실" />
+
+                <EditText
+                    android:id="@+id/timeTableBuilding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/dialog_Time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="강의시간" />
+
+                    <RadioGroup
+                        android:id="@+id/timeTableRadioGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="4dp"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/TimeTableMon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="48dp"
+                            android:minHeight="48dp"
+                            android:text="월" />
+
+                        <RadioButton
+                            android:id="@+id/TimeTableTue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="화" />
+
+                        <RadioButton
+                            android:id="@+id/TimeTableWed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="수" />
+
+                        <RadioButton
+                            android:id="@+id/TimeTableThu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:text="목" />
+
+                        <RadioButton
+                            android:id="@+id/TimeTableFri"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="금" />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <CheckBox
+                        android:id="@+id/TimeTable_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15sp"
+                        android:layout_marginTop="5sp"
+                        android:text="1교시" />
+
+                    <CheckBox
+                        android:id="@+id/TimeTable_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5sp"
+                        android:layout_marginTop="5sp"
+                        android:text="2교시" />
+
+                    <CheckBox
+                        android:id="@+id/TimeTable_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5sp"
+                        android:layout_marginTop="5sp"
+                        android:text="3교시" />
+
+                    <CheckBox
+                        android:id="@+id/TimeTable_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5sp"
+                        android:layout_marginTop="5sp"
+                        android:text="4교시" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/TimeTable_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15sp"
+                        android:layout_marginTop="5sp"
+                        android:text="5교시" />
+
+                    <CheckBox
+                        android:id="@+id/TimeTable_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5sp"
+                        android:layout_marginTop="5sp"
+                        android:text="6교시" />
+
+                    <CheckBox
+                        android:id="@+id/TimeTable_7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5sp"
+                        android:layout_marginTop="5sp"
+                        android:text="7교시" />
+
+                    <CheckBox
+                        android:id="@+id/TimeTable_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5sp"
+                        android:layout_marginTop="5sp"
+                        android:text="8교시" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/TimeTable_ok"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="0sp"
+                    android:layout_marginBottom="0sp"
+                    android:background="@color/kyonggi_color"
+                    android:text="확인" />
+
+                <Button
+                    android:id="@+id/TimeTable_cancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/kyonggi_color4"
+                    android:text="취소" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

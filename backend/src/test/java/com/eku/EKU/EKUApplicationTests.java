@@ -2,10 +2,8 @@ package com.eku.EKU;
 
 import com.eku.EKU.config.CustomProperty;
 import com.eku.EKU.domain.GELecture;
-import com.eku.EKU.enums.Grade;
 import com.eku.EKU.domain.MajorLecture;
 import com.eku.EKU.repository.LectureRepository;
-import com.eku.EKU.repository.MajorLectureRepository;
 import com.eku.EKU.secure.KeyGen;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -29,15 +27,13 @@ import static org.assertj.core.api.Assertions.fail;
 
 @SpringBootTest
 class EKUApplicationTests {
-
+/*
     @Autowired
     private CustomProperty customProperty;
 
     @Autowired
     private LectureRepository lectureRepository;
 
-    @Autowired
-    private MajorLectureRepository majorRepository;
 
     @Test
     void contextLoads() {
@@ -90,10 +86,14 @@ class EKUApplicationTests {
             GELecture.GELectureBuilder builder = GELecture.builder();
 
             for (JSONObject lecture : lectures) {
+                builder.semester(20);
                 builder.lectureNo((String) lecture.get("lectureNo"));
                 builder.lectureRoom((String) lecture.get("lectureRoom"));
+                builder.lectureName((String) lecture.get("lectureName"));
                 builder.lectureDesc((String) lecture.get("desc"));
+                builder.lectureGroup((String) lecture.get("jojik"));
                 builder.lectureTime((String) lecture.get("lectureTime"));
+                builder.professor((String) lecture.get("professor"));
                 builder.point(Short.parseShort((String) lecture.get("point")));
                 builder.complete((String) lecture.get("complete"));
                 String grade = (String) lecture.get("grade");
@@ -102,6 +102,8 @@ class EKUApplicationTests {
                 } else{
                     builder.grade(Short.parseShort(grade));
                 }
+                builder.campus((String) lecture.get("campus"));
+                builder.year(2022);
 
                 GELecture result = builder.build();
                 lectureRepository.save(result);
@@ -124,18 +126,24 @@ class EKUApplicationTests {
             MajorLecture.MajorLectureBuilder builder = MajorLecture.builder();
 
             for (JSONObject lecture : lectures) {
+                builder.semester(10);
                 builder.lectureNo((String) lecture.get("lectureNo"));
                 builder.lectureRoom((String) lecture.get("lectureRoom"));
+                builder.lectureName((String) lecture.get("lectureName"));
                 builder.lectureDesc((String) lecture.get("desc"));
                 builder.lectureTime((String) lecture.get("lectureTime"));
+                builder.professor((String) lecture.get("professor"));
                 builder.point(Short.parseShort((String) lecture.get("point")));
                 builder.complete((String) lecture.get("complete"));
+                builder.dept((String) lecture.get("dept"));
                 String grade = (String) lecture.get("grade");
                 if (Objects.equals(grade, "")) {
                     builder.grade(null);
                 } else{
                     builder.grade(Short.parseShort(grade));
                 }
+                builder.campus((String) lecture.get("campus"));
+                builder.year(2022);
 
                 MajorLecture build = builder.build();
                 majorRepository.save(build);
@@ -145,4 +153,6 @@ class EKUApplicationTests {
             fail("응 실패야");
         }
     }
+    */
+
 }
