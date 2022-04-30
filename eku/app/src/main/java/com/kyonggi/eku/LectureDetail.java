@@ -1,6 +1,5 @@
 package com.kyonggi.eku;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,9 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -18,20 +14,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.HashMap;
 
 public class LectureDetail extends AppCompatActivity {
 
@@ -42,8 +28,6 @@ public class LectureDetail extends AppCompatActivity {
     int buildingSelected = 0;
     int[] building = {1,2,3,4,5,6,7,8,9,0};
     AlertDialog buildingSelectDialog;
-    float total;
-    int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,51 +60,7 @@ public class LectureDetail extends AppCompatActivity {
 
         Intent intent = getIntent();
         String title = intent.getStringExtra("Name");
-
-
         String professor = intent.getStringExtra("Prof");
-
-        Handler handler = new Handler(getMainLooper()){
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-
-                String responseResult = (String) msg.obj;
-                try {
-                    JSONObject LectureObject = new JSONObject(responseResult);
-                    Gson a = new Gson();
-                    Critics[] critics = a.fromJson(LectureObject.getString("critics"), Critics[].class);
-                    count = critics.length;
-                    for (int i = 0; i < count; i++){
-                        int cid = critics[i].getcid();
-                        String content = critics[i].getContent();
-                        float star = critics[i].getStar();
-                        total += star;
-                        String grade = critics[i].getGrade();
-                        detail_Lecture(cid,content,star,grade);
-                    }
-                    RatingBar ratingStar = findViewById(R.id.lecture_detail_rating);
-                    total = total/count;
-                    ratingStar.setRating(total);
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };
-
-        HashMap<String, Object> temp = new HashMap<>();
-        Lecture lecture = new Lecture(title, professor);
-        temp.put("lecture",lecture);
-
-        try {
-            SendTool.request(SendTool.APPLICATION_JSON,"/critic/search/specific", temp, handler);
-        } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
-        }
-
-
 
         TextView textView = (TextView)findViewById(R.id.lecture_detail_name);
         textView.setText(title);
@@ -128,39 +68,26 @@ public class LectureDetail extends AppCompatActivity {
         textView = (TextView)findViewById(R.id.lecture_detail_professor);
         textView.setText(professor);
 
-        ImageButton WriteButton = (ImageButton) findViewById(R.id.lecture_detail_WriteButton);
-        WriteButton.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UserInformation info = new UserInformation(getApplicationContext());
-                if (!info.fromPhoneVerify(getApplicationContext())) {
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Intent intent = new Intent(getApplicationContext(),LectureDetailWrite.class);
-                    intent.putExtra("lectureName",title);
-                    intent.putExtra("professor",professor);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        });
+        //밑에 전부 수정
+        RatingBar ratingStar = findViewById(R.id.lecture_detail_rating);
+        Float rating = PreferenceManagers.getFloat(getApplicationContext(),"rating" );
+        ratingStar.setRating(rating);
 
         Button closeButton = (Button) findViewById(R.id.lecture_detail_CloseButton);
         closeButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),LectureMain.class);
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
 
 
+        detail_Lecture(0);
     }
 
-    public void detail_Lecture(int Lid, String content,float star,String grade){
+    public void detail_Lecture(int Lid){
         LinearLayout sc = (LinearLayout)findViewById(R.id.lecture_detail_scroll);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -171,10 +98,12 @@ public class LectureDetail extends AppCompatActivity {
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
 
-        /*linearLayout.setOnClickListener(new View.OnClickListener() {
+        /*
+        linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),LectureDetail.class);
+                Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
+                int Lid = view.getId();
                 intent.putExtra("key",Lid);
                 // Toast.makeText(getApplicationContext(),String.valueOf(Lid), Toast.LENGTH_SHORT).show();
                 startActivity(intent);
@@ -185,8 +114,8 @@ public class LectureDetail extends AppCompatActivity {
          */
 
         TextView textView = new TextView(getApplicationContext());
-        textView.setText(content);
-        textView.setGravity(Gravity.LEFT);
+        textView.setText("작성자 : " + PreferenceManagers.getString(getApplicationContext(), "writer"+Lid));
+        textView.setGravity(Gravity.CENTER);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17.0f);
         textView.setLayoutParams(linearLayoutParams);
         textView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -194,16 +123,16 @@ public class LectureDetail extends AppCompatActivity {
 
 
         TextView scoreView = new TextView(getApplicationContext());
-        scoreView.setText(grade);
-        scoreView.setGravity(Gravity.LEFT);
+        scoreView.setText("학점 : " + PreferenceManagers.getString(getApplicationContext(), "score"+Lid));
+        scoreView.setGravity(Gravity.RIGHT);
         scoreView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17.0f);
         scoreView.setLayoutParams(linearLayoutParams);
         scoreView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
         linearLayout.addView(scoreView);
 
         TextView contentView = new TextView(getApplicationContext());
-        contentView.setText(String.valueOf(star));
-        contentView.setGravity(Gravity.RIGHT);
+        contentView.setText(PreferenceManagers.getString(getApplicationContext(), "content"+Lid));
+        contentView.setGravity(Gravity.LEFT);
         contentView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17.0f);
         contentView.setLayoutParams(linearLayoutParams);
         contentView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;

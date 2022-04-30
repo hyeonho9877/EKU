@@ -9,13 +9,14 @@
         android:id="@+id/memo_write"
         android:layout_width="406dp"
         android:layout_height="673dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="내용"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="4dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/memo_save"
