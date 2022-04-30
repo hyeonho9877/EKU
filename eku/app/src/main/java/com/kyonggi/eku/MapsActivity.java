@@ -1,3 +1,4 @@
+/*
 package com.kyonggi.eku;
 
 import androidx.fragment.app.FragmentActivity;
@@ -82,4 +83,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(youLoc,15));
 
     }
-}
+}*/

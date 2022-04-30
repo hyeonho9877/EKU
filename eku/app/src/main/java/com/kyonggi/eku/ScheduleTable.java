@@ -10,18 +10,26 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import androidx.gridlayout.widget.GridLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,14 +48,46 @@ public class ScheduleTable extends AppCompatActivity {
     int[] building = {1,2,3,4,5,6,7,8,9,0};
     AlertDialog buildingSelectDialog;
     long backKeyPressedTime;
+    EditText password;
 
     int[] input_time = {0,0,0,0,0,0,0,0};
     String day="";
-
+    JSONArray lecture = new JSONArray();
+    boolean[][] check={{false,false,false,false,false,false,false,false},
+            {false,false,false,false,false,false,false,false},
+            {false,false,false,false,false,false,false,false},
+            {false,false,false,false,false,false,false,false},
+            {false,false,false,false,false,false,false,false}};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_table);
+        password =findViewById(R.id.Schedule_password);
+        UserInformation userInformation = new UserInformation(getApplicationContext());
+ /*       if (!(userInformation.fromPhoneVerify(getApplicationContext())))
+        {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }*/
+
+        GridLayout lp = (GridLayout) findViewById(R.id.gridLayout);
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int screenWidth = metrics.widthPixels;
+        int screenHeight = metrics.heightPixels;
+        int w = lp.getWidth();
+        int h = lp.getHeight();
+        Button button2 = new Button(ScheduleTable.this);
+        button2.setWidth((int)dp2px(30.0f));
+        button2.setHeight((int)dp2px(50.0f));
+
+        Toast.makeText(getApplicationContext(),lp.getRowCount()+"야생"+lp.getColumnCount(),Toast.LENGTH_LONG).show();
+        GridLayout.LayoutParams gridLayoutWitch = new GridLayout.LayoutParams();
+        gridLayoutWitch.rowSpec = GridLayout.spec(3);
+        gridLayoutWitch.columnSpec = GridLayout.spec(3);
+        lp.addView(button2,gridLayoutWitch);
+
 
         TextView BuildingButton = (TextView) findViewById(R.id.schedule_Spinner);
         BuildingButton.setOnClickListener(new Button.OnClickListener() {
@@ -284,21 +324,122 @@ public class ScheduleTable extends AppCompatActivity {
                 btn_ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String temp="";
-                        for(int i:input_time)
-                        {
-                            temp+=i;
+                        String temp = "";
+                        for (int i : input_time) {
+                            temp += i;
                         }
-                        temp +=dialog_title.getText().toString();
-                        temp +=dialog_Building.getText().toString();
-                        temp +=dialog_Professor.getText().toString();
-                        temp +=day;
+                        temp += dialog_title.getText().toString();
+                        temp += dialog_Building.getText().toString();
+                        temp += dialog_Professor.getText().toString();
+                        temp += day;
                         dialog.dismiss();
+
+                        boolean checked=false;
+                        if (day.equals("월")) {
+                            for(int i=0;i<input_time.length;i++)
+                            {
+                                if(input_time[i]==1 && check[0][i]==true)
+                                {
+                                    checked=true;
+                                }
+                            }
+                        } else if (day.equals("화")) {
+                            for(int i=0;i<input_time.length;i++)
+                            {
+                                if(input_time[i]==1 && check[1][i]==true)
+                                {
+                                    checked=true;
+                                }
+                            }
+
+                        } else if (day.equals("수")) {
+                            for(int i=0;i<input_time.length;i++)
+                            {
+                                if(input_time[i]==1 && check[2][i]==true)
+                                {
+                                    checked=true;
+                                }
+                            }
+
+                        }
+                        else if (day.equals("목"))
+                        {
+                            for(int i=0;i<input_time.length;i++)
+                            {
+                                if(input_time[i]==1 && check[3][i]==true)
+                                {
+                                    checked=true;
+                                }
+                            }
+                        }
+                        else if(day.equals("금"))
+                        {
+                            for(int i=0;i<input_time.length;i++)
+                            {
+                                if(input_time[i]==1 && check[4][i]==true)
+                                {
+                                    checked=true;
+                                }
+                            }
+                        }
+
+                        if(checked)
+                        {
+                            Toast.makeText(getApplicationContext(),"중복되는 값이 있습니다.",Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            JSONObject jsonObject = new JSONObject();
+                            try {
+                                String lecture_time="";
+                                lecture_time+=day;
+                                for(int i=0;i<input_time.length;i++)
+                                {
+                                    if(input_time[i]==1)
+                                    {
+                                        int j=i;
+                                        lecture_time+=(j+1);
+                                    }
+                                }
+                                jsonObject.put("day",lecture_time);
+                                jsonObject.put("lecture_room",dialog_Building);
+                                jsonObject.put("professor",dialog_Professor);
+                                jsonObject.put("lecture_name",dialog_title);
+                                jsonObject.put("studNo",userInformation.fromPhoneStudentNo(getApplicationContext()));
+                                jsonObject.put("password",password.getText().toString());
+                                lecture.put(jsonObject);
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        JSONObject element;
+                        for(int i=0;i<lecture.length();i++){
+                            element = (JSONObject) lecture.opt(i);
+
+
+
+
+                        }
+
+
+
+                        /*
+                        * inputTime 초기화
+                        * */
+                        for(int i=0;i<input_time.length;i++)
+                        {
+                            input_time[i]=0;
+                        }
                         Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_LONG).show();
 
                     }
                 });
                 Button btn_cancel = dialog.findViewById(R.id.TimeTable_cancel);
+
+
                 btn_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -321,6 +462,20 @@ public class ScheduleTable extends AppCompatActivity {
     }
 
 
+    public float dp2px(float dp){
+        Resources resources = this.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float px = dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return px;
+    }
+
+    //px을 dp로 변환 (px을 입력받아 dp를 리턴)
+    public float px2dp(float px){
+        Resources resources = this.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float dp = px / ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return dp;
+    }
     @Override
     public void onBackPressed() {
         if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
