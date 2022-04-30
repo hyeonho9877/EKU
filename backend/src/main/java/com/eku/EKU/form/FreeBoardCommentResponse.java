@@ -18,5 +18,4 @@ public class FreeBoardCommentResponse {
         this.writtenTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.writer = form.getWriter();
     }
-    public FreeBoardCommentResponse(){}
 }

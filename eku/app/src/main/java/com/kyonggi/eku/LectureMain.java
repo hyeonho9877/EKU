@@ -36,7 +36,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -167,36 +166,39 @@ public class LectureMain extends AppCompatActivity {
 
         EditText searchText = (EditText) findViewById(R.id.Lecture_Main_searchtext);
 
-        Handler handler =  new Handler(getMainLooper()){
-            @Override
+        /*
+        Handler handler = new Handler() {
             public void handleMessage(@NonNull Message msg) {
-                Log.i("d", (String) msg.obj);
-                String responseResult = (String) msg.obj;
-                try {
-                    JSONArray LectureArray = new JSONArray(responseResult);
-                    for (int i = 0; i < LectureArray.length(); i++) {
-                        JSONObject LectureObject = LectureArray.getJSONObject(i);
-                        String rating = LectureObject.getString("star");
-                        int LectureId = Integer.parseInt(LectureObject.getString("cid"));
-                        String content = LectureObject.getString("content");
-                        Gson a = new Gson();
-                        Lecture lecture1 = a.fromJson(LectureObject.getString("lecture"), Lecture.class);
-                        String title = lecture1.getLectureName();
-                        String professor = lecture1.getProfessor();
+                switch (msg.what) {
+                    case 0:
+                        String responseResult = (String) msg.obj;
+                        Log.i("a", responseResult);
+                        try {
+                            JSONArray LectureArray = new JSONArray(responseResult);
+                            for (int i = 0; i < LectureArray.length(); i++) {
+                                JSONObject LectureObject = LectureArray.getJSONObject(i);
 
-                        write_Lecture(title, professor, rating, content, LectureId);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                                String title = LectureObject.getString("lectureName");
+                                String professor = LectureObject.getString("profName");
+                                String content = LectureObject.getString("content");
+                                String rating = LectureObject.getString("star");
+                                int LectureId = Integer.parseInt(LectureObject.getString("cid"));
+                                write_Lecture(title, professor, rating, content, LectureId);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                 }
-
             }
         };
 
-        HashMap<String, Object> temp = new HashMap<>();
+        SendTool sendTool = new SendTool(handler);
+        HashMap<String, String> temp = new HashMap<>();
         try {
-            SendTool.requestForJson("/critic/read", temp, handler);
-        } catch (NullPointerException e) {
+            sendTool.request("http://115.85.182.126:8080/critic/read", "POST", temp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -207,8 +209,7 @@ public class LectureMain extends AppCompatActivity {
                 String search = searchText.getText().toString();
                 sc = (LinearLayout) findViewById(R.id.Lecture_Main_scroll);
                 sc.removeAllViews();
-                Handler handler = new Handler(getMainLooper()){
-                    @Override
+                Handler handler = new Handler() {
                     public void handleMessage(@NonNull Message msg) {
                         switch (msg.what) {
                             case 0:
@@ -217,14 +218,13 @@ public class LectureMain extends AppCompatActivity {
                                     JSONArray LectureArray = new JSONArray(responseResult);
                                     for (int i = 0; i < LectureArray.length(); i++) {
                                         JSONObject LectureObject = LectureArray.getJSONObject(i);
-                                        Gson a = new Gson();
-                                        Lecture lecture1 = a.fromJson(LectureObject.getString("lecture"), Lecture.class);
-                                        String title = lecture1.getLectureName();
-                                        String professor = lecture1.getProfessor();
+
+                                        String title = LectureObject.getString("lectureName");
+                                        String professor = LectureObject.getString("profName");
                                         if (title.contains(search) || professor.contains(search)) {
+                                            String content = LectureObject.getString("content");
                                             String rating = LectureObject.getString("star");
                                             int LectureId = Integer.parseInt(LectureObject.getString("cid"));
-                                            String content = LectureObject.getString("content");
                                             write_Lecture(title, professor, rating, content, LectureId);
                                         }
                                     }
@@ -236,14 +236,18 @@ public class LectureMain extends AppCompatActivity {
                 };
 
 
-                HashMap<String, Object> temp = new HashMap<>();
+                SendTool sendTool = new SendTool(handler);
+                HashMap<String, String> temp = new HashMap<>();
                 try {
-                    SendTool.request(SendTool.EMPTY_BODY,"/critic/read", temp, handler);
-                } catch (IOException | NullPointerException e) {
+                    sendTool.request("http://115.85.182.126:8080/critic/read", "POST", temp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
+         */
     }
 
     public void write_Lecture(String Title, String professor, String rating, String content, int Lectureid) {
