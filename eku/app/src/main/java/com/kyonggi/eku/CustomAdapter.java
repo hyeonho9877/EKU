@@ -88,10 +88,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.viewHolder
                                 //수정
                                 Dialog dialog = new Dialog(mContext, android.R.style.Theme_Material_Light_Dialog);
                                 dialog.setContentView(R.layout.dialog_edit);
-                                EditText et_title = dialog.findViewById(R.id.et_title);
-                                EditText et_content = dialog.findViewById(R.id.et_content);
-                                Button btn_ok = dialog.findViewById(R.id.btn_todo_ok);
-                                Button btn_cancle = dialog.findViewById(R.id.btn_todo_cancle);
+                                EditText et_title = dialog.findViewById(R.id.timeTableTitle);
+                                EditText et_content = dialog.findViewById(R.id.timeTableProfessor);
+                                Button btn_ok = dialog.findViewById(R.id.TimeTable_ok);
 
                                 et_title.setText(todoItem.getTitle());
                                 et_content.setText(todoItem.getContent());
@@ -115,13 +114,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.viewHolder
                                         notifyItemChanged(curPos, todoItem);
                                         dialog.dismiss();
                                         Toast.makeText(mContext, "목록 수정이 완료 되었습니다.", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-
-                                btn_cancle.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        dialog.dismiss();
                                     }
                                 });
 

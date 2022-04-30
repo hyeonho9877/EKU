@@ -1,25 +1,26 @@
 package com.kyonggi.eku;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.util.HashMap;
+import java.util.Objects;
 
 public class DetailAnnounce extends AppCompatActivity {
 
@@ -97,49 +98,7 @@ public class DetailAnnounce extends AppCompatActivity {
             modifyButton.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    Dialog dialog = new Dialog(DetailAnnounce.this, android.R.style.Theme_Material_Light_Dialog);
-                    dialog.setContentView(R.layout.dialog_update_anounce);
-                    EditText update_free_title = dialog.findViewById(R.id.update_anounce_title);
-                    EditText update_free_content = dialog.findViewById(R.id.update_anounce_content);
-                    Button btn_ok = dialog.findViewById(R.id.btn_anounce_update_ok);
-                    Button btn_cancle = dialog.findViewById(R.id.btn_anounce_update_cancle);
-
-                    btn_cancle.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            dialog.dismiss();
-                        }
-                    });
-
-                    btn_ok.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Handler handler = new Handler(){
-                                public void handleMessage(@NonNull Message msg){
-                                    switch (msg.what){
-                                        case 0:
-                                            String responseResult=(String)msg.obj;
-                                            Toast.makeText(getApplicationContext(),responseResult,Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            };
-
-                            HashMap<String,Object> sended = new HashMap<>();
-                            sended.put("id",1);
-                            sended.put("title",update_free_title);
-                            sended.put("content",update_free_content);
-                            sended.put("buliding","1000000000");
-
-
-                            try {
-                                SendTool.request(SendTool.APPLICATION_JSON,"/board/free/update",sended,handler);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                    dialog.show();
+                    Toast.makeText(getApplicationContext(),"수정", Toast.LENGTH_SHORT).show();
                 }
             });
             Button deleteButton = new Button(getApplicationContext());
