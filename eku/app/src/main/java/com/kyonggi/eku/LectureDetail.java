@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Spinner;
@@ -41,6 +42,8 @@ public class LectureDetail extends AppCompatActivity {
     int buildingSelected = 0;
     int[] building = {1,2,3,4,5,6,7,8,9,0};
     AlertDialog buildingSelectDialog;
+    float total;
+    int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,25 +85,24 @@ public class LectureDetail extends AppCompatActivity {
             public void handleMessage(@NonNull Message msg) {
 
                 String responseResult = (String) msg.obj;
-                Log.i("z", responseResult);
                 try {
                     JSONObject LectureObject = new JSONObject(responseResult);
                     Gson a = new Gson();
+                    Critics[] critics = a.fromJson(LectureObject.getString("critics"), Critics[].class);
+                    count = critics.length;
+                    for (int i = 0; i < count; i++){
+                        int cid = critics[i].getcid();
+                        String content = critics[i].getContent();
+                        float star = critics[i].getStar();
+                        total += star;
+                        String grade = critics[i].getGrade();
+                        detail_Lecture(cid,content,star,grade);
+                    }
+                    RatingBar ratingStar = findViewById(R.id.lecture_detail_rating);
+                    total = total/count;
+                    ratingStar.setRating(total);
 
-                    ////여기까지 했음~~~~~~~~~~~~~~~
 
-                    Lecture lecture1 = a.fromJson(LectureObject.getString("lecture"), Lecture.class);
-                    String title = lecture1.getLectureName();
-                    String professor = lecture1.getLectureName();
-
-                    for (int i = 0; i < LectureArray.length(); i++) {
-                        JSONObject LectureObject = LectureArray.getJSONObject(i);
-                        Gson a = new Gson();
-                        Lecture lecture1 = a.fromJson(LectureObject.getString("lecture"), Lecture.class);
-                        String title = lecture1.getLectureName();
-                        String professor = lecture1.getLectureName();
-                        }
-                        */
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -126,26 +128,32 @@ public class LectureDetail extends AppCompatActivity {
         textView = (TextView)findViewById(R.id.lecture_detail_professor);
         textView.setText(professor);
 
-        //밑에 전부 수정
-        RatingBar ratingStar = findViewById(R.id.lecture_detail_rating);
-        Float rating = PreferenceManagers.getFloat(getApplicationContext(),"rating" );
-        ratingStar.setRating(rating);
+        ImageButton WriteButton = (ImageButton) findViewById(R.id.lecture_detail_WriteButton);
+        WriteButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),LectureDetailWrite.class);
+                intent.putExtra("lectureName",title);
+                intent.putExtra("professor",professor);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         Button closeButton = (Button) findViewById(R.id.lecture_detail_CloseButton);
         closeButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(),LectureMain.class);
                 startActivity(intent);
                 finish();
             }
         });
 
 
-        detail_Lecture(0);
     }
 
-    public void detail_Lecture(int Lid){
+    public void detail_Lecture(int Lid, String content,float star,String grade){
         LinearLayout sc = (LinearLayout)findViewById(R.id.lecture_detail_scroll);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -156,12 +164,10 @@ public class LectureDetail extends AppCompatActivity {
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
 
-        /*
-        linearLayout.setOnClickListener(new View.OnClickListener() {
+        /*linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
-                int Lid = view.getId();
+                Intent intent = new Intent(getApplicationContext(),LectureDetail.class);
                 intent.putExtra("key",Lid);
                 // Toast.makeText(getApplicationContext(),String.valueOf(Lid), Toast.LENGTH_SHORT).show();
                 startActivity(intent);
@@ -172,8 +178,8 @@ public class LectureDetail extends AppCompatActivity {
          */
 
         TextView textView = new TextView(getApplicationContext());
-        textView.setText("작성자 : " + PreferenceManagers.getString(getApplicationContext(), "writer"+Lid));
-        textView.setGravity(Gravity.CENTER);
+        textView.setText(content);
+        textView.setGravity(Gravity.LEFT);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17.0f);
         textView.setLayoutParams(linearLayoutParams);
         textView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -181,16 +187,16 @@ public class LectureDetail extends AppCompatActivity {
 
 
         TextView scoreView = new TextView(getApplicationContext());
-        scoreView.setText("학점 : " + PreferenceManagers.getString(getApplicationContext(), "score"+Lid));
-        scoreView.setGravity(Gravity.RIGHT);
+        scoreView.setText(grade);
+        scoreView.setGravity(Gravity.LEFT);
         scoreView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17.0f);
         scoreView.setLayoutParams(linearLayoutParams);
         scoreView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
         linearLayout.addView(scoreView);
 
         TextView contentView = new TextView(getApplicationContext());
-        contentView.setText(PreferenceManagers.getString(getApplicationContext(), "content"+Lid));
-        contentView.setGravity(Gravity.LEFT);
+        contentView.setText(String.valueOf(star));
+        contentView.setGravity(Gravity.RIGHT);
         contentView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17.0f);
         contentView.setLayoutParams(linearLayoutParams);
         contentView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
