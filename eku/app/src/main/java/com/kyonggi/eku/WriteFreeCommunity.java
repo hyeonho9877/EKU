@@ -83,20 +83,39 @@ public class WriteFreeCommunity extends AppCompatActivity {
                   }
                 };
 
+<<<<<<< HEAD
                 HashMap<String,Object> sended = new HashMap<>();
                 sended.put("studNo",201713924);
                 sended.put("department","컴퓨터공학부");
                 sended.put("title",title);
                 sended.put("content",content);
 
+=======
+
+                HashMap<String,Object> temp2 = new HashMap<>();
+                temp2.put("studNo","201713924");
+                temp2.put("department","컴퓨터공학과");
+                temp2.put("title","test제목");
+                temp2.put("content","test내용");
+>>>>>>> main
+
 
                 try {
+<<<<<<< HEAD
                     SendTool.request(SendTool.APPLICATION_JSON,"/board/free/write",sended,handler);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
 
+=======
+                    SendTool.request(SendTool.APPLICATION_JSON, "/free/write",temp2,handler);
+                }
+                catch (IOException | NullPointerException e) {
+                    e.printStackTrace();
+                }
+
+>>>>>>> main
                 activityResultLauncher.launch(intent);
                 finish();
             }

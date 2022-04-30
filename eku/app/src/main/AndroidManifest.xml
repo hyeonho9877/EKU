@@ -54,13 +54,24 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+<<<<<<< HEAD
             android:name=".WriteFreeCommunity"
             android:exported="true">
 
         </activity>
+=======
+            android:name=".MapsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LectureDetailWrite"
+            android:exported="true" />
+        <activity
+            android:name=".MainFreeCommunity"
+            android:exported="true" />
+>>>>>>> main
         <activity
             android:name=".VerfityActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".DetailFreeCommunity"
             android:exported="false"
@@ -69,14 +80,20 @@
         <activity
             android:name=".MainFreeCommunity"
             android:exported="false" />
-            -->
+        -->
         <activity
             android:name=".DetailAnnounce"
             android:exported="true" />
+<<<<<<< HEAD
         <!--
         <activity android:name=".WriteFreeCommunity"
             android:exported="true"/>
             -->
+=======
+        <activity
+            android:name=".WriteFreeCommunity"
+            android:exported="true" />
+>>>>>>> main
         <activity
             android:name=".WriteAnnounce"
             android:exported="true" />
@@ -100,17 +117,21 @@
         -->
         <activity
             android:name=".DonanBagGi"
+<<<<<<< HEAD
             android:exported="true">
 
         </activity>
         <!--
+=======
+            android:exported="true" />
+>>>>>>> main
         <activity
             android:name=".MainCommunity"
             android:exported="true" />
             -->
         <activity
             android:name=".SignInfoActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".SignPhotoActivity"
             android:exported="false" />
@@ -124,16 +145,17 @@
         -->
         <activity
             android:name=".MainBoard"
-            android:exported="true" >
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
-
-
-        </activity>
+            android:screenOrientation="portrait" />
 
         <service
             android:name="com.minew.beacon.ScanService"
@@ -152,6 +174,7 @@
             android:exported="true" />
         <activity android:name=".WriteBoard" />
         <activity
+<<<<<<< HEAD
             android:name=".TodoActivity"
             android:exported="true">
             <intent-filter>
@@ -160,6 +183,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+=======
+            android:name=".findGang"
+            android:exported="true" />
+>>>>>>> main
         <activity
             android:name=".PhotoServeActivity"
             android:exported="true" />
@@ -167,11 +194,19 @@
             android:name=".LectureMain"
             android:exported="false" />
         <activity
+            android:name=".LectureWrite"
+            android:exported="false" />
+        <activity
             android:name=".LectureDetail"
             android:exported="false" />
         <activity
             android:name=".ScheduleTable"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
