@@ -1,24 +1,30 @@
 package com.kyonggi.eku;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ScheduleTable extends AppCompatActivity {
 
@@ -34,6 +40,9 @@ public class ScheduleTable extends AppCompatActivity {
     int[] building = {1,2,3,4,5,6,7,8,9,0};
     AlertDialog buildingSelectDialog;
     long backKeyPressedTime;
+
+    int[] input_time = {0,0,0,0,0,0,0,0};
+    String day="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,9 +144,169 @@ public class ScheduleTable extends AppCompatActivity {
 
         Button AddButton = (Button) findViewById(R.id.schedule_add_button);
         AddButton.setOnClickListener(new Button.OnClickListener() {
+
+
             @Override
             public void onClick(View view) {
+                Dialog dialog = new Dialog(ScheduleTable.this, android.R.style.Theme_Material_Light_Dialog);
+                dialog.setContentView(R.layout.dialog_schedule);
+                EditText dialog_title = dialog.findViewById(R.id.timeTableTitle);
+                EditText dialog_Professor = dialog.findViewById(R.id.timeTableProfessor);
+                EditText dialog_Building = dialog.findViewById(R.id.timeTableBuilding);
 
+                RadioButton mon = (RadioButton) dialog.findViewById(R.id.TimeTableMon);
+                RadioButton tue = (RadioButton) dialog.findViewById(R.id.TimeTableTue);
+                RadioButton wed = (RadioButton) dialog.findViewById(R.id.TimeTableWed);
+                RadioButton thu = (RadioButton) dialog.findViewById(R.id.TimeTableThu);
+                RadioButton fri = (RadioButton) dialog.findViewById(R.id.TimeTableFri);
+                RadioGroup gro = (RadioGroup) dialog.findViewById(R.id.timeTableRadioGroup);
+                gro.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                        if(i == R.id.TimeTableMon)
+                        {
+                            day="월";
+                        }
+                        else if(i == R.id.TimeTableTue)
+                        {
+                            day="화";
+                        }
+                        else if(i == R.id.TimeTableWed)
+                        {
+                            day="수";
+                        }
+                        else if(i == R.id.TimeTableThu)
+                        {
+                            day="목";
+                        }
+                        if(i == R.id.TimeTableFri)
+                        {
+                            day="금";
+                        }
+                    }
+                });
+
+
+
+                        /*
+                         * 시간표 확인할때
+                         * 1교시 => 0번입니다..
+                         * */
+                CheckBox checkBox1 = (CheckBox) dialog.findViewById(R.id.TimeTable_1);
+                checkBox1.setOnClickListener(new CheckBox.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (((CheckBox)v).isChecked()) {
+                            input_time[0]=1;
+                        } else {
+                            input_time[0]=0;
+                        }
+                    }
+                }) ;
+                CheckBox checkBox2 = (CheckBox) dialog.findViewById(R.id.TimeTable_2) ;
+                checkBox2.setOnClickListener(new CheckBox.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (((CheckBox)v).isChecked()) {
+                            input_time[1]=1;
+                        } else {
+                            input_time[1]=0;
+                        }
+                    }
+                }) ;
+                CheckBox checkBox3 = (CheckBox) dialog.findViewById(R.id.TimeTable_3) ;
+                checkBox3.setOnClickListener(new CheckBox.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (((CheckBox)v).isChecked()) {
+                            input_time[2]=1;
+                        } else {
+                            input_time[2]=0;
+                        }
+                    }
+                }) ;
+                CheckBox checkBox4 = (CheckBox) dialog.findViewById(R.id.TimeTable_4) ;
+                checkBox4.setOnClickListener(new CheckBox.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (((CheckBox)v).isChecked()) {
+                            input_time[3]=1;
+                        } else {
+                            input_time[3]=0;
+                        }
+                    }
+                }) ;
+                CheckBox checkBox5 = (CheckBox) dialog.findViewById(R.id.TimeTable_5) ;
+                checkBox5.setOnClickListener(new CheckBox.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (((CheckBox)v).isChecked()) {
+                            input_time[4]=1;
+                        } else {
+                            input_time[4]=0;
+                        }
+                    }
+                }) ;
+                CheckBox checkBox6 = (CheckBox) dialog.findViewById(R.id.TimeTable_6) ;
+                checkBox6.setOnClickListener(new CheckBox.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (((CheckBox)v).isChecked()) {
+                            input_time[5]=1;
+                        } else {
+                            input_time[5]=0;
+                        }
+                    }
+                }) ;
+                CheckBox checkBox7 = (CheckBox) dialog.findViewById(R.id.TimeTable_7) ;
+                checkBox7.setOnClickListener(new CheckBox.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (((CheckBox)v).isChecked()) {
+                            input_time[6]=1;
+                        } else {
+                            input_time[6]=0;
+                        }
+                    }
+                }) ;
+                CheckBox checkBox8 = (CheckBox) dialog.findViewById(R.id.TimeTable_8) ;
+                checkBox8.setOnClickListener(new CheckBox.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (((CheckBox)v).isChecked()) {
+                            input_time[7]=1;
+                        } else {
+                            input_time[7]=0;
+                        }
+                    }
+                });
+                Button btn_ok = dialog.findViewById(R.id.TimeTable_ok);
+                btn_ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String temp="";
+                        for(int i:input_time)
+                        {
+                            temp+=i;
+                        }
+                        temp +=dialog_title.getText().toString();
+                        temp +=dialog_Building.getText().toString();
+                        temp +=dialog_Professor.getText().toString();
+                        temp +=day;
+                        dialog.dismiss();
+                        Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_LONG).show();
+
+                    }
+                });
+                Button btn_cancel = dialog.findViewById(R.id.TimeTable_cancel);
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
             }
         });
 
@@ -150,6 +319,7 @@ public class ScheduleTable extends AppCompatActivity {
         });
 
     }
+
 
     @Override
     public void onBackPressed() {
