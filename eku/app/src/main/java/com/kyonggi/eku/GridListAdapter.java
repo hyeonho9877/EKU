@@ -1,7 +1,6 @@
 package com.kyonggi.eku;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,19 +39,20 @@ public class GridListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         context = parent.getContext(); //context정보 가져오기
         ListItem listItem = items.get(position); //item 불러오기
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate((R.layout.list_item), parent, false);
-
+        if(convertView == null){
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate((R.layout.list_item), parent, false);
+        }
 
         TextView content = convertView.findViewById(R.id.contentView);
         content.setText(listItem.getContent());
 
         TextView time = convertView.findViewById(R.id.timeView);
         time.setText(listItem.getTime());
+
 
         return convertView;
     }

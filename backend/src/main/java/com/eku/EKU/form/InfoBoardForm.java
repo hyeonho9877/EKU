@@ -13,6 +13,6 @@ public class InfoBoardForm {
     private String title;
     private String content;
     private String time;
-    private String building;
+    private Long building;
     private int lecture_building;
 }

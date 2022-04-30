@@ -19,7 +19,6 @@ import java.io.Serializable;
 public class FreeBoard implements Serializable{
     @Id
     @Column(name = "f_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne
     @JoinColumn(name = "student_no")
