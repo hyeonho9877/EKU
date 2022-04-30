@@ -79,21 +79,9 @@ public class LoginActivity extends AppCompatActivity {
 
                             String responseResult=(String)msg.obj;
 
-                            if (responseResult.equals("SignIn Success."))
+                            if(responseResult.equals("Server in Error"))
                             {
-
-                                userInformation.toPhone(getApplicationContext(),std_email,std_pw,true,true);
-                                Intent intent = new Intent(getApplicationContext(), MainBoard.class);
-                                startActivity(intent);
-                                /*
-                                *   이메일 검증 페이지 메인보드 가기전에 만들기
-                                *  shared에 기타 데이터 저장하기를 만들어놔야합니다.
-                                 */
-                            }
-                            else {
-                                userInformation.toPhone(getApplicationContext(), std_email, std_pw, true, false);
-                                Toast.makeText(getApplicationContext(), "인증이 필요합니다. 이메일로 인증해주세요!!", Toast.LENGTH_LONG);
-                                textView.setVisibility(View.VISIBLE);
+                                Toast.makeText(getBaseContext(),"ID와 PASSWORD 입력을 확인해 주세요",Toast.LENGTH_SHORT);
                             }
                             else if(responseResult.equals("Password not matching"))
                             {
