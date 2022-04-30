@@ -78,4 +78,9 @@ public class SignUpController {
             return "auth-success";
         } else return "auth-fail";
     }
+
+    @GetMapping("/signUp/emailAuth/fail")
+    public String failed() {
+        return "auth-fail";
+    }
 }
