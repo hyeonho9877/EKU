@@ -2,6 +2,7 @@ package com.eku.EKU;
 
 import com.eku.EKU.config.CustomProperty;
 import com.eku.EKU.domain.GELecture;
+import com.eku.EKU.domain.Grade;
 import com.eku.EKU.domain.MajorLecture;
 import com.eku.EKU.repository.LectureRepository;
 import com.eku.EKU.secure.KeyGen;
@@ -27,13 +28,15 @@ import static org.assertj.core.api.Assertions.fail;
 
 @SpringBootTest
 class EKUApplicationTests {
-/*
+
     @Autowired
     private CustomProperty customProperty;
 
     @Autowired
     private LectureRepository lectureRepository;
 
+    @Autowired
+    private MajorLectureRepository majorRepository;
 
     @Test
     void contextLoads() {
@@ -153,6 +156,4 @@ class EKUApplicationTests {
             fail("응 실패야");
         }
     }
-    */
-
 }

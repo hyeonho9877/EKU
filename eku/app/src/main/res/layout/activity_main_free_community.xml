@@ -16,9 +16,9 @@
             android:layout_width="358dp"
             android:layout_height="41dp"
             android:background="#FFFFFF"
+            android:backgroundTint="@color/kyonggi_color"
             android:gravity="center_vertical"
             android:textSize="25dp"
-            android:backgroundTint="#F6A788"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,11 +26,11 @@
             android:id="@+id/FreeCommunity_Menu"
             android:layout_width="50dp"
             android:layout_height="42dp"
-            android:backgroundTint="#F6A788"
+            android:backgroundTint="@color/kyonggi_color"
             android:scaleType="centerInside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/menuicon" />
+            app:srcCompat="@drawable/ic_baseline_list_24" />
 
         <Button
             android:id="@+id/FreeCommunity_announce_button"
