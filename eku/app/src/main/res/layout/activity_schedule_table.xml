@@ -50,7 +50,7 @@
         <androidx.gridlayout.widget.GridLayout
             android:id="@+id/gridLayout"
             android:layout_width="match_parent"
-            android:layout_height="450dp"
+            android:layout_height="540dp"
             android:background="@drawable/stroke_under"
             app:alignmentMode="alignMargins"
             app:columnCount="6"
@@ -62,42 +62,42 @@
 
             <TextView
                 android:layout_width="69dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:gravity="center" />
 
             <TextView
                 android:layout_width="68dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:gravity="center"
                 android:text="월" />
 
             <TextView
                 android:layout_width="68dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:gravity="center"
                 android:text="화" />
 
             <TextView
                 android:layout_width="68dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:gravity="center"
                 android:text="수" />
 
             <TextView
                 android:layout_width="68dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:gravity="center"
                 android:text="목" />
 
             <TextView
                 android:layout_width="68dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:gravity="center"
                 android:text="금" />
 
             <TextView
                 android:layout_width="69dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:gravity="center"
                 android:text="1교시"
                 app:layout_column="0"
@@ -105,7 +105,7 @@
 
             <TextView
                 android:layout_width="69dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:gravity="center"
                 android:text="2교시"
                 app:layout_column="0"
@@ -113,7 +113,7 @@
 
             <TextView
                 android:layout_width="69dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:gravity="center"
                 android:text="3교시"
                 app:layout_column="0"
@@ -121,7 +121,7 @@
 
             <TextView
                 android:layout_width="69dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:gravity="center"
                 android:text="4교시"
                 app:layout_column="0"
@@ -129,7 +129,7 @@
 
             <TextView
                 android:layout_width="69dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:gravity="center"
                 android:text="5교시"
                 app:layout_column="0"
@@ -137,7 +137,7 @@
 
             <TextView
                 android:layout_width="69dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:gravity="center"
                 android:text="6교시"
                 app:layout_column="0"
@@ -145,7 +145,7 @@
 
             <TextView
                 android:layout_width="69dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:gravity="center"
                 android:text="7교시"
                 app:layout_column="0"
@@ -153,7 +153,7 @@
 
             <TextView
                 android:layout_width="69dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:gravity="center"
                 android:text="8교시"
                 app:layout_column="0"

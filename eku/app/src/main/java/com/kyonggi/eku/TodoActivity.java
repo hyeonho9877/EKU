@@ -148,9 +148,10 @@ public class TodoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Dialog dialog = new Dialog(TodoActivity.this, android.R.style.Theme_Material_Light_Dialog);
                 dialog.setContentView(R.layout.dialog_edit);
-                EditText et_title = dialog.findViewById(R.id.timeTableTitle);
-                EditText et_content = dialog.findViewById(R.id.timeTableProfessor);
-                Button btn_ok = dialog.findViewById(R.id.TimeTable_ok);
+                EditText et_title = dialog.findViewById(R.id.et_title);
+                EditText et_content = dialog.findViewById(R.id.et_content);
+                Button btn_ok = dialog.findViewById(R.id.btn_todo_ok);
+                Button btn_cancle = dialog.findViewById(R.id.btn_todo_cancle);
 
                 btn_ok.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -168,6 +169,13 @@ public class TodoActivity extends AppCompatActivity {
                         dialog.dismiss();
                         Toast.makeText(TodoActivity.this, "할일 목록에 추가되었습니다.", Toast.LENGTH_SHORT).show();
 
+                    }
+                });
+
+                btn_cancle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
                     }
                 });
 

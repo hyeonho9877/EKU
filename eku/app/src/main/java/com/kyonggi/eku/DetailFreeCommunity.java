@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,21 +14,14 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 
 public class DetailFreeCommunity extends AppCompatActivity {
@@ -119,7 +113,30 @@ public class DetailFreeCommunity extends AppCompatActivity {
             public void onClick(View view) {
                 EditText commentLine = (EditText) findViewById(R.id.detail_Free_Write_Comment);
                 String comment = commentLine.getText().toString();
-                count++;
+
+                Handler handler = new Handler(){
+                    public void handleMessage(@NonNull Message msg){
+                        switch (msg.what){
+                            case 0:
+                                String responseResult=(String)msg.obj;
+                                Toast.makeText(getApplicationContext(),responseResult,Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                };
+
+
+                HashMap<String,Object> sended = new HashMap<>();
+                sended.put("content",comment);
+                sended.put("writer","201713924");
+                sended.put("articleID",1);
+
+
+
+                try {
+                    SendTool.request(SendTool.APPLICATION_JSON,"/comment/free/write",sended,handler);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 /*
                 long now = System.currentTimeMillis();
@@ -146,28 +163,48 @@ public class DetailFreeCommunity extends AppCompatActivity {
             modifyButton.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Handler handler = new Handler(){
-                        public void handleMessage(@NonNull Message msg){
-                            switch (msg.what) {
-                                case 0:
-                                    String responseResult=(String)msg.obj;
-                                    Toast.makeText(getApplicationContext(), responseResult, Toast.LENGTH_SHORT).show();
+
+                    Dialog dialog = new Dialog(DetailFreeCommunity.this, android.R.style.Theme_Material_Light_Dialog);
+                    dialog.setContentView(R.layout.dialog_update_free);
+                    EditText update_free_title = dialog.findViewById(R.id.update_free_title);
+                    EditText update_free_content = dialog.findViewById(R.id.update_free_content);
+                    Button btn_ok = dialog.findViewById(R.id.btn_free_update_ok);
+                    Button btn_cancle = dialog.findViewById(R.id.btn_free_update_cancle);
+
+                    btn_cancle.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    btn_ok.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Handler handler = new Handler(){
+                                public void handleMessage(@NonNull Message msg){
+                                    switch (msg.what){
+                                        case 0:
+                                            String responseResult=(String)msg.obj;
+                                            Toast.makeText(getApplicationContext(),responseResult,Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            };
+
+                            HashMap<String,Object> sended = new HashMap<>();
+                            sended.put("id",1);
+                            sended.put("title",update_free_title);
+                            sended.put("content",update_free_content);
+
+
+                            try {
+                                SendTool.request(SendTool.APPLICATION_JSON,"/board/free/update",sended,handler);
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                         }
-                    };
-
-                    HashMap<String,Object> temp2 = new HashMap<>();
-                    temp2.put("studNo","201713924");
-                    temp2.put("department","컴퓨터공학과");
-                    temp2.put("title","test제목");
-                    temp2.put("content","test내용");
-
-                    try {
-                        SendTool.request(SendTool.APPLICATION_JSON, "/comment/free/update",temp2,handler);
-                    }
-                    catch (IOException | NullPointerException e) {
-                        e.printStackTrace();
-                    }
+                    });
+                    dialog.show();
                 }
             });
             Button deleteButton = new Button(getApplicationContext());
@@ -175,26 +212,29 @@ public class DetailFreeCommunity extends AppCompatActivity {
             deleteButton.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     Handler handler = new Handler(){
                         public void handleMessage(@NonNull Message msg){
-                            switch (msg.what) {
+                            switch (msg.what){
                                 case 0:
                                     String responseResult=(String)msg.obj;
-                                    Toast.makeText(getApplicationContext(), responseResult, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(),responseResult,Toast.LENGTH_SHORT).show();
+
                             }
                         }
                     };
 
-                    HashMap<String,Object> temp2 = new HashMap<>();
 
-                    temp2.put("commentId","1");
+                    HashMap<String,Object> sended = new HashMap<>();
+                    sended.put("id","1");
+
 
                     try {
-                        SendTool.request(0x0, "http://www.eku.kro.kr/comment/free/delete",temp2,handler);
-                    }
-                    catch (IOException | NullPointerException e) {
+                        SendTool.request(SendTool.APPLICATION_JSON,"/board/free/delete",sended,handler);
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
+
                 }
             });
             buttonLayout.addView(modifyButton);

@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class FreeBoardForm {
     private long id;
-    private long writerNo;
+    private long studNo;
     private String department;
     private String title;
     private String content;

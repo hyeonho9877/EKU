@@ -36,7 +36,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -159,50 +158,47 @@ public class LectureMain extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserInformation info = new UserInformation(getApplicationContext());
-                if (!info.fromPhoneVerify(getApplicationContext())) {
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Intent intent = new Intent(getApplicationContext(), LectureWrite.class);
-                    startActivity(intent);
-                    finish();
-                }
+                Intent intent = new Intent(getApplicationContext(), LectureWrite.class);
+                startActivity(intent);
+                finish();
             }
         });
 
         EditText searchText = (EditText) findViewById(R.id.Lecture_Main_searchtext);
 
-        Handler handler =  new Handler(getMainLooper()){
-            @Override
+        /*
+        Handler handler = new Handler() {
             public void handleMessage(@NonNull Message msg) {
-                String responseResult = (String) msg.obj;
-                try {
-                    JSONArray LectureArray = new JSONArray(responseResult);
-                    for (int i = 0; i < LectureArray.length(); i++) {
-                        JSONObject LectureObject = LectureArray.getJSONObject(i);
-                        String rating = LectureObject.getString("star");
-                        int LectureId = Integer.parseInt(LectureObject.getString("cid"));
-                        String content = LectureObject.getString("content");
-                        Gson a = new Gson();
-                        Lecture lecture1 = a.fromJson(LectureObject.getString("lecture"), Lecture.class);
-                        String title = lecture1.getLectureName();
-                        String professor = lecture1.getProfessor();
+                switch (msg.what) {
+                    case 0:
+                        String responseResult = (String) msg.obj;
+                        Log.i("a", responseResult);
+                        try {
+                            JSONArray LectureArray = new JSONArray(responseResult);
+                            for (int i = 0; i < LectureArray.length(); i++) {
+                                JSONObject LectureObject = LectureArray.getJSONObject(i);
 
-                        write_Lecture(title, professor, rating, content, LectureId);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                                String title = LectureObject.getString("lectureName");
+                                String professor = LectureObject.getString("profName");
+                                String content = LectureObject.getString("content");
+                                String rating = LectureObject.getString("star");
+                                int LectureId = Integer.parseInt(LectureObject.getString("cid"));
+                                write_Lecture(title, professor, rating, content, LectureId);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                 }
-
             }
         };
 
-        HashMap<String, Object> temp = new HashMap<>();
+        SendTool sendTool = new SendTool(handler);
+        HashMap<String, String> temp = new HashMap<>();
         try {
-            SendTool.requestForJson("/critic/read", temp, handler);
-        } catch (NullPointerException e) {
+            sendTool.request("http://115.85.182.126:8080/critic/read", "POST", temp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -213,90 +209,46 @@ public class LectureMain extends AppCompatActivity {
                 String search = searchText.getText().toString();
                 sc = (LinearLayout) findViewById(R.id.Lecture_Main_scroll);
                 sc.removeAllViews();
-                Handler handler = new Handler(getMainLooper()){
-                    @Override
+                Handler handler = new Handler() {
                     public void handleMessage(@NonNull Message msg) {
-                        Log.i("c", (String) msg.obj);
-                        String responseResult = (String) msg.obj;
-                        try {
-                            JSONArray LectureArray = new JSONArray(responseResult);
-                            for (int i = 0; i < LectureArray.length(); i++) {
-                                JSONObject LectureObject = LectureArray.getJSONObject(i);
-                                String title = LectureObject.getString("lectureName");
-                                String professor = LectureObject.getString("professor");
-                                String rating = String.valueOf(LectureObject.getDouble("star"));
-                                search_Lecture(title, professor, rating);
-                            }
+                        switch (msg.what) {
+                            case 0:
+                                String responseResult = (String) msg.obj;
+                                try {
+                                    JSONArray LectureArray = new JSONArray(responseResult);
+                                    for (int i = 0; i < LectureArray.length(); i++) {
+                                        JSONObject LectureObject = LectureArray.getJSONObject(i);
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                                        String title = LectureObject.getString("lectureName");
+                                        String professor = LectureObject.getString("profName");
+                                        if (title.contains(search) || professor.contains(search)) {
+                                            String content = LectureObject.getString("content");
+                                            String rating = LectureObject.getString("star");
+                                            int LectureId = Integer.parseInt(LectureObject.getString("cid"));
+                                            write_Lecture(title, professor, rating, content, LectureId);
+                                        }
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                         }
                     }
                 };
 
 
-                HashMap<String, Object> temp = new HashMap<>();
-                temp.put("keyword",search);
+                SendTool sendTool = new SendTool(handler);
+                HashMap<String, String> temp = new HashMap<>();
                 try {
-                    SendTool.requestForJson("/critic/search", temp, handler);
-                } catch (NullPointerException e) {
+                    sendTool.request("http://115.85.182.126:8080/critic/read", "POST", temp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
+         */
     }
-
-    public void search_Lecture(String Title, String professor, String rating) {
-        sc = (LinearLayout) findViewById(R.id.Lecture_Main_scroll);
-        LinearLayout linearLayout = new LinearLayout(getApplicationContext());
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-
-        LinearLayout.LayoutParams linearLayoutParams =
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-
-        linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), LectureDetail.class);
-                intent.putExtra("Name", Title);
-                intent.putExtra("Prof", professor);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        TextView textView = new TextView(getApplicationContext());
-        textView.setText(Title);
-        textView.setGravity(Gravity.LEFT);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25.0f);
-        textView.setLayoutParams(linearLayoutParams);
-        textView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-        linearLayout.addView(textView);
-
-
-        TextView professorView = new TextView(getApplicationContext());
-        professorView.setText(professor);
-        professorView.setGravity(Gravity.RIGHT);
-        professorView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17.0f);
-        professorView.setLayoutParams(linearLayoutParams);
-        professorView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-        linearLayout.addView(professorView);
-
-        RatingBar Rating = new RatingBar(getApplicationContext());
-        Rating.setIsIndicator(true);
-        Rating.setNumStars(5);
-        Rating.setRating(Float.valueOf(rating));
-        LinearLayout.LayoutParams centerParams = new LinearLayout.LayoutParams(linearLayoutParams.WRAP_CONTENT, linearLayoutParams.WRAP_CONTENT);
-        centerParams.gravity = Gravity.CENTER;
-        Rating.setLayoutParams(centerParams);
-        linearLayout.addView(Rating);
-
-        sc.addView(linearLayout);
-    }
-
 
     public void write_Lecture(String Title, String professor, String rating, String content, int Lectureid) {
         sc = (LinearLayout) findViewById(R.id.Lecture_Main_scroll);
