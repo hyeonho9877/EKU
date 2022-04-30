@@ -33,10 +33,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 
-public class LectureWrite extends AppCompatActivity {
+public class LectureDetailWrite extends AppCompatActivity {
 
     /**
-     * 강의 평가 작성 기능
+     * 강의 평가 상세 작성 기능
      */
     //작성 화면
     String[] showgrade = {"A+", "A", "B+", "B", "C+", "C", "D+", "D", "F"};
@@ -58,6 +58,8 @@ public class LectureWrite extends AppCompatActivity {
                     }
                 }
         );
+        Intent intent = getIntent();
+
 
         Handler handler = new Handler() {
             public void handleMessage(@NonNull Message msg) {
@@ -71,7 +73,15 @@ public class LectureWrite extends AppCompatActivity {
 
 
         EditText titleview = (EditText) findViewById(R.id.lecture_write_NameText);
+        String intentLetureName = intent.getStringExtra("lectureName");
+        titleview.setText(intentLetureName);
+        titleview.setClickable(false);
+        titleview.setFocusable(false);
         EditText professorview = (EditText) findViewById(R.id.lecture_write_ProfessorText);
+        String intentProfessor = intent.getStringExtra("professor");
+        professorview.setText(intentProfessor);
+        professorview.setClickable(false);
+        professorview.setFocusable(false);
         EditText contentview = (EditText) findViewById(R.id.lecture_write_ContentText);
         RatingBar ratingview = (RatingBar) findViewById(R.id.lecture_write_ratingBar);
         Button saveButton = (Button) findViewById(R.id.lecture_write_SaveButton);
@@ -99,7 +109,9 @@ public class LectureWrite extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                Intent intent = new Intent(getApplicationContext(), LectureMain.class);
+                Intent intent = new Intent(getApplicationContext(), LectureDetail.class);
+                intent.putExtra("Name",intentLetureName);
+                intent.putExtra("Prof",intentProfessor);
                 startActivity(intent);
                 finish();
             }
@@ -122,7 +134,7 @@ public class LectureWrite extends AppCompatActivity {
                 gradeSelectDialog.show();
             }
         });
-        gradeSelectDialog = new AlertDialog.Builder(LectureWrite.this)
+        gradeSelectDialog = new AlertDialog.Builder(LectureDetailWrite.this)
                 .setSingleChoiceItems(showgrade, gradeSelected, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
