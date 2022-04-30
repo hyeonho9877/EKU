@@ -177,6 +177,7 @@ public class LectureMain extends AppCompatActivity {
         Handler handler =  new Handler(getMainLooper()){
             @Override
             public void handleMessage(@NonNull Message msg) {
+                Log.i("d", (String) msg.obj);
                 String responseResult = (String) msg.obj;
                 try {
                     JSONArray LectureArray = new JSONArray(responseResult);

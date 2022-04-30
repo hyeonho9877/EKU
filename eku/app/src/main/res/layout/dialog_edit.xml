@@ -62,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@+id/dialog_Professor" />
 
         <Button
-            android:id="@+id/TimeTable_ok"
+            android:id="@+id/btn_ok"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
