@@ -3,6 +3,7 @@ package com.eku.EKU.service;
 import com.eku.EKU.domain.FreeBoardComment;
 import com.eku.EKU.exceptions.NoSuchStudentException;
 import com.eku.EKU.form.CommentForm;
+import com.eku.EKU.form.FreeBoardCommentResponse;
 import com.eku.EKU.repository.FreeBoardCommentRepository;
 import com.eku.EKU.repository.FreeBoardRepository;
 import com.eku.EKU.repository.StudentRepository;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -54,6 +57,7 @@ public class FreeBoardCommentService {
         freeBoardCommentRepository.deleteById(form.getCommentId());
     }
 
+
     /**
      * 자유게시판댓글 db에서 요청한 댓글 수정
      * @param form 수정할 댓글의 정보가 들어있는 Form 객체
@@ -66,5 +70,24 @@ public class FreeBoardCommentService {
         if (form.getContent() != null) {
             target.setContent(form.getContent());
         }
+    }
+
+    /**
+     * 자유게시판 게시물 id에 해당하는 댓글 List 반환
+     * @param id
+     * @return
+     */
+    public List<FreeBoardCommentResponse> commentList(Long id){
+        List<FreeBoardComment> tempList = freeBoardCommentRepository.findAllByOriginalId(id);
+        List<FreeBoardCommentResponse> list = new ArrayList<FreeBoardCommentResponse>();
+        for(FreeBoardComment i : tempList){
+            FreeBoardCommentResponse response = new FreeBoardCommentResponse();
+            response.setContent(i.getContent());
+            response.setWriter(i.getWriter().getStudNo());
+            response.setFId(i.getFId());
+            response.setWrittenTime(i.getWrittenTime());
+            list.add(response);
+        }
+        return list;
     }
 }
