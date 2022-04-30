@@ -88,16 +88,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.viewHolder
                                 //수정
                                 Dialog dialog = new Dialog(mContext, android.R.style.Theme_Material_Light_Dialog);
                                 dialog.setContentView(R.layout.dialog_edit);
-<<<<<<< HEAD
                                 EditText et_title = dialog.findViewById(R.id.et_title);
                                 EditText et_content = dialog.findViewById(R.id.et_content);
                                 Button btn_ok = dialog.findViewById(R.id.btn_todo_ok);
                                 Button btn_cancle = dialog.findViewById(R.id.btn_todo_cancle);
-=======
-                                EditText et_title = dialog.findViewById(R.id.timeTableTitle);
-                                EditText et_content = dialog.findViewById(R.id.timeTableProfessor);
-                                Button btn_ok = dialog.findViewById(R.id.TimeTable_ok);
->>>>>>> main
 
                                 et_title.setText(todoItem.getTitle());
                                 et_content.setText(todoItem.getContent());

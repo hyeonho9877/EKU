@@ -52,19 +52,7 @@ public class WriteBoard extends AppCompatActivity {
                 }
         );
 
-<<<<<<< HEAD
 
-=======
-        Handler handler = new Handler() {
-            public void handleMessage(@NonNull Message msg) {
-                switch (msg.what) {
-                    case 0:
-                        String responseResult = (String) msg.obj;
-                        Log.i("a", "무" + responseResult);
-                }
-            }
-        };
->>>>>>> main
 
 
         Button saveButton = (Button) findViewById(R.id.memo_save);
@@ -86,21 +74,11 @@ public class WriteBoard extends AppCompatActivity {
                 */
 
 
-                HashMap<String, Object> temp = new HashMap<>();
+                HashMap<String, String> temp = new HashMap<>();
                 temp.put("content", memoText);
-                temp.put("minor","61686");
+                temp.put("uuid","E2C56DB5-DFFB-48D2-B060-D0F5A71096E0");
 
 
-<<<<<<< HEAD
-
-=======
-                try {
-                    SendTool.request(SendTool.APPLICATION_JSON, "/doodle/write",temp,handler);
-                }
-                catch (IOException | NullPointerException e) {
-                    e.printStackTrace();
-                }
->>>>>>> main
 
                 activityResultLauncher.launch(intent);
                 finish();

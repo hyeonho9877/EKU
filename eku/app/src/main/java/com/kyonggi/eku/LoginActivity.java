@@ -18,7 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -75,9 +74,12 @@ public class LoginActivity extends AppCompatActivity {
                 } /*else {
                     Handler handler = new Handler(){
                         public void handleMessage(@NonNull Message msg){
-                            Log.i("a",(String)msg.obj);
+                            switch(msg.what){
+                                case 0:
+                                    String responseResult=(String)msg.obj;
+                                    if (responseResult.equals("SignIn Success."))
+                                    {
 
-<<<<<<< HEAD
                                         userInformation.toPhone(getApplicationContext(),std_email,std_pw,true,true);
                                         Intent intent = new Intent(getApplicationContext(), MainBoard.class);
                                         startActivity(intent);
@@ -91,56 +93,23 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(),"인증이 필요합니다. 이메일로 인증해주세요!!",Toast.LENGTH_LONG);
                                         textView.setVisibility(View.VISIBLE);
                                     }
-=======
-                            String responseResult=(String)msg.obj;
-
-                            if(responseResult.equals("Server in Error"))
-                            {
-                                Toast.makeText(getBaseContext(),"ID와 PASSWORD 입력을 확인해 주세요",Toast.LENGTH_SHORT);
->>>>>>> main
                             }
-                            else if(responseResult.equals("Password not matching"))
-                            {
-                                Toast.makeText(getBaseContext(),"ID와 PASSWORD 입력을 확인해 주세요",Toast.LENGTH_SHORT);
-                            }
-                            else if(responseResult.equals("not authorized."))
-                            {
-                                Toast.makeText(getApplicationContext(), "인증이 필요합니다. 이메일로 인증해주세요!!", Toast.LENGTH_LONG);
-                                textView.setVisibility(View.VISIBLE);
-                            }
-                            else
-                            {
-                                try {
-                                    JSONObject jsonObject = new JSONObject(responseResult);
-                                    int student_no = jsonObject.getInt("studNo");
-                                    String st_student_no = String.valueOf(student_no);
-                                    String department = jsonObject.getString("department");
-                                    userInformation.toPhone(getApplicationContext(),std_email,std_pw,st_student_no,department,true,true);
-                                    Intent intent = new Intent(getApplicationContext(), MainBoard.class);
-                                    startActivity(intent);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-
-
-                                /*
-                                *   이메일 검증 페이지 메인보드 가기전에 만들기
-                                *  shared에 기타 데이터 저장하기를 만들어놔야합니다.
-                                 */
-                            }
-
                         }
                     };
-                    HashMap<String,Object> temp = new HashMap<>();
+                    SendTool sendTool = new SendTool(handler);
+                    HashMap<String,String> temp = new HashMap<>();
                     temp.put("email",std_email);
                     temp.put("password",std_pw);
                     try {
-                        SendTool.request(SendTool.APPLICATION_JSON, "/signIn",temp,handler);
-                    }
-                    catch (IOException | NullPointerException e) {
+                        sendTool.request("http://115.85.182.126:80/signIn","POST",temp);
+                    } catch (IOException e) {
+                        Toast.makeText(getBaseContext(),"서버에러!",Toast.LENGTH_SHORT);
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        Toast.makeText(getBaseContext(),"JSON에러!",Toast.LENGTH_SHORT);
                         e.printStackTrace();
                     }
+
 
                 }
 

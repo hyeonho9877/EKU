@@ -103,21 +103,17 @@ public class SignInfoActivity extends AppCompatActivity {
                     String user_no = user_sign_no.getText().toString();
 
 
-<<<<<<< HEAD
                     /*
                     Handler handler = new Handler(){
-=======
-                    Handler handler = new Handler(getMainLooper()){
->>>>>>> main
                         @Override
                         public void handleMessage(@NonNull Message msg) {
-                           // int e = Log.i("결과->", (String) msg.obj);
+                            int e = Log.i("결과->", (String) msg.obj);
                         }
 
 
                     };
-
-                    HashMap<String, Object> temp = new HashMap<>();
+                    SendTool sendTool = new SendTool(handler);
+                    HashMap<String, String> temp = new HashMap<>();
                     temp.put("studNo", user_no);
                     temp.put("password", user_pw);
                     temp.put("name", user_name);
@@ -125,9 +121,13 @@ public class SignInfoActivity extends AppCompatActivity {
                     temp.put("email", user_email);
 
                     try {
-                        SendTool.request(SendTool.APPLICATION_JSON,"/signUp",temp,handler);
-                    }
-                    catch (IOException | NullPointerException e) {
+                        sendTool.request("http://www.eku.kro.kr/signUp", "POST", temp);
+
+                    } catch (IOException e) {
+                        Toast.makeText(getBaseContext(), "서버에러!", Toast.LENGTH_SHORT);
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        Toast.makeText(getBaseContext(), "JSON에러!", Toast.LENGTH_SHORT);
                         e.printStackTrace();
                     }
                     Intent intent = new Intent(getApplicationContext(), VerfityActivity.class);

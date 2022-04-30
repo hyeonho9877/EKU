@@ -203,25 +203,8 @@ public class DetailFreeCommunity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
-<<<<<<< HEAD
                     });
                     dialog.show();
-=======
-                    };
-
-                    HashMap<String,Object> temp2 = new HashMap<>();
-                    temp2.put("studNo","201713924");
-                    temp2.put("department","컴퓨터공학과");
-                    temp2.put("title","test제목");
-                    temp2.put("content","test내용");
-
-                    try {
-                        SendTool.request(SendTool.APPLICATION_JSON, "/comment/free/update",temp2,handler);
-                    }
-                    catch (IOException | NullPointerException e) {
-                        e.printStackTrace();
-                    }
->>>>>>> main
                 }
             });
             Button deleteButton = new Button(getApplicationContext());
@@ -241,24 +224,14 @@ public class DetailFreeCommunity extends AppCompatActivity {
                         }
                     };
 
-<<<<<<< HEAD
 
                     HashMap<String,Object> sended = new HashMap<>();
                     sended.put("id","1");
-=======
-                    HashMap<String,Object> temp2 = new HashMap<>();
->>>>>>> main
 
 
                     try {
-<<<<<<< HEAD
                         SendTool.request(SendTool.APPLICATION_JSON,"/board/free/delete",sended,handler);
                     } catch (IOException e) {
-=======
-                        SendTool.request(0x0, "http://www.eku.kro.kr/comment/free/delete",temp2,handler);
-                    }
-                    catch (IOException | NullPointerException e) {
->>>>>>> main
                         e.printStackTrace();
                     }
 
