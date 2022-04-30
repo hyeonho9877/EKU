@@ -18,4 +18,5 @@ public class InfoBoardCommentResponse {
         this.writtenTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.writer = form.getWriter();
     }
+    public InfoBoardCommentResponse(){}
 }

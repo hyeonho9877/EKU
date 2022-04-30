@@ -59,7 +59,6 @@ public class LectureWrite extends AppCompatActivity {
                 }
         );
 
-        /*
         Handler handler = new Handler() {
             public void handleMessage(@NonNull Message msg) {
                 switch (msg.what) {
@@ -69,7 +68,6 @@ public class LectureWrite extends AppCompatActivity {
                 }
             }
         };
-        SendTool sendTool = new SendTool(handler);
 
 
         EditText titleview = (EditText) findViewById(R.id.lecture_write_NameText);
@@ -83,23 +81,21 @@ public class LectureWrite extends AppCompatActivity {
                 String title = titleview.getText().toString();
                 String professor = professorview.getText().toString();
                 String content = contentview.getText().toString();
-                String rating = String.valueOf(ratingview.getRating());
+                float rating = ratingview.getRating();
                 String score = grade[gradeSelected];
-                String user_email = "yas5@kyonggi.ac.kr";
 
-                HashMap<String, String> temp = new HashMap<>();
-                temp.put("email", user_email);
+                HashMap<String, Object> temp = new HashMap<>();
+                temp.put("studNo", 201611772);
                 temp.put("content", content);
-                temp.put("profName", professor);
-                temp.put("lectureName", title);
                 temp.put("grade", score);
                 temp.put("star", rating);
+                Lecture lecture = new Lecture(title, professor);
+                temp.put("lecture",lecture);
 
                 try {
-                    sendTool.request("http://49.174.169.48:13883/critic/apply", "POST", temp);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
+                    SendTool.request(SendTool.APPLICATION_JSON, "/critic/apply",temp, handler);
+                }
+                catch (IOException | NullPointerException e) {
                     e.printStackTrace();
                 }
 
@@ -107,7 +103,6 @@ public class LectureWrite extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-         */
 
         Button closeButton = (Button) findViewById(R.id.lecture_write_CloseButton);
         closeButton.setOnClickListener(new Button.OnClickListener() {

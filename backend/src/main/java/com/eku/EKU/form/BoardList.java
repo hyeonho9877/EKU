@@ -1,4 +1,4 @@
-package com.eku.EKU.domain;
+package com.eku.EKU.form;
 
 import lombok.Builder;
 import lombok.Data;
