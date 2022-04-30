@@ -192,6 +192,7 @@ public class MainBoard extends AppCompatActivity {
                 }
             }
         };
+        /*
             SendTool sendTool = new SendTool(handler);
 
 
@@ -202,7 +203,7 @@ public class MainBoard extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+*/
 
         gridView.setAdapter(gAdapter);
 
@@ -242,12 +243,10 @@ public class MainBoard extends AppCompatActivity {
 
     public void onSwipeRight() {
         Toast.makeText(this,"우측 스와이프", Toast.LENGTH_SHORT).show();
-        /*   ---------------------여기 지도 activity 넣어주셈-------------------------
-        Intent intent = new Intent(getApplicationContext(), 지도.class);
+        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+        intent.putExtra("title", BuildingButton.getText().toString());
         startActivity(intent);
         finish();
-
-         */
 
     }
 

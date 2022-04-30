@@ -103,6 +103,7 @@ public class SignInfoActivity extends AppCompatActivity {
                     String user_no = user_sign_no.getText().toString();
 
 
+                    /*
                     Handler handler = new Handler(){
                         @Override
                         public void handleMessage(@NonNull Message msg) {
@@ -118,6 +119,7 @@ public class SignInfoActivity extends AppCompatActivity {
                     temp.put("name", user_name);
                     temp.put("department", user_major);
                     temp.put("email", user_email);
+
                     try {
                         sendTool.request("http://www.eku.kro.kr/signUp", "POST", temp);
 
@@ -130,6 +132,7 @@ public class SignInfoActivity extends AppCompatActivity {
                     }
                     Intent intent = new Intent(getApplicationContext(), VerfityActivity.class);
                     startActivity(intent);
+                     */
 
                 } else {
                     textView.setVisibility(View.VISIBLE);

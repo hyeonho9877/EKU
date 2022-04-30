@@ -11,7 +11,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -167,7 +166,8 @@ public class LectureMain extends AppCompatActivity {
 
         EditText searchText = (EditText) findViewById(R.id.Lecture_Main_searchtext);
 
-        Handler handler = new Handler(Looper.getMainLooper()) {
+        /*
+        Handler handler = new Handler() {
             public void handleMessage(@NonNull Message msg) {
                 switch (msg.what) {
                     case 0:
@@ -235,6 +235,7 @@ public class LectureMain extends AppCompatActivity {
                     }
                 };
 
+
                 SendTool sendTool = new SendTool(handler);
                 HashMap<String, String> temp = new HashMap<>();
                 try {
@@ -246,6 +247,7 @@ public class LectureMain extends AppCompatActivity {
                 }
             }
         });
+         */
     }
 
     public void write_Lecture(String Title, String professor, String rating, String content, int Lectureid) {

@@ -1,6 +1,4 @@
-
 package com.kyonggi.eku;
-
 
 import android.os.Handler;
 import android.os.Message;
@@ -33,7 +31,7 @@ public final class SendTool {
     private static final Gson gson = new Gson();
 
 
-    public static void request(int bodyType, String url, HashMap<String, String> params, Handler handler) throws IOException, NullPointerException {
+    public static void request(int bodyType, String url, HashMap<String, Object> params, Handler handler) throws IOException, NullPointerException {
 
         if (bodyType == APPLICATION_JSON) {
             requestForJson(url, params, handler);
@@ -44,8 +42,7 @@ public final class SendTool {
 
         if (params != null) {
             for (String key : params.keySet()) {
-                String value = params.get(key);
-                assert value != null;
+                String value = (String) params.get(key);
                 builder.add(key, value);
             }
         }
@@ -73,13 +70,13 @@ public final class SendTool {
         });
     }
 
-    public static void requestForJson(String url, HashMap<String, String> params, Handler handler) throws IOException, NullPointerException {
+    private static void requestForJson(String url, HashMap<String, Object> params, Handler handler) throws NullPointerException {
 
-        Gson gson = new Gson();
         String jsonObject = gson.toJson(params);
 
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        RequestBody requestBody = RequestBody.create(jsonObject,JSON);
+        RequestBody requestBody = RequestBody.create(jsonObject, JSON);
+
         Request request = new Request.Builder()
                 .url(baseUrl+url)
                 .post(requestBody)
