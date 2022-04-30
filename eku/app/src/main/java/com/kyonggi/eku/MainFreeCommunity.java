@@ -11,7 +11,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -32,8 +31,6 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.io.IOException;
-
 /*
 *제목
 * 자유게시판
@@ -41,7 +38,7 @@ import java.io.IOException;
 *내용
 * 자유게시판판* *
 *
-*/
+ */
 public class MainFreeCommunity extends AppCompatActivity {
     String[] showBuilding = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
     int buildingSelected = 0;
@@ -175,22 +172,6 @@ public class MainFreeCommunity extends AppCompatActivity {
 
             }
         });
-
-        Handler handler2 = new Handler(){
-            public void handleMessage(@NonNull Message msg){
-                switch (msg.what){
-                    case 0:
-                        String responseResult=(String)msg.obj;
-                        Toast.makeText(getApplicationContext(),responseResult,Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
-
-        try {
-            SendTool.request(SendTool.EMPTY_BODY,"/board/free/lists",null,handler2);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         SwipeRefreshLayout swipe = findViewById(R.id.FreeCommunity_Swipe);
         swipe.setOnRefreshListener(

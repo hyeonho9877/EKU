@@ -54,7 +54,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".WriteFreeCommunity"
+            android:name=".MainFreeCommunity"
             android:exported="true">
 
         </activity>
@@ -73,10 +73,8 @@
         <activity
             android:name=".DetailAnnounce"
             android:exported="true" />
-        <!--
         <activity android:name=".WriteFreeCommunity"
             android:exported="true"/>
-            -->
         <activity
             android:name=".WriteAnnounce"
             android:exported="true" />
@@ -103,11 +101,9 @@
             android:exported="true">
 
         </activity>
-        <!--
         <activity
             android:name=".MainCommunity"
             android:exported="true" />
-            -->
         <activity
             android:name=".SignInfoActivity"
             android:exported="true"></activity>
@@ -115,7 +111,7 @@
             android:name=".SignPhotoActivity"
             android:exported="false" />
         <activity
-            android:name=".MainCommunity"
+            android:name=".TodoActivity"
             android:exported="true" />
         <!--
         <activity
@@ -125,7 +121,10 @@
         <activity
             android:name=".MainBoard"
             android:exported="true" >
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".LoginActivity"
@@ -152,19 +151,17 @@
             android:exported="true" />
         <activity android:name=".WriteBoard" />
         <activity
-            android:name=".TodoActivity"
+            android:name=".findGang"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".PhotoServeActivity"
             android:exported="true" />
         <activity
             android:name=".LectureMain"
+            android:exported="false" />
+        <activity
+            android:name=".LectureWrite"
             android:exported="false" />
         <activity
             android:name=".LectureDetail"

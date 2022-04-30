@@ -10,9 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -25,7 +23,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 public class WriteFreeCommunity extends AppCompatActivity {
 
@@ -37,8 +34,6 @@ public class WriteFreeCommunity extends AppCompatActivity {
     * ㅈㄱㄴ
     * */
     ActivityResultLauncher<Intent> activityResultLauncher;
-    EditText write_free_title = findViewById(R.id.write_free_title);
-    EditText write_free_content = findViewById(R.id.write_free_content);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +56,40 @@ public class WriteFreeCommunity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), MainFreeCommunity.class);
                 // Toast.makeText(getApplicationContext(),String.valueOf(count), Toast.LENGTH_SHORT).show();
 
-                String title = write_free_title.getText().toString();
-                String content = write_free_content.getText().toString();
 
+
+                String building = "";
+                String temp = "";
+                CheckBox building0 = findViewById(R.id.free_building0);
+                temp = building0.isChecked() ? "1" : "0";
+                building += temp;
+                CheckBox building1 = findViewById(R.id.free_building1);
+                temp = building1.isChecked() ? "1" : "0";
+                building += temp;
+                CheckBox building2 = findViewById(R.id.free_building2);
+                temp = building2.isChecked() ? "1" : "0";
+                building += temp;
+                CheckBox building3 = findViewById(R.id.free_building3);
+                temp = building3.isChecked() ? "1" : "0";
+                building += temp;
+                CheckBox building4 = findViewById(R.id.free_building4);
+                temp = building4.isChecked() ? "1" : "0";
+                building += temp;
+                CheckBox building5 = findViewById(R.id.free_building5);
+                temp = building5.isChecked() ? "1" : "0";
+                building += temp;
+                CheckBox building6 = findViewById(R.id.free_building6);
+                temp = building6.isChecked() ? "1" : "0";
+                building += temp;
+                CheckBox building7 = findViewById(R.id.free_building7);
+                temp = building7.isChecked() ? "1" : "0";
+                building += temp;
+                CheckBox building8 = findViewById(R.id.free_building8);
+                temp = building8.isChecked() ? "1" : "0";
+                building += temp;
+                CheckBox building9 = findViewById(R.id.free_building9);
+                temp = building9.isChecked() ? "1" : "0";
+                building += temp;
 
                 /*
                 long now = System.currentTimeMillis();
@@ -73,29 +99,37 @@ public class WriteFreeCommunity extends AppCompatActivity {
                 PreferenceManagers.setString(getApplicationContext(), "FreeCommunity_time" + count, time);
                 */
 
+
+
+
                 Handler handler = new Handler(){
-                  public void handleMessage(@NonNull Message msg){
-                      switch (msg.what){
-                          case 0:
-                              String responseResult=(String)msg.obj;
-                              Toast.makeText(getApplicationContext(),responseResult,Toast.LENGTH_SHORT).show();
-                      }
-                  }
+                    public void handleMessage(@NonNull Message msg){
+                        switch (msg.what) {
+                            case 0:
+                                String responseResult=(String)msg.obj;
+
+                                Toast.makeText(getApplicationContext(), responseResult, Toast.LENGTH_LONG).show();
+                                EditText estudNo = findViewById(R.id.write_free_title);
+                                EditText edepartment =findViewById(R.id.write_free_content);
+
+                        }
+                    }
                 };
 
-                HashMap<String,Object> sended = new HashMap<>();
-                sended.put("studNo",201713924);
-                sended.put("department","컴퓨터공학부");
-                sended.put("title",title);
-                sended.put("content",content);
+
+                HashMap<String,Object> temp2 = new HashMap<>();
+                temp2.put("studNo","201713924");
+                temp2.put("department","컴퓨터공학과");
+                temp2.put("title","test제목");
+                temp2.put("content","test내용");
 
 
                 try {
-                    SendTool.request(SendTool.APPLICATION_JSON,"/board/free/write",sended,handler);
-                } catch (IOException e) {
+                    SendTool.request(SendTool.APPLICATION_JSON, "/free/write",temp2,handler);
+                }
+                catch (IOException | NullPointerException e) {
                     e.printStackTrace();
                 }
-
 
                 activityResultLauncher.launch(intent);
                 finish();
@@ -110,5 +144,7 @@ public class WriteFreeCommunity extends AppCompatActivity {
                 finish();
             }
         });
+
+
     }
 }
