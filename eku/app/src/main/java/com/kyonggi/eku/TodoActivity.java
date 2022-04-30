@@ -148,9 +148,9 @@ public class TodoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Dialog dialog = new Dialog(TodoActivity.this, android.R.style.Theme_Material_Light_Dialog);
                 dialog.setContentView(R.layout.dialog_edit);
-                EditText et_title = dialog.findViewById(R.id.et_title);
-                EditText et_content = dialog.findViewById(R.id.et_content);
-                Button btn_ok = dialog.findViewById(R.id.btn_ok);
+                EditText et_title = dialog.findViewById(R.id.timeTableTitle);
+                EditText et_content = dialog.findViewById(R.id.timeTableProfessor);
+                Button btn_ok = dialog.findViewById(R.id.TimeTable_ok);
 
                 btn_ok.setOnClickListener(new View.OnClickListener() {
                     @Override
