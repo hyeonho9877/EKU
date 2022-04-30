@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>EKU! 메일 인증</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin:0;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .main-body{
+            margin-top: 126px;
+            text-align: center;
+            height: auto;
+            min-height: 100%;
+            padding-bottom: 120px;
+        }
+
+        .main-image{
+            margin-bottom: 20px;
+        }
+
+        .main-text{
+            margin-top: 20px;
+        }
+
+        .main-text-head{
+            font-size: 3.4vmax;
+            font-weight: 100;
+            margin-bottom: 16px;
+        }
+
+        .main-text-desc{
+            margin-top: 32px;
+            font-size: 1.4vmax;
+            font-weight: 400;
+            margin-bottom: 32px;
+        }
+
+        .main-text-link {
+            margin-top: 32px;
+            font-size: 1.4vmax;
+            font-weight: 700;
+        }
+
+        #auth-link{
+            border-radius: 5px;
+            padding: 8px 48px;
+            width: calc(100% - 200px);
+            text-decoration: none;
+            color: white;
+            background: #0B479B;
+        }
+
+        .main-footer{
+            display: flex;
+            align-items: center;
+            height: auto;
+            padding: 32px;
+            position : relative;
+            transform : translateY(100%);
+            background: #3D8A87;
+        }
+
+        .main-footer-text{
+            text-align: center;
+            font-size: 0.9vmax;
+            color: white;
+            font-weight: 500;
+            width: 100vw;
+        }
+    </style>
+</head>
+<body>
+<div class="main-body">
+    <div class="main-image">
+        <img src="https://eku.kro.kr/css/images/turtle-image-01.jpg" id="turtle-image" alt="turtle-image"/>
+    </div>
+    <div class="main-text">
+        <div class="main-text-head">
+            <p>EKU 가입 확인 메일</p>
+        </div>
+        <div class="main-text-desc">
+            <p>EKU 가입을 마무리 하기 위한 마지막 단계입니다.<br>아래의 링크를 클릭하여 이메일 인증을 완료하여 주세요.</p>
+        </div>
+        <div class="main-text-link">
+            <a id="auth-link" th:href="${authLink}">이메일 확인</a>
+        </div>
+    </div>
+</div>
+<footer class="main-footer">
+    <p class="main-footer-text">가입을 시도하지 않았는데 이메일이 도착했다면, 이 메일을 무시해 주시기 바랍니다.<br>요청 IP : <span th:text="${remoteHost}" id="main-footer-request-ip"></span></p>
+</footer>
+</body>
+</html>

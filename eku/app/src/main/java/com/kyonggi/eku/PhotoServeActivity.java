@@ -60,6 +60,7 @@ public class PhotoServeActivity extends AppCompatActivity {
                 finish();
             }
         };
+
         btnBack = findViewById(R.id.backButton);
         btnBack.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -69,6 +70,7 @@ public class PhotoServeActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         btnDirect = findViewById(R.id.directButton);
         btnDirect.setOnClickListener(new View.OnClickListener(){
             @Override

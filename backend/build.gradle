@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.eku'
-version = '2.2.4-SNAPSHOT'
+version = '2.4.4-SNAPSHOT'
 sourceCompatibility = '17'
 
 configurations {
@@ -19,6 +19,8 @@ repositories {
 }
 
 dependencies {
+    implementation group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.15.RELEASE'
+    implementation group: 'org.thymeleaf', name: 'thymeleaf', version: '3.0.15.RELEASE'
     implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.13.2'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.6.5'

@@ -240,4 +240,8 @@ public class SignUpService {
             return Optional.empty();
         }
     }
+
+    public void validateDepartment(String department) {
+
+    }
 }

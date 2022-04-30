@@ -3,6 +3,7 @@ package com.eku.EKU.controller;
 import com.eku.EKU.exceptions.NoAuthExceptions;
 import com.eku.EKU.exceptions.NoSuchStudentException;
 import com.eku.EKU.form.SignInForm;
+import com.eku.EKU.form.StudentInfo;
 import com.eku.EKU.service.SignInService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +30,6 @@ public class SignInController {
         this.signInService = signInService;
     }
 
-
     /**
      * 로그인 요청
      * @param form 로그인 하려는 사용자의 정보가 담긴 Form 객체
@@ -38,17 +38,16 @@ public class SignInController {
     @PostMapping("/signIn")
     public ResponseEntity<?> signIn(@RequestBody SignInForm form) {
         try {
-            if (signInService.authStudent(form))
-                return ResponseEntity.ok().body("SignIn Success.");
-            else return ResponseEntity.badRequest().body("Password not matching");
-        } catch (NoSuchStudentException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | InvalidKeySpecException | InvalidKeyException | InvalidAlgorithmParameterException e) {
-            e.printStackTrace();
+            StudentInfo info = signInService.authStudent(form).orElseThrow(NoSuchStudentException::new);
+            return ResponseEntity.ok().body(info);
+        } catch (NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | InvalidKeySpecException | InvalidKeyException | InvalidAlgorithmParameterException e) {
             return ResponseEntity.internalServerError().body("Server in Error.");
         } catch (BadPaddingException e) {
-            e.printStackTrace();
             return ResponseEntity.badRequest().body("Password not matching.");
         } catch (NoAuthExceptions exceptions) {
-            return ResponseEntity.badRequest().body("not authorized");
+            return ResponseEntity.badRequest().body("not authorized.");
+        } catch (NoSuchStudentException e) {
+            return ResponseEntity.badRequest().body("Not Registered.");
         }
     }
 }

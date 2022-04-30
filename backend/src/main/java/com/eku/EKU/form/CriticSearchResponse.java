@@ -29,11 +29,15 @@ public class CriticSearchResponse {
     @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
     private static class CriticInSpecificLecture {
         private final Long cId;
+        private final String studNo;
         private final String content;
         private final Float star;
         private final Grade grade;
+        private final String department;
 
         public CriticInSpecificLecture(Critic critic) {
+            this.department = critic.getWriter().getDepartment();
+            this.studNo = String.valueOf(critic.getWriter().getStudNo()).substring(2, 4);
             this.content = critic.getContent();
             this.star = critic.getStar();
             this.grade = critic.getGrade();
