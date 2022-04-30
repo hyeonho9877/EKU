@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,21 +14,14 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 
 public class DetailFreeCommunity extends AppCompatActivity {
@@ -170,30 +164,47 @@ public class DetailFreeCommunity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    Handler handler = new Handler(){
-                        public void handleMessage(@NonNull Message msg){
-                            switch (msg.what){
-                                case 0:
-                                    String responseResult=(String)msg.obj;
-                                    Toast.makeText(getApplicationContext(),responseResult,Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(DetailFreeCommunity.this, android.R.style.Theme_Material_Light_Dialog);
+                    dialog.setContentView(R.layout.dialog_update_free);
+                    EditText update_free_title = dialog.findViewById(R.id.update_free_title);
+                    EditText update_free_content = dialog.findViewById(R.id.update_free_content);
+                    Button btn_ok = dialog.findViewById(R.id.btn_free_update_ok);
+                    Button btn_cancle = dialog.findViewById(R.id.btn_free_update_cancle);
 
+                    btn_cancle.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    btn_ok.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Handler handler = new Handler(){
+                                public void handleMessage(@NonNull Message msg){
+                                    switch (msg.what){
+                                        case 0:
+                                            String responseResult=(String)msg.obj;
+                                            Toast.makeText(getApplicationContext(),responseResult,Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            };
+
+                            HashMap<String,Object> sended = new HashMap<>();
+                            sended.put("id",1);
+                            sended.put("title",update_free_title);
+                            sended.put("content",update_free_content);
+
+
+                            try {
+                                SendTool.request(SendTool.APPLICATION_JSON,"/board/free/update",sended,handler);
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                         }
-                    };
-
-
-                    HashMap<String,Object> sended = new HashMap<>();
-                    sended.put("id","1");
-                    sended.put("title","수정페이지 아직 없어요");
-                    sended.put("content","곧 추가할게요");
-
-
-
-                    try {
-                        SendTool.request(SendTool.APPLICATION_JSON,"/board/free/update",sended,handler);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    });
+                    dialog.show();
                 }
             });
             Button deleteButton = new Button(getApplicationContext());

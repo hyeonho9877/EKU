@@ -148,15 +148,17 @@ public class WriteAnnounce extends AppCompatActivity {
 
 
                 HashMap<String,Object> sended2 = new HashMap<>();
-                sended2.put("studNo","201713924");
+                sended2.put("writerNo",201713924);
+                sended2.put("name","이동엽");
                 sended2.put("department","컴퓨터공학부");
                 sended2.put("title",title);
                 sended2.put("content",content);
+                sended2.put("buliding",building);
 
 
 
                 try {
-                    SendTool.request(SendTool.APPLICATION_JSON,"/board/free/write",sended2,handler);
+                    SendTool.request(SendTool.APPLICATION_JSON,"/board/info/write",sended2,handler);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
