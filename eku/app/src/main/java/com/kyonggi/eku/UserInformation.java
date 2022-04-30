@@ -9,6 +9,10 @@ public class UserInformation {
     String password ="";
     boolean postLogin=false;
     boolean verify =false;
+    String student_no = "";
+    String department ="";
+
+
 
     UserInformation(Context context){
         getApplicationContext = context;
@@ -16,17 +20,21 @@ public class UserInformation {
         password = PreferenceManagers.getString(getApplicationContext,"password");
         postLogin = PreferenceManagers.getBoolean(getApplicationContext,"postLogin");
         verify = PreferenceManagers.getBoolean(getApplicationContext,"verify");
+        student_no = PreferenceManagers.getString(getApplicationContext,"student_no");
+        department = PreferenceManagers.getString(getApplicationContext,"department");
     }
 
     public UserInformation() {
 
     }
 
-    public void toPhone(Context getAppliactionContext,String email,String password,boolean postLogin,boolean verify){
+    public void toPhone(Context getAppliactionContext,String email,String password,String student_no,String department,boolean postLogin,boolean verify){
         PreferenceManagers.setString(getAppliactionContext,"email",email);
         PreferenceManagers.setString(getAppliactionContext,"password",password);
         PreferenceManagers.setBoolean(getAppliactionContext,"postLogin",postLogin);
         PreferenceManagers.setBoolean(getAppliactionContext,"verify",verify);
+        PreferenceManagers.setString(getAppliactionContext,"student_no",student_no);
+        PreferenceManagers.setString(getAppliactionContext,"department",department);
     }
 
     public String fromPhoneEmail(Context getApplicationContext) {
@@ -53,6 +61,25 @@ public class UserInformation {
         verify = PreferenceManagers.getBoolean(getApplicationContext,"verify");
         return verify;
     }
+
+    public String fromPhoneStudentNo(Context getApplicationContext){
+        if(student_no.equals(""))
+        {
+        student_no = PreferenceManagers.getString(getApplicationContext,"student_no");
+        }
+        return student_no;
+    }
+    public String fromPhoneDepartment(Context getApplicationContext){
+        if(department.equals(""))
+        {
+            department = PreferenceManagers.getString(getApplicationContext,"department");
+        }
+        return department;
+    }
+
+
+
+
 
     /*
     *   세션 체크

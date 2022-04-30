@@ -92,7 +92,7 @@ public class LectureDetail extends AppCompatActivity {
                     Lecture lecture1 = a.fromJson(LectureObject.getString("lecture"), Lecture.class);
                     String title = lecture1.getLectureName();
                     String professor = lecture1.getLectureName();
-
+    /*
                     for (int i = 0; i < LectureArray.length(); i++) {
                         JSONObject LectureObject = LectureArray.getJSONObject(i);
                         Gson a = new Gson();
