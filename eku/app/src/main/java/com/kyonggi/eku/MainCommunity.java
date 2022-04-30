@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -31,6 +32,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 /*
 * 제목
@@ -200,6 +204,22 @@ public class MainCommunity extends AppCompatActivity {
 
             }
         });
+
+        Handler handler = new Handler(){
+            public void handleMessage(@NonNull Message msg){
+                switch (msg.what){
+                    case 0:
+                        String responseResult=(String)msg.obj;
+                        Toast.makeText(getApplicationContext(),responseResult,Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
+        try {
+            SendTool.request(SendTool.EMPTY_BODY,"/board/info/lists",null,handler);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         ImageButton imageButton1 = (ImageButton)findViewById(R.id.community_Search);
         imageButton1.setOnClickListener(new View.OnClickListener(){

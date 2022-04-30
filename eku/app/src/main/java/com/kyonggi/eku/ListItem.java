@@ -28,7 +28,7 @@ public class ListItem {
         return time;
     }
 
-    public void setTime(String content) {
+    public void setNumber(String content) {
         this.time = time;
     }
 }
