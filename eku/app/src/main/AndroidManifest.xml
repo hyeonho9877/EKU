@@ -54,13 +54,17 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MapsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LectureDetailWrite"
+            android:exported="true" />
+        <activity
             android:name=".MainFreeCommunity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".VerfityActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".DetailFreeCommunity"
             android:exported="false"
@@ -69,12 +73,13 @@
         <activity
             android:name=".MainFreeCommunity"
             android:exported="false" />
-            -->
+        -->
         <activity
             android:name=".DetailAnnounce"
             android:exported="true" />
-        <activity android:name=".WriteFreeCommunity"
-            android:exported="true"/>
+        <activity
+            android:name=".WriteFreeCommunity"
+            android:exported="true" />
         <activity
             android:name=".WriteAnnounce"
             android:exported="true" />
@@ -98,15 +103,13 @@
         -->
         <activity
             android:name=".DonanBagGi"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".MainCommunity"
             android:exported="true" />
         <activity
             android:name=".SignInfoActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".SignPhotoActivity"
             android:exported="false" />
@@ -120,16 +123,17 @@
         -->
         <activity
             android:name=".MainBoard"
-            android:exported="true" >
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
-
-
-        </activity>
+            android:screenOrientation="portrait" />
 
         <service
             android:name="com.minew.beacon.ScanService"
@@ -149,9 +153,7 @@
         <activity android:name=".WriteBoard" />
         <activity
             android:name=".findGang"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".PhotoServeActivity"
             android:exported="true" />
