@@ -7,6 +7,7 @@ import com.eku.EKU.form.SignUpForm;
 import com.eku.EKU.service.MailService;
 import com.eku.EKU.service.SignUpService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 회원가입 요청에 응답하는 컨트롤러
  */
-@RestController
+@Controller
 public class SignUpController {
     private final SignUpService signUpService;
     private final MailService mailService;
@@ -34,11 +35,12 @@ public class SignUpController {
      * @return DB에 성공적으로 데이터가 저장되고 이메일이 발송되었을 경우 True를 리턴하며, 그렇지 못할 경우 False를 리턴한다.
      */
     @PostMapping("/signUp")
+    @ResponseBody
     public ResponseEntity<?> signUp(@RequestBody SignUpForm form, HttpServletRequest request) {
         try {
             if (mailService.validateEmail(form.getEmail())) {
                 Student student = signUpService.enrollClient(form).orElseThrow(DuplicateEnrollException::new);
-                mailService.sendAuthMail(student, student.getEmail());
+                mailService.sendAuthMail(student, student.getEmail(), request.getRemoteAddr());
                 return ResponseEntity.ok(true);
             } else return ResponseEntity.badRequest().body(false);
         } catch (DuplicateEnrollException e) {
@@ -53,6 +55,7 @@ public class SignUpController {
      * @return 성공시 OcrResponseForm 객체를 담은 ok, 아닐 경우 internalService error 리턴
      */
     @PostMapping("/signUp/ocr")
+    @ResponseBody
     public ResponseEntity<?> ocr(@RequestPart MultipartFile img, HttpServletRequest request) {
         try {
             OcrResponseForm response = signUpService.ocrImage(img);
@@ -70,9 +73,9 @@ public class SignUpController {
      * @return 성공적으로 메일을 발송한 경우, true를 담은 ok, 아닐경우 false를 담은 bad request
      */
     @GetMapping("/signUp/emailAuth")
-    public ResponseEntity<?> authIdentity(@RequestParam String key) {
+    public String authIdentity(@RequestParam String key) {
         if (signUpService.authEmail(key)) {
-            return ResponseEntity.ok(true);
-        } else return ResponseEntity.badRequest().body(false);
+            return "auth-success";
+        } else return "auth-fail";
     }
 }

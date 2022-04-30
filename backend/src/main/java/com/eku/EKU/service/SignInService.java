@@ -5,6 +5,7 @@ import com.eku.EKU.domain.Student;
 import com.eku.EKU.exceptions.NoAuthExceptions;
 import com.eku.EKU.exceptions.NoSuchStudentException;
 import com.eku.EKU.form.SignInForm;
+import com.eku.EKU.form.StudentInfo;
 import com.eku.EKU.repository.StudentRepository;
 import com.eku.EKU.secure.KeyGen;
 import com.eku.EKU.secure.SecurityManager;
@@ -18,6 +19,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
+import java.util.Optional;
 
 /**
  * 로그인에 관련된 로직을 수행하는 Service 클래스
@@ -47,18 +49,18 @@ public class SignInService {
      * @throws InvalidAlgorithmParameterException
      * @throws BadPaddingException
      */
-    public boolean authStudent(SignInForm form) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchStudentException, InvalidAlgorithmParameterException, BadPaddingException {
+    public Optional<StudentInfo> authStudent(SignInForm form) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchStudentException, InvalidAlgorithmParameterException, BadPaddingException {
         Student target = studentRepository.findStudentByEmail(form.getEmail()).orElseThrow(NoSuchStudentException::new);
         String password = target.getPassword();
         byte[] decode = Base64.getDecoder().decode(password);
         String decryptedPassword = securityManager.decryptWithPrefixIV(decode, KeyGen.getKeyFromPassword(form.getPassword(), target.getName()));
         if (form.getPassword().equals(decryptedPassword) && target.isAuthenticated()){
-            return true;
+            return Optional.of(new StudentInfo(target));
         } else if(!form.getPassword().equals(decryptedPassword)){
-            return false;
+            return Optional.empty();
         } else if(form.getPassword().equals(decryptedPassword) && !target.isAuthenticated()){
             throw new NoAuthExceptions();
         }
-        return false;
+        return Optional.empty();
     }
 }

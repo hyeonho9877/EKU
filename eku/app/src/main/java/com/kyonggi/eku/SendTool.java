@@ -44,7 +44,8 @@ public final class SendTool {
 
         if (params != null) {
             for (String key : params.keySet()) {
-                String value = Objects.requireNonNull(params.get(key));
+                String value = params.get(key);
+                assert value != null;
                 builder.add(key, value);
             }
         }
@@ -80,7 +81,6 @@ public final class SendTool {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(jsonObject,JSON);
         Request request = new Request.Builder()
-                .header("Content-Type","application/json")
                 .url(baseUrl+url)
                 .post(requestBody)
                 .build();

@@ -15,10 +15,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClientOcrRequestForm {
-    private String version="V2";
+    private String version;
     private String requestId;
-    private long timestamp=0;
-    private String lang = "ko";
+    private long timestamp;
+    private String lang;
     private List<OcrImagesData> images;
 
     @Override

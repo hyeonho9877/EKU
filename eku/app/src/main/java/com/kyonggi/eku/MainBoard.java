@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -168,7 +169,7 @@ public class MainBoard extends AppCompatActivity {
         GridView gridView = (GridView)findViewById(R.id.board_Memo);
         GridListAdapter gAdapter = new GridListAdapter();
 
-        Handler handler = new Handler() {
+        Handler handler = new Handler(Looper.getMainLooper()) {
             public void handleMessage(@NonNull Message msg) {
                 switch (msg.what) {
                     case 0:
