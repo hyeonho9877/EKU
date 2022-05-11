@@ -1,5 +1,6 @@
 package com.eku.EKU.controller;
 
+import com.eku.EKU.form.ScheduleDataForm;
 import com.eku.EKU.form.ScheduleForm;
 import com.eku.EKU.service.ScheduleService;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +18,47 @@ public class ScheduleController {
         this.scheduleService = scheduleService;
     }
 
+    /**
+     *  시간표 삽입
+     * @param form 시간표 폼 배열
+     * @return
+     */
     @PostMapping("/schedule/write")
     public ResponseEntity<?> insertSchedule(@RequestBody ScheduleForm[] form){
         try{
             return ResponseEntity.ok(scheduleService.insertSchedule(form));
-        }catch (NoSuchElementException e){
+        }catch (NoSuchElementException | IllegalArgumentException e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    /**
+     * 시간표 삭제
+     * @param form
+     * @return
+     */
+    @PostMapping("/schdule/delete")
+    public ResponseEntity<?> deleteSchedule(@RequestBody ScheduleDataForm form){
+        try{
+            scheduleService.deleteSchedule(form);
+            return ResponseEntity.ok("Delete success");
+        }catch (NoSuchElementException | IllegalArgumentException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    /**
+     *
+     * @param form
+     * @return
+     */
+    @PostMapping("/schedule/view")
+    public ResponseEntity<?> loadSchedule(@RequestBody ScheduleDataForm form){
+        try{
+            return ResponseEntity.ok(scheduleService.loadSchedule(form));
+        }catch (NoSuchElementException | IllegalArgumentException e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(null);
         }

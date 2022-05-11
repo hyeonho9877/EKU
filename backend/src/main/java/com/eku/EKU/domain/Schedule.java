@@ -16,20 +16,30 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@IdClass(Schedule.class)
 public class Schedule implements Serializable {
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "studNo", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Student studNo;
 
     @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "stud_No", nullable = false)
+    private Student student;
+
     @Column(name = "password")
     private long password;
 
-    @Id
-    @ManyToOne
-    private Lecture lecture_id;
+    @Column(name = "lecture_name")
+    private String lectureName;
+
+    @Column(name = "lecture_time")
+    private String lectureTime;
+
+    @Column(name = "lecture_room")
+    private String lectureRoom;
+
+    @Column(name = "professor")
+    private String professor;
 
 }
