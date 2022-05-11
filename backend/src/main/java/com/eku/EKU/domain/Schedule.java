@@ -30,8 +30,6 @@ public class Schedule implements Serializable {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "lecture_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Lecture lecture_id;
 
 }
