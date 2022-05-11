@@ -33,12 +33,12 @@ public class ScheduleService {
      * @throws IllegalArgumentException
      * @throws NoSuchElementException
      */
-    public ScheduleResponse insertSchedule(ScheduleForm[] forms)throws IllegalArgumentException, NoSuchElementException {
-        List<Schedule> testList = scheduleRepository.findAllByStudentAndPassword(studentRepository.findById(forms[0].getStudNo()).orElseThrow(), forms[0].getPassword());
+    public ScheduleResponse insertSchedule(List<ScheduleForm> forms)throws IllegalArgumentException, NoSuchElementException {
+        List<Schedule> testList = scheduleRepository.findAllByStudentAndPassword(studentRepository.findById(forms.get(0).getStudNo()).orElseThrow(), forms.get(0).getPassword());
         if(!testList.isEmpty()) {
             ScheduleDataForm tempForm = new ScheduleDataForm();
-            tempForm.setStudNo(forms[0].getStudNo());
-            tempForm.setPasswd(forms[0].getPassword());
+            tempForm.setStudNo(forms.get(0).getStudNo());
+            tempForm.setPassword(forms.get(0).getPassword());
             deleteSchedule(tempForm);
         }
         for(ScheduleForm i : forms){
@@ -54,8 +54,8 @@ public class ScheduleService {
             scheduleRepository.save(schedule);
         }
         ScheduleResponse scheduleResponse = new ScheduleResponse();
-        scheduleResponse.setStudNo(forms[0].getStudNo());
-        scheduleResponse.setPassword(forms[0].getPassword());
+        scheduleResponse.setStudNo(forms.get(0).getStudNo());
+        scheduleResponse.setPassword(forms.get(0).getPassword());
         return scheduleResponse;
     }
 
@@ -67,7 +67,7 @@ public class ScheduleService {
      */
     public void deleteSchedule(ScheduleDataForm form)throws IllegalArgumentException, NoSuchElementException{
         Student student = studentRepository.findById(form.getStudNo()).orElseThrow();
-        List<Schedule> schedules = scheduleRepository.findAllByStudentAndPassword(student, form.getPasswd());
+        List<Schedule> schedules = scheduleRepository.findAllByStudentAndPassword(student, form.getPassword());
         for(Schedule i : schedules){
             scheduleRepository.delete(i);
         }
@@ -83,16 +83,15 @@ public class ScheduleService {
      */
     public List<ScheduleForm> loadSchedule(ScheduleDataForm form)throws IllegalArgumentException, NoSuchElementException{
         List<ScheduleForm> responseList = new ArrayList<ScheduleForm>();
-        List<Schedule> list = scheduleRepository.findAllByStudentAndPassword(studentRepository.findById(form.getStudNo()).orElseThrow(), form.getPasswd());
+        List<Schedule> list = scheduleRepository.findAllByStudentAndPassword(studentRepository.findById(form.getStudNo()).orElseThrow(), form.getPassword());
         for(Schedule i : list){
-            ScheduleForm temp = ScheduleForm.builder()
-                    .lecture_name(i.getLectureName())
-                    .lecture_room(i.getLectureRoom())
-                    .lecture_time(i.getLectureTime())
-                    .password(i.getPassword())
-                    .professor(i.getProfessor())
-                    .studNo(i.getStudent().getStudNo())
-                    .build();
+            ScheduleForm temp = new ScheduleForm();
+            temp.setStudNo(i.getStudent().getStudNo());
+            temp.setPassword(i.getPassword());
+            temp.setLecture_name(i.getLectureName());
+            temp.setLecture_time(i.getLectureTime());
+            temp.setLecture_room(i.getLectureRoom());
+            temp.setProfessor(i.getProfessor());
             responseList.add(temp);
         }
         return responseList;
