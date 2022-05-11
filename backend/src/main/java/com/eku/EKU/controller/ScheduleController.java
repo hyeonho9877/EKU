@@ -20,7 +20,7 @@ public class ScheduleController {
 
     /**
      *  시간표 삽입
-     * @param form 시간표 폼 배열
+     * @param listForm 시간표 폼 배열
      * @return
      */
     @PostMapping("/schedule/write")
