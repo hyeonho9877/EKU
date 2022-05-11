@@ -35,3 +35,4 @@ out/
 *.yml
 ../eku
 /src/test/
+*.p12
