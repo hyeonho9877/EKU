@@ -12,6 +12,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +35,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 public class ScheduleTable extends AppCompatActivity {
 
@@ -43,50 +46,134 @@ public class ScheduleTable extends AppCompatActivity {
      * 기능
      * 모양만
      * */
-    String[] showBuilding = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
+    String[] showBuilding = {"1강의동", "2강의동", "3강의동", "4강의동", "5강의동", "6강의동", "7강의동", "8강의동", "9강의동", "제2공학관"};
     int buildingSelected = 0;
-    int[] building = {1,2,3,4,5,6,7,8,9,0};
+    int[] building = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+
     AlertDialog buildingSelectDialog;
     long backKeyPressedTime;
     EditText password;
+    JSONArray getLecture = new JSONArray();
+    int[] input_time = {0, 0, 0, 0, 0, 0, 0, 0};
+    String day = "";
 
-    int[] input_time = {0,0,0,0,0,0,0,0};
-    String day="";
-    JSONArray lecture = new JSONArray();
-    boolean[][] check={{false,false,false,false,false,false,false,false},
-            {false,false,false,false,false,false,false,false},
-            {false,false,false,false,false,false,false,false},
-            {false,false,false,false,false,false,false,false},
-            {false,false,false,false,false,false,false,false}};
+    boolean[][] check = {{false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false}};
+    int studentNumber = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_table);
-        password =findViewById(R.id.Schedule_password);
         UserInformation userInformation = new UserInformation(getApplicationContext());
- /*       if (!(userInformation.fromPhoneVerify(getApplicationContext())))
-        {
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }*/
 
         GridLayout lp = (GridLayout) findViewById(R.id.gridLayout);
-
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int screenWidth = metrics.widthPixels;
         int screenHeight = metrics.heightPixels;
         int w = lp.getWidth();
         int h = lp.getHeight();
-        Button button2 = new Button(ScheduleTable.this);
-        button2.setWidth((int)dp2px(30.0f));
-        button2.setHeight((int)dp2px(50.0f));
+        password = findViewById(R.id.Schedule_password);
 
-        Toast.makeText(getApplicationContext(),lp.getRowCount()+"야생"+lp.getColumnCount(),Toast.LENGTH_LONG).show();
-        GridLayout.LayoutParams gridLayoutWitch = new GridLayout.LayoutParams();
-        gridLayoutWitch.rowSpec = GridLayout.spec(3);
-        gridLayoutWitch.columnSpec = GridLayout.spec(3);
-        lp.addView(button2,gridLayoutWitch);
+
+        /**
+         * 세션 확인
+         */
+        if (!(userInformation.fromPhoneVerify(getApplicationContext()))) {
+            Toast.makeText(getApplicationContext(), "로그인이 필요합니다.", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            try {
+                studentNumber = Integer.valueOf(userInformation.fromPhoneStudentNo(getApplicationContext()));
+            } catch (Exception e) {
+                studentNumber = -1;
+            }
+        }
+
+/*
+
+
+*
+ *
+ *Lecture를 불러와서
+ *배치하고 초기값 설정하고
+                * 중복값 방지를 위해서 미리 설정
+*/
+
+
+        String tableString = PreferenceManagers.getString(getApplicationContext(), "list");
+        Toast.makeText(getApplicationContext(),tableString,Toast.LENGTH_LONG).show();
+        try {
+            getLecture = new JSONArray(tableString);
+        } catch (JSONException e) {
+            getLecture = new JSONArray();
+        }
+        for (int i = 0; i < getLecture.length(); i++) {
+            try {
+                JSONObject jsonObject = getLecture.getJSONObject(i);
+
+                int start = 0;
+                int startButtonPosition = 0;
+                String lectureTime = jsonObject.getString("lecture_time");
+                String[] lectureTimeArray = lectureTime.split("");
+                if (lectureTimeArray[0] == "월") {
+                    start = 1;
+                    for (int k = 1; i < lectureTimeArray.length; k++) {
+                        check[0][Integer.valueOf(lectureTimeArray[k]) - 1] = true;
+                    }
+
+                } else if (lectureTimeArray[0] == "화") {
+                    start = 2;
+                    for (int k = 1; i < lectureTimeArray.length; k++) {
+                        check[1][Integer.valueOf(lectureTimeArray[k]) - 1] = true;
+                    }
+                } else if (lectureTimeArray[0] == "수") {
+                    start = 3;
+                    for (int k = 1; i < lectureTimeArray.length; k++) {
+                        check[2][Integer.valueOf(lectureTimeArray[k]) - 1] = true;
+                    }
+                } else if (lectureTimeArray[0] == "목") {
+                    start = 4;
+                    for (int k = 1; i < lectureTimeArray.length; k++) {
+                        check[3][Integer.valueOf(lectureTimeArray[k]) - 1] = true;
+                    }
+                } else if (lectureTimeArray[0] == "금") {
+                    start = 5;
+                    for (int k = 1; i < lectureTimeArray.length; k++) {
+                        check[4][Integer.valueOf(lectureTimeArray[k]) - 1] = true;
+                    }
+                }
+                startButtonPosition = Integer.valueOf(lectureTimeArray[1]);
+                int temp = Integer.valueOf(lectureTimeArray[lectureTimeArray.length - 1]);
+                int end = temp - startButtonPosition + 1;
+                Button button2 = new Button(ScheduleTable.this);
+                button2.setWidth((int) dp2px(30.0f));
+                float size = 50.0f * end;
+                button2.setHeight((int) size);
+                StringBuilder sb = new StringBuilder();
+                sb.append(jsonObject.getString("lecture_name"));
+                sb.append("\n");
+                sb.append(jsonObject.getString("lecture_time"));
+                sb.append("\n");
+                sb.append(jsonObject.getString("professor"));
+                sb.append("\n");
+                sb.append(jsonObject.getString("lecture_room"));
+                button2.setText(sb.toString());
+
+                GridLayout.LayoutParams gridLayoutWitch = new GridLayout.LayoutParams();
+                gridLayoutWitch.rowSpec = GridLayout.spec(start);
+                gridLayoutWitch.columnSpec = GridLayout.spec(startButtonPosition);
+                lp.addView(button2, gridLayoutWitch);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
 
 
         TextView BuildingButton = (TextView) findViewById(R.id.schedule_Spinner);
@@ -130,7 +217,7 @@ public class ScheduleTable extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 Intent intent;
-                switch(id) {
+                switch (id) {
                     case R.id.Home:
                         intent = new Intent(getApplicationContext(), MainBoard.class);
                         startActivity(intent);
@@ -203,120 +290,112 @@ public class ScheduleTable extends AppCompatActivity {
                 gro.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                        if(i == R.id.TimeTableMon)
-                        {
-                            day="월";
+                        if (i == R.id.TimeTableMon) {
+                            day = "월";
+                        } else if (i == R.id.TimeTableTue) {
+                            day = "화";
+                        } else if (i == R.id.TimeTableWed) {
+                            day = "수";
+                        } else if (i == R.id.TimeTableThu) {
+                            day = "목";
                         }
-                        else if(i == R.id.TimeTableTue)
-                        {
-                            day="화";
-                        }
-                        else if(i == R.id.TimeTableWed)
-                        {
-                            day="수";
-                        }
-                        else if(i == R.id.TimeTableThu)
-                        {
-                            day="목";
-                        }
-                        if(i == R.id.TimeTableFri)
-                        {
-                            day="금";
+                        if (i == R.id.TimeTableFri) {
+                            day = "금";
                         }
                     }
                 });
 
 
 
-                        /*
-                         * 시간표 확인할때
-                         * 1교시 => 0번입니다..
-                         * */
+                /*
+                 *시간표 확인할때
+                 *1 교시 =>0 번입니다..
+                 **/
                 CheckBox checkBox1 = (CheckBox) dialog.findViewById(R.id.TimeTable_1);
                 checkBox1.setOnClickListener(new CheckBox.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (((CheckBox)v).isChecked()) {
-                            input_time[0]=1;
+                        if (((CheckBox) v).isChecked()) {
+                            input_time[0] = 1;
                         } else {
-                            input_time[0]=0;
+                            input_time[0] = 0;
                         }
                     }
-                }) ;
-                CheckBox checkBox2 = (CheckBox) dialog.findViewById(R.id.TimeTable_2) ;
+                });
+                CheckBox checkBox2 = (CheckBox) dialog.findViewById(R.id.TimeTable_2);
                 checkBox2.setOnClickListener(new CheckBox.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (((CheckBox)v).isChecked()) {
-                            input_time[1]=1;
+                        if (((CheckBox) v).isChecked()) {
+                            input_time[1] = 1;
                         } else {
-                            input_time[1]=0;
+                            input_time[1] = 0;
                         }
                     }
-                }) ;
-                CheckBox checkBox3 = (CheckBox) dialog.findViewById(R.id.TimeTable_3) ;
+                });
+                CheckBox checkBox3 = (CheckBox) dialog.findViewById(R.id.TimeTable_3);
                 checkBox3.setOnClickListener(new CheckBox.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (((CheckBox)v).isChecked()) {
-                            input_time[2]=1;
+                        if (((CheckBox) v).isChecked()) {
+                            input_time[2] = 1;
                         } else {
-                            input_time[2]=0;
+                            input_time[2] = 0;
                         }
                     }
-                }) ;
-                CheckBox checkBox4 = (CheckBox) dialog.findViewById(R.id.TimeTable_4) ;
+                });
+                CheckBox checkBox4 = (CheckBox) dialog.findViewById(R.id.TimeTable_4);
                 checkBox4.setOnClickListener(new CheckBox.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (((CheckBox)v).isChecked()) {
-                            input_time[3]=1;
+                        if (((CheckBox) v).isChecked()) {
+                            input_time[3] = 1;
                         } else {
-                            input_time[3]=0;
+                            input_time[3] = 0;
                         }
                     }
-                }) ;
-                CheckBox checkBox5 = (CheckBox) dialog.findViewById(R.id.TimeTable_5) ;
+                });
+                CheckBox checkBox5 = (CheckBox) dialog.findViewById(R.id.TimeTable_5);
                 checkBox5.setOnClickListener(new CheckBox.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (((CheckBox)v).isChecked()) {
-                            input_time[4]=1;
+                        if (((CheckBox) v).isChecked()) {
+                            input_time[4] = 1;
                         } else {
-                            input_time[4]=0;
+                            input_time[4] = 0;
                         }
                     }
-                }) ;
-                CheckBox checkBox6 = (CheckBox) dialog.findViewById(R.id.TimeTable_6) ;
+                });
+                CheckBox checkBox6 = (CheckBox) dialog.findViewById(R.id.TimeTable_6);
                 checkBox6.setOnClickListener(new CheckBox.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (((CheckBox)v).isChecked()) {
-                            input_time[5]=1;
+                        if (((CheckBox) v).isChecked()) {
+                            input_time[5] = 1;
                         } else {
-                            input_time[5]=0;
+                            input_time[5] = 0;
                         }
                     }
-                }) ;
-                CheckBox checkBox7 = (CheckBox) dialog.findViewById(R.id.TimeTable_7) ;
+                });
+                CheckBox checkBox7 = (CheckBox) dialog.findViewById(R.id.TimeTable_7);
                 checkBox7.setOnClickListener(new CheckBox.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (((CheckBox)v).isChecked()) {
-                            input_time[6]=1;
+                        if (((CheckBox) v).isChecked()) {
+                            input_time[6] = 1;
                         } else {
-                            input_time[6]=0;
+                            input_time[6] = 0;
                         }
                     }
-                }) ;
-                CheckBox checkBox8 = (CheckBox) dialog.findViewById(R.id.TimeTable_8) ;
+                });
+                CheckBox checkBox8 = (CheckBox) dialog.findViewById(R.id.TimeTable_8);
                 checkBox8.setOnClickListener(new CheckBox.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (((CheckBox)v).isChecked()) {
-                            input_time[7]=1;
+                        if (((CheckBox) v).isChecked()) {
+                            input_time[7] = 1;
                         } else {
-                            input_time[7]=0;
+                            input_time[7] = 0;
                         }
                     }
                 });
@@ -334,112 +413,83 @@ public class ScheduleTable extends AppCompatActivity {
                         temp += day;
                         dialog.dismiss();
 
-                        boolean checked=false;
+                        boolean checked = false;
                         if (day.equals("월")) {
-                            for(int i=0;i<input_time.length;i++)
-                            {
-                                if(input_time[i]==1 && check[0][i]==true)
-                                {
-                                    checked=true;
+                            for (int i = 0; i < input_time.length; i++) {
+                                if (input_time[i] == 1 && check[0][i] == true) {
+                                    checked = true;
                                 }
                             }
                         } else if (day.equals("화")) {
-                            for(int i=0;i<input_time.length;i++)
-                            {
-                                if(input_time[i]==1 && check[1][i]==true)
-                                {
-                                    checked=true;
+                            for (int i = 0; i < input_time.length; i++) {
+                                if (input_time[i] == 1 && check[1][i] == true) {
+                                    checked = true;
                                 }
                             }
 
                         } else if (day.equals("수")) {
-                            for(int i=0;i<input_time.length;i++)
-                            {
-                                if(input_time[i]==1 && check[2][i]==true)
-                                {
-                                    checked=true;
+                            for (int i = 0; i < input_time.length; i++) {
+                                if (input_time[i] == 1 && check[2][i] == true) {
+                                    checked = true;
                                 }
                             }
 
-                        }
-                        else if (day.equals("목"))
-                        {
-                            for(int i=0;i<input_time.length;i++)
-                            {
-                                if(input_time[i]==1 && check[3][i]==true)
-                                {
-                                    checked=true;
+                        } else if (day.equals("목")) {
+                            for (int i = 0; i < input_time.length; i++) {
+                                if (input_time[i] == 1 && check[3][i] == true) {
+                                    checked = true;
                                 }
                             }
-                        }
-                        else if(day.equals("금"))
-                        {
-                            for(int i=0;i<input_time.length;i++)
-                            {
-                                if(input_time[i]==1 && check[4][i]==true)
-                                {
-                                    checked=true;
+                        } else if (day.equals("금")) {
+                            for (int i = 0; i < input_time.length; i++) {
+                                if (input_time[i] == 1 && check[4][i] == true) {
+                                    checked = true;
                                 }
                             }
                         }
 
-                        if(checked)
-                        {
-                            Toast.makeText(getApplicationContext(),"중복되는 값이 있습니다.",Toast.LENGTH_LONG).show();
-                        }
-                        else{
+                        if (checked) {
+                            Toast.makeText(getApplicationContext(), "중복되는 값이 있습니다.", Toast.LENGTH_LONG).show();
+                        } else {
                             JSONObject jsonObject = new JSONObject();
                             try {
-                                String lecture_time="";
-                                lecture_time+=day;
-                                for(int i=0;i<input_time.length;i++)
-                                {
-                                    if(input_time[i]==1)
-                                    {
-                                        int j=i;
-                                        lecture_time+=(j+1);
+                                String lecture_time = "";
+                                lecture_time += day;
+                                for (int i = 0; i < input_time.length; i++) {
+                                    if (input_time[i] == 1) {
+                                        int j = i;
+                                        lecture_time += (j + 1);
                                     }
                                 }
-                                jsonObject.put("day",lecture_time);
-                                jsonObject.put("lecture_room",dialog_Building);
-                                jsonObject.put("professor",dialog_Professor);
-                                jsonObject.put("lecture_name",dialog_title);
-                                jsonObject.put("studNo",userInformation.fromPhoneStudentNo(getApplicationContext()));
-                                jsonObject.put("password",password.getText().toString());
-                                lecture.put(jsonObject);
-
-
+                                jsonObject.put("day", lecture_time);
+                                jsonObject.put("lecture_room", dialog_Building);
+                                jsonObject.put("professor", dialog_Professor);
+                                jsonObject.put("lecture_name", dialog_title);
+                                jsonObject.put("studNo", userInformation.fromPhoneStudentNo(getApplicationContext()));
+                                jsonObject.put("password", password.getText().toString());
+                                if (getLecture == null) {
+                                    getLecture = new JSONArray();
+                                }
+                                getLecture.put(jsonObject);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
                         }
-
-                        JSONObject element;
-                        for(int i=0;i<lecture.length();i++){
-                            element = (JSONObject) lecture.opt(i);
-
-
-
-
-                        }
-
-
-
-                        /*
-                        * inputTime 초기화
-                        * */
-                        for(int i=0;i<input_time.length;i++)
-                        {
-                            input_time[i]=0;
+/*
+                         *inputTime 초기화
+                         **/
+                        for (int i = 0; i < input_time.length; i++) {
+                            input_time[i] = 0;
                         }
                         Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_LONG).show();
-
+                        HashMap hashMap = new HashMap();
+                        hashMap.put("list", getLecture);
+                        SendTool.requestForJson("/schedule/write", hashMap, new Handler());
+                        PreferenceManagers.setString(getApplicationContext(), "list", getLecture.toString());
                     }
                 });
                 Button btn_cancel = dialog.findViewById(R.id.TimeTable_cancel);
-
-
                 btn_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -462,20 +512,21 @@ public class ScheduleTable extends AppCompatActivity {
     }
 
 
-    public float dp2px(float dp){
+    public float dp2px(float dp) {
         Resources resources = this.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
-        float px = dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        float px = dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
         return px;
     }
 
     //px을 dp로 변환 (px을 입력받아 dp를 리턴)
-    public float px2dp(float px){
+    public float px2dp(float px) {
         Resources resources = this.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
-        float dp = px / ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        float dp = px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
         return dp;
     }
+
     @Override
     public void onBackPressed() {
         if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
