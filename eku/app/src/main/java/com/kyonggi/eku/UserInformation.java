@@ -14,7 +14,7 @@ public class UserInformation {
 
 
 
-    UserInformation(Context context){
+    public UserInformation(Context context){
         getApplicationContext = context;
         email = PreferenceManagers.getString(getApplicationContext,"email");
         password = PreferenceManagers.getString(getApplicationContext,"password");
