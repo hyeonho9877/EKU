@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -77,6 +76,7 @@ public final class SendTool {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(jsonObject, JSON);
 
+        Log.d(TAG, "requestForJson: " + jsonObject);
         Request request = new Request.Builder()
                 .url(baseUrl+url)
                 .post(requestBody)
@@ -97,6 +97,7 @@ public final class SendTool {
             }
         });
     }
+
 
     public static <T> T parseToSingleEntity(String targetText, Class<T> t) {
         return gson.fromJson(targetText, t);
