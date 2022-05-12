@@ -1,7 +1,7 @@
 package com.eku.EKU.controller;
 
 import com.eku.EKU.form.ScheduleDataForm;
-import com.eku.EKU.form.ScheduleForm;
+import com.eku.EKU.form.ScheduleListForm;
 import com.eku.EKU.service.ScheduleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,13 +20,13 @@ public class ScheduleController {
 
     /**
      *  시간표 삽입
-     * @param form 시간표 폼 배열
+     * @param listForm 시간표 폼 배열
      * @return
      */
     @PostMapping("/schedule/write")
-    public ResponseEntity<?> insertSchedule(@RequestBody ScheduleForm[] form){
+    public ResponseEntity<?> insertSchedule(@RequestBody ScheduleListForm listForm){
         try{
-            return ResponseEntity.ok(scheduleService.insertSchedule(form));
+            return ResponseEntity.ok(scheduleService.insertSchedule(listForm.getList()));
         }catch (NoSuchElementException | IllegalArgumentException e){
             e.printStackTrace();
             return ResponseEntity.badRequest().body(null);
