@@ -50,7 +50,7 @@ public class ScheduleController {
     }
 
     /**
-     *
+     * 시간표 불러오기
      * @param form
      * @return
      */

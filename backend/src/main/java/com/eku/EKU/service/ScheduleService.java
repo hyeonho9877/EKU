@@ -68,6 +68,8 @@ public class ScheduleService {
     public void deleteSchedule(ScheduleDataForm form)throws IllegalArgumentException, NoSuchElementException{
         Student student = studentRepository.findById(form.getStudNo()).orElseThrow();
         List<Schedule> schedules = scheduleRepository.findAllByStudentAndPassword(student, form.getPassword());
+        if(schedules.isEmpty())
+            throw new NoSuchElementException();
         for(Schedule i : schedules){
             scheduleRepository.delete(i);
         }
@@ -84,6 +86,8 @@ public class ScheduleService {
     public List<ScheduleForm> loadSchedule(ScheduleDataForm form)throws IllegalArgumentException, NoSuchElementException{
         List<ScheduleForm> responseList = new ArrayList<ScheduleForm>();
         List<Schedule> list = scheduleRepository.findAllByStudentAndPassword(studentRepository.findById(form.getStudNo()).orElseThrow(), form.getPassword());
+        if(list.isEmpty())
+            throw new NoSuchElementException();
         for(Schedule i : list){
             ScheduleForm temp = new ScheduleForm();
             temp.setStudNo(i.getStudent().getStudNo());
