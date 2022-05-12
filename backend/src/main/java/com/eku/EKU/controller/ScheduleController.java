@@ -29,7 +29,7 @@ public class ScheduleController {
             return ResponseEntity.ok(scheduleService.insertSchedule(listForm.getList()));
         }catch (NoSuchElementException | IllegalArgumentException e){
             e.printStackTrace();
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body(listForm);
         }
     }
 
@@ -38,7 +38,7 @@ public class ScheduleController {
      * @param form
      * @return
      */
-    @PostMapping("/schdule/delete")
+    @PostMapping("/schedule/delete")
     public ResponseEntity<?> deleteSchedule(@RequestBody ScheduleDataForm form){
         try{
             scheduleService.deleteSchedule(form);
@@ -50,7 +50,7 @@ public class ScheduleController {
     }
 
     /**
-     *
+     * 시간표 불러오기
      * @param form
      * @return
      */
