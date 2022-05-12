@@ -52,7 +52,7 @@ public class TodoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo);
-
+        /*
         final DrawerLayout drawerLayout = findViewById(R.id.ToDo_drawerLayout);
 
         findViewById(R.id.ToDo_Menu).setOnClickListener(new View.OnClickListener() {
@@ -129,7 +129,7 @@ public class TodoActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("취소", null)
                 .create();
-
+        */
 
         setInit();
     }
@@ -191,7 +191,10 @@ public class TodoActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
             backKeyPressedTime = System.currentTimeMillis();
-            Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(),MainBoard.class);
+            startActivity(intent);
+            finish();
+            //Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
             return;
         }
         if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {

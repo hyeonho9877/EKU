@@ -3,6 +3,8 @@ package com.kyonggi.eku;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +14,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -20,6 +23,8 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,7 +48,7 @@ public class MainBoard extends AppCompatActivity {
     AlertDialog buildingSelectDialog;
     GestureDetector gestureDetector = null;
     long backKeyPressedTime;
-    TextView BuildingButton;
+    static TextView BuildingButton;
     GridListAdapter gAdapter;
 
     @Override
@@ -51,8 +56,73 @@ public class MainBoard extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_board);
+/*
+        if (savedInstanceState == null) {
 
-        Button button = findViewById(R.id.donanRun);
+            MapFragment mapFragment = new MapFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.board_ImageView, mapFragment, "main")
+                    .commit();
+        }
+
+ */
+
+        final DrawerLayout drawerLayout = findViewById(R.id.board_drawerLayout);
+
+        findViewById(R.id.Lecture_Main_Menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        NavigationView navigationView = findViewById(R.id.board_navigationView);
+        navigationView.setItemIconTintList(null);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                Intent intent;
+                switch (id) {
+                    case R.id.Home:
+                        intent = new Intent(getApplicationContext(), MainBoard.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.Announce:
+                        intent = new Intent(getApplicationContext(), MainCommunity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.Free:
+                        intent = new Intent(getApplicationContext(), MainFreeCommunity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.lectureMain:
+                        intent = new Intent(getApplicationContext(), LectureMain.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.ToDo:
+                        intent = new Intent(getApplicationContext(), TodoActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.TimeTable:
+                        intent = new Intent(getApplicationContext(), ScheduleTable.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                }
+                return false;
+            }
+        });
+
+
+
+        ImageButton button = findViewById(R.id.donanRun);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,6 +239,7 @@ public class MainBoard extends AppCompatActivity {
                 })
                 .setNegativeButton("취소", null)
                 .create();
+
 
         GridView gridView = (GridView)findViewById(R.id.board_Memo);
         gAdapter = new GridListAdapter();

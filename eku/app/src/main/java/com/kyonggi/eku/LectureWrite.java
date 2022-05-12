@@ -44,6 +44,7 @@ public class LectureWrite extends AppCompatActivity {
     String[] grade = {"AP", "A", "BP", "B", "CP", "C", "DP", "D", "F"};
     ActivityResultLauncher<Intent> activityResultLauncher;
     AlertDialog gradeSelectDialog;
+    long backKeyPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,4 +141,21 @@ public class LectureWrite extends AppCompatActivity {
                 .setNegativeButton("취소", null)
                 .create();
     }
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
+            backKeyPressedTime = System.currentTimeMillis();
+            Intent intent = new Intent(getApplicationContext(),LectureMain.class);
+            startActivity(intent);
+            finish();
+            //Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
+            finish();
+        }
+    }
+
+
 }
