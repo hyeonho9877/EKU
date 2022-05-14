@@ -14,8 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.kyonggi.eku.utils.SendTool;
-import com.kyonggi.eku.model.SignUpForm;
-import com.kyonggi.eku.view.signUp.ActivityInputSignUpInfo;
+import com.kyonggi.eku.model.OCRForm;
+import com.kyonggi.eku.view.signUp.activity.ActivityInputSignUpInfo;
 
 public class GalleryPresenter {
     private static final String TAG = "GalleryPresenter";
@@ -44,10 +44,11 @@ public class GalleryPresenter {
                             Toast.makeText(context, "connection failed", Toast.LENGTH_LONG).show();
                             break;
                         case SendTool.HTTP_OK:
-                            SignUpForm signUpForm = SendTool.parseToSingleEntity(response, SignUpForm.class);
+                            OCRForm OCRForm = SendTool.parseToSingleEntity(response, OCRForm.class);
                             Intent intent = new Intent(context, ActivityInputSignUpInfo.class);
-                            intent.putExtra("studentInfo", signUpForm);
+                            intent.putExtra("studentInfo", OCRForm);
                             activity.startActivity(intent);
+                            activity.finish();
                             break;
                         case SendTool.HTTP_BAD_REQUEST:
                             Toast.makeText(context, "bad request", Toast.LENGTH_LONG).show();

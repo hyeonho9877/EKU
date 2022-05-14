@@ -81,6 +81,35 @@ public final class SendTool {
 
         String jsonObject = gson.toJson(params);
 
+        MediaType JSON = MediaType.parse("application/json");
+        RequestBody requestBody = RequestBody.create(jsonObject, JSON);
+
+        Log.d(TAG, "requestForJson: " + jsonObject);
+        Request request = new Request.Builder()
+                .url(baseUrl + url)
+                .post(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d(TAG, "onFailure: ");
+                handler.sendMessage(Message.obtain(handler, CONNECTION_FAILED));
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Log.d(TAG, "onResponse: " + response.code());
+                handler.sendMessage(Message.obtain(handler, response.code(), response.body().string()));
+            }
+        });
+    }
+
+    public static void requestForJson2(String url, Object obj, Handler handler) throws NullPointerException {
+
+        String jsonObject = gson.toJson(obj);
+
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(jsonObject, JSON);
 
