@@ -17,6 +17,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.kyonggi.eku.utils.SendTool;
+
 import java.io.IOException;
 import java.util.HashMap;
 

@@ -21,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.kyonggi.eku.utils.SendTool;
+
 import java.io.IOException;
 import java.util.HashMap;
 

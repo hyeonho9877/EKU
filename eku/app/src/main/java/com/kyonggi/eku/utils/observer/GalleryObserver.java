@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.kyonggi.eku.SendTool;
+import com.kyonggi.eku.utils.SendTool;
 
 public class GalleryObserver implements DefaultLifecycleObserver {
     private static final String TAG = "GalleryObserver";

@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.kyonggi.eku.SendTool;
+import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.model.SignUpForm;
 import com.kyonggi.eku.view.signUp.ActivityInputSignUpInfo;
 

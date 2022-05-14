@@ -1,4 +1,4 @@
-package com.kyonggi.eku;
+package com.kyonggi.eku.utils;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
@@ -33,7 +33,7 @@ import okio.Okio;
 
 public final class SendTool {
     private static final String TAG = "SendTool";
-    private static final String baseUrl = "http://192.168.219.101:8080";
+    private static final String baseUrl = "https://eku.kro.kr";
     private static final OkHttpClient client = new OkHttpClient();
     private static final Gson gson = new Gson();
 

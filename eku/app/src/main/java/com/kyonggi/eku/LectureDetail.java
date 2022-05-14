@@ -21,6 +21,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
+import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.view.signIn.ActivitySignIn;
 
 import org.json.JSONException;
