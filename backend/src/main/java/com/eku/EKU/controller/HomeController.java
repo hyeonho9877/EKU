@@ -19,4 +19,26 @@ public class HomeController {
         }
         return "access success";
     }
+
+    @GetMapping("/http")
+    public String httpTest(HttpServletRequest request) {
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String header = headerNames.nextElement();
+            System.out.println("ip : "+request.getRemoteAddr());
+            System.out.println(header+" : "+request.getHeader(header));
+        }
+        return request.getRemoteAddr();
+    }
+
+    @GetMapping("/https")
+    public String httpsTest(HttpServletRequest request) {
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String header = headerNames.nextElement();
+            System.out.println("ip : "+request.getRemoteAddr());
+            System.out.println(header+" : "+request.getHeader(header));
+        }
+        return request.getRemoteAddr();
+    }
 }

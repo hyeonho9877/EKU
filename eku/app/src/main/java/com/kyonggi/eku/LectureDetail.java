@@ -1,32 +1,29 @@
 package com.kyonggi.eku;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.JSONArray;
+import com.google.gson.Gson;
+import com.kyonggi.eku.utils.SendTool;
+import com.kyonggi.eku.view.signIn.ActivitySignIn;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -131,7 +128,7 @@ public class LectureDetail extends AppCompatActivity {
             public void onClick(View view) {
                 UserInformation info = new UserInformation(getApplicationContext());
                 if (!info.fromPhoneVerify(getApplicationContext())) {
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), ActivitySignIn.class);
                     startActivity(intent);
                     finish();
                 } else {

@@ -1,12 +1,15 @@
 package com.eku.EKU.service;
 
-import com.eku.EKU.form.BoardList;
+import com.eku.EKU.form.BoardListForm;
+import com.eku.EKU.form.BoardListResponse;
 import com.eku.EKU.domain.FreeBoard;
 import com.eku.EKU.form.FreeBoardResponse;
 import com.eku.EKU.domain.Student;
 import com.eku.EKU.form.FreeBoardForm;
 import com.eku.EKU.repository.FreeBoardRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,7 +34,7 @@ public class FreeBoardService {
      * @return
      */
     public FreeBoard loadBoard(FreeBoardForm form)throws IllegalArgumentException, NoSuchElementException{
-        FreeBoard board = freeBoardRepository.findFreeBoardById(form.getId()).get();
+        FreeBoard board = freeBoardRepository.findById(form.getId()).get();
         board.setView(board.getView()+1);
         freeBoardRepository.save(board);
 
@@ -41,11 +44,12 @@ public class FreeBoardService {
      * 게시물 목록 
      * @return List<FreeBoard>로 목록을 반환
      */
-    public ArrayList<BoardList> boardList()throws IllegalArgumentException, NoSuchElementException{
-        List<FreeBoard> list = freeBoardRepository.findAll();
-        ArrayList<BoardList> newList = new ArrayList<BoardList>();
+    public List<BoardListResponse> boardList(BoardListForm listForm)throws IllegalArgumentException, NoSuchElementException{
+        PageRequest pageRequest = PageRequest.of(listForm.getPage(), 8);
+        Page<FreeBoard> list = freeBoardRepository.findAll(pageRequest);
+        List<BoardListResponse> newList = new ArrayList<BoardListResponse>();
         for(FreeBoard i : list){
-            BoardList form = BoardList.builder()
+            BoardListResponse form = BoardListResponse.builder()
                     .id(i.getId())
                     .title(i.getTitle())
                     .no(studentNo(i.getStudent().getStudNo()))
@@ -60,7 +64,7 @@ public class FreeBoardService {
      * @param form 수정할 게시판의 정보
      */
     public void updateBoard(FreeBoardForm form) throws IllegalArgumentException, NoSuchElementException{
-        FreeBoard board = freeBoardRepository.findFreeBoardById(form.getId()).get();
+        FreeBoard board = freeBoardRepository.findById(form.getId()).get();
         if(form.getTitle()!=null&&form.getContent()!=null) {
             board.setContent(form.getContent());
             board.setTitle(form.getTitle());
