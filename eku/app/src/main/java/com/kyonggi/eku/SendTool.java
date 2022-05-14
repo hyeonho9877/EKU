@@ -1,7 +1,12 @@
 package com.kyonggi.eku;
 
+import android.annotation.SuppressLint;
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.OpenableColumns;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -18,14 +23,17 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.BufferedSink;
+import okio.Okio;
 
 public final class SendTool {
     private static final String TAG = "SendTool";
-    private static final String baseUrl = "https://eku.kro.kr";
+    private static final String baseUrl = "http://192.168.219.101:8080";
     private static final OkHttpClient client = new OkHttpClient();
     private static final Gson gson = new Gson();
 
@@ -49,7 +57,7 @@ public final class SendTool {
         FormBody body = builder.build();
 
         Request request = new Request.Builder()
-                .url(baseUrl+url)
+                .url(baseUrl + url)
                 .post(body)
                 .build();
 
@@ -63,7 +71,7 @@ public final class SendTool {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d(TAG, "onResponse: "+response.code());
+                Log.d(TAG, "onResponse: " + response.code());
                 handler.sendMessage(Message.obtain(handler, response.code(), response.body().string()));
             }
         });
@@ -78,7 +86,7 @@ public final class SendTool {
 
         Log.d(TAG, "requestForJson: " + jsonObject);
         Request request = new Request.Builder()
-                .url(baseUrl+url)
+                .url(baseUrl + url)
                 .post(requestBody)
                 .build();
 
@@ -92,10 +100,69 @@ public final class SendTool {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d(TAG, "onResponse: "+response.code());
+                Log.d(TAG, "onResponse: " + response.code());
                 handler.sendMessage(Message.obtain(handler, response.code(), response.body().string()));
             }
         });
+    }
+
+    public static void requestForMultiPart(String url, Uri uri, ContentResolver contentResolver, Handler handler) {
+
+        MultipartBody.Part part = getRequestBody(uri, "img", contentResolver);
+        MultipartBody body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addPart(part)
+                .build();
+
+        Request request = new Request.Builder()
+                .addHeader("Accept-Language", "ko-KR,ko;q=0.9,ja-JP;q=0.8,ja;q=0.7,en-US;q=0.6,en;q=0.5")
+                .addHeader("Accept-Encoding", "gzip")
+                .url(baseUrl + url)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                handler.sendMessage(Message.obtain(handler, CONNECTION_FAILED));
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                handler.sendMessage(Message.obtain(handler, response.code(), response.body().string()));
+            }
+        });
+    }
+
+    public static MultipartBody.Part getRequestBody(final Uri uri, String name, final ContentResolver contentResolver) {
+        final Cursor cursor = contentResolver.query(uri, null, null, null, null);
+        if (cursor != null) {
+            if(cursor.moveToNext()) {
+                @SuppressLint("Range") final String displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                RequestBody requestBody = new RequestBody() {
+                    @Override
+                    public MediaType contentType() {
+                        return MediaType.parse(contentResolver.getType(uri));
+                    }
+
+                    @Override
+                    public void writeTo(BufferedSink sink) {
+                        try {
+                            sink.writeAll(Okio.source(contentResolver.openInputStream(uri)));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                cursor.close();
+                return MultipartBody.Part.createFormData(name, displayName, requestBody);
+            } else {
+                cursor.close();
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
 
@@ -104,7 +171,8 @@ public final class SendTool {
     }
 
     public static <T> ArrayList<T> parseToList(String targetText, Class<T> t) {
-        Type type = new TypeToken<ArrayList<T>>() {}.getType();
+        Type type = new TypeToken<ArrayList<T>>() {
+        }.getType();
         return gson.fromJson(targetText, type);
     }
 
