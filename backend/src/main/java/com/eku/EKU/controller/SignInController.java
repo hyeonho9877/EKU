@@ -41,11 +41,11 @@ public class SignInController {
             StudentInfo info = signInService.authStudent(form).orElseThrow(NoSuchStudentException::new);
             return ResponseEntity.ok().body(info);
         } catch (NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | InvalidKeySpecException | InvalidKeyException | InvalidAlgorithmParameterException e) {
-            return ResponseEntity.internalServerError().body("Server In Error.");
+            return ResponseEntity.internalServerError().body("Server in Error.");
         } catch (BadPaddingException e) {
-            return ResponseEntity.badRequest().body("Password Not Matching.");
+            return ResponseEntity.badRequest().body("Password not matching.");
         } catch (NoAuthExceptions exceptions) {
-            return ResponseEntity.badRequest().body("Not Authorized.");
+            return ResponseEntity.badRequest().body("not authorized.");
         } catch (NoSuchStudentException e) {
             return ResponseEntity.badRequest().body("Not Registered.");
         }

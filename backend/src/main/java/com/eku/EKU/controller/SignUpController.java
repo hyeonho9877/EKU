@@ -60,7 +60,6 @@ public class SignUpController {
         try {
             OcrResponseForm response = signUpService.ocrImage(img);
             String clientResponse = signUpService.parseOcrResponse(response);
-            System.out.println(clientResponse);
             return ResponseEntity.ok(clientResponse);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("service error");
