@@ -1,4 +1,4 @@
-package com.kyonggi.eku.view.signUp;
+package com.kyonggi.eku.view.signUp.activity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -13,7 +13,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.kyonggi.eku.databinding.ActivitySignupPhotoBinding;
-import com.kyonggi.eku.presenter.signUp.SignUpPresenter;
+import com.kyonggi.eku.presenter.signUp.SignUpCameraPresenter;
 import com.kyonggi.eku.utils.observer.GalleryObserver;
 
 import java.util.concurrent.ExecutorService;
@@ -23,7 +23,7 @@ public class ActivitySignUpCamera extends AppCompatActivity {
 
     private final String TAG = "SignUpActivity";
     private ActivitySignupPhotoBinding binding;
-    private SignUpPresenter presenter;
+    private SignUpCameraPresenter presenter;
     private ExecutorService cameraExecutor;
     private GalleryObserver observer;
 
@@ -38,7 +38,7 @@ public class ActivitySignUpCamera extends AppCompatActivity {
         setContentView(view); // 할당
 
         if (allPermissionGranted()) {
-            presenter = new SignUpPresenter(this, this);
+            presenter = new SignUpCameraPresenter(this, this);
             observer = new GalleryObserver(getActivityResultRegistry(), getContentResolver(), presenter.getHandler());
             getLifecycle().addObserver(observer);
             presenter.startCamera(binding);

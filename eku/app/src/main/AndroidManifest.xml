@@ -77,9 +77,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.signUp.ActivitySignUpCamera"/>
-        <activity android:name=".view.signUp.ActivityGallery"/>
-        <activity android:name=".view.signUp.ActivityInputSignUpInfo"/>
+        <activity android:name=".view.signUp.activity.ActivitySignUpCamera"/>
+        <activity android:name=".view.signUp.activity.ActivityGallery"/>
+        <activity android:name=".view.signUp.activity.ActivityInputSignUpInfo"/>
         <activity
             android:name=".MainBoard"
             android:exported="true"

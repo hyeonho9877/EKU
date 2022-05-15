@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import com.kyonggi.eku.MainBoard;
 import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.UserInformation;
-import com.kyonggi.eku.view.signUp.ActivitySignUpCamera;
+import com.kyonggi.eku.view.signUp.activity.ActivitySignUpCamera;
 
 import org.json.JSONException;
 import org.json.JSONObject;
