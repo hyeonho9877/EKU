@@ -41,12 +41,16 @@ public class SignUpErrorDialogFragment extends DialogFragment {
             case PASSWORD_NOT_MATCHING:
                 builder.setMessage(R.string.signUp_password_not_matching);
                 break;
+            case DUPLICATED_ACCOUNT:
+                builder.setMessage(R.string.signUp_duplicated_account);
+                break;
         }
         return builder.create();
     }
 
-    private final int ALL_FINE = 0x00;
-    private final int NOT_FILLED_FIELD = 0x01;
-    private final int PASSWORD_NOT_VALID = 0x02;
-    private final int PASSWORD_NOT_MATCHING = 0x03;
+    public static final int ALL_FINE = 0x00;
+    public static final int NOT_FILLED_FIELD = 0x01;
+    public static final int PASSWORD_NOT_VALID = 0x02;
+    public static final int PASSWORD_NOT_MATCHING = 0x03;
+    public static final int DUPLICATED_ACCOUNT = 0x04;
 }

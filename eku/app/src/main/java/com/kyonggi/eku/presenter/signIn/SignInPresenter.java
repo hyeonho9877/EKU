@@ -20,14 +20,14 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class LoginPresenter {
+public class SignInPresenter {
 
     private static final String TAG = "LoginPresenter";
     private Handler handler;
     private final Context context;
     private final UserInformation userInformation;
 
-    public LoginPresenter(Context context) {
+    public SignInPresenter(Context context) {
         this.context = context;
         this.userInformation = new UserInformation(context);
     }
@@ -89,7 +89,7 @@ public class LoginPresenter {
 
     private final String NOT_AUTHORIZED = "Not Authorized.";
     private final String NOT_REGISTERED = "Not Registered.";
-    private final String PASSWORD_INVALID = "Password not matching.";
+    private final String PASSWORD_INVALID = "Password Not Matching.";
     private final String SERVER_ERROR = "Server In Error.";
 }
 

@@ -76,6 +76,7 @@ public class ActivitySignUpCamera extends AppCompatActivity {
     private void initListeners() {
         binding.buttonImageCapture.setOnClickListener(v -> presenter.takePhoto());
         binding.buttonGallery.setOnClickListener(v->observer.selectImage());
+        binding.buttonSkip.setOnClickListener(v->presenter.skipPhoto());
 
     }
 

@@ -148,6 +148,12 @@ public class SignUpCameraPresenter {
         return handler;
     }
 
+    public void skipPhoto(){
+        Intent intent = new Intent(context, ActivityInputSignUpInfo.class);
+        activity.startActivity(intent);
+        activity.finish();
+    }
+
     private final int REQUEST_CODE = 0;
     private final String FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS";
 }
