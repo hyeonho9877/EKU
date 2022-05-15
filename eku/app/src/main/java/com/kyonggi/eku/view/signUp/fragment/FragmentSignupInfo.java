@@ -30,7 +30,7 @@ import com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment;
 public class FragmentSignupInfo extends Fragment {
     private FargmentSignupInfoBinding binding;
     private OnConfirmedListener listener;
-    ActivityInputSignUpInfo activity;
+    private ActivityInputSignUpInfo activity;
 
 
     @Nullable

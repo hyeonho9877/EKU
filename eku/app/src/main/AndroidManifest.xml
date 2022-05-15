@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kyonggi.eku">
+
     <uses-feature android:name="android.hardware.camera.any" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" android:required="true"/>
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"
+        android:required="true" />
     <uses-permission
         android:name="android.permission.BLUETOOTH"
         android:maxSdkVersion="30" />
@@ -77,9 +82,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.signUp.activity.ActivitySignUpCamera"/>
-        <activity android:name=".view.signUp.activity.ActivityGallery"/>
-        <activity android:name=".view.signUp.activity.ActivityInputSignUpInfo"/>
+        <activity android:name=".view.signUp.activity.ActivitySignUpCamera" />
+        <activity android:name=".view.signUp.activity.ActivityGallery" />
+        <activity android:name=".view.signUp.activity.ActivityInputSignUpInfo" />
+        <activity android:name=".view.board.activity.ActivityBoard"/>
         <activity
             android:name=".MainBoard"
             android:exported="true"
@@ -118,12 +124,14 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBpr5Cq5Dbo9YAu5qHaDyaEoC7CTIH4rns"/>
+            android:value="AIzaSyBpr5Cq5Dbo9YAu5qHaDyaEoC7CTIH4rns" />
     </application>
 
 </manifest>

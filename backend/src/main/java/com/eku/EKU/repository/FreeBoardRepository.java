@@ -3,6 +3,7 @@ package com.eku.EKU.repository;
 import com.eku.EKU.domain.FreeBoard;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -10,4 +11,6 @@ import java.util.Optional;
  */
 public interface FreeBoardRepository extends JpaRepository<FreeBoard, Long> {
     Optional<FreeBoard> findFreeBoardById(Long Id);
+    List<FreeBoard> findByOrderByTimeDesc();
+
 }

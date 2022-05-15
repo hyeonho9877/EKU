@@ -1,9 +1,6 @@
 package com.eku.EKU.controller;
 
 
-import com.eku.EKU.form.BoardList;
-import com.eku.EKU.form.FreeBoardResponse;
-import com.eku.EKU.form.InfoBoardResponse;
 import com.eku.EKU.exceptions.NoSuchArticleException;
 import com.eku.EKU.exceptions.NoSuchBoardException;
 import com.eku.EKU.exceptions.NoSuchStudentException;
@@ -14,7 +11,6 @@ import com.eku.EKU.service.InfoBoardCommentService;
 import com.eku.EKU.service.InfoBoardService;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -80,7 +76,7 @@ public class BoardController {
      */
     @PostMapping("/board/free/lists")
     public ResponseEntity<?> boardList(){
-        ArrayList<BoardList> list = freeBoardService.boardList();
+        ArrayList<FreeBoardList> list = freeBoardService.boardList();
         if(!list.isEmpty())
             return ResponseEntity.ok(list);
         else

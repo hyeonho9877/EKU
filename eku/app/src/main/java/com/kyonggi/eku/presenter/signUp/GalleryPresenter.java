@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.model.OCRForm;
+import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.view.signUp.activity.ActivityInputSignUpInfo;
 
 public class GalleryPresenter {

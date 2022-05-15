@@ -1,14 +1,19 @@
 package com.eku.EKU.form;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@SuperBuilder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BoardList {
     private Long id;
     private String title;
-    private String name;
+    private String writer;
     private Long no;
-    private String department;
+    private String time;
+    private Integer view;
 }

@@ -24,9 +24,9 @@ import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 
 import com.google.common.util.concurrent.ListenableFuture;
-import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.databinding.ActivitySignupPhotoBinding;
 import com.kyonggi.eku.model.OCRForm;
+import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.view.signUp.activity.ActivityGallery;
 import com.kyonggi.eku.view.signUp.activity.ActivityInputSignUpInfo;
 import com.kyonggi.eku.view.signUp.activity.ActivitySignUpCamera;
