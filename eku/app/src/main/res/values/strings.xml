@@ -36,4 +36,5 @@
     <string name="signUp_fill_fields">모든 항목을 작성해주세요.</string>
     <string name="signUp_password_not_valid">비밀번호를 형식에 맞게 작성해주세요.</string>
     <string name="signUp_password_not_matching">비밀번호가 일치하지 않습니다.</string>
+    <string name="signUp_duplicated_account">이미 가입된 학번 혹은 이메일입니다.</string>
 </resources>

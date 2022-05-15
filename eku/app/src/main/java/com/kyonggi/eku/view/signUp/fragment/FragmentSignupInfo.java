@@ -1,5 +1,10 @@
 package com.kyonggi.eku.view.signUp.fragment;
 
+import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.ALL_FINE;
+import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.NOT_FILLED_FIELD;
+import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.PASSWORD_NOT_MATCHING;
+import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.PASSWORD_NOT_VALID;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.kyonggi.eku.databinding.FargmentSignupInfoBinding;
 import com.kyonggi.eku.model.OCRForm;
 import com.kyonggi.eku.model.SignUpForm;
+import com.kyonggi.eku.utils.exceptions.NoExtraDataException;
 import com.kyonggi.eku.view.signUp.OnConfirmedListener;
 import com.kyonggi.eku.view.signUp.activity.ActivityInputSignUpInfo;
 import com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment;
@@ -34,7 +40,12 @@ public class FragmentSignupInfo extends Fragment {
         activity = (ActivityInputSignUpInfo) getActivity();
         initListeners();
 
-        autoFillElements(activity.getForm());
+        try {
+            autoFillElements(activity.getForm());
+        } catch (NoExtraDataException ignored) {
+
+        };
+
         return binding.getRoot();
     }
 
@@ -92,9 +103,4 @@ public class FragmentSignupInfo extends Fragment {
         binding.editDept.setText(form.getDepartment());
         binding.editName.setText(form.getName());
     }
-
-    private final int ALL_FINE = 0x00;
-    private final int NOT_FILLED_FIELD = 0x01;
-    private final int PASSWORD_NOT_VALID = 0x02;
-    private final int PASSWORD_NOT_MATCHING = 0x03;
 }

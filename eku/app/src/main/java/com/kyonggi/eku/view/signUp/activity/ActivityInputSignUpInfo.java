@@ -2,6 +2,7 @@ package com.kyonggi.eku.view.signUp.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,11 +15,15 @@ import com.kyonggi.eku.databinding.FargmentSignupInfoBinding;
 import com.kyonggi.eku.model.OCRForm;
 import com.kyonggi.eku.model.SignUpForm;
 import com.kyonggi.eku.presenter.signUp.SignUpInfoPresenter;
+import com.kyonggi.eku.utils.exceptions.NoExtraDataException;
+import com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment;
 import com.kyonggi.eku.view.signUp.fragment.FragmentSignUpEnd;
 import com.kyonggi.eku.view.signUp.fragment.FragmentSignUpProgressFirst;
 import com.kyonggi.eku.view.signUp.fragment.FragmentSignUpProgressSecond;
 import com.kyonggi.eku.view.signUp.fragment.FragmentSignupInfo;
 import com.kyonggi.eku.view.signUp.OnConfirmedListener;
+
+import java.util.Optional;
 
 public class ActivityInputSignUpInfo extends AppCompatActivity implements OnConfirmedListener {
 
@@ -57,17 +62,18 @@ public class ActivityInputSignUpInfo extends AppCompatActivity implements OnConf
         finish();
     }
 
-    public OCRForm getForm(){
-        OCRForm form = (OCRForm) getIntent().getSerializableExtra("studentInfo");
-        presenter.processForm(form);
-        return form;
+    public OCRForm getForm() throws NoExtraDataException {
+        Optional<OCRForm> form = Optional.ofNullable((OCRForm) getIntent().getSerializableExtra("studentInfo"));
+        OCRForm ocrForm = form.orElseThrow(NoExtraDataException::new);
+        presenter.processForm(ocrForm);
+        return ocrForm;
     }
 
     public int isAllFieldsAppropriate(FargmentSignupInfoBinding binding) {
         return presenter.isAllFieldsAppropriate(binding);
     }
 
-    public void onSignUpResponse(){
+    public void onSignUpResponseSuccess(){
         FragmentSignUpProgressSecond fragmentSignUpProgressSecond = new FragmentSignUpProgressSecond();
         FragmentSignUpEnd fragmentSignUpEnd = new FragmentSignUpEnd();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -79,5 +85,11 @@ public class ActivityInputSignUpInfo extends AppCompatActivity implements OnConf
                 .replace(R.id.fragment_user_interaction, fragmentSignUpEnd);
         fragmentTransaction.commit();
     }
+
+    public void onSignUpResponseFailed() {
+        new SignUpErrorDialogFragment(SignUpErrorDialogFragment.DUPLICATED_ACCOUNT).show(getSupportFragmentManager(), "error");
+    }
+
+
 
 }

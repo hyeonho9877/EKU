@@ -78,16 +78,16 @@ public class SignUpInfoPresenter {
                     Log.d(TAG, "handleMessage: " + code);
                     switch (code) {
                         case SendTool.CONNECTION_FAILED:
-                            Toast.makeText(context, "connection failed", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "네트워크 연결에 실패하였습니다.", Toast.LENGTH_LONG).show();
                             break;
                         case SendTool.HTTP_OK:
-                            activity.onSignUpResponse();
+                            activity.onSignUpResponseSuccess();
                             break;
                         case SendTool.HTTP_BAD_REQUEST:
-                            Toast.makeText(context, "bad request", Toast.LENGTH_LONG).show();
+                            activity.onSignUpResponseFailed();
                             break;
                         case SendTool.HTTP_INTERNAL_SERVER_ERROR:
-                            Toast.makeText(context, "server error", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "서버 에러가 발생하였습니다.", Toast.LENGTH_LONG).show();
                         default:
                             Log.e(TAG, "handleMessage: Unknown Error");
                             break;

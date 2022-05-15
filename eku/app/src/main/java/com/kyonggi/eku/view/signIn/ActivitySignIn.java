@@ -7,17 +7,17 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.kyonggi.eku.databinding.ActivitySigninBinding;
-import com.kyonggi.eku.presenter.signIn.LoginPresenter;
+import com.kyonggi.eku.presenter.signIn.SignInPresenter;
 
 public class ActivitySignIn extends AppCompatActivity {
 
     private ActivitySigninBinding binding;
-    private LoginPresenter presenter;
+    private SignInPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new LoginPresenter(this); // 프레젠터 할당
+        presenter = new SignInPresenter(this); // 프레젠터 할당
         binding = ActivitySigninBinding.inflate(getLayoutInflater()); // 뷰 바인딩
         View view = binding.getRoot();
         setContentView(view); // 할당
@@ -28,12 +28,12 @@ public class ActivitySignIn extends AppCompatActivity {
 
         // 로그인 버튼 리스너
         binding.signIn.setOnClickListener(v -> {
-            String studNo = binding.email.getText().toString();
+            String email = binding.email.getText().toString();
             String password = binding.password.getText().toString();
-            if (studNo.length() == 0 || password.length() == 0) {
+            if (email.length() == 0 || password.length() == 0) {
                 Toast.makeText(getBaseContext(), "이메일과 비밀번호 입력을 확인해 주세요", Toast.LENGTH_SHORT).show();
             } else {
-                presenter.signIn(studNo, password);
+                presenter.signIn(email, password);
             }
         });
 
