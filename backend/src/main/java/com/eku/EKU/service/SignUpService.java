@@ -215,7 +215,11 @@ public class SignUpService {
     }
 
     private void validateDupl(SignUpForm form) throws NoSuchStudentException {
-        studentRepository.findById(form.getStudNo()).orElseThrow(NoSuchStudentException::new);
+        Student findById = studentRepository.findById(form.getStudNo()).orElseGet(Student::new);
+        Student findByEmail = studentRepository.findStudentByEmail(form.getEmail()).orElseGet(Student::new);
+        if (findById.getStudNo() == null && findByEmail.getEmail() == null) {
+            throw new NoSuchStudentException();
+        }
     }
 
     private Optional<Student> saveAsEntity(SignUpForm form) {

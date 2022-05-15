@@ -21,6 +21,6 @@ public class WebConfig extends WebMvcConfigurationSupport {
     protected void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         StringHttpMessageConverter converter = new StringHttpMessageConverter(StandardCharsets.UTF_8);
         converters.add(converter);
-        super.configureMessageConverters(converters);
+        super.addDefaultHttpMessageConverters(converters);
     }
 }

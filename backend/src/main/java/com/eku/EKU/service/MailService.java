@@ -2,9 +2,9 @@ package com.eku.EKU.service;
 
 import com.eku.EKU.domain.Student;
 import com.eku.EKU.repository.MappingKeyRepository;
-import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
@@ -29,12 +29,13 @@ public class MailService {
         this.templateEngine = templateEngine;
     }
 
+
     /**
      * 사용자와 1대1로 매핑되는 인증키를 기반으로 링크를 생성하고 이메일을 발송하는 메소드
      * @param student 발송 되상이 되는 학생
      * @param email 학생의 이메일 주소
-     * @return 메일을 성공적으로 발송한 경우 True를 리턴, 반대의 경우 False 리턴
      */
+    @Async
     public void sendAuthMail(Student student, String email, String remoteHost){
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
