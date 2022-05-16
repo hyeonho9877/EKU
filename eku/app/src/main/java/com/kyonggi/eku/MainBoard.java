@@ -1,9 +1,5 @@
 package com.kyonggi.eku;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,9 +17,17 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.kyonggi.eku.utils.SendTool;
+import com.kyonggi.eku.view.signIn.ActivitySignIn;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -224,7 +228,7 @@ public class MainBoard extends AppCompatActivity {
                 String check = userInfo.sessionCheck(getBaseContext());
                 if(check.equals("needLogin"))
                 {
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), ActivitySignIn.class);
                     startActivity(intent);
                     finish();
                 }

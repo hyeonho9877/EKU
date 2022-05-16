@@ -1,7 +1,6 @@
 package com.kyonggi.eku;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 public class UserInformation {
     String email="";
@@ -14,7 +13,7 @@ public class UserInformation {
 
 
 
-    UserInformation(Context context){
+    public UserInformation(Context context){
         getApplicationContext = context;
         email = PreferenceManagers.getString(getApplicationContext,"email");
         password = PreferenceManagers.getString(getApplicationContext,"password");

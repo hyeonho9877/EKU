@@ -30,14 +30,15 @@ public class Student implements Serializable {
     private String name;
     @Column(name = "department", nullable = false)
     private String department;
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
     // 이메일 인증 성공 여부
     @Column(name = "authenticated", nullable = false)
     private boolean authenticated;
 
     public Student() {
-
+        this.studNo = null;
+        this.email = null;
     }
 
     @Override
