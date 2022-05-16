@@ -114,17 +114,31 @@
 
     <TextView
         android:id="@+id/text_email"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="32dp"
         android:fontFamily="@font/font_noto_sans_kr"
         android:text="@string/email"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_dept" />
+
+    <TextView
+        android:id="@+id/text_email_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/font_noto_sans_kr"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="@string/email_guide"
+        android:textColor="@color/warn_shade"
+        android:textSize="11sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/text_email"
+        app:layout_constraintStart_toEndOf="@+id/text_password"
+        app:layout_constraintTop_toTopOf="@+id/text_email" />
 
     <EditText
         android:id="@+id/edit_email"
@@ -150,17 +164,48 @@
 
     <TextView
         android:id="@+id/text_password"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="32dp"
         android:fontFamily="@font/font_noto_sans_kr"
         android:text="@string/password"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_email" />
+
+    <TextView
+        android:id="@+id/text_password_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/font_noto_sans_kr"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="@string/password_guide"
+        android:textColor="@color/warn_shade"
+        android:textSize="11sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/text_password"
+        app:layout_constraintStart_toEndOf="@+id/text_password"
+        app:layout_constraintTop_toTopOf="@+id/text_password" />
+
+    <TextView
+        android:id="@+id/text_password_confirm_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/font_noto_sans_kr"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="@string/password_guide"
+        android:textColor="@color/warn_shade"
+        android:textSize="11sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/text_password_confirm"
+        app:layout_constraintStart_toEndOf="@+id/text_password_confirm"
+        app:layout_constraintTop_toTopOf="@+id/text_password_confirm"
+        app:layout_constraintVertical_bias="0.5" />
 
     <EditText
         android:id="@+id/edit_password"
@@ -186,15 +231,13 @@
 
     <TextView
         android:id="@+id/text_password_confirm"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="32dp"
         android:fontFamily="@font/font_noto_sans_kr"
         android:text="@string/confirm_password"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_password" />
 
