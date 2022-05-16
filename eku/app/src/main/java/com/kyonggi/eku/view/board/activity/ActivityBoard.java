@@ -51,12 +51,7 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
         binding.buttonInfoBoard.setOnClickListener(v->{
             if(currentMode.equals(BOARD_FREE)) switchBoard();
         });
-        binding.swipeLayoutBoard.setOnRefreshListener(() -> {
-            binding.swipeLayoutBoard.setRefreshing(true);
-            if (currentMode.equals(BOARD_FREE)) presenter.getFreeBoardArticles();
-            else presenter.getInfoBoardArticles();
-            binding.swipeLayoutBoard.setRefreshing(false);
-        });
+
     }
 
     private void setBoard(){
@@ -115,9 +110,17 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
     }
 
     @Override
-    public void onSuccess(List<? extends BoardPreview> articles) {
-        if (currentMode.equals(BOARD_INFO)) fragmentInfoBoard.listArticles(presenter.convertToInfoBoard(articles));
-        else fragmentFreeBoard.listArticles(presenter.convertToFreeBoard(articles));
+    public void onSuccess(List<? extends BoardPreview> articles, String purpose) {
+        if (currentMode.equals(BOARD_INFO)) {
+            if (purpose.equals(LOAD_RECENT)) fragmentInfoBoard.updateArticles(presenter.convertToInfoBoard(articles));
+            else if(purpose.equals(INIT)) fragmentInfoBoard.listArticles(presenter.convertToInfoBoard(articles));
+            else fragmentInfoBoard.loadMoreArticles(presenter.convertToInfoBoard(articles));
+        }
+        else {
+            if (purpose.equals(LOAD_RECENT)) fragmentFreeBoard.updateArticles(presenter.convertToFreeBoard(articles));
+            else if(purpose.equals(INIT)) fragmentFreeBoard.listArticles(presenter.convertToFreeBoard(articles));
+            else fragmentFreeBoard.loadMoreArticles(presenter.convertToFreeBoard(articles));
+        }
     }
 
     @Override
@@ -125,6 +128,28 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
 
     }
 
+    public void updateInfoBoard(long id) {
+        presenter.updateInfoBoard(id);
+    }
+
+    public void loadMoreInfoArticles(long no) {
+        presenter.loadMoreInfoArticles(no);
+    }
+
+    public void updateFreeBoard(long id) {
+        presenter.updateFreeBoard(id);
+    }
+
+    public void loadMoreFreeArticles(Long id) {
+        presenter.loadMoreFreeArticles(id);
+    }
+
+
     public static final String BOARD_FREE = "BOARD_FREE";
     public static final String BOARD_INFO = "BOARD_INFO";
+    public static final String LOAD_RECENT = "LOAD_RECENT";
+    public static final String LOAD_OLD = "LOAD_OLD";
+    public static final String INIT = "INIT";
+
+
 }

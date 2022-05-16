@@ -1,7 +1,7 @@
 package com.kyonggi.eku.model;
 
 public class FreeBoardPreview extends BoardPreview{
-    private Integer comments;
+    private int comments;
 
     public FreeBoardPreview(Long id, String writer, String title, Integer no, String time, Integer view, Integer comments) {
         super(id, writer, title, no, time, view);

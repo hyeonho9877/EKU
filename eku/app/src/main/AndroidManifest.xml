@@ -85,7 +85,7 @@
         <activity android:name=".view.signUp.activity.ActivitySignUpCamera" />
         <activity android:name=".view.signUp.activity.ActivityGallery" />
         <activity android:name=".view.signUp.activity.ActivityInputSignUpInfo" />
-        <activity android:name=".view.board.activity.ActivityBoard"/>
+        <activity android:name=".view.board.activity.ActivityBoard" />
         <activity
             android:name=".MainBoard"
             android:exported="true"
