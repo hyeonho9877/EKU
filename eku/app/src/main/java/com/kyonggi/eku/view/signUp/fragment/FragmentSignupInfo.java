@@ -6,7 +6,11 @@ import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.PASSW
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.PASSWORD_NOT_VALID;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.kyonggi.eku.R;
 import com.kyonggi.eku.databinding.FargmentSignupInfoBinding;
 import com.kyonggi.eku.model.OCRForm;
 import com.kyonggi.eku.model.SignUpForm;
@@ -28,6 +33,7 @@ import com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment;
  * status bar and navigation/system bar) with user interaction.
  */
 public class FragmentSignupInfo extends Fragment {
+    private static final String TAG = "FragmentSignupInfo";
     private FargmentSignupInfoBinding binding;
     private OnConfirmedListener listener;
     private ActivityInputSignUpInfo activity;
@@ -90,9 +96,50 @@ public class FragmentSignupInfo extends Fragment {
             ;
         });
 
-        binding.editPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        binding.editPassword.setOnFocusChangeListener((view, b) -> binding.textPasswordGuide.setVisibility(View.VISIBLE));
+        binding.editPassword.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onFocusChange(View view, boolean b) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (binding.editPasswordConfirm.getText().toString().equals(charSequence.toString())) {
+                    binding.textPasswordConfirmGuide.setText(R.string.password_confirm_right);
+                    binding.textPasswordConfirmGuide.setTextColor(Color.parseColor("#2A5189"));
+                }else{
+                    binding.textPasswordConfirmGuide.setText(R.string.password_confirm_wrong);
+                    binding.textPasswordConfirmGuide.setTextColor(Color.parseColor("#F7941E"));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        binding.editEmail.setOnFocusChangeListener((view, b) -> binding.textEmailGuide.setVisibility(View.VISIBLE));
+        binding.editPasswordConfirm.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                binding.textPasswordConfirmGuide.setVisibility(View.VISIBLE);
+                if (binding.editPassword.getText().toString().equals(charSequence.toString())) {
+                    binding.textPasswordConfirmGuide.setText(R.string.password_confirm_right);
+                    binding.textPasswordConfirmGuide.setTextColor(Color.parseColor("#2A5189"));
+                }else{
+                    binding.textPasswordConfirmGuide.setText(R.string.password_confirm_wrong);
+                    binding.textPasswordConfirmGuide.setTextColor(Color.parseColor("#F7941E"));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
 
             }
         });
