@@ -40,7 +40,14 @@ public class FragmentFreeBoard extends Fragment {
 
     public void listArticles(List<FreeBoardPreview> articles) {
         adapter.submitList(articles);
-        adapter.notifyDataSetChanged();
         binding.recyclerViewFreeBard.setAdapter(adapter);
+    }
+
+    public void updateArticles(List<FreeBoardPreview> newArticles) {
+        adapter.submitList(newArticles);
+        adapter.notifyItemInserted(0);
+    }
+
+    public void loadMoreArticles(List<FreeBoardPreview> convertToInfoBoard) {
     }
 }

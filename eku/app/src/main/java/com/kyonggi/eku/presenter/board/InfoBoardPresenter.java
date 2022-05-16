@@ -2,6 +2,9 @@ package com.kyonggi.eku.presenter.board;
 
 import static com.kyonggi.eku.view.board.activity.ActivityBoard.BOARD_FREE;
 import static com.kyonggi.eku.view.board.activity.ActivityBoard.BOARD_INFO;
+import static com.kyonggi.eku.view.board.activity.ActivityBoard.INIT;
+import static com.kyonggi.eku.view.board.activity.ActivityBoard.LOAD_OLD;
+import static com.kyonggi.eku.view.board.activity.ActivityBoard.LOAD_RECENT;
 
 import android.content.Context;
 import android.os.Handler;
@@ -39,16 +42,16 @@ public class InfoBoardPresenter {
         HashMap<String, Object> request = new HashMap<>();
         request.put("page", 0);
         request.put("lecture_building", 8);
-        SendTool.requestForJson("/board/info/lists", request, getHandler(BOARD_INFO));
+        SendTool.requestForJson("/board/info/lists", request, getHandler(BOARD_INFO, INIT));
     }
 
     public void getFreeBoardArticles(){
         HashMap<String, Object> request = new HashMap<>();
         request.put("page", 0);
-        SendTool.requestForJson("/board/free/lists", request, getHandler(BOARD_FREE));
+        SendTool.requestForJson("/board/free/lists", request, getHandler(BOARD_FREE, INIT));
     }
 
-    private Handler getHandler(String board) {
+    private Handler getHandler(String board, String purpose) {
         return new Handler(Looper.getMainLooper()) {
             public void handleMessage(@NonNull Message msg) {
                 int code = msg.what;
@@ -63,12 +66,12 @@ public class InfoBoardPresenter {
                             case BOARD_FREE:
                                 List<FreeBoardPreview> freeBoardPreviews = SendTool.parseToList(response, FreeBoardPreview[].class);
                                 Log.d(TAG, "handleMessage: " + freeBoardPreviews);
-                                activity.onSuccess(freeBoardPreviews);
+                                activity.onSuccess(freeBoardPreviews, purpose);
                                 break;
                             case BOARD_INFO:
                                 List<InfoBoardPreview> infoBoardPreviews = SendTool.parseToList(response, InfoBoardPreview[].class);
                                 Log.d(TAG, "handleMessage: " + infoBoardPreviews);
-                                activity.onSuccess(infoBoardPreviews);
+                                activity.onSuccess(infoBoardPreviews, purpose);
                         }
 
                         break;
@@ -99,5 +102,17 @@ public class InfoBoardPresenter {
             list.add((FreeBoardPreview) preview);
         }
         return list;
+    }
+
+    public void updateInfoBoard(long id) {
+        HashMap<String, Object> request = new HashMap<>();
+        request.put("id", id);
+        SendTool.requestForJson("/board/info/recent", request, getHandler(BOARD_INFO, LOAD_RECENT));
+    }
+
+    public void loadMoreInfoArticles(long no) {
+        HashMap<String, Object> request = new HashMap<>();
+        request.put("id", no);
+        SendTool.requestForJson("/board/info/load", request, getHandler(BOARD_INFO, LOAD_OLD));
     }
 }

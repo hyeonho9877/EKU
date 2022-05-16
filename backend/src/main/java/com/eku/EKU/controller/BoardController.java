@@ -201,6 +201,16 @@ public class BoardController {
         }
 
     }
+
+    @PostMapping("/board/info/recent")
+    public ResponseEntity<?> latestInfoBoard(@RequestBody InfoBoardForm form) {
+        return ResponseEntity.ok(infoBoardService.getRecentBoard(form.getId()));
+    }
+
+    @PostMapping("/board/info/load")
+    public ResponseEntity<?> loadInfoBoard(@RequestBody InfoBoardForm form) {
+        return ResponseEntity.ok(infoBoardService.loadBoardAfterId(form.getId()));
+    }
     /**
      * 자유 게시판 댓글 작성
      * @param form 작성하려는 댓글의 정보를 담고 있는 Form 객체
@@ -284,5 +294,7 @@ public class BoardController {
             return ResponseEntity.badRequest().body(form.getCommentId());
         }
     }
+
+
 }
 
