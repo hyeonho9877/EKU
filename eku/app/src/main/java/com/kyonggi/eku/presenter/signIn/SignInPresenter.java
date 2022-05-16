@@ -10,9 +10,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.kyonggi.eku.MainBoard;
-import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.UserInformation;
+import com.kyonggi.eku.utils.SendTool;
+import com.kyonggi.eku.view.board.activity.ActivityBoard;
 import com.kyonggi.eku.view.signUp.activity.ActivitySignUpCamera;
 
 import org.json.JSONException;
@@ -65,8 +65,10 @@ public class SignInPresenter {
                                 String st_student_no = String.valueOf(student_no);
                                 String department = jsonObject.getString("department");
                                 userInformation.toPhone(context, studNo, password, st_student_no, department, true, true);
-                                Intent intent = new Intent(context, MainBoard.class);
+                                Intent intent = new Intent(context, ActivityBoard.class);
+                                intent.putExtra("mode", ActivityBoard.BOARD_INFO);
                                 context.startActivity(intent);
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

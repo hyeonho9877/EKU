@@ -2,7 +2,6 @@ package com.kyonggi.eku.view.signUp.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,12 +15,12 @@ import com.kyonggi.eku.model.OCRForm;
 import com.kyonggi.eku.model.SignUpForm;
 import com.kyonggi.eku.presenter.signUp.SignUpInfoPresenter;
 import com.kyonggi.eku.utils.exceptions.NoExtraDataException;
+import com.kyonggi.eku.view.signUp.OnConfirmedListener;
 import com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment;
 import com.kyonggi.eku.view.signUp.fragment.FragmentSignUpEnd;
 import com.kyonggi.eku.view.signUp.fragment.FragmentSignUpProgressFirst;
 import com.kyonggi.eku.view.signUp.fragment.FragmentSignUpProgressSecond;
 import com.kyonggi.eku.view.signUp.fragment.FragmentSignupInfo;
-import com.kyonggi.eku.view.signUp.OnConfirmedListener;
 
 import java.util.Optional;
 

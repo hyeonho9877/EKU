@@ -1,6 +1,7 @@
 package com.kyonggi.eku.view.signIn;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -40,5 +41,15 @@ public class ActivitySignIn extends AppCompatActivity {
         binding.signUp.setOnClickListener(view -> {
             presenter.signUp();
         });
+
+
+        /*binding.password.setOnKeyListener((view, keyCode, keyEvent) -> {
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_ENTER:
+                    binding.signIn.callOnClick();
+                    break;
+            }
+            return true;
+        });*/
     }
 }

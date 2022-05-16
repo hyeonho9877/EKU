@@ -1,8 +1,6 @@
 package com.kyonggi.eku.presenter.signUp;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -17,7 +15,6 @@ import com.kyonggi.eku.model.SignUpForm;
 import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.view.signUp.activity.ActivityInputSignUpInfo;
 
-import java.util.List;
 import java.util.Objects;
 
 public class SignUpInfoPresenter {

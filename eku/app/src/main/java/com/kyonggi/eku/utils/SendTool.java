@@ -12,12 +12,11 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -33,7 +32,7 @@ import okio.Okio;
 
 public final class SendTool {
     private static final String TAG = "SendTool";
-    private static final String baseUrl = "http://192.168.219.101:8080";
+    private static final String baseUrl = "https://eku.kro.kr";
     private static final OkHttpClient client = new OkHttpClient();
     private static final Gson gson = new Gson();
 
@@ -199,10 +198,8 @@ public final class SendTool {
         return gson.fromJson(targetText, t);
     }
 
-    public static <T> ArrayList<T> parseToList(String targetText, Class<T> t) {
-        Type type = new TypeToken<ArrayList<T>>() {
-        }.getType();
-        return gson.fromJson(targetText, type);
+    public static <T> List<T> parseToList(String targetText, Class<T[]> t) {
+        return Arrays.asList(gson.fromJson(targetText, t));
     }
 
     public static final int CONNECTION_FAILED = -1;
