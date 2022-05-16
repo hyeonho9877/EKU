@@ -136,10 +136,20 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
         presenter.loadMoreInfoArticles(no);
     }
 
+    public void updateFreeBoard(long id) {
+        presenter.updateFreeBoard(id);
+    }
+
+    public void loadMoreFreeArticles(Long id) {
+        presenter.loadMoreFreeArticles(id);
+    }
+
 
     public static final String BOARD_FREE = "BOARD_FREE";
     public static final String BOARD_INFO = "BOARD_INFO";
     public static final String LOAD_RECENT = "LOAD_RECENT";
     public static final String LOAD_OLD = "LOAD_OLD";
     public static final String INIT = "INIT";
+
+
 }
