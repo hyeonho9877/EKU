@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InfoBoardRepository extends JpaRepository<InfoBoard, Long> {
 
-    @Query(value = "SELECT i FROM InfoBoard AS i where substring(i.building, :building, 1) = '1'")
-    Page<InfoBoard> findAllByBuilding(@Param("building") int building, Pageable pageable);
+    @Query(value = "SELECT i FROM InfoBoard AS i where substring(i.building, :building, 1) = '1' order by i.writtenTime desc ")
+    Page<InfoBoard> findAllByBuildingOrderByWrittenTime(@Param("building") int building, Pageable pageable);
 
 }
