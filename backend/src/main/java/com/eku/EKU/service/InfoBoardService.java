@@ -1,12 +1,12 @@
 package com.eku.EKU.service;
 
 
+import com.eku.EKU.domain.InfoBoard;
+import com.eku.EKU.domain.Student;
 import com.eku.EKU.form.BoardListForm;
 import com.eku.EKU.form.BoardListResponse;
-import com.eku.EKU.domain.InfoBoard;
-import com.eku.EKU.form.InfoBoardResponse;
-import com.eku.EKU.domain.Student;
 import com.eku.EKU.form.InfoBoardForm;
+import com.eku.EKU.form.InfoBoardResponse;
 import com.eku.EKU.repository.InfoBoardRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import static com.eku.EKU.utils.RelativeTimeConverter.convertToRelativeTime;
 
 @Service
 public class InfoBoardService {
@@ -42,14 +44,16 @@ public class InfoBoardService {
      */
     public List<BoardListResponse> boardList(BoardListForm listForm)throws IllegalArgumentException, NoSuchElementException{
         Pageable pageable = PageRequest.of(listForm.getPage(), 8);
-        Page<InfoBoard> list = infoBoardRepository.findAllByBuilding(listForm.getLecture_building(), pageable);
+        Page<InfoBoard> list = infoBoardRepository.findAllByBuildingOrderByWrittenTime(listForm.getLecture_building(), pageable);
         List<BoardListResponse> newList = new ArrayList<BoardListResponse>();
         for(InfoBoard i : list){
+            String writer = i.getDepartment() + " " + i.getName();
             BoardListResponse form = BoardListResponse.builder()
                     .id(i.getId())
                     .title(i.getTitle())
-                    .name(i.getName())
-                    .department(i.getDepartment())
+                    .writer(writer)
+                    .time(convertToRelativeTime(i.getWrittenTime()))
+                    .view(i.getView())
                     .no(i.getNo().getStudNo())
                     .build();
             newList.add(form);
