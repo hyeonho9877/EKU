@@ -11,4 +11,7 @@ import java.util.List;
  */
 public interface FreeBoardRepository extends JpaRepository<FreeBoard, Long> {
     List<FreeBoard> findByOrderByTimeDesc(Pageable pageable);
+
+    List<FreeBoard> findByIdIsGreaterThanOrderByTimeDesc(Long id);
+    List<FreeBoard> findByIdIsLessThanOrderByTimeDesc(Long id, Pageable ofSize);
 }

@@ -115,4 +115,16 @@ public class InfoBoardPresenter {
         request.put("id", no);
         SendTool.requestForJson("/board/info/load", request, getHandler(BOARD_INFO, LOAD_OLD));
     }
+
+    public void loadMoreFreeArticles(long id) {
+        HashMap<String, Object> request = new HashMap<>();
+        request.put("id", id);
+        SendTool.requestForJson("/board/free/load", request, getHandler(BOARD_FREE, LOAD_OLD));
+    }
+
+    public void updateFreeBoard(long id) {
+        HashMap<String, Object> request = new HashMap<>();
+        request.put("id", id);
+        SendTool.requestForJson("/board/free/recent", request, getHandler(BOARD_FREE, LOAD_RECENT));
+    }
 }

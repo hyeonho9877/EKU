@@ -64,7 +64,6 @@ public class FragmentInfoBoard extends Fragment {
                 if (!isLoading) {
                     List<InfoBoardPreview> currentList = adapter.getCurrentList();
                     if (layoutManager != null && layoutManager.findLastCompletelyVisibleItemPosition() == currentList.size() - 1) {
-                        //리스트 마지막
                         currentList.add(null);
                         adapter.notifyItemInserted(currentList.size() - 1);
                         activity.loadMoreInfoArticles(currentList.get(itemCount - 1).getId());
