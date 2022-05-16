@@ -1,11 +1,11 @@
 package com.eku.EKU.service;
 
+import com.eku.EKU.domain.FreeBoard;
+import com.eku.EKU.domain.Student;
 import com.eku.EKU.form.BoardListForm;
 import com.eku.EKU.form.BoardListResponse;
-import com.eku.EKU.domain.FreeBoard;
-import com.eku.EKU.form.FreeBoardResponse;
-import com.eku.EKU.domain.Student;
 import com.eku.EKU.form.FreeBoardForm;
+import com.eku.EKU.form.FreeBoardResponse;
 import com.eku.EKU.repository.FreeBoardRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -34,7 +34,7 @@ public class FreeBoardService {
      * @return
      */
     public FreeBoard loadBoard(FreeBoardForm form)throws IllegalArgumentException, NoSuchElementException{
-        FreeBoard board = freeBoardRepository.findById(form.getId()).get();
+        FreeBoard board = freeBoardRepository.findById(form.getId()).orElseThrow();
         board.setView(board.getView()+1);
         freeBoardRepository.save(board);
 
