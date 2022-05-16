@@ -43,7 +43,7 @@ public class InfoBoardService {
      * @return List<InfoBoard>로 목록을 반환
      */
     public List<BoardListResponse> boardList(BoardListForm listForm)throws IllegalArgumentException, NoSuchElementException{
-        Pageable pageable = PageRequest.of(listForm.getPage(), 8);
+        Pageable pageable = PageRequest.of(listForm.getPage(), 20);
         Page<InfoBoard> list = infoBoardRepository.findAllByBuildingOrderByWrittenTime(listForm.getLecture_building(), pageable);
         List<BoardListResponse> newList = new ArrayList<BoardListResponse>();
         for(InfoBoard i : list){

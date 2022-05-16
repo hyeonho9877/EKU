@@ -45,7 +45,7 @@ public class FreeBoardService {
      * @return List<FreeBoard>로 목록을 반환
      */
     public List<BoardListResponse> boardList(BoardListForm listForm) throws IllegalArgumentException, NoSuchElementException {
-        PageRequest pageRequest = PageRequest.of(listForm.getPage(), 8);
+        PageRequest pageRequest = PageRequest.of(listForm.getPage(), 20);
         List<FreeBoard> list = freeBoardRepository.findByOrderByTimeDesc(pageRequest);
         List<BoardListResponse> newList = new ArrayList<BoardListResponse>();
         for (FreeBoard i : list) {
