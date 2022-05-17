@@ -11,4 +11,11 @@ public class WebConfig extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/**").addResourceLocations("classpath:/");
         super.addResourceHandlers(registry);
     }
+
+    @Override
+    protected void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        StringHttpMessageConverter converter = new StringHttpMessageConverter(StandardCharsets.UTF_8);
+        converters.add(converter);
+        super.addDefaultHttpMessageConverters(converters);
+    }
 }

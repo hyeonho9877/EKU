@@ -15,5 +15,20 @@
     <color name="kyonggi_color2">#00a05c</color>
     <color name="kyonggi_color3">#f49e01</color>
     <color name="kyonggi_color4">#eb5815</color>
-
+    <color name="main_color">#2A5189</color>
+    <color name="main_tint">#5786CA</color>
+    <color name="black_75">#BF252525</color>
+    <color name="black_50">#80252525</color>
+    <color name="black_25">#40252525</color>
+    <color name="black_10">#0A252525</color>
+    <color name="black_5">#05252525</color>
+    <color name="warn">#F7941E</color>
+    <color name="warn_shade">#DB841B</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="black_50_30">#1e252525</color>
+    <color name="warn_tint">#F8D5AB</color>
 </resources>

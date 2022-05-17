@@ -1,13 +1,17 @@
 package com.eku.EKU.repository;
 
 import com.eku.EKU.domain.FreeBoard;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import java.util.List;
 
 /**
  * FreeBoard에 대한 Repository
  */
 public interface FreeBoardRepository extends JpaRepository<FreeBoard, Long> {
-    Optional<FreeBoard> findFreeBoardById(Long Id);
+    List<FreeBoard> findByOrderByTimeDesc(Pageable pageable);
+
+    List<FreeBoard> findByIdIsGreaterThanOrderByTimeDesc(Long id);
+    List<FreeBoard> findByIdIsLessThanOrderByTimeDesc(Long id, Pageable ofSize);
 }
