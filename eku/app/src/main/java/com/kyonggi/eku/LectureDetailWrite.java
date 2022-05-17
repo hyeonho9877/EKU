@@ -3,7 +3,6 @@ package com.kyonggi.eku;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,11 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -25,13 +21,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.JSONException;
+import com.kyonggi.eku.utils.SendTool;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
 
 public class LectureDetailWrite extends AppCompatActivity {
@@ -45,8 +37,6 @@ public class LectureDetailWrite extends AppCompatActivity {
     String[] grade = {"AP", "A", "BP", "B", "CP", "C", "DP", "D", "F"};
     ActivityResultLauncher<Intent> activityResultLauncher;
     AlertDialog gradeSelectDialog;
-    long backKeyPressedTime;
-    String intentLetureName,intentProfessor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +66,12 @@ public class LectureDetailWrite extends AppCompatActivity {
 
 
         EditText titleview = (EditText) findViewById(R.id.lecture_write_NameText);
-        intentLetureName = intent.getStringExtra("lectureName");
+        String intentLetureName = intent.getStringExtra("lectureName");
         titleview.setText(intentLetureName);
         titleview.setClickable(false);
         titleview.setFocusable(false);
         EditText professorview = (EditText) findViewById(R.id.lecture_write_ProfessorText);
-        intentProfessor = intent.getStringExtra("professor");
+        String intentProfessor = intent.getStringExtra("professor");
         professorview.setText(intentProfessor);
         professorview.setClickable(false);
         professorview.setFocusable(false);
@@ -96,11 +86,6 @@ public class LectureDetailWrite extends AppCompatActivity {
                 String content = contentview.getText().toString();
                 float rating = ratingview.getRating();
                 String score = grade[gradeSelected];
-
-                if(title.equals(null)||professor.equals(null)||
-                        content.equals(null)||rating == 0||score.equals(null)){
-                    Toast.makeText(getApplicationContext(),"항목을 모두 입력해주세요", Toast.LENGTH_SHORT).show();
-                }
 
                 HashMap<String, Object> temp = new HashMap<>();
                 UserInformation info = new UserInformation(getApplicationContext());
@@ -160,22 +145,5 @@ public class LectureDetailWrite extends AppCompatActivity {
                 })
                 .setNegativeButton("취소", null)
                 .create();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
-            backKeyPressedTime = System.currentTimeMillis();
-            Intent intent = new Intent(getApplicationContext(),LectureDetail.class);
-            intent.putExtra("Name", intentLetureName);
-            intent.putExtra("Prof", intentProfessor);
-            startActivity(intent);
-            finish();
-            //Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
-            finish();
-        }
     }
 }

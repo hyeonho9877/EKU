@@ -1,123 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/board_drawerLayout"
+    android:id="@+id/gestureView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainBoard">
+    android:layout_height="match_parent">
 
-    <ScrollView
-        android:id="@+id/board_ScrollView"
+    <Button
+        android:id="@+id/donanRun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="324dp"
+        android:layout_marginTop="1dp"
+        android:backgroundTint="@color/kyonggi_color"
+        android:text="도난방지"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/go_Donan"
         android:layout_width="match_parent"
-        android:layout_height="590dp"
-        android:fillViewport="true"
-        tools:ignore="SpeakableTextPresentCheck">
+        android:layout_height="48dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="#F6A788"
+        android:gravity="center_vertical"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/gestureView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/board_ImageView"
+        android:layout_width="409dp"
+        android:layout_height="234dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/l8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/go_Donan" />
 
-            <ImageButton
-                android:id="@+id/board_Menu"
-                android:layout_width="50dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="#00FDFDFD"
-                android:scaleType="centerInside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat= "@drawable/menuicon"/>
+    <GridView
+        android:id="@+id/board_Memo"
+        android:layout_width="414dp"
+        android:layout_height="451dp"
+        android:background="#4CAF50"
+        android:horizontalSpacing="10dp"
+        android:isScrollContainer="false"
+        android:numColumns="2"
+        android:padding="10dp"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/board_ImageView" >
+    </GridView>
 
-            <ImageButton
-                android:id="@+id/donanRun"
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="#00FDFDFD"
-                android:scaleType="centerInside"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.6"
-                app:layout_constraintStart_toEndOf="@+id/go_Donan"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_notifications_active_24" />
-
-            <TextView
-                android:id="@+id/go_Donan"
-                android:layout_width="267dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="16dp"
-                android:background="#FFFFFF"
-                android:backgroundTint="#00FBFBFB"
-                android:gravity="center_vertical"
-                android:textColor="#2A5189"
-                android:textSize="25dp"
-                app:layout_constraintStart_toEndOf="@+id/board_Menu"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/board_ImageView"
-                android:layout_width="325dp"
-                android:layout_height="214dp"
-                android:layout_marginTop="8dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/l8"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/go_Donan" />
-
-            <GridView
-                android:id="@+id/board_Memo"
-                android:layout_width="387dp"
-                android:layout_height="431dp"
-                android:layout_marginTop="12dp"
-                android:background="#00FDFDFD"
-                android:horizontalSpacing="10dp"
-                android:isScrollContainer="false"
-                android:numColumns="2"
-                android:padding="10dp"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/board_ImageView"></GridView>
-
-            <ImageButton
-                android:id="@+id/board_Write"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="670dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/round_shape"
-                android:scaleType="centerInside"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/pencil"
-                tools:ignore="SpeakableTextPresentCheck" />
-
-            <LinearLayout
-                android:id="@+id/board_linear"
-                android:layout_width="409dp"
-                android:layout_height="453dp"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/board_Memo"></LinearLayout>
+    <ImageButton
+        android:id="@+id/board_Write"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/round_shape"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/pencil"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
-    <com.google.android.material.navigation.NavigationView
-    android:id="@+id/board_navigationView"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    app:headerLayout="@layout/navigation_header"
-    app:menu="@menu/navigation_menu"
-    android:layout_gravity="start"/>
-
-</androidx.drawerlayout.widget.DrawerLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
