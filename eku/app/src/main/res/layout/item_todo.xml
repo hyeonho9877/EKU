@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#fff2b6"
-    android:layout_marginBottom="10sp">
+    android:layout_marginBottom="10sp"
+    android:background="#AECFFF">
 
     <TextView
         android:id="@+id/tv_title"
@@ -14,8 +14,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="제목"
-        android:textSize="20sp"
         android:textColor="@color/black"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,8 +26,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="내용"
-        android:textSize="16sp"
         android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />

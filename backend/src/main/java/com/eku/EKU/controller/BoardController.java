@@ -1,9 +1,6 @@
 package com.eku.EKU.controller;
 
 
-import com.eku.EKU.form.BoardList;
-import com.eku.EKU.form.FreeBoardResponse;
-import com.eku.EKU.form.InfoBoardResponse;
 import com.eku.EKU.exceptions.NoSuchArticleException;
 import com.eku.EKU.exceptions.NoSuchBoardException;
 import com.eku.EKU.exceptions.NoSuchStudentException;
@@ -14,12 +11,10 @@ import com.eku.EKU.service.InfoBoardCommentService;
 import com.eku.EKU.service.InfoBoardService;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -76,11 +71,12 @@ public class BoardController {
 
     /**
      * 자유게시판의 전체목록을 불러오는 메소드
+     * @param form
      * @return 게시판목록 list 반환
      */
     @PostMapping("/board/free/lists")
-    public ResponseEntity<?> boardList(){
-        ArrayList<BoardList> list = freeBoardService.boardList();
+    public ResponseEntity<?> freeBoardList(@RequestBody BoardListForm form){
+        List<BoardListResponse> list = freeBoardService.boardList(form);
         if(!list.isEmpty())
             return ResponseEntity.ok(list);
         else
@@ -177,8 +173,8 @@ public class BoardController {
      * @return 게시판목록 list 반환
      */
     @PostMapping("/board/info/lists")
-    public ResponseEntity<?> boardList(@RequestBody InfoBoardForm form){
-        ArrayList<BoardList> list = infoBoardService.boardList(form);
+    public ResponseEntity<?> infoBoardList(@RequestBody BoardListForm form){
+        List<BoardListResponse> list = infoBoardService.boardList(form);
         if(!list.isEmpty())
             return ResponseEntity.ok(list);
         else
@@ -202,6 +198,27 @@ public class BoardController {
         }
 
     }
+
+    @PostMapping("/board/info/recent")
+    public ResponseEntity<?> latestInfoBoard(@RequestBody InfoBoardForm form) {
+        return ResponseEntity.ok(infoBoardService.getRecentBoard(form.getId()));
+    }
+
+    @PostMapping("/board/info/load")
+    public ResponseEntity<?> loadInfoBoard(@RequestBody InfoBoardForm form) {
+        return ResponseEntity.ok(infoBoardService.loadBoardAfterId(form.getId()));
+    }
+
+    @PostMapping("/board/free/recent")
+    public ResponseEntity<?> latestFreeBoard(@RequestBody InfoBoardForm form) {
+        return ResponseEntity.ok(freeBoardService.getRecentBoard(form.getId()));
+    }
+
+    @PostMapping("/board/free/load")
+    public ResponseEntity<?> loadFreeBoard(@RequestBody InfoBoardForm form) {
+        return ResponseEntity.ok(freeBoardService.loadBoardAfterId(form.getId()));
+    }
+
     /**
      * 자유 게시판 댓글 작성
      * @param form 작성하려는 댓글의 정보를 담고 있는 Form 객체
@@ -285,5 +302,7 @@ public class BoardController {
             return ResponseEntity.badRequest().body(form.getCommentId());
         }
     }
+
+
 }
 

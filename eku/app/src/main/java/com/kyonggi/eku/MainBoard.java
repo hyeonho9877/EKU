@@ -3,22 +3,30 @@ package com.kyonggi.eku;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,16 +50,83 @@ public class MainBoard extends AppCompatActivity {
     AlertDialog buildingSelectDialog;
     GestureDetector gestureDetector = null;
     long backKeyPressedTime;
-    TextView BuildingButton;
+    static TextView BuildingButton;
     GridListAdapter gAdapter;
+    LinearLayout sc;
+    MainItem mainitem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_board);
+/*
+        if (savedInstanceState == null) {
 
-        Button button = findViewById(R.id.donanRun);
+            MapFragment mapFragment = new MapFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.board_ImageView, mapFragment, "main")
+                    .commit();
+        }
+
+ */
+
+        final DrawerLayout drawerLayout = findViewById(R.id.board_drawerLayout);
+
+        findViewById(R.id.board_Menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        NavigationView navigationView = findViewById(R.id.board_navigationView);
+        navigationView.setItemIconTintList(null);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                Intent intent;
+                switch (id) {
+                    case R.id.Home:
+                        intent = new Intent(getApplicationContext(), MainBoard.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.Announce:
+                        intent = new Intent(getApplicationContext(), MainCommunity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.Free:
+                        intent = new Intent(getApplicationContext(), MainFreeCommunity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.lectureMain:
+                        intent = new Intent(getApplicationContext(), LectureMain.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.ToDo:
+                        intent = new Intent(getApplicationContext(), TodoActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.TimeTable:
+                        intent = new Intent(getApplicationContext(), ScheduleTable.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                }
+                return false;
+            }
+        });
+
+
+
+        ImageButton button = findViewById(R.id.donanRun);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,10 +244,11 @@ public class MainBoard extends AppCompatActivity {
                 .setNegativeButton("취소", null)
                 .create();
 
+
         GridView gridView = (GridView)findViewById(R.id.board_Memo);
         gAdapter = new GridListAdapter();
 
-        Handler handler = new Handler() {
+        Handler handler = new Handler(Looper.getMainLooper()) {
             public void handleMessage(@NonNull Message msg) {
                 Log.i("a", String.valueOf(msg.what));
                 switch (msg.what) {
@@ -212,7 +288,7 @@ public class MainBoard extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
+        write_Board(3);
 
 
         ImageButton imageButton = (ImageButton)findViewById(R.id.board_Write);
@@ -251,12 +327,10 @@ public class MainBoard extends AppCompatActivity {
 
     public void onSwipeRight() {
         Toast.makeText(this,"우측 스와이프", Toast.LENGTH_SHORT).show();
-        /*   ---------------------여기 지도 activity 넣어주셈-------------------------
-        Intent intent = new Intent(getApplicationContext(), 지도.class);
+        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+        intent.putExtra("title", BuildingButton.getText().toString());
         startActivity(intent);
         finish();
-
-         */
 
     }
 
@@ -277,5 +351,80 @@ public class MainBoard extends AppCompatActivity {
         if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
             finish();
         }
+    }
+
+    public void write_Board(int b) {
+        String title;
+        String[] content = new String[3];
+        sc = (LinearLayout) findViewById(R.id.board_linear);
+        LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+        switch (b) {
+            case 1:
+                title = "공지게시판";
+                content[0] = "";
+                content[1] = "";
+                content[2] = "";
+                //추가좀
+                break;
+            case 2:
+                title = "자유게시판";
+                content[0] = "";
+                content[1] = "";
+                content[2] = "";
+                //추가좀
+                break;
+            case 3:
+                Handler handler = new Handler(getMainLooper()) {
+                    @Override
+                    public void handleMessage(@NonNull Message msg) {
+                        String responseResult = (String) msg.obj;
+                        try {
+                            JSONArray LectureArray = new JSONArray(responseResult);
+                            for (int i = 0; i < LectureArray.length(); i++) {
+                                JSONObject LectureObject = LectureArray.getJSONObject(i);
+                                String text = LectureObject.getString("content");
+                                content[i] = text;
+                                if(i==2)
+                                    break;
+                            }
+                            mainitem = new MainItem(getApplicationContext(), "강의게시판", content[0], content[1], content[2]);
+                            sc.addView(mainitem);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                };
+
+                HashMap<String, Object> temp = new HashMap<>();
+                try {
+                    SendTool.requestForJson("/critic/read", temp, handler);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+                break;
+            default:
+                title = "";
+                content[0] = "";
+                content[1] = "";
+                content[2] = "";
+                break;
+        }
+
+        /*mainitem.setId(Lectureid);
+        mainitem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LectureDetail.class);
+                intent.putExtra("Name", Title);
+                intent.putExtra("Prof", professor);
+                startActivity(intent);
+                finish();
+            }
+        });
+         */
+
     }
 }

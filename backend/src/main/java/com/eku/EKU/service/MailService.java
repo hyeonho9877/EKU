@@ -2,11 +2,15 @@ package com.eku.EKU.service;
 
 import com.eku.EKU.domain.Student;
 import com.eku.EKU.repository.MappingKeyRepository;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.util.regex.Pattern;
 
 /**
@@ -17,30 +21,43 @@ public class MailService {
 
     private final JavaMailSender mailSender;
     private final MappingKeyRepository mappingKeyRepository;
+    private final SpringTemplateEngine templateEngine;
 
-    public MailService(JavaMailSender mailSender, MappingKeyRepository mappingKeyRepository) {
+    public MailService(JavaMailSender mailSender, MappingKeyRepository mappingKeyRepository, SpringTemplateEngine templateEngine) {
         this.mailSender = mailSender;
         this.mappingKeyRepository = mappingKeyRepository;
+        this.templateEngine = templateEngine;
     }
+
 
     /**
      * 사용자와 1대1로 매핑되는 인증키를 기반으로 링크를 생성하고 이메일을 발송하는 메소드
      * @param student 발송 되상이 되는 학생
      * @param email 학생의 이메일 주소
-     * @return 메일을 성공적으로 발송한 경우 True를 리턴, 반대의 경우 False 리턴
      */
-    public void sendAuthMail(Student student, String email){
+    @Async
+    public void sendAuthMail(Student student, String email, String remoteHost){
         try {
-            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+
             String authKey = mappingKeyRepository.findMappingKeyByStudent(student)
                     .orElseThrow()
                     .getAuthKey();
-            String authLink = "http://115.85.182.126:8080/signUp/emailAuth?key=" + authKey.replace("+", "%2B");
-            mailMessage.setTo(email);
-            mailMessage.setSubject("EKU! (Everywhere Kyonggi Up!) 가입 확인 메일입니다.");
-            mailMessage.setText("인증 링크 : " + authLink);
-            mailSender.send(mailMessage);
-        } catch (MailException exception) {
+            String authLink = "https://www.eku.kro.kr/signUp/emailAuth?key=" + authKey.replace("+", "%2B");
+
+            helper.setTo(email);
+            helper.setSubject("EKU! (Everywhere Kyonggi Up!) 가입 확인 메일입니다.");
+
+            Context context = new Context();
+            context.setVariable("remoteHost", remoteHost);
+            context.setVariable("authLink", authLink);
+
+            String html = templateEngine.process("auth-mail", context);
+            helper.setText(html, true);
+
+            mailSender.send(mimeMessage);
+        } catch (MessagingException exception) {
             exception.printStackTrace();
         }
     }

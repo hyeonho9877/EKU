@@ -44,6 +44,7 @@ public class LectureWrite extends AppCompatActivity {
     String[] grade = {"AP", "A", "BP", "B", "CP", "C", "DP", "D", "F"};
     ActivityResultLauncher<Intent> activityResultLauncher;
     AlertDialog gradeSelectDialog;
+    long backKeyPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +85,15 @@ public class LectureWrite extends AppCompatActivity {
                 float rating = ratingview.getRating();
                 String score = grade[gradeSelected];
 
+                if(title.equals(null)||professor.equals(null)||
+                        content.equals(null)||rating == 0||score.equals(null)){
+                    Toast.makeText(getApplicationContext(),"항목을 모두 입력해주세요", Toast.LENGTH_SHORT).show();
+                }
+
                 HashMap<String, Object> temp = new HashMap<>();
-                temp.put("studNo", 201611772);
+                UserInformation info = new UserInformation(getApplicationContext());
+                String stduNoText = info.fromPhoneStudentNo(getApplicationContext());
+                temp.put("studNo", Integer.parseInt(stduNoText));
                 temp.put("content", content);
                 temp.put("grade", score);
                 temp.put("star", rating);
@@ -98,7 +106,6 @@ public class LectureWrite extends AppCompatActivity {
                 catch (IOException | NullPointerException e) {
                     e.printStackTrace();
                 }
-
                 Intent intent = new Intent(getApplicationContext(), LectureMain.class);
                 startActivity(intent);
                 finish();
@@ -139,4 +146,21 @@ public class LectureWrite extends AppCompatActivity {
                 .setNegativeButton("취소", null)
                 .create();
     }
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
+            backKeyPressedTime = System.currentTimeMillis();
+            Intent intent = new Intent(getApplicationContext(),LectureMain.class);
+            startActivity(intent);
+            finish();
+            //Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
+            finish();
+        }
+    }
+
+
 }
