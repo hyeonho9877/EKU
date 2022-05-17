@@ -287,6 +287,7 @@ public class MainBoard extends AppCompatActivity {
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }
+        write_Board(3);
 
         write_Board(3);
 
@@ -356,6 +357,7 @@ public class MainBoard extends AppCompatActivity {
     public void write_Board(int b) {
         String title;
         String[] content = new String[3];
+
         sc = (LinearLayout) findViewById(R.id.board_linear);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -386,7 +388,8 @@ public class MainBoard extends AppCompatActivity {
                                 JSONObject LectureObject = LectureArray.getJSONObject(i);
                                 String text = LectureObject.getString("content");
                                 content[i] = text;
-                                if(i==2)
+
+                                if (i==2)
                                     break;
                             }
                             mainitem = new MainItem(getApplicationContext(), "강의게시판", content[0], content[1], content[2]);
