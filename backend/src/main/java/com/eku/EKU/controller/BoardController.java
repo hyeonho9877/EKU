@@ -11,12 +11,10 @@ import com.eku.EKU.service.InfoBoardCommentService;
 import com.eku.EKU.service.InfoBoardService;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -73,11 +71,12 @@ public class BoardController {
 
     /**
      * 자유게시판의 전체목록을 불러오는 메소드
+     * @param form
      * @return 게시판목록 list 반환
      */
     @PostMapping("/board/free/lists")
-    public ResponseEntity<?> boardList(){
-        ArrayList<BoardList> list = freeBoardService.boardList();
+    public ResponseEntity<?> freeBoardList(@RequestBody BoardListForm form){
+        List<BoardListResponse> list = freeBoardService.boardList(form);
         if(!list.isEmpty())
             return ResponseEntity.ok(list);
         else
@@ -174,8 +173,8 @@ public class BoardController {
      * @return 게시판목록 list 반환
      */
     @PostMapping("/board/info/lists")
-    public ResponseEntity<?> boardList(@RequestBody InfoBoardForm form){
-        ArrayList<BoardList> list = infoBoardService.boardList(form);
+    public ResponseEntity<?> infoBoardList(@RequestBody BoardListForm form){
+        List<BoardListResponse> list = infoBoardService.boardList(form);
         if(!list.isEmpty())
             return ResponseEntity.ok(list);
         else

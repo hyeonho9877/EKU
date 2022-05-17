@@ -1,23 +1,19 @@
 package com.kyonggi.eku;
 
-import android.content.Context;
-
 public class Lecture {
     private String lectureName;
     private String professor;
     private float star;
-    String writer;
 
     public Lecture(String lectureName,String professor){
         this.lectureName = lectureName;
         this.professor = professor;
     }
 
-    public Lecture(String lectureName,String professor, float star, String writer){
+    public Lecture(String lectureName,String professor, float star){
         this.lectureName = lectureName;
         this.professor = professor;
         this.star = star;
-        this.writer = writer;
     }
 
     public String getLectureName() {
@@ -41,6 +37,9 @@ public class Lecture {
     public void setStar(float star) {
         this.star = star;
     }
+
+
+
 
 }
 

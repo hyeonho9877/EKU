@@ -1,7 +1,6 @@
 package com.kyonggi.eku;
 
 import android.content.Context;
-
 import android.content.SharedPreferences;
 
 public class PreferenceManagers {

@@ -3,7 +3,6 @@ package com.eku.EKU.form;
 import lombok.Builder;
 import lombok.Data;
 
-@Builder
 @Data
 public class ScheduleForm {
     private String lecture_time;

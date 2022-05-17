@@ -1,13 +1,15 @@
 package com.kyonggi.eku;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.kyonggi.eku.view.signIn.ActivitySignIn;
 
 public class VerfityActivity extends AppCompatActivity {
 
@@ -29,7 +31,7 @@ public class VerfityActivity extends AppCompatActivity {
         OKbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ActivitySignIn.class);
                 startActivity(intent);
             }
         });
