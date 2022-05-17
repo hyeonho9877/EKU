@@ -9,9 +9,6 @@ import com.eku.EKU.form.InfoBoardForm;
 import com.eku.EKU.form.InfoBoardResponse;
 import com.eku.EKU.repository.InfoBoardRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,12 +31,12 @@ public class InfoBoardService {
      * @return
      */
     public InfoBoard loadBoard(InfoBoardForm form)throws IllegalArgumentException, NoSuchElementException {
-        InfoBoard board = infoBoardRepository.findById(form.getId()).get();
+        InfoBoard board = infoBoardRepository.findInfoBoardById(form.getId()).get();
         return board;
     }
     /**
      * 게시물 목록
-     * @param listForm 해당 강의동 + page번호
+     * @param boardForm 해당 강의동
      * @return List<InfoBoard>로 목록을 반환
      */
     public List<BoardListResponse> boardList(BoardListForm listForm)throws IllegalArgumentException, NoSuchElementException{
@@ -56,7 +53,8 @@ public class InfoBoardService {
                     .view(i.getView())
                     .no(i.getNo().getStudNo())
                     .build();
-            newList.add(form);
+                newList.add(form);
+            }
         }
         return newList;
     }
@@ -83,7 +81,7 @@ public class InfoBoardService {
      * @param form 수정할 게시판의 정보
      */
     public void updateBoard(InfoBoardForm form) throws IllegalArgumentException, NoSuchElementException{
-        InfoBoard board = infoBoardRepository.findById(form.getId()).get();
+        InfoBoard board = infoBoardRepository.findInfoBoardById(form.getId()).get();
         if(form.getTitle()!=null&&form.getContent()!=null) {
             board.setContent(form.getContent());
             board.setTitle(form.getTitle());

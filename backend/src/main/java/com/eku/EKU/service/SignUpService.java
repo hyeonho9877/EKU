@@ -36,6 +36,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * 회원 가입에 관련된 기능을 담당하는 서비스 클래스
@@ -195,7 +196,7 @@ public class SignUpService {
         List<String> texts = responseForm.getImages().get(0).getFields()
                 .stream()
                 .map(ImageField::getInferText)
-                .toList();
+                .collect(Collectors.toList());
 
         ClientOcrResponseForm.ClientOcrResponseFormBuilder responseFormBuilder = ClientOcrResponseForm.builder();
         texts.forEach(
