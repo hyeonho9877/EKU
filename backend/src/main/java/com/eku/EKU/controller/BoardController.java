@@ -1,9 +1,6 @@
 package com.eku.EKU.controller;
 
 
-import com.eku.EKU.form.BoardListResponse;
-import com.eku.EKU.form.FreeBoardResponse;
-import com.eku.EKU.form.InfoBoardResponse;
 import com.eku.EKU.exceptions.NoSuchArticleException;
 import com.eku.EKU.exceptions.NoSuchBoardException;
 import com.eku.EKU.exceptions.NoSuchStudentException;
@@ -201,6 +198,27 @@ public class BoardController {
         }
 
     }
+
+    @PostMapping("/board/info/recent")
+    public ResponseEntity<?> latestInfoBoard(@RequestBody InfoBoardForm form) {
+        return ResponseEntity.ok(infoBoardService.getRecentBoard(form.getId()));
+    }
+
+    @PostMapping("/board/info/load")
+    public ResponseEntity<?> loadInfoBoard(@RequestBody InfoBoardForm form) {
+        return ResponseEntity.ok(infoBoardService.loadBoardAfterId(form.getId()));
+    }
+
+    @PostMapping("/board/free/recent")
+    public ResponseEntity<?> latestFreeBoard(@RequestBody InfoBoardForm form) {
+        return ResponseEntity.ok(freeBoardService.getRecentBoard(form.getId()));
+    }
+
+    @PostMapping("/board/free/load")
+    public ResponseEntity<?> loadFreeBoard(@RequestBody InfoBoardForm form) {
+        return ResponseEntity.ok(freeBoardService.loadBoardAfterId(form.getId()));
+    }
+
     /**
      * 자유 게시판 댓글 작성
      * @param form 작성하려는 댓글의 정보를 담고 있는 Form 객체
@@ -284,5 +302,7 @@ public class BoardController {
             return ResponseEntity.badRequest().body(form.getCommentId());
         }
     }
+
+
 }
 

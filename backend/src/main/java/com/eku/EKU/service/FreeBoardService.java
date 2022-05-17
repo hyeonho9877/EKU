@@ -7,6 +7,7 @@ import com.eku.EKU.repository.FreeBoardRepository;
 import com.eku.EKU.utils.RelativeTimeConverter;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class FreeBoardService {
      * @return List<FreeBoard>로 목록을 반환
      */
     public List<BoardListResponse> boardList(BoardListForm listForm) throws IllegalArgumentException, NoSuchElementException {
-        PageRequest pageRequest = PageRequest.of(listForm.getPage(), 8);
+        PageRequest pageRequest = PageRequest.of(listForm.getPage(), 20);
         List<FreeBoard> list = freeBoardRepository.findByOrderByTimeDesc(pageRequest);
         List<BoardListResponse> newList = new ArrayList<BoardListResponse>();
         for (FreeBoard i : list) {
@@ -128,5 +129,15 @@ public class FreeBoardService {
     public Long studentNo(Long no) {
         Long temp = no / 100000;
         return temp - 2000;
+    }
+
+    public List<FreeBoardListResponse> getRecentBoard(Long id) {
+        List<FreeBoard> result = freeBoardRepository.findByIdIsGreaterThanOrderByTimeDesc(id);
+        return result.stream().map(e-> new FreeBoardListResponse(e, e.getComments(), studentNo(e.getStudent().getStudNo())+" "+e.getDepartment())).toList();
+    }
+
+    public List<FreeBoardListResponse> loadBoardAfterId(Long id) {
+        List<FreeBoard> result = freeBoardRepository.findByIdIsLessThanOrderByTimeDesc(id, Pageable.ofSize(20));
+        return result.stream().map(e-> new FreeBoardListResponse(e, e.getComments(), studentNo(e.getStudent().getStudNo())+" "+e.getDepartment())).toList();
     }
 }

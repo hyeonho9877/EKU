@@ -43,7 +43,7 @@ public class InfoBoardService {
      * @return List<InfoBoard>로 목록을 반환
      */
     public List<BoardListResponse> boardList(BoardListForm listForm)throws IllegalArgumentException, NoSuchElementException{
-        Pageable pageable = PageRequest.of(listForm.getPage(), 8);
+        Pageable pageable = PageRequest.of(listForm.getPage(), 20);
         Page<InfoBoard> list = infoBoardRepository.findAllByBuildingOrderByWrittenTime(listForm.getLecture_building(), pageable);
         List<BoardListResponse> newList = new ArrayList<BoardListResponse>();
         for(InfoBoard i : list){
@@ -91,6 +91,12 @@ public class InfoBoardService {
             infoBoardRepository.save(board);
         }
     }
+
+    public List<BoardListResponse> getRecentBoard(long id) {
+        List<InfoBoard> result = infoBoardRepository.findByIdIsGreaterThanOrderByWrittenTimeDesc(id);
+        return result.stream().map(BoardListResponse::new)
+                .toList();
+    }
     /**
      * 게시물 삭제
      * @param id 해당 게시물 번호
@@ -121,4 +127,9 @@ public class InfoBoardService {
         return false;
     }
 
+    public List<BoardListResponse> loadBoardAfterId(Long id) {
+        List<InfoBoard> result = infoBoardRepository.findByIdIsLessThanOrderByWrittenTimeDesc(id, Pageable.ofSize(20));
+        return result.stream().map(BoardListResponse::new)
+                .toList();
+    }
 }

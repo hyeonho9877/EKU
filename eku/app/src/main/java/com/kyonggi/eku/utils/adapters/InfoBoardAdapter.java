@@ -1,41 +1,88 @@
 package com.kyonggi.eku.utils.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kyonggi.eku.databinding.BoardLoadingBinding;
 import com.kyonggi.eku.databinding.InfoBoardItemBinding;
 import com.kyonggi.eku.model.InfoBoardPreview;
 
+import java.util.List;
 import java.util.Objects;
 
-public class InfoBoardAdapter extends ListAdapter<InfoBoardPreview, InfoBoardAdapter.InfoBoardViewHolder> {
+public class InfoBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
+    private static final String TAG = "InfoBoardAdapter";
+    private List<InfoBoardPreview> list;
 
+    public InfoBoardAdapter(List<InfoBoardPreview> list) {
+        this.list = list;
+    }
 
-    public InfoBoardAdapter() {
-        super(new DiffUtilCallback());
+    public boolean insertFromHead(List<InfoBoardPreview> newList) {
+        Log.d(TAG, "insert: " + newList);
+        if (newList.size() != 0 && !(newList.get(0) == list.get(0))) {
+            list.addAll(0, newList);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean insertFromTail(List<InfoBoardPreview> oldList) {
+        Log.d(TAG, "insertFromTail: " + oldList.size());
+        if (oldList.size() < 20) {
+            list.addAll(oldList);
+            return true;
+        } else {
+            list.addAll(oldList);
+            return false;
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 20;
+        return list.size();
     }
 
     @NonNull
     @Override
-    public InfoBoardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        InfoBoardItemBinding binding = InfoBoardItemBinding.inflate(layoutInflater, parent, false);
-        return new InfoBoardViewHolder(binding);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == VIEW_TYPE_ITEM) {
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+            InfoBoardItemBinding binding = InfoBoardItemBinding.inflate(layoutInflater, parent, false);
+            return new InfoBoardViewHolder(binding);
+        } else {
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+            BoardLoadingBinding binding = BoardLoadingBinding.inflate(layoutInflater, parent, false);
+            return new LoadingViewHolder(binding);
+        }
+
     }
 
     @Override
-    public void onBindViewHolder(@NonNull InfoBoardViewHolder holder, int position) {
-        holder.bind(getItem(position));
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof InfoBoardViewHolder) {
+            ((InfoBoardViewHolder) holder).bind(list.get(position));
+        } else if (holder instanceof LoadingViewHolder) {
+            showLoadingView((LoadingViewHolder) holder, position);
+        }
+    }
+
+    private void showLoadingView(LoadingViewHolder holder, int position) {
+
+    }
+
+    public List<InfoBoardPreview> getCurrentList() {
+        return list;
     }
 
     class InfoBoardViewHolder extends RecyclerView.ViewHolder {
@@ -56,10 +103,25 @@ public class InfoBoardAdapter extends ListAdapter<InfoBoardPreview, InfoBoardAda
             binding.textInfoBoardTime.setText(item.getTime());
             String view = "조회 " + item.getView();
             binding.textInfoBoardView.setText(view);
+            binding.textInfoBoardTitle.setOnClickListener(v -> {
+                        Log.d("tag", "bind: " + this.getAbsoluteAdapterPosition());
+                    }
+
+            );
+        }
+    }
+
+    private class LoadingViewHolder extends RecyclerView.ViewHolder {
+        private BoardLoadingBinding binding;
+
+        public LoadingViewHolder(@NonNull BoardLoadingBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 
     static class DiffUtilCallback extends DiffUtil.ItemCallback<InfoBoardPreview> {
+
 
         @Override
         public boolean areItemsTheSame(@NonNull InfoBoardPreview oldItem, @NonNull InfoBoardPreview newItem) {
