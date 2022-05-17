@@ -1,29 +1,32 @@
 package com.kyonggi.eku;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.gson.Gson;
-import com.kyonggi.eku.utils.SendTool;
-import com.kyonggi.eku.view.signIn.ActivitySignIn;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,12 +44,13 @@ public class LectureDetail extends AppCompatActivity {
     AlertDialog buildingSelectDialog;
     float total;
     int count;
+    long backKeyPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lecture_detail);
-
+/*
         TextView BuildingButton = (TextView) findViewById(R.id.lecture_detail_spinner);
         BuildingButton.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -70,11 +74,9 @@ public class LectureDetail extends AppCompatActivity {
                 })
                 .setNegativeButton("취소", null)
                 .create();
-
+*/
         Intent intent = getIntent();
         String title = intent.getStringExtra("Name");
-
-
         String professor = intent.getStringExtra("Prof");
 
         Handler handler = new Handler(getMainLooper()){
@@ -117,8 +119,6 @@ public class LectureDetail extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-
         TextView textView = (TextView)findViewById(R.id.lecture_detail_name);
         textView.setText(title);
 
@@ -131,7 +131,7 @@ public class LectureDetail extends AppCompatActivity {
             public void onClick(View view) {
                 UserInformation info = new UserInformation(getApplicationContext());
                 if (!info.fromPhoneVerify(getApplicationContext())) {
-                    Intent intent = new Intent(getApplicationContext(), ActivitySignIn.class);
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
@@ -143,7 +143,7 @@ public class LectureDetail extends AppCompatActivity {
                 }
             }
         });
-
+/*
         Button closeButton = (Button) findViewById(R.id.lecture_detail_CloseButton);
         closeButton.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -153,7 +153,7 @@ public class LectureDetail extends AppCompatActivity {
                 finish();
             }
         });
-
+*/
 
     }
 
@@ -161,14 +161,17 @@ public class LectureDetail extends AppCompatActivity {
         LinearLayout sc = (LinearLayout)findViewById(R.id.lecture_detail_scroll);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-
+        String writer="고지웅";
+        LectureItem lectureitem = new LectureItem(getApplicationContext(), content,grade,star,writer);
+        sc.addView(lectureitem);
+        /*
         LinearLayout.LayoutParams linearLayoutParams =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
 
-        /*linearLayout.setOnClickListener(new View.OnClickListener() {
+        linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),LectureDetail.class);
@@ -179,7 +182,7 @@ public class LectureDetail extends AppCompatActivity {
 
             }
         });
-         */
+
 
         TextView textView = new TextView(getApplicationContext());
         textView.setText(content);
@@ -208,8 +211,22 @@ public class LectureDetail extends AppCompatActivity {
 
         linearLayout.setBackgroundColor(Color.GRAY);
         sc.addView(linearLayout);
+        */
+    }
 
-
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
+            backKeyPressedTime = System.currentTimeMillis();
+            Intent intent = new Intent(getApplicationContext(),LectureMain.class);
+            startActivity(intent);
+            finish();
+            //Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
+            finish();
+        }
     }
 
 
