@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.minew.beacon.BeaconValueIndex;
@@ -30,6 +31,7 @@ public class DonanBagGi extends AppCompatActivity {
     TextView textView;
     Button button;
     Button b;
+    ImageView s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +85,8 @@ public class DonanBagGi extends AppCompatActivity {
         button= findViewById(R.id.Donan_Button);
         textView = findViewById(R.id.Donan_TextView);
         b = findViewById(R.id.BackButton);
+        s = findViewById(R.id.Donan_ImageView);
+
         mMinewBeaconManager = MinewBeaconManager.getInstance(this);
         Toast.makeText(this,"켜짐",Toast.LENGTH_SHORT).show();
     }
@@ -102,21 +106,25 @@ public class DonanBagGi extends AppCompatActivity {
             public void onClick(View view) {
                 //스캔 발견하면 스캔시작되었다고 말해줌
                 if (isScanning) {
-                    button.setBackgroundColor(Color.BLUE);
-                    button.setText("작동하기");
+                    button.setBackgroundColor(Color.rgb(42, 81, 137));
+                    button.setText("도난방지 기능 켜기");
                     isScanning = false;
-                    textView.setText("도난방지 해제됨");
+                    textView.setText("도난방지가 꺼져있습니다.");
+                    s.setColorFilter(Color.parseColor("#5786CA"));
+
                     if (mMinewBeaconManager != null) {
                         mMinewBeaconManager.stopScan();
 
                     }
                     stealing=false;
                 } else {
-                    button.setText("해제하기");
+                    button.setText("도난방지 기능 끄기");
                     button.setBackgroundColor(Color.RED);
                     //아니었으면 멈춰싿고 함
                     isScanning = true;
-                    textView.setText("도난방지 작동됨");
+                    textView.setText("도난방지가 켜져있습니다");
+                    s.setColorFilter(Color.RED);
+
                     try {
                         mMinewBeaconManager.startScan();
 

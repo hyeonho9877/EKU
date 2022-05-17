@@ -85,6 +85,11 @@ public class LectureWrite extends AppCompatActivity {
                 float rating = ratingview.getRating();
                 String score = grade[gradeSelected];
 
+                if(title.equals(null)||professor.equals(null)||
+                        content.equals(null)||rating == 0||score.equals(null)){
+                    Toast.makeText(getApplicationContext(),"항목을 모두 입력해주세요", Toast.LENGTH_SHORT).show();
+                }
+
                 HashMap<String, Object> temp = new HashMap<>();
                 UserInformation info = new UserInformation(getApplicationContext());
                 String stduNoText = info.fromPhoneStudentNo(getApplicationContext());
