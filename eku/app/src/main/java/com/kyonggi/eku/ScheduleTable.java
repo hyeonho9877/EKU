@@ -1,5 +1,12 @@
 package com.kyonggi.eku;
 
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,13 +21,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import com.google.android.material.navigation.NavigationView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ScheduleTable extends AppCompatActivity {
 

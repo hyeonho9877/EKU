@@ -8,11 +8,11 @@
     tools:context=".TodoActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/_todo"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".TodoActivity">
+        android:id="@+id/_todo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".TodoActivity">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_write"
@@ -30,23 +30,16 @@
             android:id="@+id/ToDo_spinner"
             android:layout_width="358dp"
             android:layout_height="41dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
             android:background="#FFFFFF"
-            android:backgroundTint="#F6A788"
+            android:backgroundTint="#00FFFFFF"
             android:gravity="center_vertical"
+            android:text="To Do List"
+            android:textColor="#2A5189"
             android:textSize="25dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ToDo_Menu"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/ToDo_Menu"
-            android:layout_width="50dp"
-            android:layout_height="42dp"
-            android:backgroundTint="#F6A788"
-            android:scaleType="centerInside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/menuicon" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_todo"
@@ -58,7 +51,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ToDo_spinner"
-            app:layout_constraintVertical_bias="0.058"
+            app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/item_todo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
