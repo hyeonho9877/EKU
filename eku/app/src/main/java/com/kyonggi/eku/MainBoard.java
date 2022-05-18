@@ -29,6 +29,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
 import com.kyonggi.eku.utils.SendTool;
+import com.kyonggi.eku.view.signIn.ActivitySignIn;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -300,7 +302,7 @@ public class MainBoard extends AppCompatActivity {
                 String check = userInfo.sessionCheck(getBaseContext());
                 if(check.equals("needLogin"))
                 {
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), ActivitySignIn.class);
                     startActivity(intent);
                     finish();
                 }

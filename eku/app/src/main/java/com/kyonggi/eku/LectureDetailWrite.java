@@ -25,6 +25,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.kyonggi.eku.utils.SendTool;
+
 import org.json.JSONException;
 
 import java.io.BufferedReader;

@@ -25,6 +25,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.kyonggi.eku.utils.SendTool;
+import com.kyonggi.eku.view.signIn.ActivitySignIn;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -131,7 +133,7 @@ public class LectureDetail extends AppCompatActivity {
             public void onClick(View view) {
                 UserInformation info = new UserInformation(getApplicationContext());
                 if (!info.fromPhoneVerify(getApplicationContext())) {
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), ActivitySignIn.class);
                     startActivity(intent);
                     finish();
                 } else {
