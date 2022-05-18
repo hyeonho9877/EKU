@@ -74,6 +74,13 @@ public class SignUpCameraPresenter {
 
     }
 
+    public void skipCamera(){
+        Intent intent = new Intent(context, ActivityInputSignUpInfo.class);
+        activity.startActivity(intent);
+        activity.finish();
+
+    }
+
     public void takePhoto() {
         String name = new SimpleDateFormat(FILENAME_FORMAT, Locale.KOREA).format(System.currentTimeMillis());
         ContentValues contentValues = new ContentValues();

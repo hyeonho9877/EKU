@@ -20,12 +20,10 @@ import com.kyonggi.eku.model.FreeBoardPreview;
 import com.kyonggi.eku.model.InfoBoardPreview;
 import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.view.board.OnResponseListeners;
-import com.kyonggi.eku.view.board.activity.ActivityBoard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class InfoBoardPresenter {
     private static final String TAG = "FreeBoardPresenter";

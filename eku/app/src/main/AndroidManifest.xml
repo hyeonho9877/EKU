@@ -76,6 +76,11 @@
         <activity
             android:name=".view.signIn.ActivitySignIn"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".view.signUp.activity.ActivitySignUpCamera" />
         <activity android:name=".view.signUp.activity.ActivityGallery" />
@@ -85,11 +90,6 @@
             android:name=".MainBoard"
             android:exported="true"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <service

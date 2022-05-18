@@ -6,14 +6,11 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kyonggi.eku.databinding.BoardLoadingBinding;
 import com.kyonggi.eku.databinding.FreeBoardItemBinding;
-import com.kyonggi.eku.databinding.InfoBoardItemBinding;
 import com.kyonggi.eku.model.FreeBoardPreview;
-import com.kyonggi.eku.model.InfoBoardPreview;
 
 import java.util.List;
 import java.util.Objects;
