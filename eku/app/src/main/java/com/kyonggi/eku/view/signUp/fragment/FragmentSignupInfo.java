@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ import com.kyonggi.eku.utils.exceptions.NoExtraDataException;
 import com.kyonggi.eku.view.signUp.OnConfirmedListener;
 import com.kyonggi.eku.view.signUp.activity.ActivityInputSignUpInfo;
 import com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment;
+
+import java.util.regex.Pattern;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -135,6 +138,27 @@ public class FragmentSignupInfo extends Fragment {
                     binding.textPasswordConfirmGuide.setText(R.string.password_confirm_wrong);
                     binding.textPasswordConfirmGuide.setTextColor(Color.parseColor("#F7941E"));
                 }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        binding.editName.setOnFocusChangeListener((view, b)->{
+            binding.textNameGuide.setVisibility(View.VISIBLE);
+        });
+        binding.editName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String namePattern = "\\S*[\\d+\\{\\}\\[\\]\\/?.,;:|\\)*~`!^\\-_+<>@\\#$%&\\\\\\=\\(\\'\\\"]";
+                Pattern compile = Pattern.compile(namePattern);
             }
 
             @Override
