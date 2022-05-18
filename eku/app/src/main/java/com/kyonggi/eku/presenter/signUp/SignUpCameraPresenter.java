@@ -71,12 +71,7 @@ public class SignUpCameraPresenter {
                 Log.e(TAG, "startCamera: Use case binding failed", exception);
             }
         }, ContextCompat.getMainExecutor(context));
-    }
 
-    public void startManualInfo(){
-        Intent intent = new Intent(context, ActivityInputSignUpInfo.class);
-        activity.startActivity(intent);
-        activity.finish();
     }
 
     public void takePhoto() {
