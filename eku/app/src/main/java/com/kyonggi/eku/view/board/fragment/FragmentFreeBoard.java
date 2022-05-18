@@ -14,11 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kyonggi.eku.databinding.FragmentFreeBoardBinding;
-import com.kyonggi.eku.databinding.FragmentInfoBoardBinding;
 import com.kyonggi.eku.model.FreeBoardPreview;
-import com.kyonggi.eku.model.InfoBoardPreview;
 import com.kyonggi.eku.utils.adapters.FreeBoardAdapter;
-import com.kyonggi.eku.utils.adapters.InfoBoardAdapter;
 import com.kyonggi.eku.view.board.activity.ActivityBoard;
 
 import java.util.List;

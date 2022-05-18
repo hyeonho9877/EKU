@@ -16,6 +16,7 @@ import com.kyonggi.eku.databinding.ActivitySignupPhotoBinding;
 import com.kyonggi.eku.presenter.signUp.SignUpCameraPresenter;
 import com.kyonggi.eku.utils.observer.GalleryObserver;
 
+import java.net.ProxySelector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -36,14 +37,13 @@ public class ActivitySignUpCamera extends AppCompatActivity {
         binding = ActivitySignupPhotoBinding.inflate(getLayoutInflater()); // 뷰 바인딩
         View view = binding.getRoot();
         setContentView(view); // 할당
-
+        presenter = new SignUpCameraPresenter(this, this);
         if (allPermissionGranted()) {
-            presenter = new SignUpCameraPresenter(this, this);
             observer = new GalleryObserver(getActivityResultRegistry(), getContentResolver(), presenter.getHandler());
             getLifecycle().addObserver(observer);
             presenter.startCamera(binding);
         } else{
-            String[] permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO};
+            String[] permissions = new String[]{Manifest.permission.CAMERA};
             ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_PERMISSIONS);
         }
 
@@ -55,10 +55,13 @@ public class ActivitySignUpCamera extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            presenter.startCamera(binding);
-        } else {
-            Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show();
-            finish();
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission has been granted. Start camera preview Activity.
+                presenter.startCamera(binding);
+            } else {
+                // Permission request was denied.
+                presenter.skipCamera();
+            }
         }
     }
 
@@ -70,7 +73,7 @@ public class ActivitySignUpCamera extends AppCompatActivity {
 
 
     private boolean allPermissionGranted(){
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
     }
 
     private void initListeners() {

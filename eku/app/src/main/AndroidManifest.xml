@@ -89,7 +89,8 @@
         <activity
             android:name=".MainBoard"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+        </activity>
 
         <service
             android:name="com.minew.beacon.ScanService"
@@ -122,11 +123,6 @@
         <activity
             android:name=".ScheduleTable"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data
