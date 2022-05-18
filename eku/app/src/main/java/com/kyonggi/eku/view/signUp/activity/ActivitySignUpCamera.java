@@ -42,8 +42,8 @@ public class ActivitySignUpCamera extends AppCompatActivity {
             observer = new GalleryObserver(getActivityResultRegistry(), getContentResolver(), presenter.getHandler());
             getLifecycle().addObserver(observer);
             presenter.startCamera(binding);
-        } else{
-            String[] permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO};
+        } else {
+            String[] permissions = new String[]{Manifest.permission.CAMERA};
             ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_PERMISSIONS);
         }
 
@@ -55,7 +55,14 @@ public class ActivitySignUpCamera extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            presenter.startCamera(binding);
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission has been granted. Start camera preview Activity.
+                presenter.startCamera(binding);
+            } else {
+                // Permission request was denied.
+                presenter.startManualInfo();
+            }
+
         } else {
             Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show();
             finish();
@@ -70,14 +77,13 @@ public class ActivitySignUpCamera extends AppCompatActivity {
 
 
     private boolean allPermissionGranted(){
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
     }
 
     private void initListeners() {
         binding.buttonImageCapture.setOnClickListener(v -> presenter.takePhoto());
         binding.buttonGallery.setOnClickListener(v->observer.selectImage());
         binding.buttonSkip.setOnClickListener(v->presenter.skipPhoto());
-
     }
 
     private final int REQUEST_CODE_PERMISSIONS = 10;
