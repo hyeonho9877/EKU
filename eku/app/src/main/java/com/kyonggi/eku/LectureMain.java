@@ -1,30 +1,39 @@
 package com.kyonggi.eku;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.RatingBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RatingBar;
+import android.widget.ScrollView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
@@ -35,6 +44,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class LectureMain extends AppCompatActivity {
@@ -56,7 +66,7 @@ public class LectureMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lecture_main);
-
+/*
         final DrawerLayout drawerLayout = findViewById(R.id.Lecture_Main_drawerLayout);
 
         findViewById(R.id.Lecture_Main_Menu).setOnClickListener(new View.OnClickListener() {
@@ -133,7 +143,7 @@ public class LectureMain extends AppCompatActivity {
                 })
                 .setNegativeButton("취소", null)
                 .create();
-
+*/
         SwipeRefreshLayout swipe = findViewById(R.id.Lecture_Main_Swipe);
         swipe.setOnRefreshListener(
                 () -> {
@@ -142,6 +152,10 @@ public class LectureMain extends AppCompatActivity {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+
+                            sc = (LinearLayout) findViewById(R.id.Lecture_Main_scroll);
+                            sc.removeAllViews();
+                            LoadMain();
                             swipe.setRefreshing(false);
                         }
                     }, 500);
@@ -165,38 +179,8 @@ public class LectureMain extends AppCompatActivity {
         });
 
         EditText searchText = (EditText) findViewById(R.id.Lecture_Main_searchtext);
+        LoadMain();
 
-        Handler handler =  new Handler(getMainLooper()){
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                String responseResult = (String) msg.obj;
-                try {
-                    JSONArray LectureArray = new JSONArray(responseResult);
-                    for (int i = 0; i < LectureArray.length(); i++) {
-                        JSONObject LectureObject = LectureArray.getJSONObject(i);
-                        String rating = LectureObject.getString("star");
-                        int LectureId = Integer.parseInt(LectureObject.getString("cid"));
-                        String content = LectureObject.getString("content");
-                        Gson a = new Gson();
-                        Lecture lecture1 = a.fromJson(LectureObject.getString("lecture"), Lecture.class);
-                        String title = lecture1.getLectureName();
-                        String professor = lecture1.getProfessor();
-
-                        write_Lecture(title, professor, rating, content, LectureId);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };
-
-        HashMap<String, Object> temp = new HashMap<>();
-        try {
-            SendTool.requestForJson("/critic/read", temp, handler);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
 
         imageButton1 = (ImageButton) findViewById(R.id.Lecture_Main_searchButton);
         imageButton1.setOnClickListener(new View.OnClickListener() {
@@ -242,7 +226,21 @@ public class LectureMain extends AppCompatActivity {
         sc = (LinearLayout) findViewById(R.id.Lecture_Main_scroll);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
+        String writer="고지웅";
+        LectureItem lectureitem = new LectureItem(getApplicationContext(), Title,professor,rating);
+        lectureitem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LectureDetail.class);
+                intent.putExtra("Name", Title);
+                intent.putExtra("Prof", professor);
+                startActivity(intent);
+                finish();
+            }
+        });
+        sc.addView(lectureitem);
 
+        /*
         LinearLayout.LayoutParams linearLayoutParams =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -287,6 +285,8 @@ public class LectureMain extends AppCompatActivity {
         linearLayout.addView(Rating);
 
         sc.addView(linearLayout);
+
+         */
     }
 
 
@@ -294,7 +294,22 @@ public class LectureMain extends AppCompatActivity {
         sc = (LinearLayout) findViewById(R.id.Lecture_Main_scroll);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
+        String writer="고지웅";
+        LectureItem lectureitem = new LectureItem(getApplicationContext(), Title,professor,rating,writer);
+        lectureitem.setId(Lectureid);
+        lectureitem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LectureDetail.class);
+                intent.putExtra("Name", Title);
+                intent.putExtra("Prof", professor);
+                startActivity(intent);
+                finish();
+            }
+        });
+        sc.addView(lectureitem);
 
+        /*
         LinearLayout.LayoutParams linearLayoutParams =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -348,17 +363,55 @@ public class LectureMain extends AppCompatActivity {
         linearLayout.addView(contentView);
 
         sc.addView(linearLayout);
+        */
     }
 
     @Override
     public void onBackPressed() {
         if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
             backKeyPressedTime = System.currentTimeMillis();
-            Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(),MainBoard.class);
+            startActivity(intent);
+            finish();
+            //Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
             return;
         }
         if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
             finish();
+        }
+    }
+
+    public void LoadMain(){
+        Handler handler =  new Handler(getMainLooper()){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                String responseResult = (String) msg.obj;
+                try {
+                    JSONArray LectureArray = new JSONArray(responseResult);
+                    for (int i = 0; i < LectureArray.length(); i++) {
+                        JSONObject LectureObject = LectureArray.getJSONObject(i);
+                        String rating = LectureObject.getString("star");
+                        int LectureId = Integer.parseInt(LectureObject.getString("cid"));
+                        String content = LectureObject.getString("content");
+                        Gson a = new Gson();
+                        Lecture lecture1 = a.fromJson(LectureObject.getString("lecture"), Lecture.class);
+                        String title = lecture1.getLectureName();
+                        String professor = lecture1.getProfessor();
+
+                        write_Lecture(title, professor, rating, content, LectureId);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+
+        HashMap<String, Object> temp = new HashMap<>();
+        try {
+            SendTool.requestForJson("/critic/read", temp, handler);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
 }

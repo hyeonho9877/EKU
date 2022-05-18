@@ -12,8 +12,15 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -209,4 +216,61 @@ public final class SendTool {
     public static final int EMPTY_BODY = 0x0;
     public static final int APPLICATION_JSON = 0x1;
     public static final int POST_PARAM = 0x2;
+
+    public static void requestForTimeTable(String url, JSONArray params, Handler handler) throws NullPointerException, JSONException {
+        JSONObject jO = new JSONObject();
+        jO.put("list",params);
+        String jsonObject = jO.toString();
+
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(jsonObject, JSON);
+
+
+        Request request = new Request.Builder()
+                .url(baseUrl+url)
+                .post(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d(TAG, "onFailure: ");
+                handler.sendMessage(Message.obtain(handler, CONNECTION_FAILED));
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Log.d(TAG, "onResponse: "+response.code());
+                handler.sendMessage(Message.obtain(handler, response.code(), response.body().string()));
+            }
+        });
+    }
+    public static void downForTimeTable(String url, JSONObject params, Handler handler) throws NullPointerException, JSONException {
+
+
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(String.valueOf(params), JSON);
+        Request request = new Request.Builder()
+                .url(baseUrl+url)
+                .post(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d(TAG, "onFailure: ");
+                handler.sendMessage(Message.obtain(handler, CONNECTION_FAILED));
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Log.d(TAG, "onResponse: "+response.code());
+                handler.sendMessage(Message.obtain(handler, response.code(), response.body().string()));
+            }
+        });
+    }
+
+
 }
