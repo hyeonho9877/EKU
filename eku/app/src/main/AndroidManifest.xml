@@ -116,12 +116,6 @@
             android:name=".MainCommunity"
             android:exported="true" />
         <activity
-            android:name=".SignInfoActivity"
-            android:exported="true" />
-        <activity
-            android:name=".SignPhotoActivity"
-            android:exported="false" />
-        <activity
             android:name=".TodoActivity"
             android:exported="true" />
         <!--
@@ -142,11 +136,6 @@
         <activity android:name=".view.signUp.activity.ActivityGallery" />
         <activity android:name=".view.signUp.activity.ActivityInputSignUpInfo" />
         <activity android:name=".view.board.activity.ActivityBoard" />
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
-        </activity>
 
         <service
             android:name="com.minew.beacon.ScanService"
@@ -159,16 +148,10 @@
                 <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
             </intent-filter>
         </receiver>
-
-        <activity
-            android:name=".RequestActivity"
-            android:exported="true" />
+        
         <activity android:name=".WriteBoard" />
         <activity
             android:name=".findGang"
-            android:exported="true" />
-        <activity
-            android:name=".PhotoServeActivity"
             android:exported="true" />
         <activity
             android:name=".LectureMain"
