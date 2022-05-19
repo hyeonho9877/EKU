@@ -1,3 +1,4 @@
+/*
 package com.kyonggi.eku;
 
 import android.bluetooth.BluetoothAdapter;
@@ -24,10 +25,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    /*
+    */
+/*
     *   블루투스 기능확인 더미코드
     *   블루투스 기능을 해보고 싶을때 쓰세요
-     */
+    *   끝나면 지울것!
+     *//*
+
     private PermissionSupport permission;
 
     private MinewBeaconManager mMinewBeaconManager;
@@ -85,11 +89,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /**
+    */
+/**
      * 초기 블루투스 스캔을 체크함
      * 꺼졌는지 켜졋는지 관리
      * 지원안되면 메시지 줌
-     */
+     *//*
+
     private void checkBluetooth() {
         BluetoothState bluetoothState = mMinewBeaconManager.checkBluetoothState();
         switch (bluetoothState) {
@@ -107,10 +113,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /**
+    */
+/**
      * 뷰를 초기화 하는 메소드
      * 툴바(맨위에 있는 바를
-     */
+     *//*
+
     private void initView() {
         //툴바 생성
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -191,21 +199,25 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mMinewBeaconManager.setDeviceManagerDelegateListener(new MinewBeaconManagerListener() {
-            /**
+            */
+/**
              *   비콘 새로 등판시 하는일.
              *
              *  @param minewBeacons  new beacons the manager scanned
-             */
+             *//*
+
             @Override
             public void onAppearBeacons(List<MinewBeacon> minewBeacons) {
                 Toast.makeText(getApplicationContext(),  "비콘나타났슈", Toast.LENGTH_SHORT).show();
             }
 
-            /**
+            */
+/**
              *  if a beacon didn't update data in 10 seconds, we think this beacon is out of rang, the manager will call back this method.
              *  비콘이 사라졌을 경우
              *  @param minewBeacons beacons out of range
-             */
+             *//*
+
             @Override
             public void onDisappearBeacons(List<MinewBeacon> minewBeacons) {
 
@@ -213,11 +225,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
-            /**
+            */
+/**
              *  the manager calls back this method every 1 seconds, you can get all scanned beacons.
              *  1초마다 콜백을 하는데 모든 비콘을 스캔할 수 있다.
              *  @param minewBeacons all scanned beacons
-             */
+             *//*
+
             @Override
             public void onRangeBeacons(final List<MinewBeacon> minewBeacons) {
                 runOnUiThread(new Runnable() {
@@ -238,11 +252,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            /**
+            */
+/**
              *  the manager calls back this method when BluetoothStateChanged.
              *  블루투스 상태가 달라졌을때 표시하는 비콘
              *  @param state BluetoothState
-             */
+             *//*
+
             @Override
             public void onUpdateState(BluetoothState state) {
                 switch (state) {
@@ -257,9 +273,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /*
+    */
+/*
      * 블루투스 스캔을 때려쳤을 때쓰는 코드
-     * */
+     * *//*
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -269,12 +287,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*
+    */
+/*
     BLE다이어로그를 보여준다.
-    * */
+    * *//*
+
     private void showBLEDialog() {
         Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
     }
 
 }
+*/

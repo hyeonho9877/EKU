@@ -11,7 +11,7 @@ public class PreferenceManagers {
 * 기능
 * *키값으로 안드로이드 내부에 값을 저장함
 * 가져올 수도 잇음
-* ㅂㄺ도 가능
+* 버리기도 가능
 *
  */
 

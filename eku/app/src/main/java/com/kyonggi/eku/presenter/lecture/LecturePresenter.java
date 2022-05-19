@@ -16,6 +16,7 @@ public class LecturePresenter {
 
     public void signIn() {
         Intent signInIntent = new Intent(context, ActivitySignIn.class);
+        signInIntent.putExtra("address","LectureDetail");
         activity.startActivity(signInIntent);
     }
 }

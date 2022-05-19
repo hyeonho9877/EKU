@@ -1,3 +1,4 @@
+/*
 package com.kyonggi.eku;
 
 import android.os.Bundle;
@@ -25,10 +26,12 @@ public class Request extends AppCompatActivity {
     // 에딧텍스트
     EditText edt_1;
     EditText edt_2;
-    /*
+    */
+/*      샷다 내릴예정
     * 더미코드
     * 버리세요
-     */
+     *//*
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,4 +145,4 @@ public class Request extends AppCompatActivity {
         });
 
     }
-}
+}*/

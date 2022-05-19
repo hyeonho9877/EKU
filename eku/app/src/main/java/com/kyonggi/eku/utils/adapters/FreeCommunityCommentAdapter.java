@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.kyonggi.eku.FreeCommunityCommentItem;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +38,8 @@ public class FreeCommunityCommentAdapter extends BaseAdapter {
     public FreeCommunityCommentAdapter(ArrayList<FreeCommunityCommentItem> arrayList){
         this.arrayList = arrayList;
     }
+
+
 
     @Override
     public int getCount() {

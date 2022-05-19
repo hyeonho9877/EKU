@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.kyonggi.eku.presenter.signIn.SignInPresenter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,18 +65,27 @@ public class WriteFreeCommunity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.write_free_save:
-                addBoard();
-                finish();
-                Intent intent1 = new Intent(getApplicationContext(), MainFreeCommunity.class);
-                startActivity(intent1);
-                break;
-            case R.id.write_free_close:
-                finish();
-                Intent intent = new Intent(getApplicationContext(), MainFreeCommunity.class);
-                startActivity(intent);
-                break;
+        UserInformation info = new UserInformation(getApplicationContext());
+
+        if (!info.fromPhoneVerify(getApplicationContext())) {
+            Intent intent = new Intent(getApplicationContext(), SignInPresenter.class);
+            intent.putExtra("address","WriteFreeCommunity");
+            startActivity(intent);
+            finish();
+        } else {
+            switch (view.getId()){
+                case R.id.write_free_save:
+                    addBoard();
+                    finish();
+                    Intent intent1 = new Intent(getApplicationContext(), MainFreeCommunity.class);
+                    startActivity(intent1);
+                    break;
+                case R.id.write_free_close:
+                    finish();
+                    Intent intent = new Intent(getApplicationContext(), MainFreeCommunity.class);
+                    startActivity(intent);
+                    break;
+            }
         }
     }
 

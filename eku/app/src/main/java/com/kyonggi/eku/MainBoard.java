@@ -331,6 +331,7 @@ public class MainBoard extends AppCompatActivity {
                 }
                 else {
                     Intent intent = new Intent(getApplicationContext(), WriteBoard.class);
+                    intent.putExtra("address","MainBoard");
                     startActivity(intent);
                     finish();
                 }
