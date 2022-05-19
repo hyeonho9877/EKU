@@ -36,10 +36,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
-import com.kyonggi.eku.Adapter.ComminityRecyclerAdapter;
-import com.kyonggi.eku.Model.ComminityItem;
-import com.kyonggi.eku.Model.FreeComminityItem;
-import com.kyonggi.eku.Tool.PreferenceManagers;
+import com.kyonggi.eku.ComminityRecyclerAdapter;
+import com.kyonggi.eku.ComminityItem;
+import com.kyonggi.eku.FreeComminityItem;
+import com.kyonggi.eku.PreferenceManagers;
 import com.kyonggi.eku.R;
 
 import org.json.JSONArray;

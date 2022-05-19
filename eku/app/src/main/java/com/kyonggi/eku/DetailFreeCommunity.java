@@ -35,11 +35,11 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.kyonggi.eku.Adapter.FreeCommunityCommentAdapter;
-import com.kyonggi.eku.Model.FreeCommunityCommentItem;
-import com.kyonggi.eku.Tool.PreferenceManagers;
+import com.kyonggi.eku.FreeCommunityCommentAdapter;
+import com.kyonggi.eku.FreeCommunityCommentItem;
+import com.kyonggi.eku.PreferenceManagers;
 import com.kyonggi.eku.R;
-import com.kyonggi.eku.Tool.SendTool;
+import com.kyonggi.eku.utils.SendTool;
 
 import org.json.JSONArray;
 import org.json.JSONException;
