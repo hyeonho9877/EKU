@@ -88,9 +88,7 @@
         <activity android:name=".view.board.activity.ActivityBoard" />
         <activity
             android:name=".MainBoard"
-            android:exported="true"
-            android:screenOrientation="portrait">
-        </activity>
+            android:exported="true"></activity>
 
         <service
             android:name="com.minew.beacon.ScanService"
@@ -122,8 +120,7 @@
             android:exported="false" />
         <activity
             android:name=".ScheduleTable"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

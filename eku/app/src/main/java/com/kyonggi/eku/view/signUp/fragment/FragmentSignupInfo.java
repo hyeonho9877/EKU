@@ -1,6 +1,7 @@
 package com.kyonggi.eku.view.signUp.fragment;
 
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.ALL_FINE;
+import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.NAME_NOT_VALID;
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.NOT_FILLED_FIELD;
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.PASSWORD_NOT_MATCHING;
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.PASSWORD_NOT_VALID;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleObserver;
 
 import com.kyonggi.eku.R;
 import com.kyonggi.eku.databinding.FargmentSignupInfoBinding;
@@ -52,8 +54,7 @@ public class FragmentSignupInfo extends Fragment {
             autoFillElements(activity.getForm());
         } catch (NoExtraDataException ignored) {
 
-        };
-
+        }
         return binding.getRoot();
     }
 
@@ -85,6 +86,9 @@ public class FragmentSignupInfo extends Fragment {
                 case PASSWORD_NOT_MATCHING:
                     new SignUpErrorDialogFragment(PASSWORD_NOT_MATCHING).show(activity.getSupportFragmentManager(), "alert");
                     break;
+                case NAME_NOT_VALID:
+                    new SignUpErrorDialogFragment(NAME_NOT_VALID).show(activity.getSupportFragmentManager(), "alert");
+                    break;
                 case ALL_FINE:
                     String name = binding.editName.getText().toString();
                     String department = binding.editDept.getText().toString();
@@ -110,7 +114,7 @@ public class FragmentSignupInfo extends Fragment {
                 if (binding.editPasswordConfirm.getText().toString().equals(charSequence.toString())) {
                     binding.textPasswordConfirmGuide.setText(R.string.password_confirm_right);
                     binding.textPasswordConfirmGuide.setTextColor(Color.parseColor("#2A5189"));
-                }else{
+                } else {
                     binding.textPasswordConfirmGuide.setText(R.string.password_confirm_wrong);
                     binding.textPasswordConfirmGuide.setTextColor(Color.parseColor("#F7941E"));
                 }
@@ -122,6 +126,31 @@ public class FragmentSignupInfo extends Fragment {
             }
         });
         binding.editEmail.setOnFocusChangeListener((view, b) -> binding.textEmailGuide.setVisibility(View.VISIBLE));
+        binding.editEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String kyonggiMail = "(@kyonggi.ac.kr)";
+                Pattern mailCompile = Pattern.compile(kyonggiMail);
+                if (charSequence.length() == 0 || !mailCompile.matcher(charSequence).find()) {
+                    binding.textEmailGuide.setText("올바른 이메일을 입력해주세요.");
+                    binding.textEmailGuide.setTextColor(Color.parseColor("#F7941E"));
+                } else {
+                    binding.textEmailGuide.setText("올바른 이메일입니다.");
+                    binding.textEmailGuide.setTextColor(Color.parseColor("#2A5189"));
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         binding.editPasswordConfirm.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -134,7 +163,7 @@ public class FragmentSignupInfo extends Fragment {
                 if (binding.editPassword.getText().toString().equals(charSequence.toString())) {
                     binding.textPasswordConfirmGuide.setText(R.string.password_confirm_right);
                     binding.textPasswordConfirmGuide.setTextColor(Color.parseColor("#2A5189"));
-                }else{
+                } else {
                     binding.textPasswordConfirmGuide.setText(R.string.password_confirm_wrong);
                     binding.textPasswordConfirmGuide.setTextColor(Color.parseColor("#F7941E"));
                 }
@@ -146,7 +175,7 @@ public class FragmentSignupInfo extends Fragment {
             }
         });
 
-        binding.editName.setOnFocusChangeListener((view, b)->{
+        binding.editName.setOnFocusChangeListener((view, b) -> {
             binding.textNameGuide.setVisibility(View.VISIBLE);
         });
         binding.editName.addTextChangedListener(new TextWatcher() {
@@ -157,12 +186,22 @@ public class FragmentSignupInfo extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String namePattern = "\\S*[\\d+\\{\\}\\[\\]\\/?.,;:|\\)*~`!^\\-_+<>@\\#$%&\\\\\\=\\(\\'\\\"]";
-                Pattern compile = Pattern.compile(namePattern);
-                if (compile.matcher(charSequence).matches()){
+                String digitSpecialPattern = "[`~!@#$%^&*()\\-_=+|\\[\\]{};:'\",.<>/?\\d]";
+                String incompleteNamePattern = "[ㄱ-ㅎㅏ-ㅣ]";
+                Pattern digitSpecialCompile = Pattern.compile(digitSpecialPattern);
+                Pattern incompleteCompile = Pattern.compile(incompleteNamePattern);
+                if (digitSpecialCompile.matcher(charSequence).find()) {
                     binding.textNameGuide.setText("이름에는 숫자나 특수문자가 포함될 수 없습니다.");
+                    binding.textNameGuide.setTextColor(Color.parseColor("#F7941E"));
                 } else {
-                    binding.textNameGuide.setText("사용할 수 있는 이름입니다.");
+                    if (incompleteCompile.matcher(charSequence).find() || charSequence.length() == 0) {
+                        binding.textNameGuide.setText("정확한 이름을 입력해주세요.");
+                        binding.textNameGuide.setTextColor(Color.parseColor("#F7941E"));
+                    } else {
+                        binding.textNameGuide.setText("사용할 수 있는 이름입니다.");
+                        binding.textNameGuide.setTextColor(Color.parseColor("#2A5189"));
+                    }
+
                 }
             }
 
