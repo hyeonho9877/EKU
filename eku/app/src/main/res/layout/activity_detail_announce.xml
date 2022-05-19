@@ -26,6 +26,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/detail_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:backgroundTint="#FFFFFF"
+        app:menu="@menu/detail_free_menu"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/detail_announce_Spinner"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="#FFFFFF"
+        android:gravity="center_vertical"
+        android:textSize="25dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ScrollView
         android:id="@+id/detail_total_announceView"
         android:layout_width="413dp"
@@ -42,36 +63,51 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <TextView
                 android:id="@+id/detail_announce_building"
-                android:layout_width="328dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:text="강의동"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="10sp"
+                app:layout_constraintTop_toBottomOf="@+id/detail_announce_title"
+                tools:layout_editor_absoluteX="45dp" />
 
             <TextView
                 android:id="@+id/detail_announce_writer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="41dp"
+                android:layout_marginTop="20dp"
                 android:text="작성자"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_announce_content" />
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/detail_announce_content"
+                app:layout_constraintTop_toBottomOf="@+id/detail_announce_edit_content" />
 
             <TextView
                 android:id="@+id/detail_announce_content"
                 android:layout_width="328dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="40dp"
                 android:background="@drawable/stroke_under"
                 android:text="내용"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_announce_title" />
+                app:layout_constraintStart_toStartOf="@+id/detail_announce_title"
+                app:layout_constraintTop_toBottomOf="@+id/detail_announce_building" />
+
+            <EditText
+                android:id="@+id/detail_announce_edit_content"
+                android:layout_width="328dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="40dp"
+                android:background="@drawable/stroke_under"
+                android:text="내용"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/detail_announce_title"
+                app:layout_constraintTop_toBottomOf="@+id/detail_announce_building" />
 
             <EditText
                 android:visibility="invisible"
@@ -89,10 +125,10 @@
                 android:id="@+id/detail_announce_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="41dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:text="시간"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="11sp"
+                app:layout_constraintStart_toStartOf="@+id/detail_announce_content"
                 app:layout_constraintTop_toBottomOf="@+id/detail_announce_content" />
 
 
@@ -119,14 +155,13 @@
 
             <TextView
                 android:id="@+id/detail_announce_title"
-                android:layout_width="328dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_width="300dp"
+                android:layout_height="19dp"
                 android:background="@drawable/stroke_under"
                 android:text="제목"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_announce_building" />
+                android:textSize="16sp"
+                tools:layout_editor_absoluteX="45dp"
+                tools:layout_editor_absoluteY="16dp" />
 
             <EditText
                 android:visibility="invisible"
@@ -146,20 +181,19 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_announce_time"></LinearLayout>
+                tools:layout_editor_absoluteY="160dp"></LinearLayout>
+
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="331dp"
                 android:layout_height="22dp"
                 android:layout_marginTop="80dp"
                 android:gravity="center"
-                android:text="공지에는 댓글을 입력할 수 없습니다"
+                android:text="공지게시판에는 댓글을 입력할 수 없습니다"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.524"
+                app:layout_constraintHorizontal_bias="0.463"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_announce_button" />
+                app:layout_constraintTop_toBottomOf="@+id/detail_announce_time"></LinearLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

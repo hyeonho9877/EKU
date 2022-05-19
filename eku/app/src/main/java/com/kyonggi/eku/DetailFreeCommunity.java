@@ -151,7 +151,7 @@ public class DetailFreeCommunity extends AppCompatActivity {
             }
         });
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
@@ -189,6 +189,7 @@ public class DetailFreeCommunity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+ */
     public void addItem(String id,String writer, String comment, String time){
         FreeCommunityCommentItem freeCommunityCommentItem = new FreeCommunityCommentItem(id, writer, comment, time);
         arrayList.add(0,freeCommunityCommentItem);
