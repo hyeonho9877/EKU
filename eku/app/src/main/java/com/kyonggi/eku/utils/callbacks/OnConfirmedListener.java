@@ -1,4 +1,4 @@
-package com.kyonggi.eku.view.signUp;
+package com.kyonggi.eku.utils.callbacks;
 
 import com.kyonggi.eku.model.SignUpForm;
 

@@ -1,10 +1,7 @@
 package com.kyonggi.eku;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import static com.kyonggi.eku.view.board.activity.ActivityBoard.BOARD_FREE;
+import static com.kyonggi.eku.view.board.activity.ActivityBoard.BOARD_INFO;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,15 +22,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationView;
-import com.google.gson.Gson;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.navigation.NavigationView;
 import com.kyonggi.eku.utils.SendTool;
+import com.kyonggi.eku.view.board.activity.ActivityBoard;
 import com.kyonggi.eku.view.signIn.ActivitySignIn;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -98,12 +101,14 @@ public class MainBoard extends AppCompatActivity {
                         finish();
                         break;
                     case R.id.Announce:
-                        intent = new Intent(getApplicationContext(), MainCommunity.class);
+                        intent = new Intent(getApplicationContext(), ActivityBoard.class);
+                        intent.putExtra("mode", BOARD_INFO);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.Free:
-                        intent = new Intent(getApplicationContext(), MainFreeCommunity.class);
+                        intent = new Intent(getApplicationContext(), ActivityBoard.class);
+                        intent.putExtra("mode", BOARD_FREE);
                         startActivity(intent);
                         finish();
                         break;
