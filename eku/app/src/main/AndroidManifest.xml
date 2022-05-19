@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.kyonggi.eku">
 
     <uses-feature android:name="android.hardware.camera.any" />
@@ -15,9 +16,23 @@
         android:maxSdkVersion="30" />
     <uses-permission
         android:name="android.permission.BLUETOOTH_ADMIN"
-        android:maxSdkVersion="30" />
+        android:maxSdkVersion="30" /> <!-- android 12 add -->
+    <!--
+ Needed only if your app looks for Bluetooth devices.
+             If your app doesn't use Bluetooth scan results to derive physical
+             location information, you can strongly assert that your app
+             doesn't derive physical location.
+    -->
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <!--
+ Needed only if your app makes the device discoverable to Bluetooth
+      devices.
+    -->
     <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+    <!--
+ Needed only if your app communicates with already-paired Bluetooth
+           devices.
+    -->
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" /> <!-- bibo01 : hardware option -->
     <uses-feature
         android:name="android.hardware.bluetooth"
@@ -29,7 +44,14 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCEPT_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:required="true" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:allowBackup="true"
@@ -55,6 +77,11 @@
             android:name=".DetailFreeCommunity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
+        <!--
+        <activity
+            android:name=".MainFreeCommunity"
+            android:exported="false" />
+        -->
         <activity
             android:name=".DetailAnnounce"
             android:exported="true" />
@@ -64,6 +91,24 @@
         <activity
             android:name=".WriteAnnounce"
             android:exported="true" />
+        <!--
+        <activity
+            android:name=".PhotoServeActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".WriteFreeCommunity"
+            android:exported="false" />
+        <activity
+            android:name=".MainFreeCommunity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailAnnounce"
+            android:exported="true" />
+        <activity
+            android:name=".WriteAnnounce"
+            android:exported="true" />
+        -->
         <activity
             android:name=".DonanBagGi"
             android:exported="true" />
@@ -71,10 +116,21 @@
             android:name=".MainCommunity"
             android:exported="true" />
         <activity
-            android:name=".TodoActivity"
+            android:name=".SignInfoActivity"
             android:exported="true" />
         <activity
-            android:name=".view.signIn.ActivitySignIn"
+            android:name=".SignPhotoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TodoActivity"
+            android:exported="true" />
+        <!--
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"/>
+        -->
+        <activity
+            android:name=".MainBoard"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -87,7 +143,7 @@
         <activity android:name=".view.signUp.activity.ActivityInputSignUpInfo" />
         <activity android:name=".view.board.activity.ActivityBoard" />
         <activity
-            android:name=".MainBoard"
+            android:name=".LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait">
         </activity>
@@ -105,11 +161,14 @@
         </receiver>
 
         <activity
-            android:name=".Request"
+            android:name=".RequestActivity"
             android:exported="true" />
         <activity android:name=".WriteBoard" />
         <activity
             android:name=".findGang"
+            android:exported="true" />
+        <activity
+            android:name=".PhotoServeActivity"
             android:exported="true" />
         <activity
             android:name=".LectureMain"
