@@ -28,8 +28,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.kyonggi.eku.Model.FreeCommunityCommentItem;
-import com.kyonggi.eku.Tool.PreferenceManagers;
+import com.kyonggi.eku.FreeCommunityCommentItem;
+import com.kyonggi.eku.PreferenceManagers;
 import com.kyonggi.eku.R;
 
 import org.json.JSONException;

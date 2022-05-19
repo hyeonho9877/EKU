@@ -11,15 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kyonggi.eku.Activity.DetailAnnounce;
-import com.kyonggi.eku.Activity.WriteAnnounce;
+import com.kyonggi.eku.DetailAnnounce;
+import com.kyonggi.eku.WriteAnnounce;
 import com.kyonggi.eku.ComminityItem;
 import com.kyonggi.eku.DetailAnnounce;
-import com.kyonggi.eku.Model.ComminityItem;
+import com.kyonggi.eku.ComminityItem;
 import com.kyonggi.eku.R;
 
 import java.util.ArrayList;
-
+/*
 public class ComminityRecyclerAdapter extends RecyclerView.Adapter<ComminityRecyclerAdapter.ViewHolder> {
     private ArrayList<ComminityItem> arrayList = null;
 
@@ -84,3 +84,4 @@ public class ComminityRecyclerAdapter extends RecyclerView.Adapter<ComminityRecy
         }
     }
 }
+ */
