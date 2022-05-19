@@ -24,6 +24,8 @@ import static com.eku.EKU.utils.RelativeTimeConverter.convertToRelativeTime;
 public class InfoBoardService {
     public final InfoBoardRepository infoBoardRepository;
 
+
+
     public InfoBoardService(InfoBoardRepository infoBoardRepository) {
         this.infoBoardRepository = infoBoardRepository;
     }
@@ -65,7 +67,7 @@ public class InfoBoardService {
      * @param form 삽입할 게시판의 정보
      * @return
      */
-    public InfoBoardResponse insertBoard(InfoBoardForm form) throws IllegalArgumentException{
+    public InfoBoardResponse insertBoard(InfoBoardForm form) throws IllegalArgumentException, NoSuchElementException {
         Student studNo = Student.builder().studNo(form.getWriterNo()).name("temp").email("temp").department("temp").build();
         InfoBoard infoBoard = InfoBoard.builder()
                 .no(studNo)

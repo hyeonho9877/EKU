@@ -17,6 +17,7 @@ public class InfoBoardResponse {
     private String time;
     private String building;
     private Integer view;
+    private List<String> imageList;
     private List<InfoBoardCommentResponse> commentList;
 
     public InfoBoardResponse(InfoBoard board) {
