@@ -6,6 +6,7 @@ import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.NOT_F
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.PASSWORD_NOT_MATCHING;
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.PASSWORD_NOT_VALID;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -30,10 +31,6 @@ import com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment;
 
 import java.util.regex.Pattern;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
 public class FragmentSignupInfo extends Fragment {
     private static final String TAG = "FragmentSignupInfo";
     private FargmentSignupInfoBinding binding;
@@ -73,6 +70,15 @@ public class FragmentSignupInfo extends Fragment {
     }
 
     private void initListeners() {
+        String kyonggiMail = "(@kyonggi.ac.kr)";
+        String digitSpecialPattern = "[`~!@#$%^&*()\\-_=+|\\[\\]{};:'\",.<>/?\\d]";
+        String incompleteNamePattern = "[ㄱ-ㅎㅏ-ㅣ]";
+        String passwordContainsNumber = "[0-9]";
+        Pattern mailCompile = Pattern.compile(kyonggiMail);
+        Pattern digitSpecialCompile = Pattern.compile(digitSpecialPattern);
+        Pattern incompleteCompile = Pattern.compile(incompleteNamePattern);
+        Pattern passwordCompile = Pattern.compile(passwordContainsNumber);
+
         binding.buttonConfirm.setOnClickListener(v -> {
             switch (activity.isAllFieldsAppropriate(binding)) {
                 case NOT_FILLED_FIELD:
@@ -116,6 +122,13 @@ public class FragmentSignupInfo extends Fragment {
                     binding.textPasswordConfirmGuide.setText(R.string.password_confirm_wrong);
                     binding.textPasswordConfirmGuide.setTextColor(Color.parseColor("#F7941E"));
                 }
+                if (binding.editPassword.getText().length() < 8 || !passwordCompile.matcher(charSequence).find()) {
+                    binding.textPasswordGuide.setText(R.string.password_guide);
+                    binding.textPasswordGuide.setTextColor(Color.parseColor("#F7941E"));
+                } else {
+                    binding.textPasswordGuide.setText(R.string.password_guide_right);
+                    binding.textPasswordGuide.setTextColor(Color.parseColor("#2A5189"));
+                }
             }
 
             @Override
@@ -132,8 +145,6 @@ public class FragmentSignupInfo extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String kyonggiMail = "(@kyonggi.ac.kr)";
-                Pattern mailCompile = Pattern.compile(kyonggiMail);
                 if (charSequence.length() == 0 || !mailCompile.matcher(charSequence).find()) {
                     binding.textEmailGuide.setText("올바른 이메일을 입력해주세요.");
                     binding.textEmailGuide.setTextColor(Color.parseColor("#F7941E"));
@@ -158,7 +169,8 @@ public class FragmentSignupInfo extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 binding.textPasswordConfirmGuide.setVisibility(View.VISIBLE);
-                if (binding.editPassword.getText().toString().equals(charSequence.toString())) {
+                String password = binding.editPassword.getText().toString();
+                if (password.length() != 0 && password.equals(charSequence.toString())) {
                     binding.textPasswordConfirmGuide.setText(R.string.password_confirm_right);
                     binding.textPasswordConfirmGuide.setTextColor(Color.parseColor("#2A5189"));
                 } else {
@@ -184,10 +196,6 @@ public class FragmentSignupInfo extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String digitSpecialPattern = "[`~!@#$%^&*()\\-_=+|\\[\\]{};:'\",.<>/?\\d]";
-                String incompleteNamePattern = "[ㄱ-ㅎㅏ-ㅣ]";
-                Pattern digitSpecialCompile = Pattern.compile(digitSpecialPattern);
-                Pattern incompleteCompile = Pattern.compile(incompleteNamePattern);
                 if (digitSpecialCompile.matcher(charSequence).find()) {
                     binding.textNameGuide.setText("이름에는 숫자나 특수문자가 포함될 수 없습니다.");
                     binding.textNameGuide.setTextColor(Color.parseColor("#F7941E"));
@@ -199,7 +207,6 @@ public class FragmentSignupInfo extends Fragment {
                         binding.textNameGuide.setText("사용할 수 있는 이름입니다.");
                         binding.textNameGuide.setTextColor(Color.parseColor("#2A5189"));
                     }
-
                 }
             }
 

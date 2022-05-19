@@ -55,7 +55,7 @@ public class SignInPresenter {
                             Toast.makeText(context, "이메일 혹은 비밀번호를 확인해 주세요.", Toast.LENGTH_SHORT).show();
                             break;
                         case NOT_AUTHORIZED:
-                            Toast.makeText(context, "인증이 필요합니다. 이메일 인증을 완료해주세요.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "이메일 인증을 완료해주세요.", Toast.LENGTH_SHORT).show();
                             break;
                         case NOT_REGISTERED:
                             Toast.makeText(context, "가입되어 있지 않은 계정입니다.", Toast.LENGTH_SHORT).show();

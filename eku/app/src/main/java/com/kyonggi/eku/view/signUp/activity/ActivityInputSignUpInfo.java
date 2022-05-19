@@ -1,5 +1,6 @@
 package com.kyonggi.eku.view.signUp.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 
@@ -30,6 +31,7 @@ public class ActivityInputSignUpInfo extends AppCompatActivity implements OnConf
     private ActivityInputSignupInfoBinding binding;
     private final FragmentManager fragmentManager = getSupportFragmentManager();
     private SignUpInfoPresenter presenter;
+    private ProgressDialog dialog;
 
 
     @Override
@@ -53,6 +55,10 @@ public class ActivityInputSignUpInfo extends AppCompatActivity implements OnConf
 
     @Override
     public void onConfirmed(SignUpForm form) {
+        dialog = new ProgressDialog(this);
+        dialog.setVolumeControlStream(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("잠시만 기다려 주세요..");
+        dialog.show();
         presenter.signUp(form);
     }
 
@@ -73,6 +79,7 @@ public class ActivityInputSignUpInfo extends AppCompatActivity implements OnConf
     }
 
     public void onSignUpResponseSuccess(){
+        dialog.dismiss();
         FragmentSignUpProgressSecond fragmentSignUpProgressSecond = new FragmentSignUpProgressSecond();
         FragmentSignUpEnd fragmentSignUpEnd = new FragmentSignUpEnd();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -88,7 +95,4 @@ public class ActivityInputSignUpInfo extends AppCompatActivity implements OnConf
     public void onSignUpResponseFailed() {
         new SignUpErrorDialogFragment(SignUpErrorDialogFragment.DUPLICATED_ACCOUNT).show(getSupportFragmentManager(), "error");
     }
-
-
-
 }
