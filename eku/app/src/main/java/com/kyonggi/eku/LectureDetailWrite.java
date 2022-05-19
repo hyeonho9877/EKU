@@ -34,7 +34,7 @@ public class LectureDetailWrite extends AppCompatActivity {
      */
     //작성 화면
     String[] showgrade = {"A+", "A", "B+", "B", "C+", "C", "D+", "D", "F"};
-    int gradeSelected = 0;
+    int gradeSelected = 10;
     String[] grade = {"AP", "A", "BP", "B", "CP", "C", "DP", "D", "F"};
     ActivityResultLauncher<Intent> activityResultLauncher;
     AlertDialog gradeSelectDialog;
@@ -88,12 +88,15 @@ public class LectureDetailWrite extends AppCompatActivity {
                 String professor = professorview.getText().toString();
                 String content = contentview.getText().toString();
                 float rating = ratingview.getRating();
+                if(title.equals("")||professor.equals("")||
+                        content.equals("")||rating == 0||gradeSelected==10){
+                    Toast.makeText(getApplicationContext(),"항목을 모두 입력해주세요", Toast.LENGTH_SHORT).show();
+                    Log.i("a","항목입력해주세요");
+                    return;
+                }
                 String score = grade[gradeSelected];
 
-                if(title.equals(null)||professor.equals(null)||
-                        content.equals(null)||rating == 0||score.equals(null)){
-                    Toast.makeText(getApplicationContext(),"항목을 모두 입력해주세요", Toast.LENGTH_SHORT).show();
-                }
+
 
                 HashMap<String, Object> temp = new HashMap<>();
                 UserInformation info = new UserInformation(getApplicationContext());

@@ -19,7 +19,7 @@ import com.kyonggi.eku.model.BoardPreview;
 import com.kyonggi.eku.model.FreeBoardPreview;
 import com.kyonggi.eku.model.InfoBoardPreview;
 import com.kyonggi.eku.utils.SendTool;
-import com.kyonggi.eku.view.board.OnResponseListeners;
+import com.kyonggi.eku.utils.callbacks.OnResponseListeners;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -102,15 +102,17 @@ public class InfoBoardPresenter {
         return list;
     }
 
-    public void updateInfoBoard(long id) {
+    public void updateInfoBoard(long id, String building) {
         HashMap<String, Object> request = new HashMap<>();
         request.put("id", id);
+        request.put("building", building);
         SendTool.requestForJson("/board/info/recent", request, getHandler(BOARD_INFO, LOAD_RECENT));
     }
 
-    public void loadMoreInfoArticles(long no) {
+    public void loadMoreInfoArticles(long no, String building) {
         HashMap<String, Object> request = new HashMap<>();
         request.put("id", no);
+        request.put("building", building);
         SendTool.requestForJson("/board/info/load", request, getHandler(BOARD_INFO, LOAD_OLD));
     }
 

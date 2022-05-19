@@ -24,6 +24,7 @@ public class LectureItem extends LinearLayout {
     }
 
 
+
     private void init(Context context, String Title, String professor, String rating, String writer){
         LayoutInflater inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.item_lecture,this,true);
@@ -54,7 +55,8 @@ public class LectureItem extends LinearLayout {
         TextView textView = findViewById(R.id.textView29);
         textView.setText(content);
         textView = findViewById(R.id.textView30);
-        textView.setText(grade);
+        String Gradetext = grade.replace("P", "+");
+        textView.setText(Gradetext);
         textView = findViewById(R.id.textView31);
         textView.setText(writer);
         RatingBar Rating = findViewById(R.id.ratingBar32);

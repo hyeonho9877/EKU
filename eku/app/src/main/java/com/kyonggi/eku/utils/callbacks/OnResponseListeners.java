@@ -1,4 +1,4 @@
-package com.kyonggi.eku.view.board;
+package com.kyonggi.eku.utils.callbacks;
 
 import com.kyonggi.eku.model.BoardPreview;
 

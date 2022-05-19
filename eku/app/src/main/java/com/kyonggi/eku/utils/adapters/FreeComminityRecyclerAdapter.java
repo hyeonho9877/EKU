@@ -1,4 +1,4 @@
-package com.kyonggi.eku;
+package com.kyonggi.eku.utils.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-
+/*
 public class FreeComminityRecyclerAdapter extends RecyclerView.Adapter<FreeComminityRecyclerAdapter.ViewHolder> {
     private ArrayList<FreeComminityItem> arrayList = null;
 
@@ -77,3 +77,4 @@ public class FreeComminityRecyclerAdapter extends RecyclerView.Adapter<FreeCommi
         }
     }
 }
+ */
