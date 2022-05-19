@@ -75,7 +75,7 @@ public class FragmentFreeBoard extends Fragment {
     }
 
     public void listArticles(List<FreeBoardPreview> articles) {
-        adapter = new FreeBoardAdapter(articles);
+        adapter = new FreeBoardAdapter(articles, getContext());
         adapter.notifyItemRangeInserted(0, articles.size());
         binding.recyclerViewFreeBard.setAdapter(adapter);
     }
