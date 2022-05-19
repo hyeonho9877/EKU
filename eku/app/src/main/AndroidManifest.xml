@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.kyonggi.eku">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.kyonggi.eku">
 
-    <uses-feature android:name="android.hardware.camera.any" />
-
+    <!-- permission !-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCEPT_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission
@@ -16,43 +18,21 @@
         android:maxSdkVersion="30" />
     <uses-permission
         android:name="android.permission.BLUETOOTH_ADMIN"
-        android:maxSdkVersion="30" /> <!-- android 12 add -->
-    <!--
- Needed only if your app looks for Bluetooth devices.
-             If your app doesn't use Bluetooth scan results to derive physical
-             location information, you can strongly assert that your app
-             doesn't derive physical location.
-    -->
+        android:maxSdkVersion="30" />
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
-    <!--
- Needed only if your app makes the device discoverable to Bluetooth
-      devices.
-    -->
     <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-    <!--
- Needed only if your app communicates with already-paired Bluetooth
-           devices.
-    -->
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" /> <!-- bibo01 : hardware option -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+    <!-- feature !-->
     <uses-feature
         android:name="android.hardware.bluetooth"
         android:required="false" />
     <uses-feature
         android:name="android.hardware.bluetooth_le"
-        android:required="false" /> <!-- android 12 add -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCEPT_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:required="true" />
+        android:required="false" />
+    <uses-feature android:name="android.hardware.camera.any" />
 
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
-
+    <!-- application !-->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -77,11 +57,6 @@
             android:name=".DetailFreeCommunity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
-        <!--
-        <activity
-            android:name=".MainFreeCommunity"
-            android:exported="false" />
-        -->
         <activity
             android:name=".DetailAnnounce"
             android:exported="true" />
@@ -91,24 +66,6 @@
         <activity
             android:name=".WriteAnnounce"
             android:exported="true" />
-        <!--
-        <activity
-            android:name=".PhotoServeActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity
-            android:name=".WriteFreeCommunity"
-            android:exported="false" />
-        <activity
-            android:name=".MainFreeCommunity"
-            android:exported="false" />
-        <activity
-            android:name=".DetailAnnounce"
-            android:exported="true" />
-        <activity
-            android:name=".WriteAnnounce"
-            android:exported="true" />
-        -->
         <activity
             android:name=".DonanBagGi"
             android:exported="true" />
@@ -118,11 +75,6 @@
         <activity
             android:name=".TodoActivity"
             android:exported="true" />
-        <!--
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"/>
-        -->
         <activity
             android:name=".MainBoard"
             android:exported="true">
@@ -136,11 +88,10 @@
         <activity android:name=".view.signUp.activity.ActivityGallery" />
         <activity android:name=".view.signUp.activity.ActivityInputSignUpInfo" />
         <activity android:name=".view.board.activity.ActivityBoard" />
-
+        <activity android:name=".view.signIn.ActivitySignIn"/>
         <service
             android:name="com.minew.beacon.ScanService"
             android:exported="true" />
-
         <receiver
             android:name="com.minew.beacon.BluetoothChangedReceiver"
             android:exported="true">
@@ -148,7 +99,7 @@
                 <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
             </intent-filter>
         </receiver>
-        
+
         <activity android:name=".WriteBoard" />
         <activity
             android:name=".findGang"
@@ -164,8 +115,7 @@
             android:exported="false" />
         <activity
             android:name=".ScheduleTable"
-            android:exported="true">
-        </activity>
+            android:exported="true"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

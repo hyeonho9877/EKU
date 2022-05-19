@@ -4,8 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    tools:context=".DetailAnnounce">
+    tools:context="DetailAnnounce">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/detail_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:backgroundTint="#F6A788"
+        app:menu="@menu/detail_free_menu"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/detail_announce_Spinner"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="#F6A788"
+        android:gravity="center_vertical"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/detail_toolbar"
@@ -90,6 +109,18 @@
                 app:layout_constraintStart_toStartOf="@+id/detail_announce_title"
                 app:layout_constraintTop_toBottomOf="@+id/detail_announce_building" />
 
+            <EditText
+                android:visibility="invisible"
+                android:id="@+id/detail_announce_edit_content"
+                android:layout_width="328dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/stroke_under"
+                android:text="내용"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_announce_title" />
+
             <TextView
                 android:id="@+id/detail_announce_time"
                 android:layout_width="wrap_content"
@@ -100,27 +131,26 @@
                 app:layout_constraintStart_toStartOf="@+id/detail_announce_content"
                 app:layout_constraintTop_toBottomOf="@+id/detail_announce_content" />
 
-            <LinearLayout
-                android:id="@+id/detail_button_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/detail_announce_time">
 
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/detail_button_layout"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@+id/detail_announce_time"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <Button
                     android:id="@+id/detail_edit_btn_submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="수정하기" />
-
+                    android:text="수정하기"/>
                 <Button
                     android:id="@+id/detail_edit_btn_cancle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="취소" />
+                    android:text="취소"/>
             </LinearLayout>
 
             <TextView
@@ -134,23 +164,22 @@
                 tools:layout_editor_absoluteY="16dp" />
 
             <EditText
+                android:visibility="invisible"
                 android:id="@+id/detail_announce_edit_title"
-                android:layout_width="300dp"
-                android:layout_height="22dp"
-                android:layout_marginStart="45dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="68dp"
+                android:layout_width="328dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/stroke_under"
                 android:text="제목"
-                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/detail_announce_building" />
 
             <LinearLayout
                 android:id="@+id/detail_announce_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal"
                 tools:layout_editor_absoluteY="160dp"></LinearLayout>
 
@@ -164,7 +193,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.463"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_announce_button" />
+                app:layout_constraintTop_toBottomOf="@+id/detail_announce_time"></LinearLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

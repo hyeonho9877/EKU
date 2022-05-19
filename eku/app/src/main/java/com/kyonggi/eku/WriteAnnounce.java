@@ -1,11 +1,6 @@
 package com.kyonggi.eku;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +9,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,17 +18,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.kyonggi.eku.Activity.MainCommunity;
-import com.kyonggi.eku.R;
-import com.kyonggi.eku.Tool.PreferenceManagers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,17 +49,13 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
     String writer_id    = "201713924";
     String department   = "소프트웨어공학과";
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_announce);
 
         building0   = findViewById(R.id.building0);
-        building1   = findViewById(R.id.building1);
-        building2   = findViewById(R.id.building2);
-        building3   = findViewById(R.id.building3);
-        building4   = findViewById(R.id.building4);
-        building5   = findViewById(R.id.building5);
         building6   = findViewById(R.id.building6);
         building7   = findViewById(R.id.building7);
         building8   = findViewById(R.id.building8);

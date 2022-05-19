@@ -76,7 +76,7 @@ public class FragmentInfoBoard extends Fragment {
     }
 
     public void listArticles(List<InfoBoardPreview> articles) {
-        adapter = new InfoBoardAdapter(articles);
+        adapter = new InfoBoardAdapter(articles, getContext());
         adapter.notifyItemRangeInserted(0, articles.size());
         binding.recyclerViewInfoBard.setAdapter(adapter);
     }

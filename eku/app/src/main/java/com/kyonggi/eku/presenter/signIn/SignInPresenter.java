@@ -1,5 +1,6 @@
 package com.kyonggi.eku.presenter.signIn;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -12,7 +13,6 @@ import androidx.annotation.NonNull;
 
 import com.kyonggi.eku.UserInformation;
 import com.kyonggi.eku.utils.SendTool;
-import com.kyonggi.eku.view.board.activity.ActivityBoard;
 import com.kyonggi.eku.view.signUp.activity.ActivitySignUpCamera;
 
 import org.json.JSONException;
@@ -25,11 +25,13 @@ public class SignInPresenter {
     private static final String TAG = "LoginPresenter";
     private Handler handler;
     private final Context context;
+    private final Activity activity;
     private final UserInformation userInformation;
 
-    public SignInPresenter(Context context) {
+    public SignInPresenter(Context context, Activity activity) {
         this.context = context;
         this.userInformation = new UserInformation(context);
+        this.activity = activity;
     }
 
     public void signIn(String email, String password) {
@@ -39,7 +41,7 @@ public class SignInPresenter {
         SendTool.requestForJson("/signIn", user, getHandler(email, password));
     }
 
-    private Handler getHandler(String studNo, String password) {
+    private Handler getHandler(String email, String password) {
         if (handler == null) {
             this.handler = new Handler(Looper.getMainLooper()) {
                 public void handleMessage(@NonNull Message msg) {
@@ -64,18 +66,11 @@ public class SignInPresenter {
                                 int student_no = jsonObject.getInt("studNo");
                                 String st_student_no = String.valueOf(student_no);
                                 String department = jsonObject.getString("department");
-                                userInformation.toPhone(context, studNo, password, st_student_no, department, true, true);
-                                Intent intent = new Intent(context, ActivityBoard.class);
-                                intent.putExtra("mode", ActivityBoard.BOARD_INFO);
-                                context.startActivity(intent);
-
+                                userInformation.toPhone(context, email, password, st_student_no, department, true, true);
+                                activity.finish();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            /*
-                             *   이메일 검증 페이지 메인보드 가기전에 만들기
-                             *  shared에 기타 데이터 저장하기를 만들어놔야합니다.
-                             */
                             break;
                     }
                 }
