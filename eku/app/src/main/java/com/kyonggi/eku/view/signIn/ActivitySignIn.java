@@ -40,15 +40,5 @@ public class ActivitySignIn extends AppCompatActivity {
         binding.signUp.setOnClickListener(view -> {
             presenter.signUp();
         });
-
-
-        /*binding.password.setOnKeyListener((view, keyCode, keyEvent) -> {
-            switch (keyCode) {
-                case KeyEvent.KEYCODE_ENTER:
-                    binding.signIn.callOnClick();
-                    break;
-            }
-            return true;
-        });*/
     }
 }
