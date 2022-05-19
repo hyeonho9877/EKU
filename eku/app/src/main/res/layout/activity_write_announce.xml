@@ -6,170 +6,171 @@
     android:layout_height="match_parent"
     android:padding="10dp">
 
-    <EditText
-        android:id="@+id/write_announce_title"
-        android:layout_width="270dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="게시글 제목을 입력하세요(00자 이하)"
-        android:inputType="textMultiLine"
-        android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        <EditText
+            android:id="@+id/write_announce_title"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="게시글 제목을 입력하세요(00자 이하)"
+            android:inputType="textMultiLine"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView11"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-    <TextView
-        android:id="@+id/write_announce_building"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="강의동"
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
-    <EditText
-        android:id="@+id/write_announce_content"
-        android:layout_width="390dp"
-        android:layout_height="339dp"
-        android:layout_marginTop="30dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="내용"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
-
-
-    <Button
-        android:id="@+id/write_announce_save"
-        android:layout_width="180dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="100dp"
-        android:backgroundTint="@color/kyonggi_color"
-        android:text="cancle"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/write_announce_content" />
-
-    <Button
-        android:id="@+id/write_announce_close"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:backgroundTint="@color/kyonggi_color"
-        android:text="submit"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/write_announce_content" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/write_announce_building"
-        app:layout_constraintTop_toBottomOf="@+id/write_announce_title"
-        tools:ignore="MissingConstraints">
-
-        <RadioButton
-            android:id="@+id/building6"
+        <TextView
+            android:id="@+id/write_announce_building"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/write_selector_radio_button"
-            android:button="null"
-            android:padding="5dp"
-            android:text="6강"
-            android:textSize="20sp"
-            tools:layout_editor_absoluteX="85dp"
-            tools:layout_editor_absoluteY="125dp" />
+            android:layout_marginTop="20dp"
+            android:text="강의동"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="@+id/textView7"
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
-        <RadioButton
-            android:id="@+id/building7"
+        <EditText
+            android:id="@+id/write_announce_content"
+            android:layout_width="390dp"
+            android:layout_height="339dp"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="내용"
+            android:inputType="textMultiLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+
+        <Button
+            android:id="@+id/write_announce_save"
+            android:layout_width="180dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="100dp"
+            android:backgroundTint="@color/kyonggi_color"
+            android:text="cancle"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/write_announce_content" />
+
+        <Button
+            android:id="@+id/write_announce_close"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:backgroundTint="@color/kyonggi_color"
+            android:text="submit"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/write_announce_content" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/write_selector_radio_button"
-            android:button="null"
-            android:padding="5dp"
-            android:text="7강"
-            android:textColor="@drawable/write_selector_radio_text"
-            android:textSize="20sp"
-            tools:layout_editor_absoluteY="125dp" />
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/write_announce_building"
+            app:layout_constraintTop_toBottomOf="@+id/write_announce_title"
+            tools:ignore="MissingConstraints">
 
-        <RadioButton
-            android:id="@+id/building8"
+            <RadioButton
+                android:id="@+id/building6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/write_selector_radio_button"
+                android:button="@null"
+                android:padding="5dp"
+                android:text="6강"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="85dp"
+                tools:layout_editor_absoluteY="125dp" />
+
+            <RadioButton
+                android:id="@+id/building7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/write_selector_radio_button"
+                android:button="@null"
+                android:padding="5dp"
+                android:text="7강"
+                android:textColor="@drawable/write_selector_radio_text"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteY="125dp" />
+
+            <RadioButton
+                android:id="@+id/building8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/write_selector_radio_button"
+                android:button="@null"
+                android:padding="5dp"
+                android:text="8강"
+                android:textColor="@drawable/write_selector_radio_text"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="189dp"
+                tools:layout_editor_absoluteY="125dp" />
+
+            <RadioButton
+                android:id="@+id/building9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/write_selector_radio_button"
+                android:button="@null"
+                android:padding="5dp"
+                android:text="9강"
+                android:textColor="@drawable/write_selector_radio_text"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="238dp"
+                tools:layout_editor_absoluteY="125dp" />
+
+            <RadioButton
+                android:id="@+id/building0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/write_selector_radio_button"
+                android:button="@null"
+                android:padding="5dp"
+                android:text="제2공학관"
+                android:textColor="@drawable/write_selector_radio_text"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="294dp"
+                tools:layout_editor_absoluteY="123dp" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/write_selector_radio_button"
-            android:button="null"
-            android:padding="5dp"
-            android:text="8강"
-            android:textColor="@drawable/write_selector_radio_text"
-            android:textSize="20sp"
-            tools:layout_editor_absoluteX="189dp"
-            tools:layout_editor_absoluteY="125dp" />
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Write"
+            android:textColor="@color/kyonggi_color"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <RadioButton
-            android:id="@+id/building9"
+        <TextView
+            android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/write_selector_radio_button"
-            android:button="null"
-            android:padding="5dp"
-            android:text="9강"
-            android:textColor="@drawable/write_selector_radio_text"
-            android:textSize="20sp"
-            tools:layout_editor_absoluteX="238dp"
-            tools:layout_editor_absoluteY="125dp" />
+            android:layout_marginTop="20dp"
+            android:text="제목"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="@+id/textView7"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-        <RadioButton
-            android:id="@+id/building0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/write_selector_radio_button"
-            android:button="null"
-            android:padding="5dp"
-            android:text="제2공학관"
-            android:textColor="@drawable/write_selector_radio_text"
-            android:textSize="20sp"
-            tools:layout_editor_absoluteX="294dp"
-            tools:layout_editor_absoluteY="123dp" />
-    </RadioGroup>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:text="Write"
-        android:textColor="@color/kyonggi_color"
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="제목"
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>

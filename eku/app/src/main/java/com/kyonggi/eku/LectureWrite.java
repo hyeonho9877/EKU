@@ -36,10 +36,7 @@ import java.util.HashMap;
 
 public class LectureWrite extends AppCompatActivity {
 
-    /**
-     * 강의 평가 작성 기능
-     */
-    //작성 화면
+   /*
     String[] showgrade = {"A+", "A", "B+", "B", "C+", "C", "D+", "D", "F"};
     int gradeSelected = 0;
     String[] grade = {"AP", "A", "BP", "B", "CP", "C", "DP", "D", "F"};
@@ -163,5 +160,6 @@ public class LectureWrite extends AppCompatActivity {
         }
     }
 
-
+*/
 }
+

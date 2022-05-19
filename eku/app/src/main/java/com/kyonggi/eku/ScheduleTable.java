@@ -259,7 +259,7 @@ public class ScheduleTable extends AppCompatActivity {
 
         }
 
-
+/*
         TextView BuildingButton = (TextView) findViewById(R.id.schedule_Spinner);
         BuildingButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -336,7 +336,7 @@ public class ScheduleTable extends AppCompatActivity {
                 return false;
             }
         });
-
+*/
         Button UpButton = (Button) findViewById(R.id.schedule_up_button);
         UpButton.setOnClickListener(new OnClickListener() {
             int upLectureCount = getLecture.length();
@@ -734,7 +734,10 @@ public class ScheduleTable extends AppCompatActivity {
     public void onBackPressed() {
         if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
             backKeyPressedTime = System.currentTimeMillis();
-            Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(),MainBoard.class);
+            startActivity(intent);
+            finish();
+            //Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
             return;
         }
         if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {

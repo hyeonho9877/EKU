@@ -21,9 +21,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.kyonggi.eku.Activity.MainCommunity;
+import com.kyonggi.eku.MainCommunity;
 import com.kyonggi.eku.R;
-import com.kyonggi.eku.Tool.PreferenceManagers;
+import com.kyonggi.eku.PreferenceManagers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,13 +36,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WriteAnnounce extends AppCompatActivity implements View.OnClickListener {
-    /*
-     *
+
+     /*
      * 제목
      * 공지 게시판 작성
      * 기능
      * ㅈㄱㄴ
-     * */
+     */
 
     CheckBox building0, building1, building2, building3, building4,
             building5, building6, building7, building8, building9;

@@ -26,9 +26,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.kyonggi.eku.Activity.MainFreeCommunity;
+import com.kyonggi.eku.MainFreeCommunity;
 import com.kyonggi.eku.R;
-import com.kyonggi.eku.Tool.SendTool;
+import com.kyonggi.eku.utils.SendTool;
 
 import org.json.JSONArray;
 import org.json.JSONException;
