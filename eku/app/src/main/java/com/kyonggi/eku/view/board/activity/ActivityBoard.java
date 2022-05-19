@@ -27,6 +27,7 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
     private String currentMode;
     FragmentFreeBoard fragmentFreeBoard = new FragmentFreeBoard();
     FragmentInfoBoard fragmentInfoBoard = new FragmentInfoBoard();
+    private String buildingNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
     }
 
     private void setBoard(){
+        buildingNumber = getIntent().getStringExtra("buildingNumber");
         currentMode = getIntent().getStringExtra("mode");
 
         if (currentMode.equals(BOARD_FREE)) {
@@ -63,9 +65,12 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
                     .replace(R.id.frame_layout_board, fragmentFreeBoard, BOARD_FREE)
                     .commit();
         } else if (currentMode.equals(BOARD_INFO)) {
-            binding.textBuildingBoardAnnounce.setText("n 강의동 공지 게시판입니다.");
+            String announce = buildingNumber + " 강의동 공지게시판입니다.";
+            binding.textBuildingBoardAnnounce.setText(announce);
             binding.buttonInfoBoard.setTextColor(Color.parseColor("#252525"));
             binding.buttonFreeBoard.setTextColor(Color.parseColor("#80252525"));
+            String boardName = buildingNumber + " 강의동";
+            binding.textBuildingName.setText(boardName);
 
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout_board, fragmentInfoBoard, BOARD_INFO)
@@ -127,11 +132,11 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
     }
 
     public void updateInfoBoard(long id) {
-        presenter.updateInfoBoard(id);
+        presenter.updateInfoBoard(id, buildingNumber);
     }
 
     public void loadMoreInfoArticles(long no) {
-        presenter.loadMoreInfoArticles(no);
+        presenter.loadMoreInfoArticles(no, buildingNumber);
     }
 
     public void updateFreeBoard(long id) {
@@ -142,12 +147,13 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
         presenter.loadMoreFreeArticles(id);
     }
 
+    public String getBuildingNumber(){
+        return buildingNumber;
+    }
 
     public static final String BOARD_FREE = "BOARD_FREE";
     public static final String BOARD_INFO = "BOARD_INFO";
     public static final String LOAD_RECENT = "LOAD_RECENT";
     public static final String LOAD_OLD = "LOAD_OLD";
     public static final String INIT = "INIT";
-
-
 }

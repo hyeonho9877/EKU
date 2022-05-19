@@ -28,13 +28,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WriteAnnounce extends AppCompatActivity implements View.OnClickListener {
-    /*
-     *
+
+     /*
      * 제목
      * 공지 게시판 작성
      * 기능
      * ㅈㄱㄴ
-     * */
+     */
 
     CheckBox building0, building1, building2, building3, building4,
             building5, building6, building7, building8, building9;

@@ -60,7 +60,7 @@ public class ScheduleService {
     }
 
     /**
-     *
+     * 삭제
      * @param form
      * @throws IllegalArgumentException
      * @throws NoSuchElementException
@@ -77,7 +77,7 @@ public class ScheduleService {
 
 
     /**
-     *
+     * 다운로드
      * @param form
      * @return
      * @throws IllegalArgumentException

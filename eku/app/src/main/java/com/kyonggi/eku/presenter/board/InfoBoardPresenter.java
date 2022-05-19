@@ -102,15 +102,17 @@ public class InfoBoardPresenter {
         return list;
     }
 
-    public void updateInfoBoard(long id) {
+    public void updateInfoBoard(long id, String building) {
         HashMap<String, Object> request = new HashMap<>();
         request.put("id", id);
+        request.put("building", building);
         SendTool.requestForJson("/board/info/recent", request, getHandler(BOARD_INFO, LOAD_RECENT));
     }
 
-    public void loadMoreInfoArticles(long no) {
+    public void loadMoreInfoArticles(long no, String building) {
         HashMap<String, Object> request = new HashMap<>();
         request.put("id", no);
+        request.put("building", building);
         SendTool.requestForJson("/board/info/load", request, getHandler(BOARD_INFO, LOAD_OLD));
     }
 
