@@ -4,6 +4,7 @@ public class Lecture {
     private String lectureName;
     private String professor;
     private float star;
+    private String content;
 
     public Lecture(String lectureName,String professor){
         this.lectureName = lectureName;
@@ -14,6 +15,12 @@ public class Lecture {
         this.lectureName = lectureName;
         this.professor = professor;
         this.star = star;
+    }
+
+    public Lecture(String lectureName, String professor, String content){
+        this.lectureName = lectureName;
+        this.professor = professor;
+        this.content = content;
     }
 
     public String getLectureName() {
@@ -37,5 +44,14 @@ public class Lecture {
     public void setStar(float star) {
         this.star = star;
     }
+
+    public String getCtext() {
+        return content;
+    }
+
+    public void setCtext(String content) {
+        this.content = content;
+    }
+
 }
 

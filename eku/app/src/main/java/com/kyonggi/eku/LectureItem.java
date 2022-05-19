@@ -24,6 +24,7 @@ public class LectureItem extends LinearLayout {
     }
 
 
+
     private void init(Context context, String Title, String professor, String rating, String writer){
         LayoutInflater inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.item_lecture,this,true);
