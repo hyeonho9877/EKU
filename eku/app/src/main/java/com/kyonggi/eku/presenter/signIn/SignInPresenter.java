@@ -1,6 +1,5 @@
 package com.kyonggi.eku.presenter.signIn;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -13,6 +12,7 @@ import androidx.annotation.NonNull;
 
 import com.kyonggi.eku.UserInformation;
 import com.kyonggi.eku.utils.SendTool;
+import com.kyonggi.eku.view.signIn.ActivitySignIn;
 import com.kyonggi.eku.view.signUp.activity.ActivitySignUpCamera;
 
 import org.json.JSONException;
@@ -25,10 +25,10 @@ public class SignInPresenter {
     private static final String TAG = "LoginPresenter";
     private Handler handler;
     private final Context context;
-    private final Activity activity;
+    private final ActivitySignIn activity;
     private final UserInformation userInformation;
 
-    public SignInPresenter(Context context, Activity activity) {
+    public SignInPresenter(Context context, ActivitySignIn activity) {
         this.context = context;
         this.userInformation = new UserInformation(context);
         this.activity = activity;

@@ -11,6 +11,7 @@ import com.kyonggi.eku.presenter.signIn.SignInPresenter;
 
 public class ActivitySignIn extends AppCompatActivity {
 
+    private static final String TAG = "ActivitySignIn";
     private ActivitySigninBinding binding;
     private SignInPresenter presenter;
 

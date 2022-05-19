@@ -16,8 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
+import com.kyonggi.eku.presenter.lecture.LecturePresenter;
 import com.kyonggi.eku.utils.SendTool;
-import com.kyonggi.eku.view.signIn.ActivitySignIn;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,89 +39,15 @@ public class LectureMain extends AppCompatActivity {
     int[] building = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
     AlertDialog buildingSelectDialog;
     long backKeyPressedTime;
+    private LecturePresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lecture_main);
-/*
-        final DrawerLayout drawerLayout = findViewById(R.id.Lecture_Main_drawerLayout);
 
-        findViewById(R.id.Lecture_Main_Menu).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        presenter = new LecturePresenter(this, this);
 
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-
-        NavigationView navigationView = findViewById(R.id.Lecture_Main_navigationView);
-        navigationView.setItemIconTintList(null);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                Intent intent;
-                switch (id) {
-                    case R.id.Home:
-                        intent = new Intent(getApplicationContext(), MainBoard.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                    case R.id.Announce:
-                        intent = new Intent(getApplicationContext(), MainCommunity.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                    case R.id.Free:
-                        intent = new Intent(getApplicationContext(), MainFreeCommunity.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                    case R.id.lectureMain:
-                        intent = new Intent(getApplicationContext(), LectureMain.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                    case R.id.ToDo:
-                        intent = new Intent(getApplicationContext(), TodoActivity.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                    case R.id.TimeTable:
-                        intent = new Intent(getApplicationContext(), ScheduleTable.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                }
-                return false;
-            }
-        });
-
-        TextView BuildingButton = (TextView) findViewById(R.id.Lecture_Main_spinner);
-        BuildingButton.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buildingSelectDialog.show();
-            }
-        });
-        buildingSelectDialog = new AlertDialog.Builder(LectureMain.this)
-                .setSingleChoiceItems(showBuilding, buildingSelected, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        buildingSelected = i;
-                    }
-                })
-                .setTitle("강의동")
-                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        BuildingButton.setText(showBuilding[buildingSelected]);
-                    }
-                })
-                .setNegativeButton("취소", null)
-                .create();
-*/
         SwipeRefreshLayout swipe = findViewById(R.id.Lecture_Main_Swipe);
         swipe.setOnRefreshListener(
                 () -> {
@@ -130,7 +56,6 @@ public class LectureMain extends AppCompatActivity {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-
                             sc = (LinearLayout) findViewById(R.id.Lecture_Main_scroll);
                             sc.removeAllViews();
                             LoadMain();
@@ -145,13 +70,10 @@ public class LectureMain extends AppCompatActivity {
             public void onClick(View view) {
                 UserInformation info = new UserInformation(getApplicationContext());
                 if (!info.fromPhoneVerify(getApplicationContext())) {
-                    Intent intent = new Intent(getApplicationContext(), ActivitySignIn.class);
-                    startActivity(intent);
-                    finish();
+                    //presenter.signIn();
                 } else {
                     Intent intent = new Intent(getApplicationContext(), LectureWrite.class);
                     startActivity(intent);
-                    finish();
                 }
             }
         });
@@ -188,7 +110,6 @@ public class LectureMain extends AppCompatActivity {
                     }
                 };
 
-
                 HashMap<String, Object> temp = new HashMap<>();
                 temp.put("keyword",search);
                 try {
@@ -217,54 +138,6 @@ public class LectureMain extends AppCompatActivity {
             }
         });
         sc.addView(lectureitem);
-
-        /*
-        LinearLayout.LayoutParams linearLayoutParams =
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-
-        linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), LectureDetail.class);
-                intent.putExtra("Name", Title);
-                intent.putExtra("Prof", professor);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        TextView textView = new TextView(getApplicationContext());
-        textView.setText(Title);
-        textView.setGravity(Gravity.LEFT);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25.0f);
-        textView.setLayoutParams(linearLayoutParams);
-        textView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-        linearLayout.addView(textView);
-
-
-        TextView professorView = new TextView(getApplicationContext());
-        professorView.setText(professor);
-        professorView.setGravity(Gravity.RIGHT);
-        professorView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17.0f);
-        professorView.setLayoutParams(linearLayoutParams);
-        professorView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-        linearLayout.addView(professorView);
-
-        RatingBar Rating = new RatingBar(getApplicationContext());
-        Rating.setIsIndicator(true);
-        Rating.setNumStars(5);
-        Rating.setRating(Float.valueOf(rating));
-        LinearLayout.LayoutParams centerParams = new LinearLayout.LayoutParams(linearLayoutParams.WRAP_CONTENT, linearLayoutParams.WRAP_CONTENT);
-        centerParams.gravity = Gravity.CENTER;
-        Rating.setLayoutParams(centerParams);
-        linearLayout.addView(Rating);
-
-        sc.addView(linearLayout);
-
-         */
     }
 
 
@@ -286,62 +159,6 @@ public class LectureMain extends AppCompatActivity {
             }
         });
         sc.addView(lectureitem);
-
-        /*
-        LinearLayout.LayoutParams linearLayoutParams =
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-
-        linearLayout.setId(Lectureid);
-        linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), LectureDetail.class);
-                intent.putExtra("Name", Title);
-                intent.putExtra("Prof", professor);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        TextView textView = new TextView(getApplicationContext());
-        textView.setText(Title);
-        textView.setGravity(Gravity.LEFT);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25.0f);
-        textView.setLayoutParams(linearLayoutParams);
-        textView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-        linearLayout.addView(textView);
-
-
-        TextView professorView = new TextView(getApplicationContext());
-        professorView.setText(professor);
-        professorView.setGravity(Gravity.RIGHT);
-        professorView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17.0f);
-        professorView.setLayoutParams(linearLayoutParams);
-        professorView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-        linearLayout.addView(professorView);
-
-        RatingBar Rating = new RatingBar(getApplicationContext());
-        Rating.setIsIndicator(true);
-        Rating.setNumStars(5);
-        Rating.setRating(Float.valueOf(rating));
-        LinearLayout.LayoutParams centerParams = new LinearLayout.LayoutParams(linearLayoutParams.WRAP_CONTENT, linearLayoutParams.WRAP_CONTENT);
-        centerParams.gravity = Gravity.CENTER;
-        Rating.setLayoutParams(centerParams);
-        linearLayout.addView(Rating);
-
-        TextView contentView = new TextView(getApplicationContext());
-        contentView.setText(content);
-        contentView.setGravity(Gravity.LEFT);
-        contentView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17.0f);
-        contentView.setLayoutParams(linearLayoutParams);
-        contentView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-        linearLayout.addView(contentView);
-
-        sc.addView(linearLayout);
-        */
     }
 
     @Override
