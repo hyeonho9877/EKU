@@ -1,5 +1,12 @@
 package com.kyonggi.eku;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,13 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -52,7 +52,7 @@ public class TodoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo);
-
+        /*
         final DrawerLayout drawerLayout = findViewById(R.id.ToDo_drawerLayout);
 
         findViewById(R.id.ToDo_Menu).setOnClickListener(new View.OnClickListener() {
@@ -129,7 +129,7 @@ public class TodoActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("취소", null)
                 .create();
-
+        */
 
         setInit();
     }
@@ -191,7 +191,10 @@ public class TodoActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
             backKeyPressedTime = System.currentTimeMillis();
-            Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(),MainBoard.class);
+            startActivity(intent);
+            finish();
+            //Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
             return;
         }
         if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {

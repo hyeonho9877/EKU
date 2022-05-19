@@ -1,4 +1,4 @@
-package com.kyonggi.eku.view.signUp;
+package com.kyonggi.eku.view.signUp.activity;
 
 import android.net.Uri;
 import android.os.Bundle;

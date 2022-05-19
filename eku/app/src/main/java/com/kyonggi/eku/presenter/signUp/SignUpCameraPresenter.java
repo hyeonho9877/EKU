@@ -24,17 +24,17 @@ import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 
 import com.google.common.util.concurrent.ListenableFuture;
-import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.databinding.ActivitySignupPhotoBinding;
-import com.kyonggi.eku.model.SignUpForm;
-import com.kyonggi.eku.view.signUp.ActivityGallery;
-import com.kyonggi.eku.view.signUp.ActivityInputSignUpInfo;
-import com.kyonggi.eku.view.signUp.ActivitySignUpCamera;
+import com.kyonggi.eku.model.OCRForm;
+import com.kyonggi.eku.utils.SendTool;
+import com.kyonggi.eku.view.signUp.activity.ActivityGallery;
+import com.kyonggi.eku.view.signUp.activity.ActivityInputSignUpInfo;
+import com.kyonggi.eku.view.signUp.activity.ActivitySignUpCamera;
 
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
-public class SignUpPresenter {
+public class SignUpCameraPresenter {
     private static final String TAG = "SignUpPresenter";
     private final Context context;
     private ImageCapture imageCapture;
@@ -42,7 +42,7 @@ public class SignUpPresenter {
     private Handler handler;
 
 
-    public SignUpPresenter(Context context, ActivitySignUpCamera activity) {
+    public SignUpCameraPresenter(Context context, ActivitySignUpCamera activity) {
         this.context = context;
         this.activity = activity;
     }
@@ -74,6 +74,13 @@ public class SignUpPresenter {
 
     }
 
+    public void skipCamera(){
+        Intent intent = new Intent(context, ActivityInputSignUpInfo.class);
+        activity.startActivity(intent);
+        activity.finish();
+
+    }
+
     public void takePhoto() {
         String name = new SimpleDateFormat(FILENAME_FORMAT, Locale.KOREA).format(System.currentTimeMillis());
         ContentValues contentValues = new ContentValues();
@@ -97,7 +104,8 @@ public class SignUpPresenter {
 
                         Intent intent = new Intent(context, ActivityGallery.class);
                         intent.putExtra("photo", outputFileResults.getSavedUri());
-                        context.startActivity(intent);
+                        activity.startActivity(intent);
+                        activity.finish();
                         Log.d(TAG, "onImageSaved: " + msg);
                     }
 
@@ -125,12 +133,12 @@ public class SignUpPresenter {
                             Toast.makeText(context, "connection failed", Toast.LENGTH_LONG).show();
                             break;
                         case SendTool.HTTP_OK:
-                            SignUpForm signUpForm = SendTool.parseToSingleEntity(response, SignUpForm.class);
+                            OCRForm OCRForm = SendTool.parseToSingleEntity(response, OCRForm.class);
                             Intent intent = new Intent(context, ActivityInputSignUpInfo.class);
-                            intent.putExtra("studentInfo", signUpForm);
+                            intent.putExtra("studentInfo", OCRForm);
                             activity.startActivity(intent);
                             activity.finish();
-                            Log.d(TAG, "handleMessage: " + signUpForm);
+                            Log.d(TAG, "handleMessage: " + OCRForm);
                             break;
                         case SendTool.HTTP_BAD_REQUEST:
                             Toast.makeText(context, "bad request", Toast.LENGTH_LONG).show();
@@ -145,6 +153,12 @@ public class SignUpPresenter {
             };
         }
         return handler;
+    }
+
+    public void skipPhoto(){
+        Intent intent = new Intent(context, ActivityInputSignUpInfo.class);
+        activity.startActivity(intent);
+        activity.finish();
     }
 
     private final int REQUEST_CODE = 0;

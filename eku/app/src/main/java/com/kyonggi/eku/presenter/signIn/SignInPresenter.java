@@ -10,24 +10,24 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.kyonggi.eku.MainBoard;
-import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.UserInformation;
-import com.kyonggi.eku.view.signUp.ActivitySignUpCamera;
+import com.kyonggi.eku.utils.SendTool;
+import com.kyonggi.eku.view.board.activity.ActivityBoard;
+import com.kyonggi.eku.view.signUp.activity.ActivitySignUpCamera;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class LoginPresenter {
+public class SignInPresenter {
 
     private static final String TAG = "LoginPresenter";
     private Handler handler;
     private final Context context;
     private final UserInformation userInformation;
 
-    public LoginPresenter(Context context) {
+    public SignInPresenter(Context context) {
         this.context = context;
         this.userInformation = new UserInformation(context);
     }
@@ -65,8 +65,10 @@ public class LoginPresenter {
                                 String st_student_no = String.valueOf(student_no);
                                 String department = jsonObject.getString("department");
                                 userInformation.toPhone(context, studNo, password, st_student_no, department, true, true);
-                                Intent intent = new Intent(context, MainBoard.class);
+                                Intent intent = new Intent(context, ActivityBoard.class);
+                                intent.putExtra("mode", ActivityBoard.BOARD_INFO);
                                 context.startActivity(intent);
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -89,7 +91,7 @@ public class LoginPresenter {
 
     private final String NOT_AUTHORIZED = "Not Authorized.";
     private final String NOT_REGISTERED = "Not Registered.";
-    private final String PASSWORD_INVALID = "Password not matching.";
+    private final String PASSWORD_INVALID = "Password Not Matching.";
     private final String SERVER_ERROR = "Server In Error.";
 }
 
