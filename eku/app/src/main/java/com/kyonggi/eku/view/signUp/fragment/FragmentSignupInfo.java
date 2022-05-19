@@ -159,6 +159,11 @@ public class FragmentSignupInfo extends Fragment {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String namePattern = "\\S*[\\d+\\{\\}\\[\\]\\/?.,;:|\\)*~`!^\\-_+<>@\\#$%&\\\\\\=\\(\\'\\\"]";
                 Pattern compile = Pattern.compile(namePattern);
+                if (compile.matcher(charSequence).matches()){
+                    binding.textNameGuide.setText("이름에는 숫자나 특수문자가 포함될 수 없습니다.");
+                } else {
+                    binding.textNameGuide.setText("사용할 수 있는 이름입니다.");
+                }
             }
 
             @Override
