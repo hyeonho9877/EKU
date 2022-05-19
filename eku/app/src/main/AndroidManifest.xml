@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.kyonggi.eku">
-
-    <!-- permission !-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kyonggi.eku">
+    <!-- permission ! -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,9 +21,7 @@
         android:maxSdkVersion="30" />
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-
-    <!-- feature !-->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" /> <!-- feature ! -->
     <uses-feature
         android:name="android.hardware.bluetooth"
         android:required="false" />
@@ -32,7 +30,6 @@
         android:required="false" />
     <uses-feature android:name="android.hardware.camera.any" />
 
-    <!-- application !-->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -41,6 +38,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".AccountActivity"
+            android:exported="false" />
         <activity
             android:name=".MapsActivity"
             android:exported="true" />
@@ -88,10 +88,12 @@
         <activity android:name=".view.signUp.activity.ActivityGallery" />
         <activity android:name=".view.signUp.activity.ActivityInputSignUpInfo" />
         <activity android:name=".view.board.activity.ActivityBoard" />
-        <activity android:name=".view.signIn.ActivitySignIn"/>
+        <activity android:name=".view.signIn.ActivitySignIn" />
+
         <service
             android:name="com.minew.beacon.ScanService"
             android:exported="true" />
+
         <receiver
             android:name="com.minew.beacon.BluetoothChangedReceiver"
             android:exported="true">
@@ -115,7 +117,7 @@
             android:exported="false" />
         <activity
             android:name=".ScheduleTable"
-            android:exported="true"/>
+            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

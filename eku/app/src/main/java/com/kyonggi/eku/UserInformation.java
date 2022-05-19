@@ -76,7 +76,21 @@ public class UserInformation {
         return department;
     }
 
+    public void wasteAll(Context getAppliactionContext){
 
+        PreferenceManagers.removeKey(getAppliactionContext,"email");
+        PreferenceManagers.removeKey(getAppliactionContext,"password");
+        PreferenceManagers.removeKey(getAppliactionContext,"postLogin");
+        PreferenceManagers.removeKey(getAppliactionContext,"verify");
+        PreferenceManagers.removeKey(getAppliactionContext,"student_no");
+        PreferenceManagers.removeKey(getAppliactionContext,"department");
+        email="";
+        password ="";
+        postLogin=false;
+        verify =false;
+        student_no = "";
+        department ="";
+    }
 
 
 
