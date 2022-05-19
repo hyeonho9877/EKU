@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.kyonggi.eku.databinding.FragmentSignUpEndBinding;
-import com.kyonggi.eku.view.signUp.OnConfirmedListener;
+import com.kyonggi.eku.utils.callbacks.OnConfirmedListener;
 
 public class FragmentSignUpEnd extends Fragment {
     private FragmentSignUpEndBinding binding;

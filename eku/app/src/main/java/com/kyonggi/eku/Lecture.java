@@ -37,9 +37,5 @@ public class Lecture {
     public void setStar(float star) {
         this.star = star;
     }
-
-
-
-
 }
 

@@ -12,7 +12,7 @@ import com.kyonggi.eku.R;
 import com.kyonggi.eku.databinding.ActivityBoardBinding;
 import com.kyonggi.eku.model.BoardPreview;
 import com.kyonggi.eku.presenter.board.InfoBoardPresenter;
-import com.kyonggi.eku.view.board.OnResponseListeners;
+import com.kyonggi.eku.utils.callbacks.OnResponseListeners;
 import com.kyonggi.eku.view.board.fragment.FragmentFreeBoard;
 import com.kyonggi.eku.view.board.fragment.FragmentInfoBoard;
 
