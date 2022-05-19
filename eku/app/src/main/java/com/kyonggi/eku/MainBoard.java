@@ -10,11 +10,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -272,7 +274,8 @@ public class MainBoard extends AppCompatActivity {
                         } catch (JSONException jsonException) {
                             jsonException.printStackTrace();
                         }
-                        for (int i = 0; i < BoardArray.length(); i++) {
+                        int length = BoardArray.length();
+                        for (int i = 0; i < length; i++) {
                             try {
                                 JSONObject BoardObject = BoardArray.getJSONObject(i);
                                 int minor = BoardObject.getInt("minor");
@@ -286,6 +289,11 @@ public class MainBoard extends AppCompatActivity {
                                 jsonException.printStackTrace();
                             }
                         }
+                        ViewGroup.LayoutParams params = gridView.getLayoutParams();
+                        params.height = params.height * ((length+1)/2);
+                        gridView.setLayoutParams(params);
+
+                        
                 }
             }
         };
@@ -367,7 +375,7 @@ public class MainBoard extends AppCompatActivity {
 
     public void write_Board(int b) {
         String title;
-        String[] content = new String[3];
+        Lecture[] listLecture = new Lecture[3];
         sc = (LinearLayout) findViewById(R.id.board_linear);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -375,16 +383,10 @@ public class MainBoard extends AppCompatActivity {
         switch (b) {
             case 1:
                 title = "공지게시판";
-                content[0] = "";
-                content[1] = "";
-                content[2] = "";
                 //추가좀
                 break;
             case 2:
                 title = "자유게시판";
-                content[0] = "";
-                content[1] = "";
-                content[2] = "";
                 //추가좀
                 break;
             case 3:
@@ -396,12 +398,14 @@ public class MainBoard extends AppCompatActivity {
                             JSONArray LectureArray = new JSONArray(responseResult);
                             for (int i = 0; i < LectureArray.length(); i++) {
                                 JSONObject LectureObject = LectureArray.getJSONObject(i);
+                                String title = LectureObject.getString("lectureName");
+                                String professor = LectureObject.getString("professor");
                                 String text = LectureObject.getString("content");
-                                content[i] = text;
+                                listLecture[i] = new Lecture(title,professor,text);
                                 if(i==2)
                                     break;
                             }
-                            mainitem = new MainItem(getApplicationContext(), "강의게시판", content[0], content[1], content[2]);
+                            mainitem = new MainItem(getApplicationContext(), "강의게시판", listLecture[0], listLecture[1], listLecture[2]);
                             sc.addView(mainitem);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -419,9 +423,6 @@ public class MainBoard extends AppCompatActivity {
                 break;
             default:
                 title = "";
-                content[0] = "";
-                content[1] = "";
-                content[2] = "";
                 break;
         }
 

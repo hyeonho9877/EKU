@@ -22,8 +22,11 @@ public class InfoBoardServiceTest {
     @Test
     public void test1(){
         InfoBoardForm infoBoard = new InfoBoardForm();
-        infoBoard.setId((long)6);
-        System.out.println(boardController.loadBoard(infoBoard).getBody());
+        infoBoard.setId((long)127);
+        infoBoard.setTitle("dd");
+        infoBoard.setContent("dd");
+        infoBoard.setBuilding("1000000000");
+        System.out.println(boardController.updateBoard(infoBoard).getBody());
 
     }
     @Test
