@@ -1,5 +1,11 @@
 package com.kyonggi.eku.presenter.signUp;
 
+import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.ALL_FINE;
+import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.NAME_NOT_VALID;
+import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.NOT_FILLED_FIELD;
+import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.PASSWORD_NOT_MATCHING;
+import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.PASSWORD_NOT_VALID;
+
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -16,6 +22,7 @@ import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.view.signUp.activity.ActivityInputSignUpInfo;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class SignUpInfoPresenter {
 
@@ -53,13 +60,19 @@ public class SignUpInfoPresenter {
         String password = binding.editPassword.getText().toString();
         String passwordConfirm = binding.editPasswordConfirm.getText().toString();
 
+        String namePattern = "\\S*[\\d+\\{\\}\\[\\]\\/?.,;:|\\)*~`!^\\-_+<>@\\#$%&\\\\\\=\\(\\'\\\"]";
+        Pattern compile = Pattern.compile(namePattern);
+
         if (name.equals("") || department.equals("") || studNo.equals("") || email.equals("") || password.equals("") || passwordConfirm.equals("")) {
             return NOT_FILLED_FIELD;
         } else if (password.length() <= 8) {
             return PASSWORD_NOT_VALID;
         } else if (!password.equals(passwordConfirm)) {
             return PASSWORD_NOT_MATCHING;
-        } else return ALL_FINE;
+        } else if (compile.matcher(name).matches()){
+            return NAME_NOT_VALID;
+        }
+        else return ALL_FINE;
     }
 
     public void signUp(SignUpForm form) {
@@ -94,9 +107,4 @@ public class SignUpInfoPresenter {
         }
         return handler;
     }
-
-    private final int ALL_FINE = 0x00;
-    private final int NOT_FILLED_FIELD = 0x01;
-    private final int PASSWORD_NOT_VALID = 0x02;
-    private final int PASSWORD_NOT_MATCHING = 0x03;
 }
