@@ -40,7 +40,7 @@ import com.kyonggi.eku.Adapter.ComminityRecyclerAdapter;
 import com.kyonggi.eku.Model.ComminityItem;
 import com.kyonggi.eku.Model.FreeComminityItem;
 import com.kyonggi.eku.Tool.PreferenceManagers;
-import com.kyonggi.eku.R;
+import com.kyonggi.eku.utils.adapters.ComminityRecyclerAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,4 +1,4 @@
-package com.kyonggi.eku;
+package com.kyonggi.eku.utils.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kyonggi.eku.Activity.DetailAnnounce;
 import com.kyonggi.eku.Activity.WriteAnnounce;
+import com.kyonggi.eku.ComminityItem;
+import com.kyonggi.eku.DetailAnnounce;
 import com.kyonggi.eku.Model.ComminityItem;
 import com.kyonggi.eku.R;
 

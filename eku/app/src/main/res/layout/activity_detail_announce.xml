@@ -22,56 +22,46 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/detail_announce_title"
+                android:layout_width="328dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/stroke_under"
+                android:text="제목"
+                tools:layout_editor_absoluteX="41dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <TextView
                 android:id="@+id/detail_announce_building"
                 android:layout_width="328dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:text="강의동"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                tools:layout_editor_absoluteX="44dp"
+                tools:layout_editor_absoluteY="50dp" />
 
             <TextView
                 android:id="@+id/detail_announce_writer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="41dp"
                 android:text="작성자"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_announce_content" />
+                tools:layout_editor_absoluteX="333dp"
+                tools:layout_editor_absoluteY="117dp" />
 
             <TextView
                 android:id="@+id/detail_announce_content"
                 android:layout_width="328dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:background="@drawable/stroke_under"
                 android:text="내용"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_announce_title" />
+                tools:layout_editor_absoluteX="43dp"
+                tools:layout_editor_absoluteY="83dp" />
 
             <TextView
                 android:id="@+id/detail_announce_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="41dp"
-                android:layout_marginTop="15dp"
                 android:text="시간"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_announce_content" />
-
-            <TextView
-                android:id="@+id/detail_announce_title"
-                android:layout_width="328dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/stroke_under"
-                android:text="제목"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_announce_building" />
+                tools:layout_editor_absoluteX="41dp"
+                tools:layout_editor_absoluteY="117dp" />
 
             <TextView
                 android:id="@+id/hakBun"
@@ -85,15 +75,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/detail_announce_content" />
 
-            <LinearLayout
-                android:id="@+id/detail_announce_button"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/hakBun"></LinearLayout>
+                android:layout_height="2dp"
+                android:background="#FFFF0000"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="-16dp"
+                tools:layout_editor_absoluteY="173dp" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

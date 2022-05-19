@@ -39,7 +39,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.kyonggi.eku.Adapter.FreeComminityRecyclerAdapter;
 import com.kyonggi.eku.Model.FreeComminityItem;
 import com.kyonggi.eku.Tool.PreferenceManagers;
-import com.kyonggi.eku.R;
+import com.kyonggi.eku.utils.adapters.FreeComminityRecyclerAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;

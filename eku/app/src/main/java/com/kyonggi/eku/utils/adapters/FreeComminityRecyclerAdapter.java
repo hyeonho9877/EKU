@@ -1,4 +1,4 @@
-package com.kyonggi.eku;
+package com.kyonggi.eku.utils.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kyonggi.eku.Activity.DetailFreeCommunity;
+import com.kyonggi.eku.DetailFreeCommunity;
+import com.kyonggi.eku.FreeComminityItem;
 import com.kyonggi.eku.Model.FreeComminityItem;
 import com.kyonggi.eku.R;
 
