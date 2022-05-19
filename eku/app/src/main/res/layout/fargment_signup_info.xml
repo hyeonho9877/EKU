@@ -6,17 +6,30 @@
 
     <TextView
         android:id="@+id/text_name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
         android:fontFamily="@font/font_noto_sans_kr"
         android:text="@string/name"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/text_name_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/font_noto_sans_kr"
+        android:text="@string/name_guide"
+        android:textColor="@color/warn"
+        android:textSize="13sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/text_name"
+        app:layout_constraintStart_toEndOf="@+id/text_name"
+        app:layout_constraintTop_toTopOf="@+id/text_name" />
 
     <EditText
         android:id="@+id/edit_name"
@@ -33,7 +46,7 @@
         android:paddingTop="4dp"
         android:paddingEnd="8dp"
         android:paddingBottom="4dp"
-        android:textSize="11sp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_name"
@@ -48,6 +61,7 @@
         android:layout_marginTop="14dp"
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/font_noto_sans_kr"
+        android:textSize="16sp"
         android:text="@string/studentNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +82,7 @@
         android:paddingTop="4dp"
         android:paddingEnd="8dp"
         android:paddingBottom="4dp"
-        android:textSize="11sp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_studNo"
@@ -85,7 +99,7 @@
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/font_noto_sans_kr"
         android:text="@string/department"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_studNo" />
@@ -105,7 +119,7 @@
         android:paddingTop="4dp"
         android:paddingEnd="8dp"
         android:paddingBottom="4dp"
-        android:textSize="11sp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_dept"
@@ -120,7 +134,7 @@
         android:layout_marginTop="12dp"
         android:fontFamily="@font/font_noto_sans_kr"
         android:text="@string/email"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_dept" />
 
@@ -133,11 +147,11 @@
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:text="@string/email_guide"
-        android:textColor="@color/warn_shade"
-        android:textSize="11sp"
+        android:textColor="@color/warn"
+        android:textSize="13sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/text_email"
-        app:layout_constraintStart_toEndOf="@+id/text_password"
+        app:layout_constraintStart_toEndOf="@+id/text_email"
         app:layout_constraintTop_toTopOf="@+id/text_email" />
 
     <EditText
@@ -147,20 +161,20 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="32dp"
+        android:autofillHints="emailAddress"
         android:background="@drawable/border_box"
         android:fontFamily="@font/font_noto_sans_kr"
         android:hint="@string/email_hint"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
         android:paddingStart="8dp"
         android:paddingTop="4dp"
         android:paddingEnd="8dp"
         android:paddingBottom="4dp"
-        android:textSize="11sp"
-        android:minHeight="48dp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_email"
-        android:autofillHints="emailAddress"
-        android:inputType="textEmailAddress"/>
+        app:layout_constraintTop_toBottomOf="@+id/text_email" />
 
     <TextView
         android:id="@+id/text_password"
@@ -170,7 +184,7 @@
         android:layout_marginTop="12dp"
         android:fontFamily="@font/font_noto_sans_kr"
         android:text="@string/password"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_email" />
 
@@ -183,8 +197,8 @@
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:text="@string/password_guide"
-        android:textColor="@color/warn_shade"
-        android:textSize="11sp"
+        android:textColor="@color/warn"
+        android:textSize="13sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/text_password"
         app:layout_constraintStart_toEndOf="@+id/text_password"
@@ -199,8 +213,8 @@
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:text="@string/password_guide"
-        android:textColor="@color/warn_shade"
-        android:textSize="11sp"
+        android:textColor="@color/warn"
+        android:textSize="13sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/text_password_confirm"
         app:layout_constraintStart_toEndOf="@+id/text_password_confirm"
@@ -222,7 +236,7 @@
         android:paddingTop="4dp"
         android:paddingEnd="8dp"
         android:paddingBottom="4dp"
-        android:textSize="11sp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_password"
@@ -237,7 +251,7 @@
         android:layout_marginTop="12dp"
         android:fontFamily="@font/font_noto_sans_kr"
         android:text="@string/confirm_password"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_password" />
 
@@ -256,7 +270,7 @@
         android:paddingTop="4dp"
         android:paddingEnd="8dp"
         android:paddingBottom="4dp"
-        android:textSize="11sp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_password_confirm"

@@ -3,7 +3,6 @@ package com.kyonggi.eku;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class MainItem extends LinearLayout {

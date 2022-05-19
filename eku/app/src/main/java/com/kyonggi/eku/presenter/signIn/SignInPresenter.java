@@ -39,7 +39,7 @@ public class SignInPresenter {
         SendTool.requestForJson("/signIn", user, getHandler(email, password));
     }
 
-    private Handler getHandler(String studNo, String password) {
+    private Handler getHandler(String email, String password) {
         if (handler == null) {
             this.handler = new Handler(Looper.getMainLooper()) {
                 public void handleMessage(@NonNull Message msg) {
@@ -64,18 +64,13 @@ public class SignInPresenter {
                                 int student_no = jsonObject.getInt("studNo");
                                 String st_student_no = String.valueOf(student_no);
                                 String department = jsonObject.getString("department");
-                                userInformation.toPhone(context, studNo, password, st_student_no, department, true, true);
+                                userInformation.toPhone(context, email, password, st_student_no, department, true, true);
                                 Intent intent = new Intent(context, ActivityBoard.class);
                                 intent.putExtra("mode", ActivityBoard.BOARD_INFO);
                                 context.startActivity(intent);
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            /*
-                             *   이메일 검증 페이지 메인보드 가기전에 만들기
-                             *  shared에 기타 데이터 저장하기를 만들어놔야합니다.
-                             */
                             break;
                     }
                 }

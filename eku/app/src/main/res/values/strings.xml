@@ -22,9 +22,9 @@
     <string name="studNo_hint">학번을 입력해주세요.</string>
     <string name="department">학과</string>
     <string name="department_hint">소속 학과를 입력해주세요.</string>
-    <string name="email_hint">이메일을 입력해주세요.</string>
+    <string name="email_hint">학교 이메일을 입력해주세요.</string>
     <string name="password_hint">비밀번호를 입력해주세요.</string>
-    <string name="password_guide">비밀번호는 6자리 이상으로 설정해주세요.</string>
+    <string name="password_guide">비밀번호는 8자리 이상으로 설정해주세요.</string>
     <string name="confirm_password">비밀번호 확인</string>
     <string name="confirm_password_hint">비밀번호를 다시 입력해주세요.</string>
     <string name="signup_eku">EKU 회원 가입</string>
@@ -41,4 +41,8 @@
     <string name="email_guide">학교 이메일을 입력해주세요.</string>
     <string name="password_confirm_right">비밀번호가 일치합니다.</string>
     <string name="password_confirm_wrong">비밀번호가 일치하지 않습니다.</string>
+    <string name="name_guide">이름에는 숫자나 특수문자가 포함될 수 없습니다.</string>
+    <string name="name_error_dialog">이름을 확인해주세요.</string>
+    <string name="kyonggi_mail">\@ kyonggi.ac.kr</string>
+    <string name="email_error_dialog">이메일을 확인해주세요.</string>
 </resources>
