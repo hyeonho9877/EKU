@@ -36,6 +36,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
+import com.kyonggi.eku.utils.adapters.FreeComminityRecyclerAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,7 +65,7 @@ public class MainFreeCommunity extends AppCompatActivity {
     // 위젯 선언
     private RecyclerView rc_fc_board;
     // 게시판 목록 정보를 담을 Array List 선언
-    private ArrayList<FreeComminityItem> arrayList;
+    private ArrayList<FreeCommunityItem> arrayList;
     // 리사이클러 뷰 어댐터
     private FreeComminityRecyclerAdapter freeComminityRecyclerAdapter;
 
@@ -79,7 +80,7 @@ public class MainFreeCommunity extends AppCompatActivity {
         rc_fc_board = (RecyclerView) findViewById(R.id.FreeCommunity_RecyclerView);
 
         // 게시판 목록을 담을 Array List 생성
-        arrayList = new ArrayList<FreeComminityItem>();
+        arrayList = new ArrayList<FreeCommunityItem>();
         // Server에서 게시판 목록 가져옴
         getBoardList();
 
@@ -356,7 +357,7 @@ public class MainFreeCommunity extends AppCompatActivity {
 
     // Array List 에 게시판 내용 Item 삽입
     public void addItem(String id,String title, String comments, String writer, String time, String views){
-        FreeComminityItem item = new FreeComminityItem(id,title,writer,comments,time,views);
+        FreeCommunityItem item = new FreeCommunityItem(id,title,writer,comments,time,views);
         /*
         item.setFc_title(title);
         item.setFc_comment(comments);
