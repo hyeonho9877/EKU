@@ -17,7 +17,7 @@ public class ActivitySignIn extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new SignInPresenter(this); // 프레젠터 할당
+        presenter = new SignInPresenter(this, this); // 프레젠터 할당
         binding = ActivitySigninBinding.inflate(getLayoutInflater()); // 뷰 바인딩
         View view = binding.getRoot();
         setContentView(view); // 할당
