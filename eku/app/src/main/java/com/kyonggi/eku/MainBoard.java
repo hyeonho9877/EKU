@@ -10,11 +10,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -268,7 +270,8 @@ public class MainBoard extends AppCompatActivity {
                         } catch (JSONException jsonException) {
                             jsonException.printStackTrace();
                         }
-                        for (int i = 0; i < BoardArray.length(); i++) {
+                        int length = BoardArray.length();
+                        for (int i = 0; i < length; i++) {
                             try {
                                 JSONObject BoardObject = BoardArray.getJSONObject(i);
                                 int minor = BoardObject.getInt("minor");
@@ -282,6 +285,11 @@ public class MainBoard extends AppCompatActivity {
                                 jsonException.printStackTrace();
                             }
                         }
+                        ViewGroup.LayoutParams params = gridView.getLayoutParams();
+                        params.height = params.height * ((length+1)/2);
+                        gridView.setLayoutParams(params);
+
+                        
                 }
             }
         };

@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class ScheduleTable extends AppCompatActivity {
 
@@ -159,6 +161,30 @@ public class ScheduleTable extends AppCompatActivity {
                 int temp = Integer.valueOf(lectureTimeArray[lectureTimeArray.length - 1]);
                 int end = temp - startButtonPosition + 1;
                 Button button2 = new Button(this.getApplicationContext());
+
+                Random random = new Random();
+                int randomColor = random.nextInt(6) + 1;
+                switch (randomColor) {
+                    case 1:
+                        button2.setBackgroundColor(Color.rgb(224,226,128));
+                        break;
+                    case 2:
+                        button2.setBackgroundColor(Color.rgb(128,226,150));
+                        break;
+                    case 3:
+                        button2.setBackgroundColor(Color.rgb(128,209,226));
+                        break;
+                    case 4:
+                        button2.setBackgroundColor(Color.rgb(226,134,128));
+                        break;
+                    case 5:
+                        button2.setBackgroundColor(Color.rgb(128,138,226));
+                        break;
+                    default:
+                        button2.setBackgroundColor(Color.rgb(215,165,198));
+                        break;
+                }
+
                 float size = 50.0f * end;
 
                 String stLectureName = jsonObject.getString("lecture_name");
@@ -196,7 +222,6 @@ public class ScheduleTable extends AppCompatActivity {
                         builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-
                             }
                         });
                         builder.setNegativeButton("삭제", new DialogInterface.OnClickListener() {
