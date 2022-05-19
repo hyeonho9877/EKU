@@ -65,7 +65,8 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
                     .replace(R.id.frame_layout_board, fragmentFreeBoard, BOARD_FREE)
                     .commit();
         } else if (currentMode.equals(BOARD_INFO)) {
-            binding.textBuildingBoardAnnounce.setText("n 강의동 공지 게시판입니다.");
+            String announce = buildingNumber + " 강의동 공지게시판입니다.";
+            binding.textBuildingBoardAnnounce.setText(announce);
             binding.buttonInfoBoard.setTextColor(Color.parseColor("#252525"));
             binding.buttonFreeBoard.setTextColor(Color.parseColor("#80252525"));
             String boardName = buildingNumber + " 강의동";
@@ -144,6 +145,10 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
 
     public void loadMoreFreeArticles(Long id) {
         presenter.loadMoreFreeArticles(id);
+    }
+
+    public String getBuildingNumber(){
+        return buildingNumber;
     }
 
     public static final String BOARD_FREE = "BOARD_FREE";

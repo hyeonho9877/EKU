@@ -67,7 +67,7 @@ public class MainBoard extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_board);
-        buildingNumber = getIntent().getStringExtra("gang").substring(0, 1);
+        buildingNumber = "8";
 /*
         if (savedInstanceState == null) {
 
