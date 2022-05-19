@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailFreeCommunity">
+    tools:context=".Activity.DetailFreeCommunity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/detail_Free_toolbar"
@@ -46,6 +46,19 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/stroke_under"
                 android:text="제목"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_Free_building" />
+
+            <EditText
+                android:id="@+id/detail_Free_edit_title"
+                android:layout_width="328dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/stroke_under"
+                android:text="제목"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/detail_Free_building" />
@@ -107,16 +120,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/detail_Free_content" />
 
             <TextView
-                android:id="@+id/textView3"
-                android:layout_width="331dp"
-                android:layout_height="22dp"
-                android:layout_marginTop="50dp"
-                android:text="댓글"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_Free_edit_button_layout" />
-
-            <TextView
                 android:id="@+id/detail_Free_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -127,13 +130,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/detail_Free_content" />
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/detail_Free_edit_button_layout"
-                android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@+id/detail_Free_time"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/detail_Free_time">
+
+                <Button
+                    android:id="@+id/detail_Free_edit_btn_cancle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="취소" />
+
                 <Button
                     android:id="@+id/detail_Free_edit_btn_submit"
                     android:layout_width="wrap_content"
@@ -155,7 +165,7 @@
                 app:layout_constraintHeight_max="250dp"
                 app:layout_constraintHorizontal_bias="0.516"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                app:layout_constraintTop_toBottomOf="@+id/view3"
                 tools:ignore="SpeakableTextPresentCheck">
 
                 <LinearLayout
@@ -163,10 +173,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <ListView
                         android:id="@+id/detail_Free_comment_listview"
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"/>
+                        android:layout_height="250dp" >
+
+                        <View
+                            android:id="@+id/view3"
+                            android:layout_width="match_parent"
+                            android:layout_height="2px"
+                            android:background="#717171"
+                            tools:ignore="MissingConstraints" />
+                    </ListView>
                 </LinearLayout>
             </ScrollView>
 
@@ -176,6 +195,8 @@
                 android:layout_height="48dp"
                 android:layout_marginStart="35dp"
                 android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:hint="댓글을 입력해주세요."
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/detail_Free_ScrollView" />
 
@@ -199,8 +220,6 @@
                 android:orientation="horizontal"></LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </ScrollView>
 
 

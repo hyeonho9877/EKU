@@ -1,4 +1,4 @@
-package com.kyonggi.eku;
+package com.kyonggi.eku.utils.adapters;
 
 import android.content.Context;
 import android.util.Log;
