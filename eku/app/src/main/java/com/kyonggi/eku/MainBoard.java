@@ -60,12 +60,14 @@ public class MainBoard extends AppCompatActivity {
     GridListAdapter gAdapter;
     LinearLayout sc;
     MainItem mainitem;
+    private String buildingNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_board);
+        buildingNumber = getIntent().getStringExtra("gang").substring(0, 1);
 /*
         if (savedInstanceState == null) {
 
@@ -103,12 +105,14 @@ public class MainBoard extends AppCompatActivity {
                     case R.id.Announce:
                         intent = new Intent(getApplicationContext(), ActivityBoard.class);
                         intent.putExtra("mode", BOARD_INFO);
+                        intent.putExtra("buildingNumber", buildingNumber);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.Free:
                         intent = new Intent(getApplicationContext(), ActivityBoard.class);
                         intent.putExtra("mode", BOARD_FREE);
+                        intent.putExtra("buildingNumber", buildingNumber);
                         startActivity(intent);
                         finish();
                         break;
