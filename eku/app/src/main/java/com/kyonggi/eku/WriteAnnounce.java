@@ -1,22 +1,33 @@
 package com.kyonggi.eku;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 
-public class WriteAnnounce extends AppCompatActivity {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+
+public class WriteAnnounce extends AppCompatActivity implements View.OnClickListener {
     /*
      *
      * 제목
@@ -24,109 +35,156 @@ public class WriteAnnounce extends AppCompatActivity {
      * 기능
      * ㅈㄱㄴ
      * */
-    ActivityResultLauncher<Intent> activityResultLauncher;
 
+    CheckBox building0, building1, building2, building3, building4,
+            building5, building6, building7, building8, building9;
+
+    EditText et_title;
+    EditText et_content;
+
+    Button btn_save;
+    Button btn_cancle;
+
+    String name         = "고지웅";
+    String writer_id    = "201713924";
+    String department   = "소프트웨어공학과";
+
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_announce);
-        activityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
+
+        building0   = findViewById(R.id.building0);
+        building6   = findViewById(R.id.building6);
+        building7   = findViewById(R.id.building7);
+        building8   = findViewById(R.id.building8);
+        building9   = findViewById(R.id.building9);
+
+        et_title    = findViewById(R.id.write_announce_title);
+        et_content  = findViewById(R.id.write_announce_content);
+        btn_save    = findViewById(R.id.write_announce_save);
+        btn_cancle  = findViewById(R.id.write_announce_close);
+
+        btn_save.setOnClickListener(this::onClick);
+        btn_cancle.setOnClickListener(this::onClick);
+
+
+    }
+
+
+    public String getBuilding(){
+        String building = "";
+
+        building += building0.isChecked() ? "1" : "0";;
+        building += building1.isChecked() ? "1" : "0";;
+        building += building2.isChecked() ? "1" : "0";;
+        building += building3.isChecked() ? "1" : "0";;
+        building += building4.isChecked() ? "1" : "0";;
+        building += building5.isChecked() ? "1" : "0";;
+        building += building6.isChecked() ? "1" : "0";;
+        building += building7.isChecked() ? "1" : "0";;
+        building += building8.isChecked() ? "1" : "0";;
+        building += building9.isChecked() ? "1" : "0";;
+
+        return building;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.write_announce_save:
+                addBoard();
+                finish();
+                Intent intent1 = new Intent(getApplicationContext(), MainCommunity.class);
+                startActivity(intent1);
+                break;
+            case R.id.write_announce_close:
+                finish();
+                Intent intent = new Intent(getApplicationContext(), MainCommunity.class);
+                startActivity(intent);
+                break;
+        }
+    }
+
+    public void addBoard(){
+        // volley 큐 선언 및 생성
+        RequestQueue queue = Volley.newRequestQueue(this);
+        // Body에 담을 JSON Object 생성 및 선언
+        JSONObject jsonBodyObj = new JSONObject();
+        try{
+            String title    = et_title.getText().toString();
+            String content  = et_content.getText().toString();
+
+            jsonBodyObj.put("writerNo", writer_id);
+            jsonBodyObj.put("department", department);
+            jsonBodyObj.put("name", name);
+            jsonBodyObj.put("title", title);
+            jsonBodyObj.put("content", content);
+            jsonBodyObj.put("building",getBuilding());
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        // body String 선언
+        final String requestBody = String.valueOf(jsonBodyObj.toString());
+
+        // Server 주소
+        String url = "https://www.eku.kro.kr/board/info/write";
+        // VOLLEY 라이브러리를 이용하여 Server에 JSON Array 요청
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onActivityResult(ActivityResult result) {
-                        // Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
+                    public void onResponse(JSONArray response) {
+                        // Request에 대한 reponse 받음
+                        Log.d("---","---");
+                        Log.w("//===========//","================================================");
+                        Log.d("","\n"+"[FREE_COMMUNITY_BOARD > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 응답]");
+                        Log.d("","\n"+"["+"응답 전체 - "+String.valueOf(response.toString())+"]");
+                        Log.w("//===========//","================================================");
+                        Log.d("---","---");
+                    }
+                },
+                // Response Error 출력시,
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error){
+                        Log.d("---","---");
+                        Log.e("//===========//","================================================");
+                        Log.d("","\n"+"[A_Main > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 실패]");
+                        Log.d("","\n"+"["+"에러 코드 - "+String.valueOf(error.toString())+"]");
+                        Log.e("//===========//","================================================");
+                        Log.d("---","---");
                     }
                 }
-        );
-
-
-        Button saveButton = (Button) findViewById(R.id.write_announce_save);
-        saveButton.setOnClickListener(new Button.OnClickListener() {
+        ){
+            // Header Request 선언
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainCommunity.class);
-                int count = PreferenceManagers.getInt(getApplicationContext(), "announce_count");
-                // Toast.makeText(getApplicationContext(),String.valueOf(count), Toast.LENGTH_SHORT).show();
-                count++;
-                PreferenceManagers.setInt(getApplicationContext(),"announce_count", count);
-
-
-                String title = "announce_title"+count;
-                EditText text = findViewById(R.id.write_announce_title);
-                String titletext = text.getText().toString();
-                PreferenceManagers.setString(getApplicationContext(), title, titletext);
-
-                String content = "announce_content"+count;
-                text = findViewById(R.id.write_announce_content);
-                String contenttext = text.getText().toString();
-                PreferenceManagers.setString(getApplicationContext(), content, contenttext);
-
-                String writer = "announce_writer"+count;
-                String writertext = "고지웅";
-                PreferenceManagers.setString(getApplicationContext(), writer, writertext);
-
-                String building = "";
-                String temp = "";
-                CheckBox building0 = findViewById(R.id.building0);
-                temp = building0.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building1 = findViewById(R.id.building1);
-                temp = building1.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building2 = findViewById(R.id.building2);
-                temp = building2.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building3 = findViewById(R.id.building3);
-                temp = building3.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building4 = findViewById(R.id.building4);
-                temp = building4.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building5 = findViewById(R.id.building5);
-                temp = building5.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building6 = findViewById(R.id.building6);
-                temp = building6.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building7 = findViewById(R.id.building7);
-                temp = building7.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building8 = findViewById(R.id.building8);
-                temp = building8.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building9 = findViewById(R.id.building9);
-                temp = building9.isChecked() ? "1" : "0";
-                building += temp;
-
-
-                String buildingtext = "announce_building"+count;
-                PreferenceManagers.setString(getApplicationContext(), building, buildingtext);
-
-                long now = System.currentTimeMillis();
-                Date date = new Date(now);
-                SimpleDateFormat timeFormat = new SimpleDateFormat("MM-dd hh-mm");
-                String time = timeFormat.format(date);
-                PreferenceManagers.setString(getApplicationContext(), "announce_time" + count, time);
-
-
-
-
-                activityResultLauncher.launch(intent);
-                finish();
-
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
             }
-        });
-        Button closeButton = (Button) findViewById(R.id.write_announce_close);
-        closeButton.setOnClickListener(new Button.OnClickListener() {
+            // Body Request 선언
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),MainCommunity.class);
-                startActivity(intent);
-                finish();
+            public byte[] getBody() {
+                try {
+                    if (requestBody != null && requestBody.length()>0 && !requestBody.equals("")){
+                        return requestBody.getBytes("utf-8");
+                    }
+                    else {
+                        return null;
+                    }
+                } catch (UnsupportedEncodingException uee) {
+                    return null;
+                }
             }
-        });
+        };
 
-
+        // 이전 결과가 있더도 새로 요청하여 응답을 보여줌 여부
+        // False
+        request.setShouldCache(false);
+        // Volley Request 큐에 request 삽입.
+        queue.add(request);
     }
 }

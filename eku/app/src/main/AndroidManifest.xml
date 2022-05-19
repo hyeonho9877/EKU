@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kyonggi.eku">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.kyonggi.eku">
 
-    <uses-feature android:name="android.hardware.camera.any" />
-
+    <!-- permission !-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCEPT_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission
@@ -18,19 +21,18 @@
         android:maxSdkVersion="30" />
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" /> <!-- bibo01 : hardware option -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+    <!-- feature !-->
     <uses-feature
         android:name="android.hardware.bluetooth"
         android:required="false" />
     <uses-feature
         android:name="android.hardware.bluetooth_le"
-        android:required="false" /> <!-- android 12 add -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCEPT_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+        android:required="false" />
+    <uses-feature android:name="android.hardware.camera.any" />
 
+    <!-- application !-->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -74,7 +76,7 @@
             android:name=".TodoActivity"
             android:exported="true" />
         <activity
-            android:name=".view.signIn.ActivitySignIn"
+            android:name=".MainBoard"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -86,15 +88,10 @@
         <activity android:name=".view.signUp.activity.ActivityGallery" />
         <activity android:name=".view.signUp.activity.ActivityInputSignUpInfo" />
         <activity android:name=".view.board.activity.ActivityBoard" />
-        <activity
-            android:name=".MainBoard"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-
+        <activity android:name=".view.signIn.ActivitySignIn"/>
         <service
             android:name="com.minew.beacon.ScanService"
             android:exported="true" />
-
         <receiver
             android:name="com.minew.beacon.BluetoothChangedReceiver"
             android:exported="true">
@@ -103,9 +100,6 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".Request"
-            android:exported="true" />
         <activity android:name=".WriteBoard" />
         <activity
             android:name=".findGang"
@@ -121,13 +115,7 @@
             android:exported="false" />
         <activity
             android:name=".ScheduleTable"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -2,147 +2,159 @@ package com.kyonggi.eku;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.kyonggi.eku.utils.SendTool;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 
-import java.io.IOException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.Map;
 
-public class WriteFreeCommunity extends AppCompatActivity {
+public class WriteFreeCommunity extends AppCompatActivity implements View.OnClickListener {
 
     /*
-    *
-    * 제목
-    * 자유게시판 작성
-    * 기능
-    * ㅈㄱㄴ
-    * */
-    ActivityResultLauncher<Intent> activityResultLauncher;
+     *
+     * 제목
+     * 자유게시판 작성
+     * 기능
+     * ㅈㄱㄴ
+     * */
+
+    EditText et_title;
+    EditText et_content;
+
+    Button btn_save;
+    Button btn_cancle;
+
+    String writer_id    = "201713924";
+    String department   = "소프트웨어공학과";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_free_community);
-        activityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        // Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
 
-        Button saveButton = (Button) findViewById(R.id.write_free_save);
-        saveButton.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+
+        et_title    = findViewById(R.id.write_free_title);
+        et_content  = findViewById(R.id.write_free_content);
+        btn_save    = findViewById(R.id.write_free_save);
+        btn_cancle  = findViewById(R.id.write_free_close);
+
+        btn_save.setOnClickListener(this::onClick);
+        btn_cancle.setOnClickListener(this::onClick);
+
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.write_free_save:
+                addBoard();
+                finish();
+                Intent intent1 = new Intent(getApplicationContext(), MainFreeCommunity.class);
+                startActivity(intent1);
+                break;
+            case R.id.write_free_close:
+                finish();
                 Intent intent = new Intent(getApplicationContext(), MainFreeCommunity.class);
-                // Toast.makeText(getApplicationContext(),String.valueOf(count), Toast.LENGTH_SHORT).show();
-
-
-
-                String building = "";
-                String temp = "";
-                CheckBox building0 = findViewById(R.id.free_building0);
-                temp = building0.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building1 = findViewById(R.id.free_building1);
-                temp = building1.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building2 = findViewById(R.id.free_building2);
-                temp = building2.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building3 = findViewById(R.id.free_building3);
-                temp = building3.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building4 = findViewById(R.id.free_building4);
-                temp = building4.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building5 = findViewById(R.id.free_building5);
-                temp = building5.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building6 = findViewById(R.id.free_building6);
-                temp = building6.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building7 = findViewById(R.id.free_building7);
-                temp = building7.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building8 = findViewById(R.id.free_building8);
-                temp = building8.isChecked() ? "1" : "0";
-                building += temp;
-                CheckBox building9 = findViewById(R.id.free_building9);
-                temp = building9.isChecked() ? "1" : "0";
-                building += temp;
-
-                /*
-                long now = System.currentTimeMillis();
-                Date date = new Date(now);
-                SimpleDateFormat timeFormat = new SimpleDateFormat("MM-dd hh-mm");
-                String time = timeFormat.format(date);
-                PreferenceManagers.setString(getApplicationContext(), "FreeCommunity_time" + count, time);
-                */
-
-
-
-
-                Handler handler = new Handler(){
-                    public void handleMessage(@NonNull Message msg){
-                        switch (msg.what) {
-                            case 0:
-                                String responseResult=(String)msg.obj;
-
-                                Toast.makeText(getApplicationContext(), responseResult, Toast.LENGTH_LONG).show();
-                                EditText estudNo = findViewById(R.id.write_free_title);
-                                EditText edepartment =findViewById(R.id.write_free_content);
-
-                        }
-                    }
-                };
-
-
-                HashMap<String,Object> temp2 = new HashMap<>();
-                temp2.put("studNo","201713924");
-                temp2.put("department","컴퓨터공학과");
-                temp2.put("title","test제목");
-                temp2.put("content","test내용");
-
-
-                try {
-                    SendTool.request(SendTool.APPLICATION_JSON, "/free/write",temp2,handler);
-                }
-                catch (IOException | NullPointerException e) {
-                    e.printStackTrace();
-                }
-
-                activityResultLauncher.launch(intent);
-                finish();
-            }
-        });
-        Button closeButton = (Button) findViewById(R.id.write_free_close);
-        closeButton.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),MainFreeCommunity.class);
                 startActivity(intent);
-                finish();
+                break;
+        }
+    }
+
+
+    public void addBoard(){
+        // volley 큐 선언 및 생성
+        RequestQueue queue = Volley.newRequestQueue(this);
+        // Body에 담을 JSON Object 생성 및 선언
+        JSONObject jsonBodyObj = new JSONObject();
+        try{
+            String title    = et_title.getText().toString();
+            String content  = et_content.getText().toString();
+            jsonBodyObj.put("writerNo", writer_id);
+            jsonBodyObj.put("department", department);
+            jsonBodyObj.put("title", title);
+            jsonBodyObj.put("content", content);
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        // body String 선언
+        final String requestBody = String.valueOf(jsonBodyObj.toString());
+
+        // Server 주소
+        String url = "https://www.eku.kro.kr/board/free/write";
+        // VOLLEY 라이브러리를 이용하여 Server에 JSON Array 요청
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // Request에 대한 reponse 받음
+                        Log.d("---","---");
+                        Log.w("//===========//","================================================");
+                        Log.d("","\n"+"[FREE_COMMUNITY_BOARD > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 응답]");
+                        Log.d("","\n"+"["+"응답 전체 - "+String.valueOf(response.toString())+"]");
+                        Log.w("//===========//","================================================");
+                        Log.d("---","---");
+                    }
+                },
+                // Response Error 출력시,
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error){
+                        Log.d("---","---");
+                        Log.e("//===========//","================================================");
+                        Log.d("","\n"+"[A_Main > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 실패]");
+                        Log.d("","\n"+"["+"에러 코드 - "+String.valueOf(error.toString())+"]");
+                        Log.e("//===========//","================================================");
+                        Log.d("---","---");
+                    }
+                }
+        ){
+            // Header Request 선언
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
             }
-        });
+            // Body Request 선언
+            @Override
+            public byte[] getBody() {
+                try {
+                    if (requestBody != null && requestBody.length()>0 && !requestBody.equals("")){
+                        return requestBody.getBytes("utf-8");
+                    }
+                    else {
+                        return null;
+                    }
+                } catch (UnsupportedEncodingException uee) {
+                    return null;
+                }
+            }
+        };
 
-
+        // 이전 결과가 있더도 새로 요청하여 응답을 보여줌 여부
+        // False
+        request.setShouldCache(false);
+        // Volley Request 큐에 request 삽입.
+        queue.add(request);
     }
 }

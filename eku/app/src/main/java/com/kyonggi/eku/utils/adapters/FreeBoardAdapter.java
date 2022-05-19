@@ -1,19 +1,19 @@
 package com.kyonggi.eku.utils.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kyonggi.eku.DetailFreeCommunity;
 import com.kyonggi.eku.databinding.BoardLoadingBinding;
 import com.kyonggi.eku.databinding.FreeBoardItemBinding;
-import com.kyonggi.eku.databinding.InfoBoardItemBinding;
 import com.kyonggi.eku.model.FreeBoardPreview;
-import com.kyonggi.eku.model.InfoBoardPreview;
 
 import java.util.List;
 import java.util.Objects;
@@ -24,9 +24,11 @@ public class FreeBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private final int VIEW_TYPE_LOADING = 1;
     private static final String TAG = "FreeBoardAdapter";
     private List<FreeBoardPreview> list;
+    private final Context context;
 
-    public FreeBoardAdapter(List<FreeBoardPreview> list) {
+    public FreeBoardAdapter(List<FreeBoardPreview> list, Context context) {
         this.list = list;
+        this.context = context;
     }
 
     public boolean insertFromHead(List<FreeBoardPreview> newList) {
@@ -88,7 +90,8 @@ public class FreeBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     class FreeBoardViewHolder extends RecyclerView.ViewHolder {
         private final FreeBoardItemBinding binding;
-        private Integer writerNo;
+        private int writerNo;
+        private long id;
 
 
         public FreeBoardViewHolder(FreeBoardItemBinding binding) {
@@ -98,6 +101,7 @@ public class FreeBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         public void bind(FreeBoardPreview item) {
             this.writerNo = item.getNo();
+            this.id = item.getId();
             // 각각의 UI 에 알람 정보를 업데이트한다
             binding.textFreeBoardWriter.setText(item.getWriter());
             binding.textFreeBoardTitle.setText(item.getTitle());
@@ -106,9 +110,10 @@ public class FreeBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             binding.textFreeBoardView.setText(view);
             binding.textFreeBoardComment.setText(String.valueOf(item.getComments()));
             binding.textFreeBoardTitle.setOnClickListener(v -> {
-                        Log.d("tag", "bind: " + this.getAbsoluteAdapterPosition());
+                        Intent intent = new Intent(context, DetailFreeCommunity.class);
+                        intent.putExtra("id", String.valueOf(id));
+                        context.startActivity(intent);
                     }
-
             );
         }
     }

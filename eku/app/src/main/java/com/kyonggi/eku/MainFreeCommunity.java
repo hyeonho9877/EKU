@@ -24,24 +24,49 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /*
-*제목
-* 자유게시판
-*
-*내용
-* 자유게시판판* *
-*
+ *제목
+ * 자유게시판
+ *
+ *내용
+ * 자유게시판판* *
+ *
  */
 public class MainFreeCommunity extends AppCompatActivity {
-    String[] showBuilding = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
+    String[] showBuilding = {"6강의동","7강의동","8강의동","9강의동","제2공학관"};
     int buildingSelected = 0;
-    int[] building = {1,2,3,4,5,6,7,8,9,0};
+    int[] building = {6,7,8,9,0};
     AlertDialog buildingSelectDialog;
     long backKeyPressedTime;
+
+    // 위젯 선언
+    private RecyclerView rc_fc_board;
+    // 게시판 목록 정보를 담을 Array List 선언
+    private ArrayList<FreeComminityItem> arrayList;
+    // 리사이클러 뷰 어댐터
+    private FreeComminityRecyclerAdapter freeComminityRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +74,21 @@ public class MainFreeCommunity extends AppCompatActivity {
         setContentView(R.layout.activity_main_free_community);
 
         final DrawerLayout drawerLayout = findViewById(R.id.FreeCommunity_drawerLayout);
+
+        // 리사이클러 뷰 위젯 연결
+        rc_fc_board = (RecyclerView) findViewById(R.id.FreeCommunity_RecyclerView);
+
+        // 게시판 목록을 담을 Array List 생성
+        arrayList = new ArrayList<FreeComminityItem>();
+        // Server에서 게시판 목록 가져옴
+        getBoardList();
+
+        // 리사이클러 뷰 어댑터 생성
+        freeComminityRecyclerAdapter = new FreeComminityRecyclerAdapter(arrayList);
+        // 리사이클러 뷰에 어댑터 선언
+        rc_fc_board.setAdapter(freeComminityRecyclerAdapter);
+        // 리사이클러뷰 레이아웃 선언
+        rc_fc_board.setLayoutManager(new LinearLayoutManager(this));
 
         findViewById(R.id.FreeCommunity_Menu).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,7 +245,7 @@ public class MainFreeCommunity extends AppCompatActivity {
         if (count==-1){
             PreferenceManagers.setInt(getApplicationContext(), "FreeCommunity_count", 0);
         }
-        Toast.makeText(getApplicationContext(),"자유작성"+count, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"자유작성"+count, Toast.LENGTH_SHORT).show();
         if (count >0){
             for (int i = count;i>=1;i--){
                 if(!PreferenceManagers.getString(getApplicationContext(),"FreeCommunity_title"+String.valueOf(i)).equals("")) {
@@ -219,6 +259,111 @@ public class MainFreeCommunity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    // Serser에서 게시판 목록을 가져오는 메소드
+    public void getBoardList(){
+        // volley 큐 선언 및 생성
+        RequestQueue queue = Volley.newRequestQueue(this);
+        // Body에 담을 JSON Object 생성 및 선언
+        JSONObject jsonBodyObj = new JSONObject();
+        try{
+            jsonBodyObj.put("","");
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        // body String 선언
+        final String requestBody = String.valueOf(jsonBodyObj.toString());
+
+        // Server 주소
+        String url = "https://www.eku.kro.kr/board/free/lists";
+        // VOLLEY 라이브러리를 이용하여 Server에 JSON Array 요청
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // Request에 대한 reponse 받음
+                        Log.d("---","---");
+                        Log.w("//===========//","================================================");
+                        Log.d("","\n"+"[FREE_COMMUNITY_BOARD > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 응답]");
+                        Log.d("","\n"+"["+"응답 전체 - "+String.valueOf(response.toString())+"]");
+                        Log.w("//===========//","================================================");
+                        Log.d("---","---");
+
+                        try{
+                            // Json Array 의 각 데이터를 파싱
+                            // Array List 에 삽입
+                            // 리사이클러 뷰 어댑터 갱신
+                            for(int i=0;i<response.length();i++){
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                String id       = jsonObject.getString("id");
+                                String title    = jsonObject.getString("title");
+                                String writer   = jsonObject.getString("writer") + " " +jsonObject.getString("no");
+                                String time     = jsonObject.getString("time");
+                                String views    = jsonObject.getString("view");
+                                String comments = jsonObject.getString("comments");
+
+                                addItem(id,title, comments, writer, time, views);
+                                freeComminityRecyclerAdapter.notifyDataSetChanged();
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                // Response Error 출력시,
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error){
+                        Log.d("---","---");
+                        Log.e("//===========//","================================================");
+                        Log.d("","\n"+"[A_Main > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 실패]");
+                        Log.d("","\n"+"["+"에러 코드 - "+String.valueOf(error.toString())+"]");
+                        Log.e("//===========//","================================================");
+                        Log.d("---","---");
+                    }
+                }
+        ){
+            // Header Request 선언
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError{
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+            // Body Request 선언
+            @Override
+            public byte[] getBody() {
+                try {
+                    if (requestBody != null && requestBody.length()>0 && !requestBody.equals("")){
+                        return requestBody.getBytes("utf-8");
+                    }
+                    else {
+                        return null;
+                    }
+                } catch (UnsupportedEncodingException uee) {
+                    return null;
+                }
+            }
+        };
+
+        // 이전 결과가 있더도 새로 요청하여 응답을 보여줌 여부
+        // False
+        request.setShouldCache(false);
+        // Volley Request 큐에 request 삽입.
+        queue.add(request);
+    }
+
+    // Array List 에 게시판 내용 Item 삽입
+    public void addItem(String id,String title, String comments, String writer, String time, String views){
+        FreeComminityItem item = new FreeComminityItem(id,title,writer,comments,time,views);
+        /*
+        item.setFc_title(title);
+        item.setFc_comment(comments);
+        item.setFc_writer(writer);
+        item.setFc_time(time);
+        item.setFc_views(views);*/
+        arrayList.add(item);
     }
 
     public void write_Lecture(String Title, String writer, int count){
@@ -236,7 +381,7 @@ public class MainFreeCommunity extends AppCompatActivity {
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),DetailFreeCommunity.class);
+                Intent intent = new Intent(getApplicationContext(), DetailFreeCommunity.class);
                 int Lid = view.getId();
                 intent.putExtra("FreeCommunity_key",Lid);
                 // Toast.makeText(getApplicationContext(),String.valueOf(Lid), Toast.LENGTH_SHORT).show();

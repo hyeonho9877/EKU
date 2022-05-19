@@ -1,7 +1,6 @@
 package com.kyonggi.eku.view.signIn;
 
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,7 +17,7 @@ public class ActivitySignIn extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new SignInPresenter(this); // 프레젠터 할당
+        presenter = new SignInPresenter(this, this); // 프레젠터 할당
         binding = ActivitySigninBinding.inflate(getLayoutInflater()); // 뷰 바인딩
         View view = binding.getRoot();
         setContentView(view); // 할당
@@ -41,15 +40,5 @@ public class ActivitySignIn extends AppCompatActivity {
         binding.signUp.setOnClickListener(view -> {
             presenter.signUp();
         });
-
-
-        /*binding.password.setOnKeyListener((view, keyCode, keyEvent) -> {
-            switch (keyCode) {
-                case KeyEvent.KEYCODE_ENTER:
-                    binding.signIn.callOnClick();
-                    break;
-            }
-            return true;
-        });*/
     }
 }

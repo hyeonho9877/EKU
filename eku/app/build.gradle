@@ -50,6 +50,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.google.android.material:material:1.6.0"
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'com.android.volley:volley:1.2.0'
     testImplementation 'junit:junit:4.13.2'
     //noinspection GradleCompatible
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -83,6 +84,4 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
     // alternately - if using Java8, use the following instead of lifecycle-compiler
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
-
-    implementation 'com.airbnb.android:lottie:5.0.3'
 }
