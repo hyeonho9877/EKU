@@ -133,6 +133,11 @@ public class MainBoard extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                         break;
+                    case R.id.Account:
+                        intent = new Intent(getApplicationContext(),AccountActivity.class);
+                        intent.putExtra("address",AccountActivity.class);
+                        startActivity(intent);
+                        finish();
                 }
                 return false;
             }
