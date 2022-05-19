@@ -1,5 +1,7 @@
 package com.kyonggi.eku.utils.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kyonggi.eku.DetailAnnounce;
 import com.kyonggi.eku.databinding.BoardLoadingBinding;
 import com.kyonggi.eku.databinding.InfoBoardItemBinding;
 import com.kyonggi.eku.model.InfoBoardPreview;
@@ -20,9 +23,11 @@ public class InfoBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private final int VIEW_TYPE_LOADING = 1;
     private static final String TAG = "InfoBoardAdapter";
     private List<InfoBoardPreview> list;
+    private final Context context;
 
-    public InfoBoardAdapter(List<InfoBoardPreview> list) {
+    public InfoBoardAdapter(List<InfoBoardPreview> list, Context context) {
         this.list = list;
+        this.context = context;
     }
 
     public boolean insertFromHead(List<InfoBoardPreview> newList) {
@@ -84,7 +89,8 @@ public class InfoBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     class InfoBoardViewHolder extends RecyclerView.ViewHolder {
         private final InfoBoardItemBinding binding;
-        private Integer writerNo;
+        private int writerNo;
+        private long id;
 
 
         public InfoBoardViewHolder(InfoBoardItemBinding binding) {
@@ -94,6 +100,7 @@ public class InfoBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         public void bind(InfoBoardPreview item) {
             this.writerNo = item.getNo();
+            this.id = item.getId();
             // 각각의 UI 에 알람 정보를 업데이트한다
             binding.textInfoBoardWriter.setText(item.getWriter());
             binding.textInfoBoardTitle.setText(item.getTitle());
@@ -101,9 +108,10 @@ public class InfoBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             String view = "조회 " + item.getView();
             binding.textInfoBoardView.setText(view);
             binding.textInfoBoardTitle.setOnClickListener(v -> {
-                        Log.d("tag", "bind: " + this.getAbsoluteAdapterPosition());
+                        Intent intent = new Intent(context, DetailAnnounce.class);
+                        intent.putExtra("id", String.valueOf(id));
+                        context.startActivity(intent);
                     }
-
             );
         }
     }

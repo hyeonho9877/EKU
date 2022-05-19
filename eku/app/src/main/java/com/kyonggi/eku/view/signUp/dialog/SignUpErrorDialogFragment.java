@@ -44,6 +44,12 @@ public class SignUpErrorDialogFragment extends DialogFragment {
             case DUPLICATED_ACCOUNT:
                 builder.setMessage(R.string.signUp_duplicated_account);
                 break;
+            case NAME_NOT_VALID:
+                builder.setMessage(R.string.name_error_dialog);
+                break;
+            case EMAIL_NOT_VALID:
+                builder.setMessage(R.string.email_error_dialog);
+                break;
         }
         return builder.create();
     }
@@ -53,4 +59,6 @@ public class SignUpErrorDialogFragment extends DialogFragment {
     public static final int PASSWORD_NOT_VALID = 0x02;
     public static final int PASSWORD_NOT_MATCHING = 0x03;
     public static final int DUPLICATED_ACCOUNT = 0x04;
+    public static final int NAME_NOT_VALID = 0x05;
+    public static final int EMAIL_NOT_VALID = 0x06;
 }

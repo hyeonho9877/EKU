@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +15,6 @@ import com.kyonggi.eku.databinding.ActivitySignupPhotoBinding;
 import com.kyonggi.eku.presenter.signUp.SignUpCameraPresenter;
 import com.kyonggi.eku.utils.observer.GalleryObserver;
 
-import java.net.ProxySelector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
