@@ -54,7 +54,8 @@ public class LectureItem extends LinearLayout {
         TextView textView = findViewById(R.id.textView29);
         textView.setText(content);
         textView = findViewById(R.id.textView30);
-        textView.setText(grade);
+        String Gradetext = grade.replace("P", "+");
+        textView.setText(Gradetext);
         textView = findViewById(R.id.textView31);
         textView.setText(writer);
         RatingBar Rating = findViewById(R.id.ratingBar32);

@@ -139,6 +139,7 @@ public class LectureMain extends AppCompatActivity {
                     }, 500);
                 });
 
+        /*
         imageButton = (ImageButton) findViewById(R.id.Lecture_Main_WriteButton);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +156,7 @@ public class LectureMain extends AppCompatActivity {
                 }
             }
         });
+         */
 
         EditText searchText = (EditText) findViewById(R.id.Lecture_Main_searchtext);
         LoadMain();
