@@ -69,17 +69,18 @@
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ImageButton
-                android:id="@+id/Lecture_Main_searchButton"
-                android:layout_width="53dp"
-                android:layout_height="47dp"
-                android:layout_marginTop="8dp"
-                android:scaleType="centerInside"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.2"
-                app:layout_constraintStart_toEndOf="@+id/Lecture_Main_searchtext"
-                app:layout_constraintTop_toBottomOf="@+id/Lecture_Main_spinner"
-                app:srcCompat="@drawable/search"
-                tools:ignore="SpeakableTextPresentCheck" />
+            android:id="@+id/Lecture_Main_searchButton"
+            android:layout_width="53dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="8dp"
+            android:background="#AECFFF"
+            android:scaleType="centerInside"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toEndOf="@+id/Lecture_Main_searchtext"
+            app:layout_constraintTop_toBottomOf="@+id/Lecture_Main_spinner"
+            app:srcCompat="@drawable/search"
+            tools:ignore="SpeakableTextPresentCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView

@@ -127,7 +127,6 @@ public class LectureMain extends AppCompatActivity {
         sc = (LinearLayout) findViewById(R.id.Lecture_Main_scroll);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        String writer="고지웅";
         LectureItem lectureitem = new LectureItem(getApplicationContext(), Title,professor,rating);
         lectureitem.setOnClickListener(new View.OnClickListener() {
             @Override

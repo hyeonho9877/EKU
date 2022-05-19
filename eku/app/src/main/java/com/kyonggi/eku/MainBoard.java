@@ -371,7 +371,7 @@ public class MainBoard extends AppCompatActivity {
 
     public void write_Board(int b) {
         String title;
-        String[] content = new String[3];
+        Lecture[] listLecture = new Lecture[3];
         sc = (LinearLayout) findViewById(R.id.board_linear);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -379,16 +379,10 @@ public class MainBoard extends AppCompatActivity {
         switch (b) {
             case 1:
                 title = "공지게시판";
-                content[0] = "";
-                content[1] = "";
-                content[2] = "";
                 //추가좀
                 break;
             case 2:
                 title = "자유게시판";
-                content[0] = "";
-                content[1] = "";
-                content[2] = "";
                 //추가좀
                 break;
             case 3:
@@ -400,12 +394,14 @@ public class MainBoard extends AppCompatActivity {
                             JSONArray LectureArray = new JSONArray(responseResult);
                             for (int i = 0; i < LectureArray.length(); i++) {
                                 JSONObject LectureObject = LectureArray.getJSONObject(i);
+                                String title = LectureObject.getString("lectureName");
+                                String professor = LectureObject.getString("professor");
                                 String text = LectureObject.getString("content");
-                                content[i] = text;
+                                listLecture[i] = new Lecture(title,professor,text);
                                 if(i==2)
                                     break;
                             }
-                            mainitem = new MainItem(getApplicationContext(), "강의게시판", content[0], content[1], content[2]);
+                            mainitem = new MainItem(getApplicationContext(), "강의게시판", listLecture[0], listLecture[1], listLecture[2]);
                             sc.addView(mainitem);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -423,9 +419,6 @@ public class MainBoard extends AppCompatActivity {
                 break;
             default:
                 title = "";
-                content[0] = "";
-                content[1] = "";
-                content[2] = "";
                 break;
         }
 
