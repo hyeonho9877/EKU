@@ -36,4 +36,6 @@ out/
 ../eku
 /src/test/
 *.p12
+*.xml
 /src/main/resources/logback-spring.xml
+

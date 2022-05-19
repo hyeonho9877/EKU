@@ -5,16 +5,16 @@ import com.eku.EKU.exceptions.NoSuchArticleException;
 import com.eku.EKU.exceptions.NoSuchBoardException;
 import com.eku.EKU.exceptions.NoSuchStudentException;
 import com.eku.EKU.form.*;
-import com.eku.EKU.service.FreeBoardCommentService;
-import com.eku.EKU.service.FreeBoardService;
-import com.eku.EKU.service.InfoBoardCommentService;
-import com.eku.EKU.service.InfoBoardService;
+import com.eku.EKU.service.*;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -27,12 +27,14 @@ public class BoardController {
     private final InfoBoardService infoBoardService;
     private final FreeBoardCommentService freeBoardCommentService;
     private final InfoBoardCommentService infoBoardCommentService;
+    private final FileService fileService;
     
-    public BoardController(FreeBoardService boardService, InfoBoardService infoBoardService, FreeBoardCommentService freeBoardCommentService, InfoBoardCommentService infoBoardCommentService) {
+    public BoardController(FreeBoardService boardService, InfoBoardService infoBoardService, FreeBoardCommentService freeBoardCommentService, InfoBoardCommentService infoBoardCommentService, FileService fileService) {
         this.freeBoardService = boardService;
         this.infoBoardService = infoBoardService;
         this.freeBoardCommentService = freeBoardCommentService;
         this.infoBoardCommentService = infoBoardCommentService;
+        this.fileService = fileService;
     }
 
     /**
@@ -191,6 +193,7 @@ public class BoardController {
             InfoBoardResponse board = new InfoBoardResponse(infoBoardService.loadBoard(form));
             List<InfoBoardCommentResponse> commentList = infoBoardCommentService.commentList(form.getId());
             board.setCommentList(commentList);
+            board.setImageList(fileService.imageList(form.getId()));
             return ResponseEntity.ok(board);
         }catch (EmptyResultDataAccessException | NoSuchElementException exception){
             exception.printStackTrace();
@@ -300,6 +303,23 @@ public class BoardController {
             return ResponseEntity.ok(form.getCommentId());
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(form.getCommentId());
+        }
+    }
+
+    /**
+     * 공지게시판 사진업로드
+     * @param files 이미지 파일
+     * @param id 해당 공지게시판 id
+     * @return
+     */
+    @PostMapping("/file/upload")
+    public ResponseEntity<?> fileUpload(@RequestParam(value = "image", required = false)List<MultipartFile> files, @RequestParam(value = "id")Long id){
+        try{
+            for(MultipartFile i : files)
+                fileService.fileUpload(i, id);
+            return ResponseEntity.ok("success");
+        }catch (IOException | IllegalArgumentException | NoSuchElementException e){
+            return ResponseEntity.badRequest().body("fail");
         }
     }
 
