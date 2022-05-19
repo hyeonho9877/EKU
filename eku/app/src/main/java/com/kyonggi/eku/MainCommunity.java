@@ -1,5 +1,14 @@
 package com.kyonggi.eku;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,36 +28,64 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
+import com.kyonggi.eku.ComminityRecyclerAdapter;
+import com.kyonggi.eku.ComminityItem;
+import com.kyonggi.eku.FreeComminityItem;
+import com.kyonggi.eku.PreferenceManagers;
+import com.kyonggi.eku.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
-* 제목
-* 공지게시판
-* 내용
-* 공지게시판임임*
-* *
-*
+ * 제목
+ * 공지게시판
+ * 내용
+ * 공지게시판임임*
+ * *
+ *
  */
 public class MainCommunity extends AppCompatActivity {
 
-    String[] showBuilding = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
+    String[] showBuilding = {"6강의동","7강의동","8강의동","9강의동","제2공학관"};
     int buildingSelected = 0;
-    int[] building = {1,2,3,4,5,6,7,8,9,0};
+    int[] building = {6,7,8,9,0};
     AlertDialog buildingSelectDialog;
     long backKeyPressedTime;
+
+    ArrayList<ComminityItem> arrayList;
+    RecyclerView recyclerView;
+    ComminityRecyclerAdapter comminityRecyclerAdapter;
+    int now_building = 8;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_community);
+
+        recyclerView = findViewById(R.id.Community_RecyclerView);
+
+        arrayList = new ArrayList<ComminityItem>();
+        comminityRecyclerAdapter = new ComminityRecyclerAdapter(arrayList);
+        recyclerView.setAdapter(comminityRecyclerAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        getBoardList();
 
         final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
 
@@ -104,6 +141,7 @@ public class MainCommunity extends AppCompatActivity {
         });
 
         TextView BuildingButton = (TextView) findViewById(R.id.community_Spinner);
+        BuildingButton.setText("8 강의동");
         BuildingButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,6 +153,7 @@ public class MainCommunity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         buildingSelected = i;
+
                     }
                 })
                 .setTitle("강의동")
@@ -122,6 +161,8 @@ public class MainCommunity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         BuildingButton.setText(showBuilding[buildingSelected]);
+                        now_building = building[buildingSelected];
+                        getBoardList();
                     }
                 })
                 .setNegativeButton("취소", null)
@@ -209,7 +250,6 @@ public class MainCommunity extends AppCompatActivity {
         if (count==-1){
             PreferenceManagers.setInt(getApplicationContext(), "announce_count", 0);
         }
-        Toast.makeText(getApplicationContext(),"작성"+count, Toast.LENGTH_SHORT).show();
         if (count >0){
             for (int i = count;i>=1;i--){
                 if(!PreferenceManagers.getString(getApplicationContext(),"announce_title"+String.valueOf(i)).equals("")) {
@@ -240,7 +280,7 @@ public class MainCommunity extends AppCompatActivity {
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),DetailAnnounce.class);
+                Intent intent = new Intent(getApplicationContext(), DetailAnnounce.class);
                 int Lid = view.getId();
                 intent.putExtra("announce_key",Lid);
                 // Toast.makeText(getApplicationContext(),String.valueOf(Lid), Toast.LENGTH_SHORT).show();
@@ -268,9 +308,9 @@ public class MainCommunity extends AppCompatActivity {
         linearLayout.addView(professorView);
 
         sc.addView(linearLayout);
-
-
     }
+
+
     public void initialize() { //초기화
         int i = PreferenceManagers.getInt(getApplicationContext(), "announce_count");
         for (int j=0;j<=i;j++){
@@ -291,6 +331,106 @@ public class MainCommunity extends AppCompatActivity {
         if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
             finish();
         }
+    }
+
+    // Serser에서 게시판 목록을 가져오는 메소드
+    public void getBoardList(){
+
+        // volley 큐 선언 및 생성
+        RequestQueue queue = Volley.newRequestQueue(this);
+        // Body에 담을 JSON Object 생성 및 선언
+        JSONObject jsonBodyObj = new JSONObject();
+        try{
+            jsonBodyObj.put("page","0");
+            jsonBodyObj.put("lecture_building", now_building);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        // body String 선언
+        final String requestBody = String.valueOf(jsonBodyObj.toString());
+
+        String url = "https://www.eku.kro.kr/board/info/lists";
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // Request에 대한 reponse 받음
+                        Log.d("---","---");
+                        Log.w("//===========//","================================================");
+                        Log.d("","\n"+"[FREE_COMMUNITY_BOARD > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 응답]");
+                        Log.d("","\n"+"["+"응답 전체 - "+String.valueOf(response.toString())+"]");
+                        Log.w("//===========//","================================================");
+                        Log.d("---","---");
+
+                        try{
+                            arrayList.clear();
+                            // Json Array 의 각 데이터를 파싱
+                            // Array List 에 삽입
+                            // 리사이클러 뷰 어댑터 갱신
+                            for(int i=0;i<response.length();i++){
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                String id       = jsonObject.getString("id");
+                                String title    = jsonObject.getString("title");
+                                String writer   = jsonObject.getString("writer") + " " +jsonObject.getString("no");
+                                String time     = jsonObject.getString("time");
+                                String views    = jsonObject.getString("view");
+                                String comments = "";
+
+                                addItem(id,title, comments, writer, time, views);
+                                comminityRecyclerAdapter.notifyDataSetChanged();
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                // Response Error 출력시,
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error){
+                        Log.d("---","---");
+                        Log.e("//===========//","================================================");
+                        Log.d("","\n"+"[A_Main > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 실패]");
+                        Log.d("","\n"+"["+"에러 코드 - "+String.valueOf(error.toString())+"]");
+                        Log.e("//===========//","================================================");
+                        Log.d("---","---");
+                    }
+                }
+        ){
+            // Header Request 선언
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+            // Body Request 선언
+            @Override
+            public byte[] getBody() {
+                try {
+                    if (requestBody != null && requestBody.length()>0 && !requestBody.equals("")){
+                        return requestBody.getBytes("utf-8");
+                    }
+                    else {
+                        return null;
+                    }
+                } catch (UnsupportedEncodingException uee) {
+                    return null;
+                }
+            }
+        };
+
+        // 이전 결과가 있더도 새로 요청하여 응답을 보여줌 여부
+        // False
+        request.setShouldCache(false);
+        // Volley Request 큐에 request 삽입.
+        queue.add(request);
+    }
+
+    // Array List 에 게시판 내용 Item 삽입
+    public void addItem(String id,String title, String comments, String writer, String time, String views){
+        ComminityItem item = new ComminityItem(id,title,writer,comments,time,views);
+        arrayList.add(item);
     }
 
 
