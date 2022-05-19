@@ -1,6 +1,7 @@
 package com.kyonggi.eku.presenter.signUp;
 
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.ALL_FINE;
+import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.EMAIL_NOT_VALID;
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.NAME_NOT_VALID;
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.NOT_FILLED_FIELD;
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.PASSWORD_NOT_MATCHING;
@@ -60,8 +61,10 @@ public class SignUpInfoPresenter {
         String password = binding.editPassword.getText().toString();
         String passwordConfirm = binding.editPasswordConfirm.getText().toString();
 
-        String namePattern = "\\S*[\\d+\\{\\}\\[\\]\\/?.,;:|\\)*~`!^\\-_+<>@\\#$%&\\\\\\=\\(\\'\\\"]";
-        Pattern compile = Pattern.compile(namePattern);
+        String digitSpecialPattern = "[`~!@#$%^&*()\\-_=+|\\[\\]{};:'\",.<>/?\\d]";
+        String incompleteNamePattern = "[ㄱ-ㅎㅏ-ㅣ]";
+        Pattern digitSpecialCompile = Pattern.compile(digitSpecialPattern);
+        Pattern incompleteCompile = Pattern.compile(incompleteNamePattern);
 
         if (name.equals("") || department.equals("") || studNo.equals("") || email.equals("") || password.equals("") || passwordConfirm.equals("")) {
             return NOT_FILLED_FIELD;
@@ -69,10 +72,13 @@ public class SignUpInfoPresenter {
             return PASSWORD_NOT_VALID;
         } else if (!password.equals(passwordConfirm)) {
             return PASSWORD_NOT_MATCHING;
-        } else if (compile.matcher(name).matches()){
+        } else if (digitSpecialCompile.matcher(name).find() || incompleteCompile.matcher(name).find() || name.length()==0){
             return NAME_NOT_VALID;
+        } else if (email.length() == 0 || email.contains("@")) {
+            return EMAIL_NOT_VALID;
+        } else {
+            return ALL_FINE;
         }
-        else return ALL_FINE;
     }
 
     public void signUp(SignUpForm form) {
