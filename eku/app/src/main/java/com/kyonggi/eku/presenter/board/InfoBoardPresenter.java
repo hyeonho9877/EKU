@@ -19,7 +19,7 @@ import com.kyonggi.eku.model.BoardPreview;
 import com.kyonggi.eku.model.FreeBoardPreview;
 import com.kyonggi.eku.model.InfoBoardPreview;
 import com.kyonggi.eku.utils.SendTool;
-import com.kyonggi.eku.view.board.OnResponseListeners;
+import com.kyonggi.eku.utils.callbacks.OnResponseListeners;
 
 import java.util.ArrayList;
 import java.util.HashMap;
