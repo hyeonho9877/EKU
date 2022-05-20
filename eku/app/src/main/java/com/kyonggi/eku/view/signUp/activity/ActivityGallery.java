@@ -1,7 +1,9 @@
 package com.kyonggi.eku.view.signUp.activity;
 
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -32,7 +34,9 @@ public class ActivityGallery extends AppCompatActivity {
     }
 
     private void initListeners() {
-        binding.buttonConfirm.setOnClickListener(v-> presenter.confirm(photo, getContentResolver()));
+        binding.buttonConfirm.setOnClickListener(v-> {
+            presenter.confirm(photo, getContentResolver());
+        });
         binding.buttonCancel.setOnClickListener(v->{
             finish();
         });

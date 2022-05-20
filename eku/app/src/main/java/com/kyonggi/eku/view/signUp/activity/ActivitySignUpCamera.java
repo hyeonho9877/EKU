@@ -36,32 +36,15 @@ public class ActivitySignUpCamera extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view); // 할당
         presenter = new SignUpCameraPresenter(this, this);
-        if (allPermissionGranted()) {
-            observer = new GalleryObserver(getActivityResultRegistry(), getContentResolver(), presenter.getHandler());
-            getLifecycle().addObserver(observer);
-            presenter.startCamera(binding);
-        } else{
-            String[] permissions = new String[]{Manifest.permission.CAMERA};
-            ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_PERMISSIONS);
-        }
+
+        observer = new GalleryObserver(getActivityResultRegistry(), getContentResolver(), presenter.getHandler());
+        getLifecycle().addObserver(observer);
+        presenter.startCamera(binding);
 
         initListeners();
         cameraExecutor = Executors.newSingleThreadExecutor();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission has been granted. Start camera preview Activity.
-                presenter.startCamera(binding);
-            } else {
-                // Permission request was denied.
-                presenter.skipCamera();
-            }
-        }
-    }
 
     @Override
     protected void onDestroy() {
@@ -70,16 +53,9 @@ public class ActivitySignUpCamera extends AppCompatActivity {
     }
 
 
-    private boolean allPermissionGranted(){
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
-    }
-
     private void initListeners() {
         binding.buttonImageCapture.setOnClickListener(v -> presenter.takePhoto());
-        binding.buttonGallery.setOnClickListener(v->observer.selectImage());
-        binding.buttonSkip.setOnClickListener(v->presenter.skipPhoto());
-
+        binding.buttonGallery.setOnClickListener(v -> observer.selectImage());
+        binding.buttonSkip.setOnClickListener(v -> presenter.skipPhoto());
     }
-
-    private final int REQUEST_CODE_PERMISSIONS = 10;
 }

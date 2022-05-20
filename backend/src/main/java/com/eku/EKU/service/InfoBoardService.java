@@ -94,8 +94,8 @@ public class InfoBoardService {
         }
     }
 
-    public List<BoardListResponse> getRecentBoard(long id) {
-        List<InfoBoard> result = infoBoardRepository.findByIdIsGreaterThanOrderByWrittenTimeDesc(id);
+    public List<BoardListResponse> getRecentBoard(String building, long id) {
+        List<InfoBoard> result = infoBoardRepository.findByBuildingAndIdIsGreaterThanOrderByWrittenTimeDesc(building, id);
         return result.stream().map(BoardListResponse::new)
                 .toList();
     }
@@ -120,8 +120,7 @@ public class InfoBoardService {
     /**
      * 1011001010 이런식으로 오는 강의동코드와 목록이 표시되어야할 강의동 번호가 일치하는지 검사하는 함수
      */
-    public boolean isCorrectBuilding(String code, int no){
-
+    public boolean isCorrectBuilding(String code, int no) {
         if(no<1||no>10)
             return false;
         else if(code.substring(no-1,no).equals("1"))
@@ -129,8 +128,8 @@ public class InfoBoardService {
         return false;
     }
 
-    public List<BoardListResponse> loadBoardAfterId(Long id) {
-        List<InfoBoard> result = infoBoardRepository.findByIdIsLessThanOrderByWrittenTimeDesc(id, Pageable.ofSize(20));
+    public List<BoardListResponse> loadBoardAfterId(String building, Long id) {
+        List<InfoBoard> result = infoBoardRepository.findByBuildingAndIdIsLessThanOrderByWrittenTimeDesc(building, id, Pageable.ofSize(20));
         return result.stream().map(BoardListResponse::new)
                 .toList();
     }

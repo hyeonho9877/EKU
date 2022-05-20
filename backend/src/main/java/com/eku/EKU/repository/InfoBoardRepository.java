@@ -18,6 +18,8 @@ public interface InfoBoardRepository extends JpaRepository<InfoBoard, Long> {
     @Query(value = "SELECT i FROM InfoBoard AS i where substring(i.building, :building, 1) = '1' order by i.writtenTime desc ")
     Page<InfoBoard> findAllByBuildingOrderByWrittenTime(@Param("building") int building, Pageable pageable);
 
-    List<InfoBoard> findByIdIsLessThanOrderByWrittenTimeDesc(@NonNull Long id, Pageable pageable);
-    List<InfoBoard> findByIdIsGreaterThanOrderByWrittenTimeDesc(@NonNull Long id);
+    @Query(value = "SELECT i FROM InfoBoard AS i where substring(i.building, :building, 1) = '1' and i.id < :id order by i.writtenTime desc ")
+    List<InfoBoard> findByBuildingAndIdIsLessThanOrderByWrittenTimeDesc(@NonNull String building, @NonNull Long id, Pageable pageable);
+    @Query(value = "SELECT i FROM InfoBoard AS i where substring(i.building, :building, 1) = '1' and i.id > :id order by i.writtenTime desc ")
+    List<InfoBoard> findByBuildingAndIdIsGreaterThanOrderByWrittenTimeDesc(@NonNull String building, @NonNull Long id);
 }

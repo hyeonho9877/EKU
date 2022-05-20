@@ -347,11 +347,4 @@ public class DetailAnnounce extends AppCompatActivity {
                 });
         builder.show();
     }
-
-    @Override
-    public void onBackPressed() {
-        finish();
-        Intent intent = new Intent(getApplicationContext(),MainCommunity.class);
-        startActivity(intent);
-    }
 }
