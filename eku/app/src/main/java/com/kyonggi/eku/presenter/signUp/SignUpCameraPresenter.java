@@ -110,11 +110,9 @@ public class SignUpCameraPresenter {
                     public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                         String msg = outputFileResults.getSavedUri() + "에 사진이 저장되었습니다.";
                         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
-
                         Intent intent = new Intent(context, ActivityGallery.class);
                         intent.putExtra("photo", outputFileResults.getSavedUri());
                         activity.startActivity(intent);
-                        activity.finish();
                         Log.d(TAG, "onImageSaved: " + msg);
                     }
 
