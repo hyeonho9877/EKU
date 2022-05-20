@@ -138,7 +138,7 @@ public class MainBoard extends AppCompatActivity {
                         break;
                     case R.id.Account:
                         intent = new Intent(getApplicationContext(),AccountActivity.class);
-                        intent.putExtra("address",AccountActivity.class);
+                        intent.putExtra("address","MainBoard");
                         drawerLayout.closeDrawer(GravityCompat.START);
                         startActivity(intent);
                         finish();
@@ -403,7 +403,7 @@ public class MainBoard extends AppCompatActivity {
                 Handler handler = new Handler(getMainLooper()) {
                     @Override
                     public void handleMessage(@NonNull Message msg) {
-                        String responseResult = (String) msg.obj;
+                       /* String responseResult = (String) msg.obj;
                         try {
                             JSONArray LectureArray = new JSONArray(responseResult);
                             for (int i = 0; i < LectureArray.length(); i++) {
@@ -420,7 +420,7 @@ public class MainBoard extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
+*/
                     }
                 };
 
