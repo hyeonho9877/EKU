@@ -1,5 +1,6 @@
 package com.kyonggi.eku.view.board.activity;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -114,6 +115,8 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
 
     @Override
     public void onSuccess(List<? extends BoardPreview> articles, String purpose) {
+        binding.animBoardLoading.setVisibility(View.INVISIBLE);
+        binding.frameLayoutBoard.setVisibility(View.VISIBLE);
         if (currentMode.equals(BOARD_INFO)) {
             if (purpose.equals(LOAD_RECENT)) fragmentInfoBoard.updateArticles(presenter.convertToInfoBoard(articles));
             else if(purpose.equals(INIT)) fragmentInfoBoard.listArticles(presenter.convertToInfoBoard(articles));

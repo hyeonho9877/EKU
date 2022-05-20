@@ -1,6 +1,6 @@
 package com.kyonggi.eku;
 
-public class FreeComminityItem {
+public class FreeCommunityItem {
     private String fc_title;
     private String fc_writer;
     private String fc_comment;
@@ -8,10 +8,10 @@ public class FreeComminityItem {
     private String fc_views;
     private String fc_id;
 
-    public FreeComminityItem(){
+    public FreeCommunityItem(){
 
     }
-    public FreeComminityItem(String id, String fc_title, String fc_writer, String fc_comment, String fc_time, String fc_views){
+    public FreeCommunityItem(String id, String fc_title, String fc_writer, String fc_comment, String fc_time, String fc_views){
         this.fc_id      = id;
         this.fc_title   = fc_title;
         this.fc_writer  = fc_writer;

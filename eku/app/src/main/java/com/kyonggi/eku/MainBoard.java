@@ -101,6 +101,7 @@ public class MainBoard extends AppCompatActivity {
                 switch (id) {
                     case R.id.Home:
                         intent = new Intent(getApplicationContext(), MainBoard.class);
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         startActivity(intent);
                         finish();
                         break;
@@ -108,34 +109,37 @@ public class MainBoard extends AppCompatActivity {
                         intent = new Intent(getApplicationContext(), ActivityBoard.class);
                         intent.putExtra("mode", BOARD_INFO);
                         intent.putExtra("buildingNumber", buildingNumber);
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         startActivity(intent);
-                        finish();
                         break;
                     case R.id.Free:
                         intent = new Intent(getApplicationContext(), ActivityBoard.class);
                         intent.putExtra("mode", BOARD_FREE);
                         intent.putExtra("buildingNumber", buildingNumber);
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         startActivity(intent);
-                        finish();
                         break;
                     case R.id.lectureMain:
                         intent = new Intent(getApplicationContext(), LectureMain.class);
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         startActivity(intent);
-                        finish();
                         break;
                     case R.id.ToDo:
                         intent = new Intent(getApplicationContext(), TodoActivity.class);
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.TimeTable:
                         intent = new Intent(getApplicationContext(), ScheduleTable.class);
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.Account:
                         intent = new Intent(getApplicationContext(),AccountActivity.class);
                         intent.putExtra("address",AccountActivity.class);
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         startActivity(intent);
                         finish();
                 }
