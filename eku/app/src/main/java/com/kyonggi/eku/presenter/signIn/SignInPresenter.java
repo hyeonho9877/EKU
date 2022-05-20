@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import com.kyonggi.eku.UserInformation;
 import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.view.signIn.ActivitySignIn;
+import com.kyonggi.eku.view.signUp.activity.ActivityInputSignUpInfo;
 import com.kyonggi.eku.view.signUp.activity.ActivitySignUpCamera;
 
 import org.json.JSONException;
@@ -88,5 +89,15 @@ public class SignInPresenter {
     private final String NOT_REGISTERED = "Not Registered.";
     private final String PASSWORD_INVALID = "Password Not Matching.";
     private final String SERVER_ERROR = "Server In Error.";
+
+    public void startCamera() {
+        Intent intent = new Intent(context, ActivitySignUpCamera.class);
+        activity.startActivity(intent);
+    }
+
+    public void skipCamera() {
+        Intent intent = new Intent(context, ActivityInputSignUpInfo.class);
+        activity.startActivity(intent);
+    }
 }
 

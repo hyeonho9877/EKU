@@ -4,7 +4,10 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.icu.text.SimpleDateFormat;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -24,6 +27,7 @@ import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 
 import com.google.common.util.concurrent.ListenableFuture;
+import com.kyonggi.eku.R;
 import com.kyonggi.eku.databinding.ActivitySignupPhotoBinding;
 import com.kyonggi.eku.model.OCRForm;
 import com.kyonggi.eku.utils.SendTool;
@@ -40,6 +44,7 @@ public class SignUpCameraPresenter {
     private ImageCapture imageCapture;
     private final ActivitySignUpCamera activity;
     private Handler handler;
+    private MediaPlayer mediaPlayer;
 
 
     public SignUpCameraPresenter(Context context, ActivitySignUpCamera activity) {
@@ -74,13 +79,6 @@ public class SignUpCameraPresenter {
 
     }
 
-    public void skipCamera(){
-        Intent intent = new Intent(context, ActivityInputSignUpInfo.class);
-        activity.startActivity(intent);
-        activity.finish();
-
-    }
-
     public void takePhoto() {
         String name = new SimpleDateFormat(FILENAME_FORMAT, Locale.KOREA).format(System.currentTimeMillis());
         ContentValues contentValues = new ContentValues();
@@ -92,6 +90,17 @@ public class SignUpCameraPresenter {
         }
         ContentResolver contentResolver = context.getContentResolver();
         ImageCapture.OutputFileOptions fileOptions = new ImageCapture.OutputFileOptions.Builder(contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues).build();
+
+        Resources res = context.getResources();
+        int resId = R.raw.camera_shutter;
+        Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
+                "://" + res.getResourcePackageName(resId)
+                + '/' + res.getResourceTypeName(resId)
+                + '/' + res.getResourceEntryName(resId));
+
+        mediaPlayer = MediaPlayer.create(context, uri);
+        mediaPlayer.setOnCompletionListener(mp -> stopSound());
+        mediaPlayer.start();
 
         imageCapture.takePicture(
                 fileOptions,
@@ -115,10 +124,6 @@ public class SignUpCameraPresenter {
                     }
                 }
         );
-    }
-
-    public void openGallery() {
-
     }
 
     public Handler getHandler() {
@@ -159,6 +164,13 @@ public class SignUpCameraPresenter {
         Intent intent = new Intent(context, ActivityInputSignUpInfo.class);
         activity.startActivity(intent);
         activity.finish();
+    }
+
+    private void stopSound() {
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 
     private final int REQUEST_CODE = 0;

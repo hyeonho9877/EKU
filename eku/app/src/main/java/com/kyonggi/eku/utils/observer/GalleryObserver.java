@@ -30,7 +30,9 @@ public class GalleryObserver implements DefaultLifecycleObserver {
     public void onCreate(@NonNull LifecycleOwner owner) {
         getContent = registry.register("key", owner, new GetContent(),
                 result -> {
-                    SendTool.requestForMultiPart("/signUp/ocr", result, contentResolver, handler);
+                    if (result != null) {
+                        SendTool.requestForMultiPart("/signUp/ocr", result, contentResolver, handler);
+                    }
                 });
     }
 
