@@ -89,6 +89,7 @@ public class ScheduleTable extends AppCompatActivity {
         if (!(userInformation.fromPhoneVerify(getApplicationContext()))) {
             Toast.makeText(getApplicationContext(), "로그인이 필요합니다.", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(getApplicationContext(), ActivitySignIn.class);
+            intent.putExtra("address","ScheduleTable");
             startActivity(intent);
             finish();
         } else {

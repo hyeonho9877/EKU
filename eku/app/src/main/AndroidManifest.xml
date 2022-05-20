@@ -78,10 +78,7 @@
         <activity
             android:name=".MainBoard"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity android:name=".view.signUp.activity.ActivitySignUpCamera" />
         <activity android:name=".view.signUp.activity.ActivityGallery" />
@@ -105,6 +102,10 @@
         <activity
             android:name=".findGang"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".LectureMain"

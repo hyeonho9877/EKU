@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.kyonggi.eku.presenter.signIn.SignInPresenter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,11 +95,19 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.write_announce_save:
-                addBoard();
-                finish();
-                Intent intent1 = new Intent(getApplicationContext(), MainCommunity.class);
-                startActivity(intent1);
-                break;
+                UserInformation info = new UserInformation(getApplicationContext());
+                if (!info.fromPhoneVerify(getApplicationContext())) {
+                    Intent intent = new Intent(getApplicationContext(), SignInPresenter.class);
+                    intent.putExtra("address","WriteAnnounce");
+                    startActivity(intent);
+                    finish();
+                } else {
+                    addBoard();
+                    finish();
+                    Intent intent1 = new Intent(getApplicationContext(), MainCommunity.class);
+                    startActivity(intent1);
+                    break;
+                }
             case R.id.write_announce_close:
                 finish();
                 Intent intent = new Intent(getApplicationContext(), MainCommunity.class);

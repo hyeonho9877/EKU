@@ -52,7 +52,7 @@ import java.util.HashMap;
 public class MainBoard extends AppCompatActivity {
 
     public static final int Minorcheck = 61686;
-    String[] showBuilding = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관"};
+    String[] showBuilding = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관","종합강의동"};
     int buildingSelected = 0;
     int[] building = {1,2,3,4,5,6,7,8,9,0};
     AlertDialog buildingSelectDialog;
@@ -138,7 +138,7 @@ public class MainBoard extends AppCompatActivity {
                         break;
                     case R.id.Account:
                         intent = new Intent(getApplicationContext(),AccountActivity.class);
-                        intent.putExtra("address",AccountActivity.class);
+                        intent.putExtra("address","MainBoard");
                         drawerLayout.closeDrawer(GravityCompat.START);
                         startActivity(intent);
                         finish();
@@ -340,6 +340,7 @@ public class MainBoard extends AppCompatActivity {
                 }
                 else {
                     Intent intent = new Intent(getApplicationContext(), WriteBoard.class);
+                    intent.putExtra("address","MainBoard");
                     startActivity(intent);
                     finish();
                 }
@@ -402,7 +403,7 @@ public class MainBoard extends AppCompatActivity {
                 Handler handler = new Handler(getMainLooper()) {
                     @Override
                     public void handleMessage(@NonNull Message msg) {
-                        String responseResult = (String) msg.obj;
+                       /* String responseResult = (String) msg.obj;
                         try {
                             JSONArray LectureArray = new JSONArray(responseResult);
                             for (int i = 0; i < LectureArray.length(); i++) {
@@ -419,7 +420,7 @@ public class MainBoard extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
+*/
                     }
                 };
 

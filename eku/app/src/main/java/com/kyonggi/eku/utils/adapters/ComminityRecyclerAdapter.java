@@ -16,7 +16,6 @@ import com.kyonggi.eku.DetailAnnounce;
 import com.kyonggi.eku.R;
 
 import java.util.ArrayList;
-
 public class ComminityRecyclerAdapter extends RecyclerView.Adapter<ComminityRecyclerAdapter.ViewHolder> {
     private ArrayList<ComminityItem> arrayList = null;
 

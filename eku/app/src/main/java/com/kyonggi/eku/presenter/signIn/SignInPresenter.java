@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.kyonggi.eku.MainBoard;
 import com.kyonggi.eku.UserInformation;
 import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.view.signIn.ActivitySignIn;
@@ -69,6 +70,10 @@ public class SignInPresenter {
                                 String department = jsonObject.getString("department");
                                 userInformation.toPhone(context, email, password, st_student_no, department, true, true);
                                 activity.finish();
+                                Intent intent = new Intent(context,MainBoard.class);
+                                context.startActivity(intent);
+
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

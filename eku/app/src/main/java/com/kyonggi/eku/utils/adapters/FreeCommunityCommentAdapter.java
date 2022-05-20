@@ -40,6 +40,8 @@ public class FreeCommunityCommentAdapter extends BaseAdapter {
         this.arrayList = arrayList;
     }
 
+
+
     @Override
     public int getCount() {
         return arrayList.size();

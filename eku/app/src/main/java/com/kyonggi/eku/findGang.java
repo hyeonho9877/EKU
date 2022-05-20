@@ -116,11 +116,11 @@ public class findGang extends AppCompatActivity {
                     }
                     if(temp.equals("61633"))
                     {
-                        intent.putExtra("GANG","4강의동");
+                        intent.putExtra("GANG","종합강의동");
                     }
                     if(temp.equals("61524"))
                     {
-                        intent.putExtra("GANG","5강의동");
+                        intent.putExtra("GANG","제2공학관");
                     }
                     if(temp.equals("61632"))
                     {
@@ -128,6 +128,9 @@ public class findGang extends AppCompatActivity {
                     }
                     if(temp.equals("61618")) {
                         intent.putExtra("GANG","6강의동");
+                    }
+                    if(temp.equals("61511")) {
+                        intent.putExtra("GANG","5강의동");
                     }
                     mMinewBeaconManager.stopScan();
                     startActivity(intent);
