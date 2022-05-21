@@ -48,8 +48,11 @@
         android:id="@+id/write_announce_save"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#2952EA"
-        android:text="저장"
+        android:layout_marginStart="204dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/rounded_blue"
+        android:text="submit"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -57,8 +60,11 @@
         android:id="@+id/write_announce_close"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#4B4B4B"
-        android:text="닫기"
+        android:layout_marginEnd="208dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/rounded_blue"
+        android:text="cancle"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

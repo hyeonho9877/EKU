@@ -8,50 +8,38 @@
 
     <EditText
         android:id="@+id/write_free_title"
-        android:layout_width="394dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="277dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="30dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="제목"
+        android:hint="제목을 입력해주세요"
         android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/write_free_building"
-        android:layout_width="59dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="15dp"
-        android:text="강의동"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.022"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/write_free_title" />
+        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintTop_toTopOf="@+id/textView13" />
 
     <EditText
         android:id="@+id/write_free_content"
-        android:layout_width="410dp"
-        android:layout_height="283dp"
-        android:layout_marginTop="28dp"
+        android:layout_width="406dp"
+        android:layout_height="349dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="내용"
+        android:hint="게시글 내용을 입력해주세요"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/free_building9" />
+        tools:layout_editor_absoluteY="201dp" />
 
     <Button
         android:id="@+id/write_free_save"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#2952EA"
-        android:text="저장"
+        android:layout_marginStart="208dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/rounded_blue"
+        android:text="submit"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -59,108 +47,34 @@
         android:id="@+id/write_free_close"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#4B4B4B"
-        android:text="닫기"
+        android:layout_marginEnd="208dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/rounded_blue"
+        android:text="cancle"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <CheckBox
-        android:id="@+id/free_building0"
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="88dp"
-        android:text="제2공학관"
-        app:layout_constraintStart_toEndOf="@+id/free_building6"
-        app:layout_constraintTop_toBottomOf="@+id/write_free_building" />
-
-    <CheckBox
-        android:id="@+id/free_building1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="20dp"
-        android:text="1강"
+        android:text="Write"
+        android:textColor="@color/kyonggi_color"
+        android:textSize="35sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/write_free_building" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <CheckBox
-        android:id="@+id/free_building2"
+    <TextView
+        android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
-        android:text="2강"
-        app:layout_constraintStart_toEndOf="@+id/free_building1"
-        app:layout_constraintTop_toBottomOf="@+id/write_free_building" />
-
-    <CheckBox
-        android:id="@+id/free_building3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:text="3강"
-        app:layout_constraintStart_toEndOf="@+id/free_building2"
-        app:layout_constraintTop_toBottomOf="@+id/write_free_building" />
-
-    <CheckBox
-        android:id="@+id/free_building4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:text="4강"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/free_building1" />
-
-    <CheckBox
-        android:id="@+id/free_building5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:text="5강"
-        app:layout_constraintStart_toEndOf="@+id/free_building4"
-        app:layout_constraintTop_toBottomOf="@+id/free_building2" />
-
-    <CheckBox
-        android:id="@+id/free_building6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:text="6강"
-        app:layout_constraintStart_toEndOf="@+id/free_building5"
-        app:layout_constraintTop_toBottomOf="@+id/free_building3" />
-
-    <CheckBox
-        android:id="@+id/free_building7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:text="7강"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/free_building4" />
-
-    <CheckBox
-        android:id="@+id/free_building8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:text="8강"
-        app:layout_constraintStart_toEndOf="@+id/free_building7"
-        app:layout_constraintTop_toBottomOf="@+id/free_building5" />
-
-    <CheckBox
-        android:id="@+id/free_building9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:text="9강"
-        app:layout_constraintStart_toEndOf="@+id/free_building8"
-        app:layout_constraintTop_toBottomOf="@+id/free_building6" />
+        android:text="제목"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
