@@ -58,7 +58,7 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
             } else presenter.signIn();
         });
         binding.buttonSearch.setOnClickListener(v->{
-            presenter.search(currentMode);
+            presenter.search(currentMode, buildingNumber);
         });
 
     }

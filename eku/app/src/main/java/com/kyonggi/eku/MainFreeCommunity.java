@@ -107,11 +107,6 @@ public class MainFreeCommunity extends AppCompatActivity {
                 int id = item.getItemId();
                 Intent intent;
                 switch(id) {
-                    case R.id.Home:
-                        intent = new Intent(getApplicationContext(), MainBoard.class);
-                        startActivity(intent);
-                        finish();
-                        break;
                     case R.id.Announce:
                         intent = new Intent(getApplicationContext(), MainCommunity.class);
                         startActivity(intent);
