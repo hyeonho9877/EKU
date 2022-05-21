@@ -1,6 +1,5 @@
 package com.kyonggi.eku.view.board.activity;
 
-import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import com.kyonggi.eku.R;
 import com.kyonggi.eku.databinding.ActivityBoardBinding;
 import com.kyonggi.eku.model.BoardPreview;
-import com.kyonggi.eku.presenter.board.InfoBoardPresenter;
+import com.kyonggi.eku.presenter.board.BoardPresenter;
 import com.kyonggi.eku.utils.callbacks.OnResponseListeners;
 import com.kyonggi.eku.view.board.fragment.FragmentFreeBoard;
 import com.kyonggi.eku.view.board.fragment.FragmentInfoBoard;
@@ -23,11 +22,11 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
 
     private static final String TAG = "ActivityBoard";
     private ActivityBoardBinding binding;
-    private InfoBoardPresenter presenter;
+    private BoardPresenter presenter;
     private final FragmentManager fragmentManager = getSupportFragmentManager();
     private String currentMode;
-    FragmentFreeBoard fragmentFreeBoard = new FragmentFreeBoard();
-    FragmentInfoBoard fragmentInfoBoard = new FragmentInfoBoard();
+    private final FragmentFreeBoard fragmentFreeBoard = new FragmentFreeBoard();
+    private final FragmentInfoBoard fragmentInfoBoard = new FragmentInfoBoard();
     private String buildingNumber;
 
     @Override
@@ -40,21 +39,27 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
         setContentView(view);
         setBoard();
 
-        presenter = new InfoBoardPresenter(this, this);
+        presenter = new BoardPresenter(this, this);
         initListeners();
     }
 
     private void initListeners() {
-        binding.buttonFreeBoard.setOnClickListener(v->{
+        binding.buttonFreeBoard.setOnClickListener(v -> {
             if (currentMode.equals(BOARD_INFO)) switchBoard();
         });
-        binding.buttonInfoBoard.setOnClickListener(v->{
-            if(currentMode.equals(BOARD_FREE)) switchBoard();
+        binding.buttonInfoBoard.setOnClickListener(v -> {
+            if (currentMode.equals(BOARD_FREE)) switchBoard();
+        });
+        binding.buttonWriteBoard.setOnClickListener(v -> {
+            if (presenter.isAuthenticated()) {
+                if (currentMode.equals(BOARD_INFO)) presenter.writeInfoBoard();
+                else presenter.writeFreeBoard();
+            } else presenter.signIn();
         });
 
     }
 
-    private void setBoard(){
+    private void setBoard() {
         buildingNumber = getIntent().getStringExtra("buildingNumber");
         currentMode = getIntent().getStringExtra("mode");
 
@@ -81,10 +86,11 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
 
     }
 
-    private void switchBoard(){
-        Log.d(TAG, "switchBoard: "+currentMode);
+    private void switchBoard() {
+        Log.d(TAG, "switchBoard: " + currentMode);
         if (currentMode.equals(BOARD_FREE)) {
-            binding.textBuildingBoardAnnounce.setText("n 강의동 공지 게시판입니다.");
+            String announce = buildingNumber + " 강의동 공지게시판입니다.";
+            binding.textBuildingBoardAnnounce.setText(announce);
             binding.buttonFreeBoard.setTextColor(Color.parseColor("#80252525"));
             binding.buttonInfoBoard.setTextColor(Color.parseColor("#252525"));
             currentMode = BOARD_INFO;
@@ -105,11 +111,11 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
         }
     }
 
-    public void getInfoBoardArticles(){
+    public void getInfoBoardArticles() {
         presenter.getInfoBoardArticles();
     }
 
-    public void getFreeBoardArticles(){
+    public void getFreeBoardArticles() {
         presenter.getFreeBoardArticles();
     }
 
@@ -118,13 +124,16 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
         binding.animBoardLoading.setVisibility(View.INVISIBLE);
         binding.frameLayoutBoard.setVisibility(View.VISIBLE);
         if (currentMode.equals(BOARD_INFO)) {
-            if (purpose.equals(LOAD_RECENT)) fragmentInfoBoard.updateArticles(presenter.convertToInfoBoard(articles));
-            else if(purpose.equals(INIT)) fragmentInfoBoard.listArticles(presenter.convertToInfoBoard(articles));
+            if (purpose.equals(LOAD_RECENT))
+                fragmentInfoBoard.updateArticles(presenter.convertToInfoBoard(articles));
+            else if (purpose.equals(INIT))
+                fragmentInfoBoard.listArticles(presenter.convertToInfoBoard(articles));
             else fragmentInfoBoard.loadMoreArticles(presenter.convertToInfoBoard(articles));
-        }
-        else {
-            if (purpose.equals(LOAD_RECENT)) fragmentFreeBoard.updateArticles(presenter.convertToFreeBoard(articles));
-            else if(purpose.equals(INIT)) fragmentFreeBoard.listArticles(presenter.convertToFreeBoard(articles));
+        } else {
+            if (purpose.equals(LOAD_RECENT))
+                fragmentFreeBoard.updateArticles(presenter.convertToFreeBoard(articles));
+            else if (purpose.equals(INIT))
+                fragmentFreeBoard.listArticles(presenter.convertToFreeBoard(articles));
             else fragmentFreeBoard.loadMoreArticles(presenter.convertToFreeBoard(articles));
         }
     }
