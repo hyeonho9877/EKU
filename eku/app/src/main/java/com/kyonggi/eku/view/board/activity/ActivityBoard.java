@@ -25,8 +25,8 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
     private BoardPresenter presenter;
     private final FragmentManager fragmentManager = getSupportFragmentManager();
     private String currentMode;
-    FragmentFreeBoard fragmentFreeBoard = new FragmentFreeBoard();
-    FragmentInfoBoard fragmentInfoBoard = new FragmentInfoBoard();
+    private final FragmentFreeBoard fragmentFreeBoard = new FragmentFreeBoard();
+    private final FragmentInfoBoard fragmentInfoBoard = new FragmentInfoBoard();
     private String buildingNumber;
 
     @Override
@@ -89,7 +89,8 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
     private void switchBoard() {
         Log.d(TAG, "switchBoard: " + currentMode);
         if (currentMode.equals(BOARD_FREE)) {
-            binding.textBuildingBoardAnnounce.setText("n 강의동 공지 게시판입니다.");
+            String announce = buildingNumber + " 강의동 공지게시판입니다.";
+            binding.textBuildingBoardAnnounce.setText(announce);
             binding.buttonFreeBoard.setTextColor(Color.parseColor("#80252525"));
             binding.buttonInfoBoard.setTextColor(Color.parseColor("#252525"));
             currentMode = BOARD_INFO;
