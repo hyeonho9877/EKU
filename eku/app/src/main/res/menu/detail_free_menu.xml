@@ -10,6 +10,6 @@
     <item
         android:id="@+id/detail_Free_menu_delete"
         android:title="삭제"
-        android:icon="@drawable/turtle"
+        android:icon="@drawable/ic_baseline_delete_24"
         app:showAsAction="always"/>
 </menu>

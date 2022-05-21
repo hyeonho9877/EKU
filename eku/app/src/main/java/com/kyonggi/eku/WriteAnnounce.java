@@ -38,8 +38,9 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
      * ㅈㄱㄴ
      */
 
-    CheckBox building0, building1, building2, building3, building4,
-            building5, building6, building7, building8, building9;
+    CheckBox building0, building6, building7, building8, building9;
+    String building1, building2, building3, building4, building5;
+
 
     EditText et_title;
     EditText et_content;
@@ -48,7 +49,7 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
     Button btn_cancle;
 
     String name         = "고지웅";
-    String writer_id    = "201713924";
+    Integer writer_id    = 201713924;
     String department   = "소프트웨어공학과";
 
     @SuppressLint("WrongViewCast")
@@ -76,14 +77,9 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
 
 
     public String getBuilding(){
-        String building = "";
+        String building = "00000";
 
         building += building0.isChecked() ? "1" : "0";;
-        building += building1.isChecked() ? "1" : "0";;
-        building += building2.isChecked() ? "1" : "0";;
-        building += building3.isChecked() ? "1" : "0";;
-        building += building4.isChecked() ? "1" : "0";;
-        building += building5.isChecked() ? "1" : "0";;
         building += building6.isChecked() ? "1" : "0";;
         building += building7.isChecked() ? "1" : "0";;
         building += building8.isChecked() ? "1" : "0";;
@@ -142,7 +138,7 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        // Request에 대한 reponse 받음
+                        // Request에 대한 response 받음
                         Log.d("---","---");
                         Log.w("//===========//","================================================");
                         Log.d("","\n"+"[FREE_COMMUNITY_BOARD > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 응답]");
