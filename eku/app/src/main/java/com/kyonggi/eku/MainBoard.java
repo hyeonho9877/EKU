@@ -31,6 +31,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.view.board.activity.ActivityBoard;
 import com.kyonggi.eku.view.signIn.ActivitySignIn;
@@ -403,13 +404,15 @@ public class MainBoard extends AppCompatActivity {
                 Handler handler = new Handler(getMainLooper()) {
                     @Override
                     public void handleMessage(@NonNull Message msg) {
-                       /* String responseResult = (String) msg.obj;
+                       String responseResult = (String) msg.obj;
                         try {
                             JSONArray LectureArray = new JSONArray(responseResult);
                             for (int i = 0; i < LectureArray.length(); i++) {
                                 JSONObject LectureObject = LectureArray.getJSONObject(i);
-                                String title = LectureObject.getString("lectureName");
-                                String professor = LectureObject.getString("professor");
+                                Gson a = new Gson();
+                                Lecture lecture1 = a.fromJson(LectureObject.getString("lecture"), Lecture.class);
+                                String title = lecture1.getLectureName();
+                                String professor = lecture1.getProfessor();
                                 String text = LectureObject.getString("content");
                                 listLecture[i] = new Lecture(title,professor,text);
                                 if(i==2)
@@ -420,7 +423,7 @@ public class MainBoard extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-*/
+
                     }
                 };
 
