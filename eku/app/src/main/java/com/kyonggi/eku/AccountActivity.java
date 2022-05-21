@@ -42,9 +42,6 @@ public class AccountActivity extends AppCompatActivity {
             textView.setText(temp);
             Button button2= findViewById(R.id.Account_back);
 
-
-
-
             button2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
