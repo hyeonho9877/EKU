@@ -14,5 +14,6 @@ public class InfoBoardForm {
     private String content;
     private String time;
     private String building;
-    private int lecture_building;
+    private int lectureBuilding;
+    private String keyword;
 }

@@ -10,7 +10,6 @@ import com.eku.EKU.form.InfoBoardResponse;
 import com.eku.EKU.repository.InfoBoardRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -45,8 +44,7 @@ public class InfoBoardService {
      * @return List<InfoBoard>로 목록을 반환
      */
     public List<BoardListResponse> boardList(BoardListForm listForm)throws IllegalArgumentException, NoSuchElementException{
-        Pageable pageable = PageRequest.of(listForm.getPage(), 20);
-        Page<InfoBoard> list = infoBoardRepository.findAllByBuildingOrderByWrittenTime(listForm.getLecture_building(), pageable);
+        Page<InfoBoard> list = infoBoardRepository.findAllByBuildingOrderByWrittenTime(listForm.getLectureBuilding(), Pageable.ofSize(20));
         List<BoardListResponse> newList = new ArrayList<BoardListResponse>();
         for(InfoBoard i : list){
             String writer = i.getDepartment() + " " + i.getName();
@@ -94,7 +92,7 @@ public class InfoBoardService {
         }
     }
 
-    public List<BoardListResponse> getRecentBoard(String building, long id) {
+    public List<BoardListResponse> getRecentBoard(int building, long id) {
         List<InfoBoard> result = infoBoardRepository.findByBuildingAndIdIsGreaterThanOrderByWrittenTimeDesc(building, id);
         return result.stream().map(BoardListResponse::new)
                 .toList();
@@ -128,9 +126,19 @@ public class InfoBoardService {
         return false;
     }
 
-    public List<BoardListResponse> loadBoardAfterId(String building, Long id) {
+    public List<BoardListResponse> loadBoardAfterId(int building, Long id) {
         List<InfoBoard> result = infoBoardRepository.findByBuildingAndIdIsLessThanOrderByWrittenTimeDesc(building, id, Pageable.ofSize(20));
         return result.stream().map(BoardListResponse::new)
                 .toList();
+    }
+
+    public List<BoardListResponse> searchBoard(int building, String keyword) {
+        List<InfoBoard> result = infoBoardRepository.findByBuildingAndKeywordOrderByWrittenTimeDesc(building, keyword, Pageable.ofSize(20));
+        return result.stream().map(BoardListResponse::new).toList();
+    }
+
+    public List<BoardListResponse> searchMoreBoard(int building, String keyword, long id) {
+        List<InfoBoard> result = infoBoardRepository.findByBuildingAndKeywordAndIdLessThanOrderByWrittenTimeDesc(building, keyword, id, Pageable.ofSize(20));
+        return result.stream().map(BoardListResponse::new).toList();
     }
 }

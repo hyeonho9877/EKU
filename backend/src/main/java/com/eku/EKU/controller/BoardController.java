@@ -73,12 +73,11 @@ public class BoardController {
 
     /**
      * 자유게시판의 전체목록을 불러오는 메소드
-     * @param form
      * @return 게시판목록 list 반환
      */
     @PostMapping("/board/free/lists")
-    public ResponseEntity<?> freeBoardList(@RequestBody BoardListForm form){
-        List<BoardListResponse> list = freeBoardService.boardList(form);
+    public ResponseEntity<?> freeBoardList(){
+        List<BoardListResponse> list = freeBoardService.boardList();
         if(!list.isEmpty())
             return ResponseEntity.ok(list);
         else
@@ -204,12 +203,12 @@ public class BoardController {
 
     @PostMapping("/board/info/recent")
     public ResponseEntity<?> latestInfoBoard(@RequestBody InfoBoardForm form) {
-        return ResponseEntity.ok(infoBoardService.getRecentBoard(form.getBuilding(), form.getId()));
+        return ResponseEntity.ok(infoBoardService.getRecentBoard(form.getLectureBuilding(), form.getId()));
     }
 
     @PostMapping("/board/info/load")
     public ResponseEntity<?> loadInfoBoard(@RequestBody InfoBoardForm form) {
-        return ResponseEntity.ok(infoBoardService.loadBoardAfterId(form.getBuilding(), form.getId()));
+        return ResponseEntity.ok(infoBoardService.loadBoardAfterId(form.getLectureBuilding(), form.getId()));
     }
 
     @PostMapping("/board/free/recent")
@@ -222,6 +221,25 @@ public class BoardController {
         return ResponseEntity.ok(freeBoardService.loadBoardAfterId(form.getId()));
     }
 
+    @PostMapping("/board/free/search")
+    public ResponseEntity<?> searchFreeBoard(@RequestBody FreeBoardForm form) {
+        return ResponseEntity.ok(freeBoardService.searchBoard(form.getKeyword()));
+    }
+
+    @PostMapping("/board/info/search")
+    public ResponseEntity<?> searchInfoBoard(@RequestBody InfoBoardForm form) {
+        return ResponseEntity.ok(infoBoardService.searchBoard(form.getLectureBuilding(), form.getKeyword()));
+    }
+
+    @PostMapping("/board/info/search/load")
+    public ResponseEntity<?> searchMoreInfoBoard(@RequestBody InfoBoardForm form) {
+        return ResponseEntity.ok(infoBoardService.searchMoreBoard(form.getLectureBuilding(), form.getKeyword(), form.getId()));
+    }
+
+    @PostMapping("/board/free/search/load")
+    public ResponseEntity<?> searchMoreFreeBoard(@RequestBody FreeBoardForm form) {
+        return ResponseEntity.ok(freeBoardService.searchMoreBoard(form.getKeyword(), form.getId()));
+    }
     /**
      * 자유 게시판 댓글 작성
      * @param form 작성하려는 댓글의 정보를 담고 있는 Form 객체

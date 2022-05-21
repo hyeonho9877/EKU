@@ -2,11 +2,13 @@ package com.eku.EKU.service;
 
 import com.eku.EKU.domain.FreeBoard;
 import com.eku.EKU.domain.Student;
-import com.eku.EKU.form.*;
+import com.eku.EKU.form.BoardListResponse;
+import com.eku.EKU.form.FreeBoardForm;
+import com.eku.EKU.form.FreeBoardListResponse;
+import com.eku.EKU.form.FreeBoardResponse;
 import com.eku.EKU.repository.FreeBoardRepository;
 import com.eku.EKU.utils.RelativeTimeConverter;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -45,9 +47,8 @@ public class FreeBoardService {
      *
      * @return List<FreeBoard>로 목록을 반환
      */
-    public List<BoardListResponse> boardList(BoardListForm listForm) throws IllegalArgumentException, NoSuchElementException {
-        PageRequest pageRequest = PageRequest.of(listForm.getPage(), 20);
-        List<FreeBoard> list = freeBoardRepository.findByOrderByTimeDesc(pageRequest);
+    public List<BoardListResponse> boardList() throws IllegalArgumentException, NoSuchElementException {
+        List<FreeBoard> list = freeBoardRepository.findByOrderByTimeDesc(Pageable.ofSize(20));
         List<BoardListResponse> newList = new ArrayList<BoardListResponse>();
         for (FreeBoard i : list) {
             Student student = i.getStudent();
@@ -138,6 +139,16 @@ public class FreeBoardService {
 
     public List<FreeBoardListResponse> loadBoardAfterId(Long id) {
         List<FreeBoard> result = freeBoardRepository.findByIdIsLessThanOrderByTimeDesc(id, Pageable.ofSize(20));
+        return result.stream().map(e-> new FreeBoardListResponse(e, e.getComments(), studentNo(e.getStudent().getStudNo())+" "+e.getDepartment())).toList();
+    }
+
+    public List<FreeBoardListResponse> searchBoard(String keyword) {
+        List<FreeBoard> result = freeBoardRepository.findByKeywordOrderByTimeDesc(keyword, Pageable.ofSize(20));
+        return result.stream().map(e-> new FreeBoardListResponse(e, e.getComments(), studentNo(e.getStudent().getStudNo())+" "+e.getDepartment())).toList();
+    }
+
+    public List<FreeBoardListResponse> searchMoreBoard(String keyword, long id) {
+        List<FreeBoard> result = freeBoardRepository.findByKeywordAndIdLessThanOrderByTimeDesc(keyword, id, Pageable.ofSize(20));
         return result.stream().map(e-> new FreeBoardListResponse(e, e.getComments(), studentNo(e.getStudent().getStudNo())+" "+e.getDepartment())).toList();
     }
 }
