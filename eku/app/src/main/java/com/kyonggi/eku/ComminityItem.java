@@ -21,6 +21,12 @@ public class ComminityItem {
         this.c_views   = c_views;
     }
 
+    public ComminityItem(String id, String c_title){
+        this.c_id      = id;
+        this.c_title   = c_title;
+    }
+
+
     public void setc_id(String c_id) {
         this.c_id = c_id;
     }
