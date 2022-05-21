@@ -1,5 +1,6 @@
 package com.eku.EKU.service;
 
+import com.eku.EKU.domain.FreeBoard;
 import com.eku.EKU.domain.FreeBoardComment;
 import com.eku.EKU.exceptions.NoSuchStudentException;
 import com.eku.EKU.form.CommentForm;
@@ -38,13 +39,16 @@ public class FreeBoardCommentService {
      * @throws NoSuchStudentException
      * @throws IllegalStateException
      */
+    @Transactional
     public void writeComment(CommentForm form) throws IllegalStateException, EntityNotFoundException {
+        FreeBoard article = freeBoardRepository.findById(form.getArticleID()).orElseThrow();
         FreeBoardComment comment = FreeBoardComment.builder()
                 .content((form.getContent()))
                 .writer(studentRepository.getById(form.getWriter()))
-                .original(freeBoardRepository.getById(form.getArticleID()))
+                .original(article)
                 .build();
         freeBoardCommentRepository.save(comment);
+        article.setComments(article.getComments()+1);
     }
 
     /**
@@ -53,8 +57,11 @@ public class FreeBoardCommentService {
      * @throws IllegalArgumentException
      * @throws NoSuchElementException
      */
+    @Transactional
     public void deleteComment(CommentForm form) throws IllegalArgumentException, NoSuchElementException {
         freeBoardCommentRepository.deleteById(form.getCommentId());
+        FreeBoard article = freeBoardRepository.findById(form.getArticleID()).orElseThrow();
+        article.setComments(article.getComments()-1);
     }
 
 
