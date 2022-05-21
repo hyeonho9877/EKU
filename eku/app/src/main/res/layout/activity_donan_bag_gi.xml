@@ -9,10 +9,12 @@
 
     <TextView
         android:id="@+id/Donan_Title"
-        android:layout_width="139dp"
-        android:layout_height="57dp"
+        android:layout_width="140dp"
+        android:layout_height="80dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="12dp"
+        android:fontFamily="@font/noto_sans_kr_bold"
+
         android:text="도난방지"
         android:textColor="#2A5189"
         android:textSize="35dp"
@@ -25,6 +27,7 @@
         android:layout_height="65dp"
         android:layout_marginTop="48dp"
         android:background="#2A5189"
+        android:fontFamily="@font/noto_sans_kr_regular"
         android:shadowColor="#FFFFFF"
         android:text="도난방지 기능 켜기"
         android:textColor="#FFFFFF"
@@ -39,9 +42,11 @@
         android:layout_width="349dp"
         android:layout_height="51dp"
         android:backgroundTint="@color/kyonggi_color4"
+        android:fontFamily="@font/noto_sans_kr_regular"
         android:text="알림끄기"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -50,6 +55,7 @@
         android:layout_height="65dp"
         android:layout_marginTop="20dp"
         android:background="#2A5189"
+        android:fontFamily="@font/noto_sans_kr_regular"
         android:text="메인으로 돌아가기"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
@@ -63,6 +69,7 @@
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/noto_sans_kr_regular"
         android:gravity="center"
         android:text="도난방지기능 "
         android:textColor="#000000"

@@ -19,6 +19,10 @@ public class FreeCommunityItem {
         this.fc_time    = fc_time;
         this.fc_views   = fc_views;
     }
+    public FreeCommunityItem(String id, String fc_title){
+        this.fc_id      = id;
+        this.fc_title   = fc_title;
+    }
 
     public void setFc_id(String fc_id) {
         this.fc_id = fc_id;

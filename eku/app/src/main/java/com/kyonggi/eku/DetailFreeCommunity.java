@@ -119,6 +119,10 @@ public class DetailFreeCommunity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String str_comment = et_comment.getText().toString();
+                if(str_comment.length()<=0){
+                    Toast.makeText(DetailFreeCommunity.this, "글자를 0자 이상 입력해주세요.", Toast.LENGTH_SHORT).show();
+
+                }
                 getBoardDetail(board_id, str_comment, DETAIL_COMMENT_WRITE_REQUEST);
             }
         });
