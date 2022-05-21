@@ -1,6 +1,5 @@
 package com.kyonggi.eku.view.board.fragment;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;

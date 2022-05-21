@@ -428,6 +428,4 @@ public class MainCommunity extends AppCompatActivity {
         ComminityItem item = new ComminityItem(id,title,writer,comments,time,views);
         arrayList.add(item);
     }
-
-
 }

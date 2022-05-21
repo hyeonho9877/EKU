@@ -82,7 +82,7 @@ public class WriteBoard extends AppCompatActivity {
 
 
                 try {
-                    SendTool.request(SendTool.APPLICATION_JSON, "/doodle/write",temp,handler);
+                    SendTool.requestForPost(SendTool.APPLICATION_JSON, "/doodle/write",temp,handler);
                 }
                 catch (IOException | NullPointerException e) {
                     e.printStackTrace();

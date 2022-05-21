@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -242,7 +241,7 @@ public class MainBoard extends AppCompatActivity {
 
 
         try {
-            SendTool.request(SendTool.POST_PARAM,"/doodle/read", params, handler);
+            SendTool.requestForPost(SendTool.POST_PARAM,"/doodle/read", params, handler);
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }
