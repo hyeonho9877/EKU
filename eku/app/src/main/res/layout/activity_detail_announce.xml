@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="DetailAnnounce">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/detail_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
-        android:backgroundTint="#F6A788"
+        android:backgroundTint="#FBFBFB"
         app:menu="@menu/detail_free_menu"
         tools:ignore="MissingConstraints" />
 

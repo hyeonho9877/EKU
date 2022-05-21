@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
-        android:backgroundTint="#FBFBFB"
+        android:backgroundTint="#F6A788"
         app:menu="@menu/detail_free_menu"
         tools:ignore="MissingConstraints" />
 
@@ -28,9 +28,9 @@
 
     <ScrollView
         android:id="@+id/detail_total_ScrollView"
-        android:layout_width="413dp"
-        android:layout_height="550dp"
-        android:layout_marginTop="1dp"
+        android:layout_width="408dp"
+        android:layout_height="586dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detail_Free_Spinner"
         tools:ignore="SpeakableTextPresentCheck">
@@ -42,36 +42,49 @@
 
             <TextView
                 android:id="@+id/detail_Free_title"
-                android:layout_width="328dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_width="350dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="52dp"
                 android:background="@drawable/stroke_under"
                 android:text="제목"
+                android:textColor="#000000"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_Free_building" />
+                tools:layout_editor_absoluteY="25dp" />
 
             <EditText
                 android:id="@+id/detail_Free_edit_title"
                 android:layout_width="328dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:background="@drawable/stroke_under"
                 android:text="제목"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <View
+                android:id="@+id/view18"
+                style="@style/Divider"
+                android:layout_width="380dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="14dp"
+                app:layout_constraintBottom_toTopOf="@+id/detail_Free_ScrollView"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_Free_building" />
+                app:layout_constraintTop_toBottomOf="@+id/detail_Free_time" />
 
             <TextView
                 android:id="@+id/detail_Free_content"
-                android:layout_width="328dp"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/stroke_under"
                 android:text=""
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/detail_Free_title"
+                app:layout_constraintStart_toStartOf="@+id/detail_Free_title"
                 app:layout_constraintTop_toBottomOf="@+id/detail_Free_title" />
 
             <EditText
@@ -88,44 +101,23 @@
 
 
             <TextView
-                android:id="@+id/detail_Free_building"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="강의동"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.109"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
                 android:id="@+id/detail_Free_writer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:layout_marginEnd="41dp"
                 android:text="작성자"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="@+id/detail_Free_content"
                 app:layout_constraintTop_toBottomOf="@+id/detail_Free_content" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="331dp"
-                android:layout_height="22dp"
-                android:layout_marginTop="50dp"
-                android:text="댓글"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_Free_edit_button_layout" />
 
             <TextView
                 android:id="@+id/detail_Free_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="41dp"
                 android:layout_marginTop="15dp"
                 android:text="시간"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="@+id/detail_Free_content"
                 app:layout_constraintTop_toBottomOf="@+id/detail_Free_content" />
 
             <LinearLayout
@@ -153,14 +145,14 @@
             <ScrollView
                 android:id="@+id/detail_Free_ScrollView"
                 android:layout_width="330dp"
-                android:layout_height="250dp"
-                android:layout_marginTop="15dp"
+                android:layout_height="300dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="130dp"
+                android:layout_marginEnd="38dp"
                 app:layout_constrainedHeight="true"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_max="250dp"
-                app:layout_constraintHorizontal_bias="0.516"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                app:layout_constraintTop_toBottomOf="@+id/detail_Free_content"
                 tools:ignore="SpeakableTextPresentCheck">
 
                 <LinearLayout
@@ -171,8 +163,8 @@
 
                     <ListView
                         android:id="@+id/detail_Free_comment_listview"
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp" />
+                        android:layout_width="330dp"
+                        android:layout_height="300dp" />
                 </LinearLayout>
             </ScrollView>
 
@@ -181,7 +173,9 @@
                 android:layout_width="300dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
+                android:hint="댓글을 입력해주세요"
+                app:layout_constraintEnd_toStartOf="@+id/detail_Free_Write_Comment_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/detail_Free_ScrollView" />
 
@@ -189,10 +183,8 @@
                 android:id="@+id/detail_Free_Write_Comment_button"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:scaleType="centerInside"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/detail_Free_Write_Comment"
                 app:layout_constraintTop_toBottomOf="@+id/detail_Free_ScrollView"
                 app:srcCompat="@drawable/pencil"
