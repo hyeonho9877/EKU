@@ -1,15 +1,10 @@
 package com.kyonggi.eku.view.signUp.activity;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.kyonggi.eku.databinding.ActivitySignupPhotoBinding;
 import com.kyonggi.eku.presenter.signUp.SignUpCameraPresenter;

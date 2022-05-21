@@ -3,6 +3,7 @@ package com.kyonggi.eku.presenter.lecture;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
 import com.kyonggi.eku.view.signIn.ActivitySignIn;
 
 public class LecturePresenter {

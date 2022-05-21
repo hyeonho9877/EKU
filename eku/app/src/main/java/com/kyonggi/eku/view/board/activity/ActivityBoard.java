@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -56,6 +57,9 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
                 else presenter.writeFreeBoard();
             } else presenter.signIn();
         });
+        binding.buttonSearch.setOnClickListener(v->{
+            presenter.search(currentMode, buildingNumber);
+        });
 
     }
 
@@ -82,8 +86,6 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
                     .replace(R.id.frame_layout_board, fragmentInfoBoard, BOARD_INFO)
                     .commit();
         }
-
-
     }
 
     private void switchBoard() {
@@ -112,7 +114,7 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
     }
 
     public void getInfoBoardArticles() {
-        presenter.getInfoBoardArticles();
+        presenter.getInfoBoardArticles(buildingNumber);
     }
 
     public void getFreeBoardArticles() {
@@ -140,7 +142,7 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
 
     @Override
     public void onFailed() {
-
+        Toast.makeText(this, "게시글 조회에 실패하였습니다.", Toast.LENGTH_SHORT).show();
     }
 
     public void updateInfoBoard(long id) {

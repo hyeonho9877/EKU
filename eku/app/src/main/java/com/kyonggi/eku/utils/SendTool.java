@@ -40,8 +40,29 @@ public final class SendTool {
     private static final OkHttpClient client = new OkHttpClient();
     private static final Gson gson = new Gson();
 
+    public static void request(String url, Handler handler) throws NullPointerException {
 
-    public static void request(int bodyType, String url, HashMap<String, Object> params, Handler handler) throws IOException, NullPointerException {
+        Request request = new Request.Builder()
+                .url(baseUrl + url)
+                .post(RequestBody.create(new byte[0]))
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d(TAG, "onFailure: ");
+                handler.sendMessage(Message.obtain(handler, CONNECTION_FAILED));
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Log.d(TAG, "onResponse: " + response.code());
+                handler.sendMessage(Message.obtain(handler, response.code(), response.body().string()));
+            }
+        });
+    }
+
+    public static void requestForPost(int bodyType, String url, HashMap<String, Object> params, Handler handler) throws IOException, NullPointerException {
 
         if (bodyType == APPLICATION_JSON) {
             requestForJson(url, params, handler);
@@ -268,6 +289,4 @@ public final class SendTool {
             }
         });
     }
-
-
 }

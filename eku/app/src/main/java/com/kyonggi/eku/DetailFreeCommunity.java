@@ -4,9 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +13,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -79,7 +75,6 @@ public class DetailFreeCommunity extends AppCompatActivity {
     String id_text = "201713924";
     String writer_id ="";
     String board_id = "";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,7 +213,6 @@ public class DetailFreeCommunity extends AppCompatActivity {
             }
         }else if( mode == DETAIL_COMMENT_WRITE_REQUEST){
             try{
-
                 jsonBodyObj.put("content",comment);
                 jsonBodyObj.put("articleID",Integer.parseInt(id));
                 jsonBodyObj.put("writer", id_text);

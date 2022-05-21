@@ -13,4 +13,5 @@ public class FreeBoardForm {
     private String content;
     private int view;
     private String time;
+    private String keyword;
 }

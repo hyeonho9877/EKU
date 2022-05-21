@@ -85,7 +85,7 @@ public class LectureDetail extends AppCompatActivity {
         temp.put("lecture",lecture);
 
         try {
-            SendTool.request(SendTool.APPLICATION_JSON,"/critic/search/specific", temp, handler);
+            SendTool.requestForPost(SendTool.APPLICATION_JSON,"/critic/search/specific", temp, handler);
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }
