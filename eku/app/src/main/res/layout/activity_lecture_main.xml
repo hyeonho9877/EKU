@@ -15,54 +15,56 @@
 
 
         <TextView
-                android:id="@+id/Lecture_Main_spinner"
-                android:layout_width="358dp"
-                android:layout_height="41dp"
-                android:layout_marginTop="16dp"
-                android:background="#FFFFFF"
-                android:backgroundTint="#00FFFFFF"
-                android:gravity="center_vertical"
-                android:text="강의평가"
-                android:textColor="#2A5189"
-                android:textSize="25dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.49"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/Lecture_Main_spinner"
+            android:layout_width="358dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#FFFFFF"
+            android:backgroundTint="#00FFFFFF"
+            android:fontFamily="@font/noto_sans_kr_bold"
+            android:gravity="center_vertical"
+            android:text="강의평가"
+            android:textColor="#2A5189"
+            android:textSize="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-                android:id="@+id/Lecture_Main_searchtext"
-                android:layout_width="314dp"
-                android:layout_height="39dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:hint="검색"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Lecture_Main_spinner" />
+            android:id="@+id/Lecture_Main_searchtext"
+            android:layout_width="314dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/noto_sans_kr_regular"
+            android:hint="검색"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Lecture_Main_spinner" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/Lecture_Main_Swipe"
-                android:layout_width="366dp"
-                android:layout_height="594dp"
-                android:layout_marginTop="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.488"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Lecture_Main_searchtext">
+            android:id="@+id/Lecture_Main_Swipe"
+            android:layout_width="366dp"
+            android:layout_height="550dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.488"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Lecture_Main_searchtext">
 
             <ScrollView
-                    android:id="@+id/Lecture_Main_ScrollView"
-                    android:layout_width="match_parent"
-                    android:layout_height="590dp"
-                    android:fillViewport="true"
-                    tools:ignore="SpeakableTextPresentCheck">
+                android:id="@+id/Lecture_Main_ScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="590dp"
+                android:fillViewport="true"
+                tools:ignore="SpeakableTextPresentCheck">
 
                 <LinearLayout
-                        android:id="@+id/Lecture_Main_scroll"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                    android:id="@+id/Lecture_Main_scroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                 </LinearLayout>
             </ScrollView>
@@ -70,13 +72,13 @@
 
         <ImageButton
             android:id="@+id/Lecture_Main_searchButton"
-            android:layout_width="53dp"
-            android:layout_height="47dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
             android:background="#AECFFF"
             android:scaleType="centerInside"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/Lecture_Main_searchtext"
             app:layout_constraintTop_toBottomOf="@+id/Lecture_Main_spinner"
             app:srcCompat="@drawable/search"

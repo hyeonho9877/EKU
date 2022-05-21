@@ -185,7 +185,7 @@ public class MainItem extends LinearLayout {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, DetailFreeCommunity.class);
+                Intent intent = new Intent(context, DetailAnnounce.class);
                 intent.putExtra("id",C1.getc_id());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
@@ -196,7 +196,7 @@ public class MainItem extends LinearLayout {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, DetailFreeCommunity.class);
+                Intent intent = new Intent(context, DetailAnnounce.class);
                 intent.putExtra("id",C2.getc_id());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
@@ -207,7 +207,7 @@ public class MainItem extends LinearLayout {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, DetailFreeCommunity.class);
+                Intent intent = new Intent(context, DetailAnnounce.class);
                 intent.putExtra("id",C3.getc_id());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
