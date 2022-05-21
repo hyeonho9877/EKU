@@ -150,10 +150,6 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
         presenter.loadMoreFreeArticles(id);
     }
 
-    public String getBuildingNumber(){
-        return buildingNumber;
-    }
-
     public static final String BOARD_FREE = "BOARD_FREE";
     public static final String BOARD_INFO = "BOARD_INFO";
     public static final String LOAD_RECENT = "LOAD_RECENT";

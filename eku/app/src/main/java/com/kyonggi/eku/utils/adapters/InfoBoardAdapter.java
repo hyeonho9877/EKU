@@ -107,7 +107,7 @@ public class InfoBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             binding.textInfoBoardTime.setText(item.getTime());
             String view = "조회 " + item.getView();
             binding.textInfoBoardView.setText(view);
-            binding.textInfoBoardTitle.setOnClickListener(v -> {
+            binding.constraintLayoutInfoBoard.setOnClickListener(v -> {
                         Intent intent = new Intent(context, DetailAnnounce.class);
                         intent.putExtra("id", String.valueOf(id));
                         context.startActivity(intent);

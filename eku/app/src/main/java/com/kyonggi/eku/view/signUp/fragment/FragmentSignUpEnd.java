@@ -1,7 +1,9 @@
 package com.kyonggi.eku.view.signUp.fragment;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,10 @@ import androidx.fragment.app.Fragment;
 import com.kyonggi.eku.databinding.FragmentSignUpEndBinding;
 import com.kyonggi.eku.utils.callbacks.OnConfirmedListener;
 
+import java.util.List;
+
 public class FragmentSignUpEnd extends Fragment {
+    private static final String TAG = "FragmentSignUpEnd";
     private FragmentSignUpEndBinding binding;
     private OnConfirmedListener listener;
 
