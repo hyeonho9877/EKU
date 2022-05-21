@@ -129,26 +129,21 @@ public class MainBoard extends AppCompatActivity {
                         intent = new Intent(getApplicationContext(), TodoActivity.class);
                         drawerLayout.closeDrawer(GravityCompat.START);
                         startActivity(intent);
-                        finish();
                         break;
                     case R.id.TimeTable:
                         intent = new Intent(getApplicationContext(), ScheduleTable.class);
                         drawerLayout.closeDrawer(GravityCompat.START);
                         startActivity(intent);
-                        finish();
                         break;
                     case R.id.Account:
                         intent = new Intent(getApplicationContext(),AccountActivity.class);
                         intent.putExtra("address","MainBoard");
                         drawerLayout.closeDrawer(GravityCompat.START);
                         startActivity(intent);
-                        finish();
                 }
                 return false;
             }
         });
-
-
 
         ImageButton button = findViewById(R.id.donanRun);
         button.setOnClickListener(new View.OnClickListener() {

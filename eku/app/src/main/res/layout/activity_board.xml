@@ -133,4 +133,15 @@
         app:layout_constraintTop_toBottomOf="@id/constraintLayout">
     </FrameLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_write_board"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        app:borderWidth="0dp"
+        android:backgroundTint="#f9f9f9"
+        android:src="@drawable/ic_write"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

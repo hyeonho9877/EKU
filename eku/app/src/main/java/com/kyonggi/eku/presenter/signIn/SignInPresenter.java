@@ -70,10 +70,6 @@ public class SignInPresenter {
                                 String department = jsonObject.getString("department");
                                 userInformation.toPhone(context, email, password, st_student_no, department, true, true);
                                 activity.finish();
-                                Intent intent = new Intent(context,MainBoard.class);
-                                context.startActivity(intent);
-
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

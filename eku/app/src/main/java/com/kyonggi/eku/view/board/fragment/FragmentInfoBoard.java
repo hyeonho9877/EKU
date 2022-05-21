@@ -95,11 +95,13 @@ public class FragmentInfoBoard extends Fragment {
         currentList.remove(currentList.size() - 1);
         adapter.notifyItemRemoved(currentList.size()-1);
         isLoading = false;
-        if (adapter.insertFromTail(oldArticles)) {
-            adapter.notifyItemRangeInserted(adapter.getCurrentList().size(), oldArticles.size());
-            binding.recyclerViewInfoBard.removeOnScrollListener(scrollListener);
-        } else {
-            adapter.notifyItemRangeInserted(adapter.getCurrentList().size(), oldArticles.size());
-        }
+        new Handler().postDelayed(()->{
+            if (adapter.insertFromTail(oldArticles)) {
+                adapter.notifyItemRangeInserted(adapter.getCurrentList().size(), oldArticles.size());
+                binding.recyclerViewInfoBard.removeOnScrollListener(scrollListener);
+            } else {
+                adapter.notifyItemRangeInserted(adapter.getCurrentList().size(), oldArticles.size());
+            }
+        }, 200);
     }
 }

@@ -62,7 +62,7 @@ public class SignUpInfoPresenter {
         String password = binding.editPassword.getText().toString();
         String passwordConfirm = binding.editPasswordConfirm.getText().toString();
 
-        String kyonggiMail = "(@kyonggi.ac.kr)";
+        String kyonggiMail = "[a-zA-Z\\d]+(@kyonggi.ac.kr)";
         String digitSpecialPattern = "[`~!@#$%^&*()\\-_=+|\\[\\]{};:'\",.<>/?\\d]";
         String incompleteNamePattern = "[ㄱ-ㅎㅏ-ㅣ]";
         String passwordContainsNumber = "[0-9]";
@@ -79,7 +79,7 @@ public class SignUpInfoPresenter {
             return PASSWORD_NOT_MATCHING;
         } else if (digitSpecialCompile.matcher(name).find() || incompleteCompile.matcher(name).find() || name.length()==0){
             return NAME_NOT_VALID;
-        } else if (email.length() == 0 || !mailCompile.matcher(email).find()) {
+        } else if (email.length() == 0 || !mailCompile.matcher(email).matches()) {
             return EMAIL_NOT_VALID;
         } else {
             return ALL_FINE;

@@ -30,7 +30,6 @@ public class AccountActivity extends AppCompatActivity {
         Intent preIntent = getIntent();
         if(!userInformation.fromPhoneVerify(getApplicationContext()))
         {
-
             Intent intent = new Intent(getApplicationContext(), ActivitySignIn.class);
             startActivity(intent);
             finish();
@@ -41,9 +40,6 @@ public class AccountActivity extends AppCompatActivity {
             String temp = userInformation.department+" "+userInformation.student_no;
             textView.setText(temp);
             Button button2= findViewById(R.id.Account_back);
-
-
-
 
             button2.setOnClickListener(new View.OnClickListener() {
                 @Override
