@@ -1,6 +1,7 @@
 package com.kyonggi.eku.view.signUp.fragment;
 
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.ALL_FINE;
+import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.EMAIL_NOT_VALID;
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.NAME_NOT_VALID;
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.NOT_FILLED_FIELD;
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.PASSWORD_NOT_MATCHING;
@@ -92,6 +93,9 @@ public class FragmentSignupInfo extends Fragment {
                     break;
                 case NAME_NOT_VALID:
                     new SignUpErrorDialogFragment(NAME_NOT_VALID).show(activity.getSupportFragmentManager(), "alert");
+                    break;
+                case EMAIL_NOT_VALID:
+                    new SignUpErrorDialogFragment(EMAIL_NOT_VALID).show(activity.getSupportFragmentManager(), "alert");
                     break;
                 case ALL_FINE:
                     String name = binding.editName.getText().toString();
