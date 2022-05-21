@@ -10,7 +10,7 @@
     <ScrollView
         android:id="@+id/board_ScrollView"
         android:layout_width="match_parent"
-        android:layout_height="590dp"
+        android:layout_height="200dp"
         android:fillViewport="true"
         tools:ignore="SpeakableTextPresentCheck">
 
@@ -99,7 +99,7 @@
             <LinearLayout
                 android:id="@+id/board_linear"
                 android:layout_width="409dp"
-                android:layout_height="453dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
