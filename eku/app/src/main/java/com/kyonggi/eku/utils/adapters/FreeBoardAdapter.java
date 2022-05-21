@@ -109,12 +109,11 @@ public class FreeBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             String view = "조회 " + item.getView();
             binding.textFreeBoardView.setText(view);
             binding.textFreeBoardComment.setText(String.valueOf(item.getComments()));
-            binding.textFreeBoardTitle.setOnClickListener(v -> {
-                        Intent intent = new Intent(context, DetailFreeCommunity.class);
-                        intent.putExtra("id", String.valueOf(id));
-                        context.startActivity(intent);
-                    }
-            );
+            binding.constraintLayoutFreeBoard.setOnClickListener(v->{
+                Intent intent = new Intent(context, DetailFreeCommunity.class);
+                intent.putExtra("id", String.valueOf(id));
+                context.startActivity(intent);
+            });
         }
     }
 

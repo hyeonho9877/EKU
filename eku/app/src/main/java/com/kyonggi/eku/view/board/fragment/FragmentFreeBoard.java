@@ -72,6 +72,12 @@ public class FragmentFreeBoard extends Fragment {
             }
         };
         binding.recyclerViewFreeBard.addOnScrollListener(scrollListener);
+
+        binding.recyclerViewFreeBard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
     }
 
     public void listArticles(List<FreeBoardPreview> articles) {
