@@ -30,6 +30,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.kyonggi.eku.utils.SendTool;
@@ -41,7 +48,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.Map;
 
 
 /*
@@ -55,15 +64,15 @@ public class MainBoard extends AppCompatActivity {
     public static final int Minorcheck = 61686;
     String[] showBuilding = {"1강의동","2강의동","3강의동","4강의동","5강의동","6강의동","7강의동","8강의동","9강의동","제2공학관","종합강의동"};
     int buildingSelected = 0;
-    int[] building = {1,2,3,4,5,6,7,8,9,0};
+    int[] building = {6,7,8,9,0};
     AlertDialog buildingSelectDialog;
-    GestureDetector gestureDetector = null;
     long backKeyPressedTime;
     static TextView BuildingButton;
     GridListAdapter gAdapter;
     LinearLayout sc;
     MainItem mainitem;
     private String buildingNumber;
+    int now_building = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,81 +162,6 @@ public class MainBoard extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        View gestureView = findViewById(R.id.gestureView);
-        gestureView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                gestureDetector.onTouchEvent(motionEvent);
-                return true;
-            }
-        });
-        gestureDetector = new GestureDetector(this, new GestureDetector.OnGestureListener() {
-            ViewConfiguration configuration = ViewConfiguration.get(getApplicationContext());
-            final int minSwipeDelta = configuration.getScaledPagingTouchSlop();
-            final int minSwipeVelocity = configuration.getScaledMinimumFlingVelocity();
-            final int maxSwipeVelocity = configuration.getScaledMaximumFlingVelocity();
-
-            @Override
-            public boolean onDown(MotionEvent motionEvent) {
-                return false;
-            }
-
-            @Override
-            public void onShowPress(MotionEvent motionEvent) {
-
-            }
-
-            @Override
-            public boolean onSingleTapUp(MotionEvent motionEvent) {
-                return false;
-            }
-
-            @Override
-            public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-                return false;
-            }
-
-            @Override
-            public void onLongPress(MotionEvent motionEvent) {
-
-            }
-
-            @Override
-            public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float velocityX, float velocityY) {
-                boolean result = false;
-                try {
-                    float deltaX = motionEvent1.getX() - motionEvent.getX();
-                    float deltaY = motionEvent1.getY() - motionEvent.getY();
-                    float absVelocityX = Math.abs(velocityX);
-                    float absVelocityY = Math.abs(velocityY);
-                    float absDeltaX = Math.abs(deltaX);
-                    float absDeltaY = Math.abs(deltaY);
-                    if (absDeltaX > absDeltaY) {
-                        if (absDeltaX > minSwipeDelta && absVelocityX > minSwipeVelocity
-                                && absVelocityX < maxSwipeVelocity) {
-                            if (deltaX < 0) {
-                                onSwipeLeft();
-                            } else {
-                                onSwipeRight();
-                            }
-                        }
-                        result = true;
-                    } else if (absDeltaY > minSwipeDelta && absVelocityY > minSwipeVelocity
-                            && absVelocityY < maxSwipeVelocity) {
-                        if (deltaY < 0) {
-                            onSwipeTop();
-                        } else {
-                            onSwipeBottom();
-                        }
-                    }
-                    result = true;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return result;
-
-            }
-        });
 
         BuildingButton = (TextView) findViewById(R.id.go_Donan);
         BuildingButton.setText("불러오는중");
@@ -313,7 +247,13 @@ public class MainBoard extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        write_Board(3);
+        sc = (LinearLayout) findViewById(R.id.board_linear);
+        LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+        PreviewCom(sc);
+        PreviewFree(sc);
+        PreviewLec(sc);
 
 
         ImageButton imageButton = (ImageButton)findViewById(R.id.board_Write);
@@ -344,108 +284,232 @@ public class MainBoard extends AppCompatActivity {
         });
     }
 
-    public void onSwipeLeft() {
-        Toast.makeText(this,"좌측 스와이프", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getApplicationContext(), MainCommunity.class);
-        startActivity(intent);
-        finish();
-    }
+    public void PreviewCom(LinearLayout sc){
+        ComminityItem[] listcom = new ComminityItem[3];
+        RequestQueue queue;
+        JSONObject jsonBodyObj;
+        String requestbody;
+        String url;
+        JsonArrayRequest request;
 
-    public void onSwipeRight() {
-        Toast.makeText(this,"우측 스와이프", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-        intent.putExtra("title", BuildingButton.getText().toString());
-        startActivity(intent);
-        finish();
-
-    }
-
-    public void onSwipeTop() {
-        Toast.makeText(this,"상단 스와이프", Toast.LENGTH_SHORT).show();
-    }
-
-    public void onSwipeBottom() {
-        Toast.makeText(this,"하단 스와이프", Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    public void onBackPressed() {
-        if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
-            backKeyPressedTime = System.currentTimeMillis();
-            Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
-            return;
+        queue = Volley.newRequestQueue(this);
+        // Body에 담을 JSON Object 생성 및 선언
+        jsonBodyObj = new JSONObject();
+        try{
+            jsonBodyObj.put("page","0");
+            jsonBodyObj.put("lecture_building", now_building);
+        }catch (JSONException e){
+            e.printStackTrace();
         }
-        if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
-            finish();
-        }
-    }
+        // body String 선언
+        requestbody = String.valueOf(jsonBodyObj.toString());
 
-    public void write_Board(int b) {
-        String title;
-        Lecture[] listLecture = new Lecture[3];
-        sc = (LinearLayout) findViewById(R.id.board_linear);
-        LinearLayout linearLayout = new LinearLayout(getApplicationContext());
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-
-        switch (b) {
-            case 1:
-                title = "공지게시판";
-                //추가좀
-                break;
-            case 2:
-                title = "자유게시판";
-                //추가좀
-                break;
-            case 3:
-                Handler handler = new Handler(getMainLooper()) {
+        url = "https://www.eku.kro.kr/board/info/lists";
+        request = new JsonArrayRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void handleMessage(@NonNull Message msg) {
-                       String responseResult = (String) msg.obj;
-                        try {
-                            JSONArray LectureArray = new JSONArray(responseResult);
-                            for (int i = 0; i < LectureArray.length(); i++) {
-                                JSONObject LectureObject = LectureArray.getJSONObject(i);
-                                Gson a = new Gson();
-                                Lecture lecture1 = a.fromJson(LectureObject.getString("lecture"), Lecture.class);
-                                String title = lecture1.getLectureName();
-                                String professor = lecture1.getProfessor();
-                                String text = LectureObject.getString("content");
-                                listLecture[i] = new Lecture(title,professor,text);
+                    public void onResponse(JSONArray response) {
+                        // Request에 대한 reponse 받음
+                        Log.d("---","---");
+                        Log.w("//===========//","================================================");
+                        Log.d("","\n"+"[FREE_COMMUNITY_BOARD > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 응답]");
+                        Log.d("","\n"+"["+"응답 전체 - "+String.valueOf(response.toString())+"]");
+                        Log.w("//===========//","================================================");
+                        Log.d("---","---");
+
+                        try{
+                            for(int i=0;i<response.length();i++){
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                String id       = jsonObject.getString("id");
+                                String title    = jsonObject.getString("title");
+                                listcom[i] = new ComminityItem(id,title);
                                 if(i==2)
                                     break;
                             }
-                            mainitem = new MainItem(getApplicationContext(), "강의게시판", listLecture[0], listLecture[1], listLecture[2]);
+                            mainitem = new MainItem(getApplicationContext(), "공지게시판", listcom[0], listcom[1], listcom[2], buildingNumber);
+                            sc.addView(mainitem);
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                // Response Error 출력시,
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error){
+                        Log.d("---","---");
+                        Log.e("//===========//","================================================");
+                        Log.d("","\n"+"[A_Main > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 실패]");
+                        Log.d("","\n"+"["+"에러 코드 - "+String.valueOf(error.toString())+"]");
+                        Log.e("//===========//","================================================");
+                        Log.d("---","---");
+                    }
+                }
+        ){
+            // Header Request 선언
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+            // Body Request 선언
+            @Override
+            public byte[] getBody() {
+                try {
+                    if (requestbody != null && requestbody.length()>0 && !requestbody.equals("")){
+                        return requestbody.getBytes("utf-8");
+                    }
+                    else {
+                        return null;
+                    }
+                } catch (UnsupportedEncodingException uee) {
+                    return null;
+                }
+            }
+        };
+
+        // 이전 결과가 있더도 새로 요청하여 응답을 보여줌 여부
+        // False
+        request.setShouldCache(false);
+        // Volley Request 큐에 request 삽입.
+        queue.add(request);
+
+    }
+
+    public void PreviewFree(LinearLayout sc) {
+        FreeCommunityItem[] listFree = new FreeCommunityItem[3];
+        RequestQueue queue;
+        JSONObject jsonBodyObj;
+        final String requestBody;
+        String url;
+        JsonArrayRequest request;
+
+        queue = Volley.newRequestQueue(this);
+        // Body에 담을 JSON Object 생성 및 선언
+        jsonBodyObj = new JSONObject();
+        try {
+            jsonBodyObj.put("", "");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        // body String 선언
+        requestBody = String.valueOf(jsonBodyObj.toString());
+
+        // Server 주소
+        url = "https://www.eku.kro.kr/board/free/lists";
+        // VOLLEY 라이브러리를 이용하여 Server에 JSON Array 요청
+        request = new JsonArrayRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // Request에 대한 reponse 받음
+                        Log.d("---", "---");
+                        Log.w("//===========//", "================================================");
+                        Log.d("", "\n" + "[FREE_COMMUNITY_BOARD > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 응답]");
+                        Log.d("", "\n" + "[" + "응답 전체 - " + String.valueOf(response.toString()) + "]");
+                        Log.w("//===========//", "================================================");
+                        Log.d("---", "---");
+
+                        try {
+                            // Json Array 의 각 데이터를 파싱
+                            // Array List 에 삽입
+                            // 리사이클러 뷰 어댑터 갱신
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                String id = jsonObject.getString("id");
+                                String title = jsonObject.getString("title");
+                                listFree[i] = new FreeCommunityItem(id, title);
+                                if (i == 2)
+                                    break;
+                            }
+                            mainitem = new MainItem(getApplicationContext(), "자유게시판", listFree[0], listFree[1], listFree[2], buildingNumber);
                             sc.addView(mainitem);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
-                };
+                },
+                // Response Error 출력시,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("---", "---");
+                        Log.e("//===========//", "================================================");
+                        Log.d("", "\n" + "[A_Main > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 실패]");
+                        Log.d("", "\n" + "[" + "에러 코드 - " + String.valueOf(error.toString()) + "]");
+                        Log.e("//===========//", "================================================");
+                        Log.d("---", "---");
+                    }
+                }
+        ) {
+            // Header Request 선언
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
 
-                HashMap<String, Object> temp = new HashMap<>();
+            // Body Request 선언
+            @Override
+            public byte[] getBody() {
                 try {
-                    SendTool.requestForJson("/critic/read", temp, handler);
-                } catch (NullPointerException e) {
+                    if (requestBody != null && requestBody.length() > 0 && !requestBody.equals("")) {
+                        return requestBody.getBytes("utf-8");
+                    } else {
+                        return null;
+                    }
+                } catch (UnsupportedEncodingException uee) {
+                    return null;
+                }
+            }
+        };
+
+        // 이전 결과가 있더도 새로 요청하여 응답을 보여줌 여부
+        // False
+        request.setShouldCache(false);
+        // Volley Request 큐에 request 삽입.
+        queue.add(request);
+    }
+
+
+
+    public void PreviewLec(LinearLayout sc) {
+        Lecture[] listLecture = new Lecture[3];
+
+        Handler handler = new Handler(getMainLooper()) {
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+               String responseResult = (String) msg.obj;
+                try {
+                    JSONArray LectureArray = new JSONArray(responseResult);
+                    for (int i = 0; i < LectureArray.length(); i++) {
+                        JSONObject LectureObject = LectureArray.getJSONObject(i);
+                        Gson a = new Gson();
+                        Lecture lecture1 = a.fromJson(LectureObject.getString("lecture"), Lecture.class);
+                        String title = lecture1.getLectureName();
+                        String professor = lecture1.getProfessor();
+                        String text = LectureObject.getString("content");
+                        listLecture[i] = new Lecture(title,professor,text);
+                        if(i==2)
+                            break;
+                    }
+                    mainitem = new MainItem(getApplicationContext(), "강의게시판", listLecture[0], listLecture[1], listLecture[2]);
+                    sc.addView(mainitem);
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                break;
-            default:
-                title = "";
-                break;
-        }
 
-        /*mainitem.setId(Lectureid);
-        mainitem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), LectureDetail.class);
-                intent.putExtra("Name", Title);
-                intent.putExtra("Prof", professor);
-                startActivity(intent);
-                finish();
             }
-        });
-         */
+        };
+
+        HashMap<String, Object> temp = new HashMap<>();
+        try {
+            SendTool.requestForJson("/critic/read", temp, handler);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
     }
 }
