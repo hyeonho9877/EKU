@@ -12,7 +12,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -35,12 +34,12 @@ import java.util.List;
 public class BoardPresenter {
     private static final String TAG = "FreeBoardPresenter";
     private final Context context;
-    private final OnResponseListeners activity;
+    private final OnResponseListeners listener;
     private UserInformation userInformation;
 
-    public BoardPresenter(Context context, OnResponseListeners activity) {
+    public BoardPresenter(Context context, OnResponseListeners listener) {
         this.context = context;
-        this.activity = activity;
+        this.listener = listener;
         userInformation = new UserInformation(context);
     }
 
@@ -64,14 +63,14 @@ public class BoardPresenter {
                     switch (board) {
                         case BOARD_FREE:
                             List<FreeBoardPreview> freeBoardPreviews = SendTool.parseToList(response, FreeBoardPreview[].class);
-                            activity.onSuccess(freeBoardPreviews, purpose);
+                            listener.onSuccess(freeBoardPreviews, purpose);
                             break;
                         case BOARD_INFO:
                             List<InfoBoardPreview> infoBoardPreviews = SendTool.parseToList(response, InfoBoardPreview[].class);
-                            activity.onSuccess(infoBoardPreviews, purpose);
+                            listener.onSuccess(infoBoardPreviews, purpose);
                     }
                 } else {
-                    activity.onFailed();
+                    listener.onFailed();
                 }
             }
         };
@@ -138,13 +137,36 @@ public class BoardPresenter {
         context.startActivity(intent);
     }
 
-    public void search(String currentMode) {
+    public void search(String currentMode, String buildingNumber) {
         if (currentMode.equals(BOARD_FREE)){
             Intent intent = new Intent(context, ActivityFreeBoardSearch.class);
+            intent.putExtra("buildingNumber", buildingNumber);
             context.startActivity(intent);
         } else {
             Intent intent = new Intent(context, ActivityInfoBoardSearch.class);
+            intent.putExtra("buildingNumber", buildingNumber);
             context.startActivity(intent);
         }
+    }
+
+    public void searchInfoBoard(String keyword, String building){
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("keyword", keyword);
+        param.put("lectureBuilding", building);
+        SendTool.requestForJson("/board/info/search", param, getHandler(BOARD_INFO, INIT));
+    }
+
+    public void searchFreeBoard(String keyword){
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("keyword", keyword);
+        SendTool.requestForJson("/board/free/search", param, getHandler(BOARD_FREE, INIT));
+    }
+
+    public void loadMoreInfoArticles(long no, String building, String keyword) {
+        HashMap<String, Object> request = new HashMap<>();
+        request.put("id", no);
+        request.put("keyword", keyword);
+        request.put("lectureBuilding", building);
+        SendTool.requestForJson("/board/info/search/load", request, getHandler(BOARD_INFO, LOAD_OLD));
     }
 }
