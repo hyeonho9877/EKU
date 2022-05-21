@@ -50,7 +50,7 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
         binding.buttonInfoBoard.setOnClickListener(v -> {
             if (currentMode.equals(BOARD_FREE)) switchBoard();
         });
-        binding.icWriteIc.setOnClickListener(v -> {
+        binding.buttonWriteBoard.setOnClickListener(v -> {
             if (presenter.isAuthenticated()) {
                 if (currentMode.equals(BOARD_INFO)) presenter.writeInfoBoard();
                 else presenter.writeFreeBoard();

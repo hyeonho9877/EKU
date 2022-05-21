@@ -30,7 +30,6 @@ public class AccountActivity extends AppCompatActivity {
         Intent preIntent = getIntent();
         if(!userInformation.fromPhoneVerify(getApplicationContext()))
         {
-
             Intent intent = new Intent(getApplicationContext(), ActivitySignIn.class);
             startActivity(intent);
             finish();
