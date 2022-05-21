@@ -1,9 +1,7 @@
 package com.kyonggi.eku.view.signUp.activity;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 

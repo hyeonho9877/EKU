@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.kyonggi.eku.MainBoard;
 import com.kyonggi.eku.UserInformation;
 import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.view.signIn.ActivitySignIn;
