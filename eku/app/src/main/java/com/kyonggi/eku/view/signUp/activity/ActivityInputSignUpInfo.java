@@ -1,9 +1,7 @@
 package com.kyonggi.eku.view.signUp.activity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -25,7 +23,6 @@ import com.kyonggi.eku.view.signUp.fragment.FragmentSignUpProgressFirst;
 import com.kyonggi.eku.view.signUp.fragment.FragmentSignUpProgressSecond;
 import com.kyonggi.eku.view.signUp.fragment.FragmentSignupInfo;
 
-import java.util.List;
 import java.util.Optional;
 
 public class ActivityInputSignUpInfo extends AppCompatActivity implements OnConfirmedListener {

@@ -1,13 +1,13 @@
 package com.kyonggi.eku;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.kyonggi.eku.utils.intenter.FindIntenter;
 import com.kyonggi.eku.view.signIn.ActivitySignIn;
@@ -30,7 +30,6 @@ public class AccountActivity extends AppCompatActivity {
         Intent preIntent = getIntent();
         if(!userInformation.fromPhoneVerify(getApplicationContext()))
         {
-
             Intent intent = new Intent(getApplicationContext(), ActivitySignIn.class);
             startActivity(intent);
             finish();

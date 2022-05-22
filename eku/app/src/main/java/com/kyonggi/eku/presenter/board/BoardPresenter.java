@@ -12,7 +12,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -24,6 +23,8 @@ import com.kyonggi.eku.model.FreeBoardPreview;
 import com.kyonggi.eku.model.InfoBoardPreview;
 import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.utils.callbacks.OnResponseListeners;
+import com.kyonggi.eku.view.board.activity.ActivityFreeBoardSearch;
+import com.kyonggi.eku.view.board.activity.ActivityInfoBoardSearch;
 import com.kyonggi.eku.view.signIn.ActivitySignIn;
 
 import java.util.ArrayList;
@@ -33,27 +34,23 @@ import java.util.List;
 public class BoardPresenter {
     private static final String TAG = "FreeBoardPresenter";
     private final Context context;
-    private final OnResponseListeners activity;
-    private Handler handler;
+    private final OnResponseListeners listener;
     private UserInformation userInformation;
 
-    public BoardPresenter(Context context, OnResponseListeners activity) {
+    public BoardPresenter(Context context, OnResponseListeners listener) {
         this.context = context;
-        this.activity = activity;
+        this.listener = listener;
         userInformation = new UserInformation(context);
     }
 
-    public void getInfoBoardArticles(){
+    public void getInfoBoardArticles(String buildingNumber){
         HashMap<String, Object> request = new HashMap<>();
-        request.put("page", 0);
-        request.put("lecture_building", 8);
+        request.put("lectureBuilding", buildingNumber);
         SendTool.requestForJson("/board/info/lists", request, getHandler(BOARD_INFO, INIT));
     }
 
     public void getFreeBoardArticles(){
-        HashMap<String, Object> request = new HashMap<>();
-        request.put("page", 0);
-        SendTool.requestForJson("/board/free/lists", request, getHandler(BOARD_FREE, INIT));
+        SendTool.request("/board/free/lists", getHandler(BOARD_FREE, INIT));
     }
 
     private Handler getHandler(String board, String purpose) {
@@ -62,32 +59,18 @@ public class BoardPresenter {
                 int code = msg.what;
                 String response = (String) msg.obj;
                 Log.d(TAG, "handleMessage: " + code);
-                switch (code) {
-                    case SendTool.CONNECTION_FAILED:
-                        Toast.makeText(context, "네트워크 연결에 실패하였습니다.", Toast.LENGTH_LONG).show();
-                        break;
-                    case SendTool.HTTP_OK:
-                        switch (board){
-                            case BOARD_FREE:
-                                List<FreeBoardPreview> freeBoardPreviews = SendTool.parseToList(response, FreeBoardPreview[].class);
-                                Log.d(TAG, "handleMessage: " + freeBoardPreviews);
-                                activity.onSuccess(freeBoardPreviews, purpose);
-                                break;
-                            case BOARD_INFO:
-                                List<InfoBoardPreview> infoBoardPreviews = SendTool.parseToList(response, InfoBoardPreview[].class);
-                                Log.d(TAG, "handleMessage: " + infoBoardPreviews);
-                                activity.onSuccess(infoBoardPreviews, purpose);
-                        }
-
-                        break;
-                    case SendTool.HTTP_BAD_REQUEST:
-                        Log.d(TAG, "handleMessage: ");
-                        break;
-                    case SendTool.HTTP_INTERNAL_SERVER_ERROR:
-                        Toast.makeText(context, "서버 에러가 발생하였습니다.", Toast.LENGTH_LONG).show();
-                    default:
-                        Log.e(TAG, "handleMessage: Unknown Error");
-                        break;
+                if (code == SendTool.HTTP_OK) {
+                    switch (board) {
+                        case BOARD_FREE:
+                            List<FreeBoardPreview> freeBoardPreviews = SendTool.parseToList(response, FreeBoardPreview[].class);
+                            listener.onSuccess(freeBoardPreviews, purpose);
+                            break;
+                        case BOARD_INFO:
+                            List<InfoBoardPreview> infoBoardPreviews = SendTool.parseToList(response, InfoBoardPreview[].class);
+                            listener.onSuccess(infoBoardPreviews, purpose);
+                    }
+                } else {
+                    listener.onFailed();
                 }
             }
         };
@@ -112,14 +95,14 @@ public class BoardPresenter {
     public void updateInfoBoard(long id, String building) {
         HashMap<String, Object> request = new HashMap<>();
         request.put("id", id);
-        request.put("building", building);
+        request.put("lectureBuilding", building);
         SendTool.requestForJson("/board/info/recent", request, getHandler(BOARD_INFO, LOAD_RECENT));
     }
 
     public void loadMoreInfoArticles(long no, String building) {
         HashMap<String, Object> request = new HashMap<>();
         request.put("id", no);
-        request.put("building", building);
+        request.put("lectureBuilding", building);
         SendTool.requestForJson("/board/info/load", request, getHandler(BOARD_INFO, LOAD_OLD));
     }
 
@@ -152,5 +135,38 @@ public class BoardPresenter {
     public void writeFreeBoard(){
         Intent intent = new Intent(context, WriteFreeCommunity.class);
         context.startActivity(intent);
+    }
+
+    public void search(String currentMode, String buildingNumber) {
+        if (currentMode.equals(BOARD_FREE)){
+            Intent intent = new Intent(context, ActivityFreeBoardSearch.class);
+            intent.putExtra("buildingNumber", buildingNumber);
+            context.startActivity(intent);
+        } else {
+            Intent intent = new Intent(context, ActivityInfoBoardSearch.class);
+            intent.putExtra("buildingNumber", buildingNumber);
+            context.startActivity(intent);
+        }
+    }
+
+    public void searchInfoBoard(String keyword, String building){
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("keyword", keyword);
+        param.put("lectureBuilding", building);
+        SendTool.requestForJson("/board/info/search", param, getHandler(BOARD_INFO, INIT));
+    }
+
+    public void searchFreeBoard(String keyword){
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("keyword", keyword);
+        SendTool.requestForJson("/board/free/search", param, getHandler(BOARD_FREE, INIT));
+    }
+
+    public void loadMoreInfoArticles(long no, String building, String keyword) {
+        HashMap<String, Object> request = new HashMap<>();
+        request.put("id", no);
+        request.put("keyword", keyword);
+        request.put("lectureBuilding", building);
+        SendTool.requestForJson("/board/info/search/load", request, getHandler(BOARD_INFO, LOAD_OLD));
     }
 }

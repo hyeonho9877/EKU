@@ -1,9 +1,7 @@
 package com.eku.EKU.service;
 
 import com.eku.EKU.controller.BoardController;
-import com.eku.EKU.domain.Student;
 import com.eku.EKU.form.BoardListForm;
-import com.eku.EKU.form.FreeBoardForm;
 import com.eku.EKU.form.InfoBoardForm;
 import com.eku.EKU.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
@@ -32,7 +30,7 @@ public class InfoBoardServiceTest {
     @Test
     public void test2(){
         BoardListForm form = new BoardListForm();
-        form.setLecture_building(1);
+        form.setLectureBuilding(1);
         form.setPage(0);
         System.out.println(boardController.infoBoardList(form));
     }

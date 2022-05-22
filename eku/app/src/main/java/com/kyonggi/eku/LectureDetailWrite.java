@@ -109,7 +109,7 @@ public class LectureDetailWrite extends AppCompatActivity {
                 temp.put("lecture",lecture);
 
                 try {
-                    SendTool.request(SendTool.APPLICATION_JSON, "/critic/apply",temp, handler);
+                    SendTool.requestForPost(SendTool.APPLICATION_JSON, "/critic/apply",temp, handler);
                 }
                 catch (IOException | NullPointerException e) {
                     e.printStackTrace();

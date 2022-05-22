@@ -85,6 +85,8 @@
         <activity android:name=".view.signUp.activity.ActivityInputSignUpInfo" />
         <activity android:name=".view.board.activity.ActivityBoard" />
         <activity android:name=".view.signIn.ActivitySignIn" />
+        <activity android:name=".view.board.activity.ActivityFreeBoardSearch"/>
+        <activity android:name=".view.board.activity.ActivityInfoBoardSearch"/>
 
         <service
             android:name="com.minew.beacon.ScanService"
