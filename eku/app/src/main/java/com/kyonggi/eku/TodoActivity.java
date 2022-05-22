@@ -1,6 +1,9 @@
 package com.kyonggi.eku;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class TodoActivity extends AppCompatActivity {
@@ -45,6 +49,26 @@ public class TodoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        int hour=8;
+        int minute=30;
+        int sec =00;
+        calendar.set(Calendar.HOUR_OF_DAY,hour);
+        calendar.set(Calendar.MINUTE,minute);
+        calendar.set(Calendar.SECOND,sec);
+
+        AlarmManager alarmManager=(AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null) {
+            Intent intent = new Intent(this, AlarmReceiver.class);
+            PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                    AlarmManager.INTERVAL_DAY, alarmIntent);
+
+            //Toast.makeText(TodoActivity.this, "알람이 저장되었습니다.", Toast.LENGTH_LONG).show();
+        }
+
         /*
         final DrawerLayout drawerLayout = findViewById(R.id.ToDo_drawerLayout);
 
