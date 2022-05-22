@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -198,6 +199,9 @@ public class BoardController {
         }catch (EmptyResultDataAccessException | NoSuchElementException exception){
             exception.printStackTrace();
             return ResponseEntity.badRequest().body("no article");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("file error");
         }
 
     }
