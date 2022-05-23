@@ -84,4 +84,9 @@ public class SignUpController {
     public String failed() {
         return "auth-fail";
     }
+
+    @PostMapping("/signUp/dept")
+    public ResponseEntity<?> getDept(){
+        return ResponseEntity.ok(signUpService.getDepartment());
+    }
 }
