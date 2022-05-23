@@ -1,6 +1,5 @@
 package com.kyonggi.eku.view.signUp.activity;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 

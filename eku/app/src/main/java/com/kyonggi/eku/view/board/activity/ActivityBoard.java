@@ -11,7 +11,8 @@ import androidx.fragment.app.FragmentManager;
 
 import com.kyonggi.eku.R;
 import com.kyonggi.eku.databinding.ActivityBoardBinding;
-import com.kyonggi.eku.model.BoardPreview;
+import com.kyonggi.eku.model.FreeBoardPreview;
+import com.kyonggi.eku.model.InfoBoardPreview;
 import com.kyonggi.eku.presenter.board.BoardPresenter;
 import com.kyonggi.eku.utils.callbacks.OnResponseListeners;
 import com.kyonggi.eku.view.board.fragment.FragmentFreeBoard;
@@ -57,7 +58,7 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
                 else presenter.writeFreeBoard();
             } else presenter.signIn();
         });
-        binding.buttonSearch.setOnClickListener(v->{
+        binding.buttonSearch.setOnClickListener(v -> {
             presenter.search(currentMode, buildingNumber);
         });
 
@@ -122,22 +123,25 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
     }
 
     @Override
-    public void onSuccess(List<? extends BoardPreview> articles, String purpose) {
+    public void onFreeBoardSuccess(List<FreeBoardPreview> articles, String purpose) {
         binding.animBoardLoading.setVisibility(View.INVISIBLE);
         binding.frameLayoutBoard.setVisibility(View.VISIBLE);
-        if (currentMode.equals(BOARD_INFO)) {
-            if (purpose.equals(LOAD_RECENT))
-                fragmentInfoBoard.updateArticles(presenter.convertToInfoBoard(articles));
-            else if (purpose.equals(INIT))
-                fragmentInfoBoard.listArticles(presenter.convertToInfoBoard(articles));
-            else fragmentInfoBoard.loadMoreArticles(presenter.convertToInfoBoard(articles));
-        } else {
-            if (purpose.equals(LOAD_RECENT))
-                fragmentFreeBoard.updateArticles(presenter.convertToFreeBoard(articles));
-            else if (purpose.equals(INIT))
-                fragmentFreeBoard.listArticles(presenter.convertToFreeBoard(articles));
-            else fragmentFreeBoard.loadMoreArticles(presenter.convertToFreeBoard(articles));
-        }
+        if (purpose.equals(LOAD_RECENT))
+            fragmentFreeBoard.updateArticles(articles);
+        else if (purpose.equals(INIT))
+            fragmentFreeBoard.listArticles(articles);
+        else fragmentFreeBoard.loadMoreArticles(articles);
+    }
+
+    @Override
+    public void onInfoBoardSuccess(List<InfoBoardPreview> articles, String purpose) {
+        binding.animBoardLoading.setVisibility(View.INVISIBLE);
+        binding.frameLayoutBoard.setVisibility(View.VISIBLE);
+        if (purpose.equals(LOAD_RECENT))
+            fragmentInfoBoard.updateArticles(articles);
+        else if (purpose.equals(INIT))
+            fragmentInfoBoard.listArticles(articles);
+        else fragmentInfoBoard.loadMoreArticles(articles);
     }
 
     @Override

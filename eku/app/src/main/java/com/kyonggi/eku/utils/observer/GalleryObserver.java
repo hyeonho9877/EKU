@@ -1,7 +1,6 @@
 package com.kyonggi.eku.utils.observer;
 
 import static androidx.activity.result.contract.ActivityResultContracts.GetContent;
-
 import static com.kyonggi.eku.utils.SendTool.CONNECTION_FAILED;
 import static com.kyonggi.eku.utils.SendTool.HTTP_BAD_REQUEST;
 import static com.kyonggi.eku.utils.SendTool.HTTP_INTERNAL_SERVER_ERROR;
@@ -16,7 +15,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;

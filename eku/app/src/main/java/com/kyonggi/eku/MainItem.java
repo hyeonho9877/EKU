@@ -3,7 +3,6 @@ package com.kyonggi.eku;
 import static com.kyonggi.eku.view.board.activity.ActivityBoard.BOARD_FREE;
 import static com.kyonggi.eku.view.board.activity.ActivityBoard.BOARD_INFO;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -11,8 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.core.view.GravityCompat;
 
 import com.kyonggi.eku.view.board.activity.ActivityBoard;
 
