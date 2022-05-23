@@ -49,30 +49,6 @@ public class FragmentFreeBoard extends Fragment {
             binding.swipeLayoutFreeBoard.setRefreshing(false);
         });
 
-        scrollListener = new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                int itemCount = recyclerView.getAdapter().getItemCount();
-                if (!isLoading) {
-                    List<FreeBoardPreview> currentList = adapter.getCurrentList();
-                    if (layoutManager != null && layoutManager.findLastCompletelyVisibleItemPosition() == currentList.size() - 1) {
-                        currentList.add(null);
-                        adapter.notifyItemInserted(currentList.size() - 1);
-                        activity.loadMoreFreeArticles(currentList.get(itemCount - 1).getId());
-                        isLoading = true;
-                    }
-                }
-            }
-        };
-        binding.recyclerViewFreeBard.addOnScrollListener(scrollListener);
-
         binding.recyclerViewFreeBard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +57,7 @@ public class FragmentFreeBoard extends Fragment {
     }
 
     public void listArticles(List<FreeBoardPreview> articles) {
+        if(articles.size() >= 20) addScrollListener();
         adapter = new FreeBoardAdapter(articles, getContext());
         adapter.notifyItemRangeInserted(0, articles.size());
         binding.recyclerViewFreeBard.setAdapter(adapter);
@@ -104,5 +81,31 @@ public class FragmentFreeBoard extends Fragment {
         } else {
             adapter.notifyItemRangeInserted(adapter.getCurrentList().size(), oldArticles.size());
         }
+    }
+
+    private void addScrollListener(){
+        scrollListener = new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int itemCount = recyclerView.getAdapter().getItemCount();
+                if (!isLoading) {
+                    List<FreeBoardPreview> currentList = adapter.getCurrentList();
+                    if (layoutManager != null && layoutManager.findLastCompletelyVisibleItemPosition() == currentList.size() - 1) {
+                        currentList.add(null);
+                        binding.recyclerViewFreeBard.post(() -> adapter.notifyItemInserted(currentList.size() - 1));
+                        activity.loadMoreFreeArticles(currentList.get(itemCount - 1).getId());
+                        isLoading = true;
+                    }
+                }
+            }
+        };
+        binding.recyclerViewFreeBard.addOnScrollListener(scrollListener);
     }
 }
