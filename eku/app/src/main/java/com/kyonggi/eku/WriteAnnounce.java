@@ -19,6 +19,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.kyonggi.eku.view.signIn.ActivitySignIn;
+import com.kyonggi.eku.utils.UserInformation;
+import com.kyonggi.eku.PreferenceManagers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,9 +49,12 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
     Button btn_save;
     Button btn_cancle;
 
+
     String name         = "고지웅";
-    Integer writer_id    = 201713924;
+    String writer_id;
     String department   = "소프트웨어공학과";
+
+    UserInformation userInformation;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -70,6 +75,11 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
 
         btn_save.setOnClickListener(this::onClick);
         btn_cancle.setOnClickListener(this::onClick);
+
+        userInformation = new UserInformation();
+
+        writer_id = userInformation.fromPhoneStudentNo(getApplicationContext());
+        department = userInformation.fromPhoneDepartment(getApplicationContext());
 
 
     }
