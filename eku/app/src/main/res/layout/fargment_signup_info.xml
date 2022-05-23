@@ -104,9 +104,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_studNo" />
 
-    <EditText
-        android:id="@+id/edit_dept"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/text_dept_show"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="4dp"
@@ -120,11 +120,24 @@
         android:paddingEnd="8dp"
         android:paddingBottom="4dp"
         android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_select_dept"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_dept"
-        android:importantForAutofill="no"
-        android:inputType="text"/>
+        app:layout_constraintTop_toBottomOf="@+id/text_dept" />
+
+    <TextView
+        android:id="@+id/button_select_dept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/font_noto_sans_kr"
+        android:includeFontPadding="false"
+        android:text="@string/select"
+        android:textColor="@color/warn"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_dept_show"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_dept_show" />
 
     <TextView
         android:id="@+id/text_email"
@@ -136,7 +149,7 @@
         android:text="@string/email"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_dept" />
+        app:layout_constraintTop_toBottomOf="@+id/text_dept_show" />
 
     <TextView
         android:id="@+id/text_email_guide"

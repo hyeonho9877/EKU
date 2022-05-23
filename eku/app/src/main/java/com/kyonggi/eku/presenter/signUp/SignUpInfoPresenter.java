@@ -19,16 +19,19 @@ import androidx.annotation.NonNull;
 import com.kyonggi.eku.databinding.FargmentSignupInfoBinding;
 import com.kyonggi.eku.model.OCRForm;
 import com.kyonggi.eku.model.SignUpForm;
+import com.kyonggi.eku.utils.EditDistance;
 import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.view.signUp.activity.ActivityInputSignUpInfo;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class SignUpInfoPresenter {
 
     private static final String TAG = "SignUpInfoPresenter";
-    private Handler handler;
+    private Handler signUpHandler;
+    private Handler deptHandler;
     private final ActivityInputSignUpInfo activity;
     private final Context context;
 
@@ -37,25 +40,36 @@ public class SignUpInfoPresenter {
         this.context = context;
     }
 
-    public void processForm(OCRForm form) {
+    public void processForm(OCRForm form, List<String> deptList) {
         String studNo = form.getStudNo();
         String name = form.getName();
         String department = form.getDepartment();
 
         if (Objects.equals(studNo, "0")) {
-            form.setStudNo("학번을 인식하지 못하였습니다.");
+            form.setStudNo(NO_NOT_FOUND);
         }
         if (name == null) {
-            form.setName("이름을 인식하지 못하였습니다.");
+            form.setName(NAME_NOT_FOUND);
         }
         if (department == null) {
-            form.setDepartment("학과를 인식하지 못하였습니다.");
+            form.setDepartment(DEPT_NOT_FOUND);
+        } else {
+            String dept="";
+            int min=Integer.MAX_VALUE;
+            for (String deptName : deptList) {
+                int calculate = EditDistance.calculate(deptName, form.getDepartment());
+                if (calculate < min) {
+                    min = calculate;
+                    dept = deptName;
+                }
+            }
+            form.setDepartment(dept);
         }
     }
 
     public int isAllFieldsAppropriate(FargmentSignupInfoBinding binding) {
         String name = binding.editName.getText().toString();
-        String department = binding.editDept.getText().toString();
+        String department = binding.textDeptShow.getText().toString();
         String studNo = binding.editStudNo.getText().toString();
         String email = binding.editEmail.getText().toString();
         String password = binding.editPassword.getText().toString();
@@ -76,7 +90,7 @@ public class SignUpInfoPresenter {
             return PASSWORD_NOT_VALID;
         } else if (!password.equals(passwordConfirm)) {
             return PASSWORD_NOT_MATCHING;
-        } else if (digitSpecialCompile.matcher(name).find() || incompleteCompile.matcher(name).find() || name.length()==0){
+        } else if (digitSpecialCompile.matcher(name).find() || incompleteCompile.matcher(name).find() || name.length() == 0) {
             return NAME_NOT_VALID;
         } else if (email.length() == 0 || !mailCompile.matcher(email).matches()) {
             return EMAIL_NOT_VALID;
@@ -86,12 +100,12 @@ public class SignUpInfoPresenter {
     }
 
     public void signUp(SignUpForm form) {
-        SendTool.requestForJson2("/signUp", form, getHandler());
+        SendTool.requestForJson2("/signUp", form, getSignUpHandler());
     }
 
-    private Handler getHandler() {
-        if (handler == null) {
-            this.handler = new Handler(Looper.getMainLooper()) {
+    private Handler getSignUpHandler() {
+        if (signUpHandler == null) {
+            this.signUpHandler = new Handler(Looper.getMainLooper()) {
                 public void handleMessage(@NonNull Message msg) {
                     int code = msg.what;
                     String response = (String) msg.obj;
@@ -115,6 +129,36 @@ public class SignUpInfoPresenter {
                 }
             };
         }
-        return handler;
+        return signUpHandler;
     }
+
+    private Handler getDeptHandler() {
+        if (deptHandler == null) {
+            this.deptHandler = new Handler(Looper.getMainLooper()) {
+                public void handleMessage(@NonNull Message msg) {
+                    int code = msg.what;
+                    String response = (String) msg.obj;
+                    switch (code) {
+                        case SendTool.CONNECTION_FAILED | SendTool.HTTP_BAD_REQUEST | SendTool.HTTP_INTERNAL_SERVER_ERROR:
+                            Toast.makeText(context, "네트워크 연결에 실패하였습니다.", Toast.LENGTH_LONG).show();
+                            break;
+                        case SendTool.HTTP_OK:
+                            List<String> deptList = SendTool.parseToString(response);
+                            activity.onDeptResponseSuccess(deptList);
+                            break;
+                    }
+                }
+            };
+        }
+        return deptHandler;
+    }
+
+    public void getDept() {
+        SendTool.request("/signUp/dept", getDeptHandler());
+    }
+
+    public static final String NAME_NOT_FOUND = "이름을 인식하지 못하였습니다.";
+    public static final String DEPT_NOT_FOUND = "학과를 인식하지 못하였습니다.";
+    public static final String NO_NOT_FOUND = "학번을 인식하지 못하였습니다.";
+
 }
