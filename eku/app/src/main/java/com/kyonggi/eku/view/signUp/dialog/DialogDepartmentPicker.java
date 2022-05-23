@@ -1,19 +1,14 @@
 package com.kyonggi.eku.view.signUp.dialog;
 
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import com.kyonggi.eku.R;
 import com.kyonggi.eku.databinding.DialogDeptBinding;

@@ -15,18 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kyonggi.eku.databinding.ActivityBoardSearchBinding;
-import com.kyonggi.eku.model.BoardPreview;
 import com.kyonggi.eku.model.FreeBoardPreview;
 import com.kyonggi.eku.model.InfoBoardPreview;
 import com.kyonggi.eku.presenter.board.BoardPresenter;
 import com.kyonggi.eku.utils.adapters.FreeBoardAdapter;
-import com.kyonggi.eku.utils.adapters.InfoBoardAdapter;
 import com.kyonggi.eku.utils.callbacks.OnResponseListeners;
 
 import java.util.List;
 
 public class ActivityFreeBoardSearch extends AppCompatActivity implements OnResponseListeners {
-    private static final String TAG = "ActivityInfoBoardSearch";
+    private static final String TAG = "ActivityFreeBoardSearch";
     private ActivityBoardSearchBinding binding;
     private BoardPresenter presenter;
     private FreeBoardAdapter adapter;
@@ -49,11 +47,11 @@ public class ActivityFreeBoardSearch extends AppCompatActivity implements OnResp
     private void initListeners() {
         binding.editTextSearch.setOnKeyListener((view, i, keyEvent) -> {
             keyword = binding.editTextSearch.getText().toString();
-            if (keyword.length() != 0 && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+            if (keyword.length() != 0 && i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
                 binding.animBoardSearchLoading.setVisibility(View.VISIBLE);
                 presenter.searchFreeBoard(keyword);
             }
-            return false;
+            return true;
         });
 
         scrollListener = new RecyclerView.OnScrollListener() {
@@ -72,7 +70,7 @@ public class ActivityFreeBoardSearch extends AppCompatActivity implements OnResp
                     if (layoutManager != null && layoutManager.findLastCompletelyVisibleItemPosition() == currentList.size() - 1) {
                         currentList.add(null);
                         adapter.notifyItemInserted(currentList.size() - 1);
-                        presenter.loadMoreInfoArticles(currentList.get(itemCount - 1).getId(), buildingNumber, keyword);
+                        presenter.loadMoreFreeArticles(currentList.get(itemCount - 1).getId(), keyword);
                         isLoading = true;
                     }
                 }
@@ -83,9 +81,9 @@ public class ActivityFreeBoardSearch extends AppCompatActivity implements OnResp
     }
 
     @Override
-    public void onSuccess(List<? extends BoardPreview> articles, String purpose) {
-        if (purpose.equals(INIT)){
-            adapter = new FreeBoardAdapter(presenter.convertToFreeBoard(articles), this);
+    public void onFreeBoardSuccess(List<FreeBoardPreview> articles, String purpose) {
+        if (purpose.equals(INIT)) {
+            adapter = new FreeBoardAdapter(articles, this);
             binding.animBoardSearchLoading.setVisibility(View.INVISIBLE);
             binding.recyclerViewSearch.setVisibility(View.VISIBLE);
             binding.recyclerViewSearch.setAdapter(adapter);
@@ -93,10 +91,10 @@ public class ActivityFreeBoardSearch extends AppCompatActivity implements OnResp
         } else {
             List<FreeBoardPreview> currentList = adapter.getCurrentList();
             currentList.remove(currentList.size() - 1);
-            adapter.notifyItemRemoved(currentList.size()-1);
+            adapter.notifyItemRemoved(currentList.size() - 1);
             isLoading = false;
-            new Handler().postDelayed(()->{
-                if (adapter.insertFromTail(presenter.convertToFreeBoard(articles))) {
+            new Handler().postDelayed(() -> {
+                if (adapter.insertFromTail(articles)) {
                     adapter.notifyItemRangeInserted(adapter.getCurrentList().size(), articles.size());
                     binding.recyclerViewSearch.removeOnScrollListener(scrollListener);
                 } else {
@@ -104,6 +102,12 @@ public class ActivityFreeBoardSearch extends AppCompatActivity implements OnResp
                 }
             }, 200);
         }
+    }
+
+    @Override
+    public void onInfoBoardSuccess(List<InfoBoardPreview> articles, String purpose) {
+        Toast.makeText(this, "Something went wrong..", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override

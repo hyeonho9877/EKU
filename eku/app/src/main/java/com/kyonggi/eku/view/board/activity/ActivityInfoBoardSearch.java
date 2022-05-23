@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kyonggi.eku.databinding.ActivityBoardSearchBinding;
-import com.kyonggi.eku.model.BoardPreview;
+import com.kyonggi.eku.model.FreeBoardPreview;
 import com.kyonggi.eku.model.InfoBoardPreview;
 import com.kyonggi.eku.presenter.board.BoardPresenter;
 import com.kyonggi.eku.utils.adapters.InfoBoardAdapter;
@@ -47,7 +47,7 @@ public class ActivityInfoBoardSearch extends AppCompatActivity implements OnResp
     private void initListeners() {
         binding.editTextSearch.setOnKeyListener((view, i, keyEvent) -> {
             keyword = binding.editTextSearch.getText().toString();
-            if (keyword.length() != 0 && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+            if (keyword.length() != 0 && i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
                 binding.animBoardSearchLoading.setVisibility(View.VISIBLE);
                 presenter.searchInfoBoard(keyword, buildingNumber);
             }
@@ -81,9 +81,9 @@ public class ActivityInfoBoardSearch extends AppCompatActivity implements OnResp
     }
 
     @Override
-    public void onSuccess(List<? extends BoardPreview> articles, String purpose) {
+    public void onInfoBoardSuccess(List<InfoBoardPreview> articles, String purpose) {
         if (purpose.equals(INIT)){
-            adapter = new InfoBoardAdapter(presenter.convertToInfoBoard(articles), this);
+            adapter = new InfoBoardAdapter(articles, this);
             binding.animBoardSearchLoading.setVisibility(View.INVISIBLE);
             binding.recyclerViewSearch.setVisibility(View.VISIBLE);
             binding.recyclerViewSearch.setAdapter(adapter);
@@ -94,7 +94,7 @@ public class ActivityInfoBoardSearch extends AppCompatActivity implements OnResp
             adapter.notifyItemRemoved(currentList.size()-1);
             isLoading = false;
             new Handler().postDelayed(()->{
-                if (adapter.insertFromTail(presenter.convertToInfoBoard(articles))) {
+                if (adapter.insertFromTail(articles)) {
                     adapter.notifyItemRangeInserted(adapter.getCurrentList().size(), articles.size());
                     binding.recyclerViewSearch.removeOnScrollListener(scrollListener);
                 } else {
@@ -102,6 +102,12 @@ public class ActivityInfoBoardSearch extends AppCompatActivity implements OnResp
                 }
             }, 200);
         }
+    }
+
+    @Override
+    public void onFreeBoardSuccess(List<FreeBoardPreview> articles, String purpose) {
+        Toast.makeText(this, "Something went wrong..", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override
