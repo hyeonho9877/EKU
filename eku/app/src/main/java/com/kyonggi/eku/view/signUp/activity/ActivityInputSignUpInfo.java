@@ -1,7 +1,12 @@
 package com.kyonggi.eku.view.signUp.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -23,6 +28,7 @@ import com.kyonggi.eku.view.signUp.fragment.FragmentSignUpProgressFirst;
 import com.kyonggi.eku.view.signUp.fragment.FragmentSignUpProgressSecond;
 import com.kyonggi.eku.view.signUp.fragment.FragmentSignupInfo;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ActivityInputSignUpInfo extends AppCompatActivity implements OnConfirmedListener {
@@ -32,6 +38,8 @@ public class ActivityInputSignUpInfo extends AppCompatActivity implements OnConf
     private final FragmentManager fragmentManager = getSupportFragmentManager();
     private SignUpInfoPresenter presenter;
     private ProgressDialog dialog;
+    private FragmentSignupInfo fragmentSignupInfo;
+    private List<String> deptList;
 
 
     @Override
@@ -42,14 +50,23 @@ public class ActivityInputSignUpInfo extends AppCompatActivity implements OnConf
         setContentView(view);
 
         presenter = new SignUpInfoPresenter(this, this);
+        presenter.getDept();
 
-        FragmentSignupInfo fragmentSignupInfo = new FragmentSignupInfo();
+        fragmentSignupInfo = new FragmentSignupInfo();
         FragmentSignUpProgressFirst fragmentSignUpProgressFirst = new FragmentSignUpProgressFirst();
 
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.progress_bar_section, fragmentSignUpProgressFirst);
-        fragmentTransaction.add(R.id.fragment_user_interaction, fragmentSignupInfo, "INPUT_FRAGMENT");
-        fragmentTransaction.commit();
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
+        int downSpeed = capabilities.getLinkDownstreamBandwidthKbps()/1000;
+        int delays = (2*downSpeed+300)/downSpeed*100;
+        Log.d(TAG, "onCreate: "+delays);
+
+        new Handler().postDelayed(()->{
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.progress_bar_section, fragmentSignUpProgressFirst);
+            fragmentTransaction.add(R.id.fragment_user_interaction, fragmentSignupInfo, "INPUT_FRAGMENT");
+            fragmentTransaction.commit();
+        }, delays);
     }
 
 
@@ -70,7 +87,7 @@ public class ActivityInputSignUpInfo extends AppCompatActivity implements OnConf
     public OCRForm getForm() throws NoExtraDataException {
         Optional<OCRForm> form = Optional.ofNullable((OCRForm) getIntent().getSerializableExtra("studentInfo"));
         OCRForm ocrForm = form.orElseThrow(NoExtraDataException::new);
-        presenter.processForm(ocrForm);
+        presenter.processForm(ocrForm, deptList);
         return ocrForm;
     }
 
@@ -94,5 +111,13 @@ public class ActivityInputSignUpInfo extends AppCompatActivity implements OnConf
 
     public void onSignUpResponseFailed() {
         new SignUpErrorDialogFragment(SignUpErrorDialogFragment.DUPLICATED_ACCOUNT).show(getSupportFragmentManager(), "error");
+    }
+
+    public void onDeptResponseSuccess(List<String> deptList){
+        this.deptList = deptList;
+    }
+
+    public List<String> getDeptList() {
+        return deptList;
     }
 }
