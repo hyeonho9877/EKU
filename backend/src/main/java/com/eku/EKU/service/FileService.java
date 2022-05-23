@@ -66,7 +66,7 @@ public class FileService {
         InfoBoard article = infoBoardRepository.getById(id);
         Image image = Image.builder()
                 .fileName(uploadFileName)
-                .path(serverPath.toString())
+                .path(uploadDir+File.separator)
                 .infoBoard(article)
                 .build();
         imageRepository.save(image);
@@ -82,9 +82,20 @@ public class FileService {
         List<Image> imageList = imageRepository.findAllByInfoBoard(infoBoard);
         List<String> pathList = new ArrayList<>();
         for(Image i : imageList){
-            String out = i.getPath();
+            String out = i.getPath()+i.getFileName();
             pathList.add(out);
         }
         return pathList;
+    }
+
+    public List<String> imageURL(Long articleId)throws IllegalArgumentException, NoSuchElementException{
+        InfoBoard infoBoard = infoBoardRepository.getById(articleId);
+        List<Image> imageList = imageRepository.findAllByInfoBoard(infoBoard);
+        List<String> urlList = new ArrayList<>();
+        for(int i=0;i<imageList.size();i++){
+            String url = "https://eko.kro.kr/board/info/image?id="+articleId+"&imageNo="+i;
+            urlList.add(url);
+        }
+        return urlList;
     }
 }
