@@ -164,6 +164,7 @@ public class BoardController {
     @PostMapping("/board/info/delete")
     public ResponseEntity<?> deleteBoard(@RequestBody InfoBoardForm form){
         try {
+            fileService.deleteFile(form.getId());
             infoBoardService.deleteBoard(form.getId());
             return ResponseEntity.ok(form.getId());
         } catch(NoSuchElementException exception){
@@ -346,6 +347,12 @@ public class BoardController {
         }
     }
 
+    /**
+     * 이미지 파일의 url
+     * @param id
+     * @param imageNo
+     * @return
+     */
     @GetMapping ("/board/info/image")
     public ResponseEntity<?> imageTest(@RequestParam(value = "id")Long id, @RequestParam(value = "imageNo")int imageNo){
         try {

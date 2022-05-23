@@ -88,14 +88,33 @@ public class FileService {
         return pathList;
     }
 
+    /**
+     * image url 목록 반환
+     * @param articleId
+     * @return
+     * @throws IllegalArgumentException
+     * @throws NoSuchElementException
+     */
     public List<String> imageURL(Long articleId)throws IllegalArgumentException, NoSuchElementException{
         InfoBoard infoBoard = infoBoardRepository.getById(articleId);
         List<Image> imageList = imageRepository.findAllByInfoBoard(infoBoard);
         List<String> urlList = new ArrayList<>();
         for(int i=0;i<imageList.size();i++){
-            String url = "https://eko.kro.kr/board/info/image?id="+articleId+"&imageNo="+i;
+            String url = "https://eku.kro.kr/board/info/image?id="+articleId+"&imageNo="+i;
             urlList.add(url);
         }
         return urlList;
+    }
+
+    public void deleteFile(Long articleId){
+        InfoBoard infoBoard = infoBoardRepository.getById(articleId);
+        List<Image> imageList = imageRepository.findAllByInfoBoard(infoBoard);
+        for(Image i : imageList){
+            String path = i.getPath()+i.getFileName();
+            File file = new File(path);
+            if (file.exists()){
+                file.delete();
+            }
+        }
     }
 }
