@@ -4,6 +4,7 @@ import static com.kyonggi.eku.view.board.activity.ActivityBoard.INIT;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -48,41 +49,18 @@ public class ActivityInfoBoardSearch extends AppCompatActivity implements OnResp
         binding.editTextSearch.setOnKeyListener((view, i, keyEvent) -> {
             keyword = binding.editTextSearch.getText().toString();
             if (keyword.length() != 0 && i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                Log.d(TAG, "initListeners: searching..");
                 binding.animBoardSearchLoading.setVisibility(View.VISIBLE);
                 presenter.searchInfoBoard(keyword, buildingNumber);
             }
             return false;
         });
-
-        scrollListener = new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                int itemCount = recyclerView.getAdapter().getItemCount();
-                if (!isLoading) {
-                    List<InfoBoardPreview> currentList = adapter.getCurrentList();
-                    if (layoutManager != null && layoutManager.findLastCompletelyVisibleItemPosition() == currentList.size() - 1) {
-                        currentList.add(null);
-                        adapter.notifyItemInserted(currentList.size() - 1);
-                        presenter.loadMoreInfoArticles(currentList.get(itemCount - 1).getId(), buildingNumber, keyword);
-                        isLoading = true;
-                    }
-                }
-            }
-        };
-
-        binding.recyclerViewSearch.addOnScrollListener(scrollListener);
     }
 
     @Override
     public void onInfoBoardSuccess(List<InfoBoardPreview> articles, String purpose) {
         if (purpose.equals(INIT)){
+            if(articles.size() >= 20) addScrollListeners();
             adapter = new InfoBoardAdapter(articles, this);
             binding.animBoardSearchLoading.setVisibility(View.INVISIBLE);
             binding.recyclerViewSearch.setVisibility(View.VISIBLE);
@@ -113,5 +91,33 @@ public class ActivityInfoBoardSearch extends AppCompatActivity implements OnResp
     @Override
     public void onFailed() {
         Toast.makeText(this, "게시글 검색에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+    }
+
+    private void addScrollListeners(){
+        scrollListener = new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                Log.d(TAG, "onScrolled: scrolling");
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int itemCount = recyclerView.getAdapter().getItemCount();
+                if (!isLoading) {
+                    List<InfoBoardPreview> currentList = adapter.getCurrentList();
+                    if (layoutManager != null && layoutManager.findLastCompletelyVisibleItemPosition() == currentList.size() - 1) {
+                        currentList.add(null);
+                        binding.recyclerViewSearch.post(() -> adapter.notifyItemInserted(currentList.size() - 1));
+                        presenter.loadMoreInfoArticles(currentList.get(itemCount - 1).getId(), buildingNumber, keyword);
+                        isLoading = true;
+                    }
+                }
+            }
+        };
+
+        binding.recyclerViewSearch.addOnScrollListener(scrollListener);
     }
 }

@@ -33,13 +33,9 @@ public class FragmentInfoBoard extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentInfoBoardBinding.inflate(inflater, container, false);
-
         activity = (ActivityBoard) getActivity();
-
         initListeners();
-
         activity.getInfoBoardArticles();
-
         return binding.getRoot();
     }
 
@@ -50,33 +46,10 @@ public class FragmentInfoBoard extends Fragment {
             Log.d(TAG, "initListeners: " + adapter.getCurrentList().get(0).getId());
             binding.swipeLayoutInfoBoard.setRefreshing(false);
         });
-
-        scrollListener = new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                int itemCount = recyclerView.getAdapter().getItemCount();
-                if (!isLoading) {
-                    List<InfoBoardPreview> currentList = adapter.getCurrentList();
-                    if (layoutManager != null && layoutManager.findLastCompletelyVisibleItemPosition() == currentList.size() - 1) {
-                        currentList.add(null);
-                        adapter.notifyItemInserted(currentList.size() - 1);
-                        activity.loadMoreInfoArticles(currentList.get(itemCount - 1).getId());
-                        isLoading = true;
-                    }
-                }
-            }
-        };
-        binding.recyclerViewInfoBard.addOnScrollListener(scrollListener);
     }
 
     public void listArticles(List<InfoBoardPreview> articles) {
+        if(articles.size() >= 20) addScrollListener();
         adapter = new InfoBoardAdapter(articles, getContext());
         adapter.notifyItemRangeInserted(0, articles.size());
         binding.recyclerViewInfoBard.setAdapter(adapter);
@@ -102,5 +75,31 @@ public class FragmentInfoBoard extends Fragment {
                 adapter.notifyItemRangeInserted(adapter.getCurrentList().size(), oldArticles.size());
             }
         }, 200);
+    }
+
+    private void addScrollListener(){
+        scrollListener = new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int itemCount = recyclerView.getAdapter().getItemCount();
+                if (!isLoading) {
+                    List<InfoBoardPreview> currentList = adapter.getCurrentList();
+                    if (layoutManager != null && layoutManager.findLastCompletelyVisibleItemPosition() == currentList.size() - 1) {
+                        currentList.add(null);
+                        binding.recyclerViewInfoBard.post(() -> adapter.notifyItemInserted(currentList.size() - 1));
+                        activity.loadMoreInfoArticles(currentList.get(itemCount - 1).getId());
+                        isLoading = true;
+                    }
+                }
+            }
+        };
+        binding.recyclerViewInfoBard.addOnScrollListener(scrollListener);
     }
 }
