@@ -1,10 +1,24 @@
 package com.kyonggi.eku;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -12,27 +26,33 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import com.kyonggi.eku.UserInformation;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.kyonggi.eku.utils.adapters.FreeCommunityCommentAdapter;
+import com.kyonggi.eku.CommentReloadTool;
+import com.kyonggi.eku.FreeCommunityCommentItem;
+import com.kyonggi.eku.PreferenceManagers;
+import com.kyonggi.eku.R;
+import com.kyonggi.eku.utils.SendTool;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,8 +93,12 @@ public class DetailFreeCommunity extends AppCompatActivity {
     Toolbar toolbar;
     ListView listView;
     String id_text = "201713924";
+
     String writer_id ="";
     String board_id = "";
+    UserInformation userInformation;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,17 +121,29 @@ public class DetailFreeCommunity extends AppCompatActivity {
         et_comment          = (EditText) findViewById(R.id.detail_Free_Write_Comment);
         btn_comment_submit  = (ImageButton)  findViewById(R.id.detail_Free_Write_Comment_button);
 
+        Intent intent = getIntent();
+        board_id = intent.getStringExtra("id");
+        userInformation = new UserInformation();
+        id_text = userInformation.fromPhoneStudentNo(getApplicationContext());
+        Log.d("LoginID :",id_text);
+
+
         arrayList = new ArrayList<FreeCommunityCommentItem>();
-        freeCommunityCommentAdapter = new FreeCommunityCommentAdapter(arrayList);
+        CommentReloadTool commentReloadTool = new CommentReloadTool(){
+            @Override
+            public void reload(){
+                getBoardDetail(board_id, DETAIL_BOARD_REQUEST);
+            }
+        };
+
+        freeCommunityCommentAdapter = new FreeCommunityCommentAdapter(arrayList,commentReloadTool,board_id);
         listView.setAdapter(freeCommunityCommentAdapter);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        Intent intent = getIntent();
-        board_id = intent.getStringExtra("id");
-        getBoardDetail(board_id , DETAIL_BOARD_REQUEST);
+        getBoardDetail(board_id, DETAIL_BOARD_REQUEST);
 
 
         btn_comment_submit.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +187,7 @@ public class DetailFreeCommunity extends AppCompatActivity {
             }
         });
     }
-/*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
@@ -162,34 +198,39 @@ public class DetailFreeCommunity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.detail_Free_menu_modify:
-                Toast.makeText(getApplicationContext(),"수정",Toast.LENGTH_LONG).show();
+        if (id_text.trim().equals(writer_id.trim())) {
+            switch (item.getItemId()) {
+                case R.id.detail_Free_menu_modify:
+                    Toast.makeText(getApplicationContext(), "수정", Toast.LENGTH_LONG).show();
 
 
-                if(mode == VIEW_MODE){
-                    mode = MODIFY_MODE;
+                    if (mode == VIEW_MODE) {
+                        mode = MODIFY_MODE;
 
-                    et_title.setText(tv_title.getText().toString());
-                    et_content.setText(tv_content.getText().toString());
+                        et_title.setText(tv_title.getText().toString());
+                        et_content.setText(tv_content.getText().toString());
 
-                    tv_title.setVisibility(View.INVISIBLE);
-                    tv_content.setVisibility(View.INVISIBLE);
-                    et_title.setVisibility(View.VISIBLE);
-                    et_content.setVisibility(View.VISIBLE);
-                    edit_layout.setVisibility(View.VISIBLE);
-                }
+                        tv_title.setVisibility(View.INVISIBLE);
+                        tv_content.setVisibility(View.INVISIBLE);
+                        et_title.setVisibility(View.VISIBLE);
+                        et_content.setVisibility(View.VISIBLE);
+                        edit_layout.setVisibility(View.VISIBLE);
+                    }
 
-                return true;
-            case R.id.detail_Free_menu_delete:
-                dialog_delete();
-                return true;
-            default:
+                    return true;
+                case R.id.detail_Free_menu_delete:
+                    dialog_delete();
+                    return true;
+                default:
 
+                    return super.onOptionsItemSelected(item);
+            }
+        } else {
+                dialog_not_access();
                 return super.onOptionsItemSelected(item);
         }
     }
- */
+
     public void addItem(String id,String writer, String comment, String time){
         FreeCommunityCommentItem freeCommunityCommentItem = new FreeCommunityCommentItem(id, writer, comment, time);
         arrayList.add(0,freeCommunityCommentItem);
@@ -214,7 +255,7 @@ public class DetailFreeCommunity extends AppCompatActivity {
         }else if( mode == DETAIL_COMMENT_WRITE_REQUEST){
             try{
                 jsonBodyObj.put("content",comment);
-                jsonBodyObj.put("articleID",Integer.parseInt(id));
+                jsonBodyObj.put("articleId",Integer.parseInt(id));
                 jsonBodyObj.put("writer", id_text);
                 url = "https://www.eku.kro.kr/comment/free/write";
             }catch (JSONException e){
@@ -404,6 +445,19 @@ public class DetailFreeCommunity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getApplicationContext(),"아니오를 선택했습니다.",Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                    }
+                });
+        builder.show();
+    }
+
+    public void dialog_not_access(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("작성자가 아닙니다.");
+        builder.setMessage("게시글을 삭제 및 수정 하실수 없습니다.");
+        builder.setPositiveButton("예",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 });
