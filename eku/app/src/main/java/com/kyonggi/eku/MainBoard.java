@@ -18,6 +18,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -57,8 +58,9 @@ import java.util.Map;
 public class MainBoard extends AppCompatActivity {
 
     public static final int Minorcheck = 61686;
-    String[] showBuilding = {"1강의동", "2강의동", "3강의동", "4강의동", "5강의동", "6강의동", "7강의동", "8강의동", "9강의동", "제2공학관", "종합강의동"};
-    int buildingSelected = 0;
+    String[] showBuilding = {"6강의동", "7강의동", "8강의동", "9강의동", "제2공학관", "종합강의동"};
+    int[] minor = {61618, 61632, 61686, 61511, 61633, 61524};
+    int buildingSelected = 6;
     int[] building = {6, 7, 8, 9, 0};
     AlertDialog buildingSelectDialog;
     long backKeyPressedTime;
@@ -74,17 +76,17 @@ public class MainBoard extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_board);
-        buildingNumber = "8";
+        buildingNumber = String.valueOf(now_building);
 /*
         if (savedInstanceState == null) {
-
             MapFragment mapFragment = new MapFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.board_ImageView, mapFragment, "main")
                     .commit();
         }
-
  */
+
+
 
         final DrawerLayout drawerLayout = findViewById(R.id.board_drawerLayout);
 
@@ -494,5 +496,17 @@ public class MainBoard extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
+            backKeyPressedTime = System.currentTimeMillis();
+            Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
+            finish();
+        }
     }
 }

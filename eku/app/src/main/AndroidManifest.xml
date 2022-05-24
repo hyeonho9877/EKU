@@ -115,9 +115,6 @@
             android:name=".LectureMain"
             android:exported="false" />
         <activity
-            android:name=".LectureWrite"
-            android:exported="false" />
-        <activity
             android:name=".LectureDetail"
             android:exported="false" />
         <activity
@@ -135,7 +132,7 @@
         <receiver android:name=".AlarmReceiver"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBpr5Cq5Dbo9YAu5qHaDyaEoC7CTIH4rns" />
+            android:value="" />
     </application>
 
 </manifest>

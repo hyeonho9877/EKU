@@ -64,9 +64,12 @@ public class LectureDetail extends AppCompatActivity {
                         int cid = critics[i].getcid();
                         String content = critics[i].getContent();
                         float star = critics[i].getStar();
+                        String studNo = critics[i].getStudNo();
+                        String department = critics[i].getDepartment();
+                        String writer = studNo + " " + department;
                         total += star;
                         String grade = critics[i].getGrade();
-                        detail_Lecture(cid,content,star,grade);
+                        detail_Lecture(cid,content,star,grade, writer);
                     }
                     RatingBar ratingStar = findViewById(R.id.lecture_detail_rating);
                     total = total/count;
@@ -114,11 +117,10 @@ public class LectureDetail extends AppCompatActivity {
         });
     }
 
-    public void detail_Lecture(int Lid, String content,float star,String grade){
+    public void detail_Lecture(int Lid, String content,float star,String grade, String writer){
         LinearLayout sc = (LinearLayout)findViewById(R.id.lecture_detail_scroll);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        String writer="고지웅";
         LectureItem lectureitem = new LectureItem(getApplicationContext(), content,grade,star,writer);
         sc.addView(lectureitem);
     }
