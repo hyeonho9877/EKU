@@ -1,5 +1,6 @@
 package com.kyonggi.eku.view.signUp.activity;
 
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -33,7 +34,11 @@ public class ActivityGallery extends AppCompatActivity {
 
     private void initListeners() {
         binding.buttonConfirm.setOnClickListener(v-> {
-            presenter.confirm(photo, getContentResolver());
+            ProgressDialog dialog = new ProgressDialog(this);
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage("사진을 분석중입니다..");
+            dialog.show();
+            presenter.confirm(photo, getContentResolver(), dialog);
         });
         binding.buttonCancel.setOnClickListener(v->{
             finish();

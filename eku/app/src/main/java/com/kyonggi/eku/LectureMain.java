@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -51,7 +50,6 @@ public class LectureMain extends AppCompatActivity {
         SwipeRefreshLayout swipe = findViewById(R.id.Lecture_Main_Swipe);
         swipe.setOnRefreshListener(
                 () -> {
-                    Log.i("TAG", "onRefresh called from SwipeRefreshLayout");
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -94,7 +92,6 @@ public class LectureMain extends AppCompatActivity {
                 Handler handler = new Handler(getMainLooper()){
                     @Override
                     public void handleMessage(@NonNull Message msg) {
-                        Log.i("c", (String) msg.obj);
                         String responseResult = (String) msg.obj;
                         try {
                             JSONArray LectureArray = new JSONArray(responseResult);
@@ -142,11 +139,10 @@ public class LectureMain extends AppCompatActivity {
     }
 
 
-    public void write_Lecture(String Title, String professor, String rating, String content, int Lectureid) {
+    public void write_Lecture(String Title, String professor, String rating, String writer, int Lectureid) {
         sc = (LinearLayout) findViewById(R.id.Lecture_Main_scroll);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        String writer="고지웅";
         LectureItem lectureitem = new LectureItem(getApplicationContext(), Title,professor,rating,writer);
         lectureitem.setId(Lectureid);
         lectureitem.setOnClickListener(new View.OnClickListener() {
@@ -186,13 +182,15 @@ public class LectureMain extends AppCompatActivity {
                         JSONObject LectureObject = LectureArray.getJSONObject(i);
                         String rating = LectureObject.getString("star");
                         int LectureId = Integer.parseInt(LectureObject.getString("cid"));
-                        String content = LectureObject.getString("content");
+                        String studNo = LectureObject.getString("studNo");
+                        String department = LectureObject.getString("department");
+                        String writer = studNo + " " + department;
                         Gson a = new Gson();
                         Lecture lecture1 = a.fromJson(LectureObject.getString("lecture"), Lecture.class);
                         String title = lecture1.getLectureName();
                         String professor = lecture1.getProfessor();
 
-                        write_Lecture(title, professor, rating, content, LectureId);
+                        write_Lecture(title, professor, rating, writer, LectureId);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

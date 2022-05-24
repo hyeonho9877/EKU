@@ -4,13 +4,15 @@ import com.eku.EKU.domain.Image;
 import com.eku.EKU.domain.InfoBoard;
 import com.eku.EKU.repository.ImageRepository;
 import com.eku.EKU.repository.InfoBoardRepository;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,7 +27,8 @@ public class FileService {
     private final ImageRepository imageRepository;
     private final InfoBoardRepository infoBoardRepository;
 
-    private String uploadDir = "/usr/local/image";
+    @Value("${server.tomcat.document-root}")
+    private String uploadDir;
 
     public FileService(ImageRepository imageRepository, InfoBoardRepository infoBoardRepository) {
         this.imageRepository = imageRepository;
@@ -63,7 +66,7 @@ public class FileService {
         InfoBoard article = infoBoardRepository.getById(id);
         Image image = Image.builder()
                 .fileName(uploadFileName)
-                .path(serverPath.toString())
+                .path(uploadDir+File.separator)
                 .infoBoard(article)
                 .build();
         imageRepository.save(image);
@@ -74,13 +77,44 @@ public class FileService {
      * @param articleId 공지게시물 id
      * @return 해당 게시물에 첨부된 사진의 경로 list
      */
-    public List<String> imageList(Long articleId){
+    public List<String> imageList(Long articleId) throws IOException {
         InfoBoard infoBoard = infoBoardRepository.getById(articleId);
         List<Image> imageList = imageRepository.findAllByInfoBoard(infoBoard);
         List<String> pathList = new ArrayList<>();
         for(Image i : imageList){
-            pathList.add(i.getPath());
+            String out = i.getPath()+i.getFileName();
+            pathList.add(out);
         }
         return pathList;
+    }
+
+    /**
+     * image url 목록 반환
+     * @param articleId
+     * @return
+     * @throws IllegalArgumentException
+     * @throws NoSuchElementException
+     */
+    public List<String> imageURL(Long articleId)throws IllegalArgumentException, NoSuchElementException{
+        InfoBoard infoBoard = infoBoardRepository.getById(articleId);
+        List<Image> imageList = imageRepository.findAllByInfoBoard(infoBoard);
+        List<String> urlList = new ArrayList<>();
+        for(int i=0;i<imageList.size();i++){
+            String url = "https://eku.kro.kr/board/info/image?id="+articleId+"&imageNo="+i;
+            urlList.add(url);
+        }
+        return urlList;
+    }
+
+    public void deleteFile(Long articleId){
+        InfoBoard infoBoard = infoBoardRepository.getById(articleId);
+        List<Image> imageList = imageRepository.findAllByInfoBoard(infoBoard);
+        for(Image i : imageList){
+            String path = i.getPath()+i.getFileName();
+            File file = new File(path);
+            if (file.exists()){
+                file.delete();
+            }
+        }
     }
 }

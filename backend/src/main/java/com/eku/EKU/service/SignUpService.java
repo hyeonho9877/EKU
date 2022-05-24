@@ -1,11 +1,13 @@
 package com.eku.EKU.service;
 
 import com.eku.EKU.config.CustomProperty;
+import com.eku.EKU.domain.Department;
 import com.eku.EKU.domain.MappingKey;
 import com.eku.EKU.domain.Student;
 import com.eku.EKU.exceptions.NoSuchAuthKeyException;
 import com.eku.EKU.exceptions.NoSuchStudentException;
 import com.eku.EKU.form.*;
+import com.eku.EKU.repository.DepartmentRepository;
 import com.eku.EKU.repository.MappingKeyRepository;
 import com.eku.EKU.repository.StudentRepository;
 import com.eku.EKU.secure.KeyGen;
@@ -45,13 +47,15 @@ public class SignUpService {
     private final CustomProperty customProperty;
     private final StudentRepository studentRepository;
     private final MappingKeyRepository mappingKeyRepository;
+    private final DepartmentRepository departmentRepository;
     private final WebClient webClient;
     private final SecurityManager securityManager;
 
-    public SignUpService(CustomProperty customProperty, StudentRepository studentRepository, MappingKeyRepository mappingKeyRepository, WebClient webClient, SecurityManager securityManager) {
+    public SignUpService(CustomProperty customProperty, StudentRepository studentRepository, MappingKeyRepository mappingKeyRepository, DepartmentRepository departmentRepository, WebClient webClient, SecurityManager securityManager) {
         this.customProperty = customProperty;
         this.studentRepository = studentRepository;
         this.mappingKeyRepository = mappingKeyRepository;
+        this.departmentRepository = departmentRepository;
         this.webClient = webClient;
         this.securityManager = securityManager;
     }
@@ -244,7 +248,9 @@ public class SignUpService {
         }
     }
 
-    public void validateDepartment(String department) {
-
+    public List<String> getDepartment() {
+        return departmentRepository.findAllByDistinctDeptNameOrderByDeptName().stream()
+                .map(Department::getDeptName)
+                .toList();
     }
 }

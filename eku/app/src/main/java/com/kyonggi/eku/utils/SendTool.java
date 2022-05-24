@@ -12,12 +12,14 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -227,13 +229,10 @@ public final class SendTool {
         return Arrays.asList(gson.fromJson(targetText, t));
     }
 
-    public static final int CONNECTION_FAILED = -1;
-    public static final int HTTP_OK = 200;
-    public static final int HTTP_INTERNAL_SERVER_ERROR = 500;
-    public static final int HTTP_BAD_REQUEST = 400;
-    public static final int EMPTY_BODY = 0x0;
-    public static final int APPLICATION_JSON = 0x1;
-    public static final int POST_PARAM = 0x2;
+    public static List<String> parseToString(String targetText){
+        Type type = new TypeToken<List<String>>(){}.getType();
+        return gson.fromJson(targetText, type);
+    }
 
     public static void requestForTimeTable(String url, JSONArray params, Handler handler) throws NullPointerException, JSONException {
         JSONObject jO = new JSONObject();
@@ -289,4 +288,11 @@ public final class SendTool {
             }
         });
     }
+
+    public static final int CONNECTION_FAILED = -1;
+    public static final int HTTP_OK = 200;
+    public static final int HTTP_INTERNAL_SERVER_ERROR = 500;
+    public static final int HTTP_BAD_REQUEST = 400;
+    public static final int APPLICATION_JSON = 0x1;
+    public static final int POST_PARAM = 0x2;
 }

@@ -23,8 +23,6 @@ import static com.eku.EKU.utils.RelativeTimeConverter.convertToRelativeTime;
 public class InfoBoardService {
     public final InfoBoardRepository infoBoardRepository;
 
-
-
     public InfoBoardService(InfoBoardRepository infoBoardRepository) {
         this.infoBoardRepository = infoBoardRepository;
     }

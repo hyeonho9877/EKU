@@ -6,15 +6,20 @@ import com.eku.EKU.exceptions.NoSuchBoardException;
 import com.eku.EKU.exceptions.NoSuchStudentException;
 import com.eku.EKU.form.*;
 import com.eku.EKU.service.*;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -159,6 +164,7 @@ public class BoardController {
     @PostMapping("/board/info/delete")
     public ResponseEntity<?> deleteBoard(@RequestBody InfoBoardForm form){
         try {
+            fileService.deleteFile(form.getId());
             infoBoardService.deleteBoard(form.getId());
             return ResponseEntity.ok(form.getId());
         } catch(NoSuchElementException exception){
@@ -192,7 +198,7 @@ public class BoardController {
             InfoBoardResponse board = new InfoBoardResponse(infoBoardService.loadBoard(form));
             List<InfoBoardCommentResponse> commentList = infoBoardCommentService.commentList(form.getId());
             board.setCommentList(commentList);
-            board.setImageList(fileService.imageList(form.getId()));
+            board.setImageList(fileService.imageURL(form.getId()));
             return ResponseEntity.ok(board);
         }catch (EmptyResultDataAccessException | NoSuchElementException exception){
             exception.printStackTrace();
@@ -331,13 +337,42 @@ public class BoardController {
      * @return
      */
     @PostMapping("/file/upload")
-    public ResponseEntity<?> fileUpload(@RequestParam(value = "image", required = false)List<MultipartFile> files, @RequestParam(value = "id")Long id){
+    public ResponseEntity<?> fileUpload(@RequestParam(value = "image")List<MultipartFile> files, @RequestParam(value = "id")Long id){
         try{
             for(MultipartFile i : files)
                 fileService.fileUpload(i, id);
             return ResponseEntity.ok("success");
         }catch (IOException | IllegalArgumentException | NoSuchElementException e){
             return ResponseEntity.badRequest().body("fail");
+        }
+    }
+
+    /**
+     * 이미지 파일의 url
+     * @param id
+     * @param imageNo
+     * @return
+     */
+    @GetMapping ("/board/info/image")
+    public ResponseEntity<?> imageTest(@RequestParam(value = "id")Long id, @RequestParam(value = "imageNo")int imageNo){
+        try {
+            List<String> fileName = fileService.imageList(id);
+            Resource resource = new FileSystemResource(fileName.get(0));
+            if(!resource.exists()){
+                return ResponseEntity.badRequest().body("file is not exist"); // 리턴 결과 반환 404
+            }
+            HttpHeaders header = new HttpHeaders();
+            Path filePath = null;
+            try {
+                filePath = Paths.get(fileName.get(imageNo));
+                header.add("Content-Type", Files.probeContentType(filePath));
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
+        }catch (IOException e){
+            return ResponseEntity.badRequest().body("file error");
         }
     }
 
