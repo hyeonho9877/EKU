@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.kyonggi.eku.view.signIn.ActivitySignIn;
+import com.kyonggi.eku.utils.UserInformation;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,7 +45,7 @@ public class WriteFreeCommunity extends AppCompatActivity implements View.OnClic
 
     String writer_id    = "201713924";
     String department   = "소프트웨어공학과";
-
+    UserInformation userInformation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,10 @@ public class WriteFreeCommunity extends AppCompatActivity implements View.OnClic
 
         btn_save.setOnClickListener(this::onClick);
         btn_cancle.setOnClickListener(this::onClick);
+
+        userInformation = new UserInformation();
+        writer_id = userInformation.fromPhoneStudentNo(getApplicationContext());
+        department = userInformation.fromPhoneDepartment(getApplicationContext());
 
     }
 

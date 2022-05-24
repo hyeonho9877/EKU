@@ -18,8 +18,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.kyonggi.eku.CommentReloadTool;
 import com.kyonggi.eku.FreeCommunityCommentItem;
 import com.kyonggi.eku.R;
+import com.kyonggi.eku.utils.UserInformation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,13 +36,18 @@ public class FreeCommunityCommentAdapter extends BaseAdapter {
     private final int DELETE_MODE   = 1;
     private ArrayList<FreeCommunityCommentItem> arrayList;
     private Context context;
+    private CommentReloadTool commentReloadTool;
+    private UserInformation userInformation;
+    private String id_text;
+    String articleId;
 
 
-    public FreeCommunityCommentAdapter(ArrayList<FreeCommunityCommentItem> arrayList){
+    public FreeCommunityCommentAdapter(ArrayList<FreeCommunityCommentItem> arrayList, CommentReloadTool commentReloadTool, String articleId){
         this.arrayList = arrayList;
+        this.commentReloadTool = commentReloadTool;
+        userInformation = new UserInformation();
+        this.articleId = articleId;
     }
-
-
 
     @Override
     public int getCount() {
@@ -60,6 +67,7 @@ public class FreeCommunityCommentAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         context = viewGroup.getContext();
+        id_text = userInformation.fromPhoneStudentNo(context);
         FreeCommunityCommentItem freeCommunityCommentItem = arrayList.get(i);
 
         if (view == null){
@@ -87,6 +95,11 @@ public class FreeCommunityCommentAdapter extends BaseAdapter {
         tv_time.setText(time);
         tv_content.setText(comment);
 
+        if(!id_text.equals(writer)){
+            btn_edit.setVisibility(View.GONE);
+            btn_delete.setVisibility(View.GONE);
+        }
+
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,6 +120,7 @@ public class FreeCommunityCommentAdapter extends BaseAdapter {
                 arrayList.remove(i);
                 request(id,null,DELETE_MODE);
                 notifyDataSetChanged();
+                commentReloadTool.reload();
             }
         });
 
@@ -157,6 +171,7 @@ public class FreeCommunityCommentAdapter extends BaseAdapter {
         }else if(mode == DELETE_MODE){
             try{
                 jsonBodyObj.put("commentId",Integer.parseInt(id));
+                jsonBodyObj.put("articleId",Integer.parseInt(articleId));
                 url ="https://www.eku.kro.kr/comment/free/delete";
             }catch (JSONException e){
                 e.printStackTrace();
