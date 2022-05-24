@@ -46,7 +46,7 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/Lecture_Main_Swipe"
             android:layout_width="366dp"
-            android:layout_height="550dp"
+            android:layout_height="450dp"
             android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.488"
