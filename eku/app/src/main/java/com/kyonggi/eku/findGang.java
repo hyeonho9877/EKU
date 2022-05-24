@@ -1,7 +1,9 @@
 package com.kyonggi.eku;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.minew.beacon.BeaconValueIndex;
 import com.minew.beacon.BluetoothState;
@@ -44,6 +47,8 @@ public class findGang extends AppCompatActivity {
         permissionCheck();
         initManager();
         initListener();
+    
+
         mMinewBeaconManager.startScan();
         Button b = findViewById(R.id.skipButton);
         b.setOnClickListener(new View.OnClickListener() {
