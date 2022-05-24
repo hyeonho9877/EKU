@@ -58,9 +58,9 @@ import java.util.Map;
 public class MainBoard extends AppCompatActivity {
 
     public static final int Minorcheck = 61686;
-    String[] showBuilding = {"6강의동", "7강의동", "8강의동", "9강의동", "제2공학관", "종합강의동"};
-    int[] minor = {61618, 61632, 61686, 61511, 61633, 61524};
-    int buildingSelected = 6;
+    String[] showBuilding = {"6강의동", "7강의동", "8강의동", "제2공학관", "종합강의동"};
+    int[] minor = {61618, 61632, 61686, 61633, 61524};
+    int buildingSelected = 5;
     int[] building = {6, 7, 8, 9, 0};
     AlertDialog buildingSelectDialog;
     long backKeyPressedTime;
@@ -70,6 +70,10 @@ public class MainBoard extends AppCompatActivity {
     MainItem mainitem;
     private String buildingNumber;
     int now_building = 8;
+    String name;
+    GridView gridView;
+    int paramHeight;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +81,8 @@ public class MainBoard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_board);
         buildingNumber = String.valueOf(now_building);
+        gridView = (GridView) findViewById(R.id.board_Memo);
+        paramHeight = gridView.getLayoutParams().height;
 /*
         if (savedInstanceState == null) {
             MapFragment mapFragment = new MapFragment();
@@ -157,11 +163,10 @@ public class MainBoard extends AppCompatActivity {
         BuildingButton = (TextView) findViewById(R.id.go_Donan);
         BuildingButton.setText("불러오는중");
         Intent intent = getIntent();
-        String name;
         try {
             name = intent.getExtras().getString("GANG");
         } catch (Exception e) {
-            name = "8강의동";
+            name = "EKU";
         }
         BuildingButton.setText(name);
         BuildingButton.setOnClickListener(new Button.OnClickListener() {
@@ -181,60 +186,27 @@ public class MainBoard extends AppCompatActivity {
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        name = showBuilding[buildingSelected];
                         BuildingButton.setText(showBuilding[buildingSelected]);
+                        ViewMemo(minor[buildingSelected]);
                     }
                 })
                 .setNegativeButton("취소", null)
                 .create();
 
 
-        GridView gridView = (GridView) findViewById(R.id.board_Memo);
-        gAdapter = new GridListAdapter();
-
-        Handler handler = new Handler(Looper.getMainLooper()) {
-            public void handleMessage(@NonNull Message msg) {
-                Log.i("a", String.valueOf(msg.what));
-                switch (msg.what) {
-                    case 200:
-                        String responseResult = (String) msg.obj;
-                        JSONArray BoardArray = null;
-                        try {
-                            BoardArray = new JSONArray(responseResult);
-                        } catch (JSONException jsonException) {
-                            jsonException.printStackTrace();
-                        }
-                        int length = BoardArray.length();
-                        for (int i = 0; i < length; i++) {
-                            try {
-                                JSONObject BoardObject = BoardArray.getJSONObject(i);
-                                int minor = BoardObject.getInt("minor");
-                                if (minor == Minorcheck) {
-                                    String content = BoardObject.getString("content");
-                                    String time = BoardObject.getString("writtenTime");
-                                    gAdapter.addItem(new ListItem(content, time));
-                                    gridView.setAdapter(gAdapter);
-                                }
-                            } catch (JSONException jsonException) {
-                                jsonException.printStackTrace();
-                            }
-                        }
-                        ViewGroup.LayoutParams params = gridView.getLayoutParams();
-                        params.height = params.height * ((length + 1) / 2);
-                        gridView.setLayoutParams(params);
-
-
-                }
+        if (name.equals("EKU")){
+            GridView gridView = (GridView) findViewById(R.id.board_Memo);
+            gAdapter = new GridListAdapter();
+            gAdapter.addItem(new ListItem("기본 메시지입니다", "EKU"));
+            gAdapter.addItem(new ListItem("비콘을 연결하면 강의동 메시지를 확인하실 수 있습니다", "EKU"));
+            gridView.setAdapter(gAdapter);
+        }
+        else {
+            for (int i=0;i< showBuilding.length;i++){
+                if (name.equals(showBuilding[i]))
+                    ViewMemo(minor[i]);
             }
-        };
-
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("minor", "61686");
-
-
-        try {
-            SendTool.requestForPost(SendTool.POST_PARAM, "/doodle/read", params, handler);
-        } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
         }
 
         sc = (LinearLayout) findViewById(R.id.board_linear);
@@ -269,6 +241,56 @@ public class MainBoard extends AppCompatActivity {
             }
         });
     }
+
+    public void ViewMemo(int checkMinor){
+        GridView gridView = (GridView) findViewById(R.id.board_Memo);
+        gridView.setAdapter(null);
+        gAdapter = new GridListAdapter();
+        Handler handler = new Handler(Looper.getMainLooper()) {
+            public void handleMessage(@NonNull Message msg) {
+                Log.i("a", String.valueOf(msg.what));
+                switch (msg.what) {
+                    case 200:
+                        String responseResult = (String) msg.obj;
+                        JSONArray BoardArray = null;
+                        try {
+                            BoardArray = new JSONArray(responseResult);
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
+                        int length = BoardArray.length();
+                        for (int i = 0; i < length; i++) {
+                            try {
+                                JSONObject BoardObject = BoardArray.getJSONObject(i);
+                                int minor = BoardObject.getInt("minor");
+                                if (minor == checkMinor) {
+                                    String content = BoardObject.getString("content");
+                                    String time = BoardObject.getString("writtenTime");
+                                    gAdapter.addItem(new ListItem(content, time));
+                                    gridView.setAdapter(gAdapter);
+                                }
+                            } catch (JSONException jsonException) {
+                                jsonException.printStackTrace();
+                            }
+                        }
+                        ViewGroup.LayoutParams params = gridView.getLayoutParams();
+                        params.height = paramHeight * ((length + 1) / 2);
+                        gridView.setLayoutParams(params);
+                }
+            }
+        };
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("minor", String.valueOf(checkMinor));
+
+
+        try {
+            SendTool.requestForPost(SendTool.POST_PARAM, "/doodle/read", params, handler);
+        } catch (IOException | NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void PreviewCom(LinearLayout sc) {
         ComminityItem[] listcom = new ComminityItem[3];
