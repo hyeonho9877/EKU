@@ -1,5 +1,8 @@
 package com.kyonggi.eku.view.signUp.fragment;
 
+import static com.kyonggi.eku.presenter.signUp.SignUpInfoPresenter.DEPT_NOT_FOUND;
+import static com.kyonggi.eku.presenter.signUp.SignUpInfoPresenter.NAME_NOT_FOUND;
+import static com.kyonggi.eku.presenter.signUp.SignUpInfoPresenter.NO_NOT_FOUND;
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.ALL_FINE;
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.EMAIL_NOT_VALID;
 import static com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment.NAME_NOT_VALID;
@@ -26,17 +29,18 @@ import com.kyonggi.eku.model.OCRForm;
 import com.kyonggi.eku.model.SignUpForm;
 import com.kyonggi.eku.utils.callbacks.OnConfirmedListener;
 import com.kyonggi.eku.utils.exceptions.NoExtraDataException;
+import com.kyonggi.eku.view.signUp.OnDeptSelectedListener;
 import com.kyonggi.eku.view.signUp.activity.ActivityInputSignUpInfo;
+import com.kyonggi.eku.view.signUp.dialog.DialogDepartmentPicker;
 import com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment;
 
 import java.util.regex.Pattern;
 
-public class FragmentSignupInfo extends Fragment {
+public class FragmentSignupInfo extends Fragment implements OnDeptSelectedListener {
     private static final String TAG = "FragmentSignupInfo";
     private FargmentSignupInfoBinding binding;
     private OnConfirmedListener listener;
     private ActivityInputSignUpInfo activity;
-
 
     @Nullable
     @Override
@@ -98,7 +102,7 @@ public class FragmentSignupInfo extends Fragment {
                     break;
                 case ALL_FINE:
                     String name = binding.editName.getText().toString();
-                    String department = binding.editDept.getText().toString();
+                    String department = binding.textDeptShow.getText().toString();
                     Long studNo = Long.parseLong(binding.editStudNo.getText().toString());
                     String email = binding.editEmail.getText().toString();
                     String password = binding.editPassword.getText().toString();
@@ -218,11 +222,28 @@ public class FragmentSignupInfo extends Fragment {
 
             }
         });
+
+        binding.buttonSelectDept.setOnClickListener(v->{
+            selectDept();
+        });
     }
 
     private void autoFillElements(OCRForm form) {
-        binding.editStudNo.setText(form.getStudNo());
-        binding.editDept.setText(form.getDepartment());
-        binding.editName.setText(form.getName());
+        if (form.getStudNo().equals(NO_NOT_FOUND)) binding.editStudNo.setHint(NO_NOT_FOUND);
+        else binding.editStudNo.setText(form.getStudNo());
+        if (form.getDepartment().equals(DEPT_NOT_FOUND)) binding.textDeptShow.setHint(DEPT_NOT_FOUND);
+        else binding.textDeptShow.setText(form.getDepartment());
+        if(form.getName().equals(NAME_NOT_FOUND)) binding.editName.setHint(NAME_NOT_FOUND);
+        else binding.editName.setText(form.getName());
+    }
+
+    public void selectDept(){
+        DialogDepartmentPicker picker = new DialogDepartmentPicker(activity.getDeptList(), this);
+        picker.show(getActivity().getSupportFragmentManager(), "picker");
+    }
+
+    @Override
+    public void onSelected(String item) {
+        binding.textDeptShow.setText(item);
     }
 }

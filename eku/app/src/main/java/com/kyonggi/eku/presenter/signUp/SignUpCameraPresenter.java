@@ -10,8 +10,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
@@ -29,8 +27,6 @@ import androidx.core.content.ContextCompat;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.kyonggi.eku.R;
 import com.kyonggi.eku.databinding.ActivitySignupPhotoBinding;
-import com.kyonggi.eku.model.OCRForm;
-import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.view.signUp.activity.ActivityGallery;
 import com.kyonggi.eku.view.signUp.activity.ActivityInputSignUpInfo;
 import com.kyonggi.eku.view.signUp.activity.ActivitySignUpCamera;
@@ -122,40 +118,6 @@ public class SignUpCameraPresenter {
                     }
                 }
         );
-    }
-
-    public Handler getHandler() {
-        if (handler == null) {
-            this.handler = new Handler(Looper.getMainLooper()) {
-                public void handleMessage(@NonNull Message msg) {
-                    int code = msg.what;
-                    String response = (String) msg.obj;
-                    Log.d(TAG, "handleMessage: " + code);
-                    switch (code) {
-                        case SendTool.CONNECTION_FAILED:
-                            Toast.makeText(context, "connection failed", Toast.LENGTH_LONG).show();
-                            break;
-                        case SendTool.HTTP_OK:
-                            OCRForm OCRForm = SendTool.parseToSingleEntity(response, OCRForm.class);
-                            Intent intent = new Intent(context, ActivityInputSignUpInfo.class);
-                            intent.putExtra("studentInfo", OCRForm);
-                            activity.startActivity(intent);
-                            activity.finish();
-                            Log.d(TAG, "handleMessage: " + OCRForm);
-                            break;
-                        case SendTool.HTTP_BAD_REQUEST:
-                            Toast.makeText(context, "bad request", Toast.LENGTH_LONG).show();
-                            break;
-                        case SendTool.HTTP_INTERNAL_SERVER_ERROR:
-                            Toast.makeText(context, "server error", Toast.LENGTH_LONG).show();
-                        default:
-                            Log.e(TAG, "handleMessage: Unknown Error");
-                            break;
-                    }
-                }
-            };
-        }
-        return handler;
     }
 
     public void skipPhoto(){

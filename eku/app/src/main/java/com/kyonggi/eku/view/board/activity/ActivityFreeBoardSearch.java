@@ -4,6 +4,7 @@ import static com.kyonggi.eku.view.board.activity.ActivityBoard.INIT;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -15,18 +16,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kyonggi.eku.databinding.ActivityBoardSearchBinding;
-import com.kyonggi.eku.model.BoardPreview;
 import com.kyonggi.eku.model.FreeBoardPreview;
 import com.kyonggi.eku.model.InfoBoardPreview;
 import com.kyonggi.eku.presenter.board.BoardPresenter;
 import com.kyonggi.eku.utils.adapters.FreeBoardAdapter;
-import com.kyonggi.eku.utils.adapters.InfoBoardAdapter;
 import com.kyonggi.eku.utils.callbacks.OnResponseListeners;
 
 import java.util.List;
 
 public class ActivityFreeBoardSearch extends AppCompatActivity implements OnResponseListeners {
-    private static final String TAG = "ActivityInfoBoardSearch";
+    private static final String TAG = "ActivityFreeBoardSearch";
     private ActivityBoardSearchBinding binding;
     private BoardPresenter presenter;
     private FreeBoardAdapter adapter;
@@ -49,43 +48,26 @@ public class ActivityFreeBoardSearch extends AppCompatActivity implements OnResp
     private void initListeners() {
         binding.editTextSearch.setOnKeyListener((view, i, keyEvent) -> {
             keyword = binding.editTextSearch.getText().toString();
-            if (keyword.length() != 0 && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+            if (keyword.length() != 0 && i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                Log.d(TAG, "initListeners: searching..");
                 binding.animBoardSearchLoading.setVisibility(View.VISIBLE);
                 presenter.searchFreeBoard(keyword);
             }
             return false;
         });
-
-        scrollListener = new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                int itemCount = recyclerView.getAdapter().getItemCount();
-                if (!isLoading) {
-                    List<FreeBoardPreview> currentList = adapter.getCurrentList();
-                    if (layoutManager != null && layoutManager.findLastCompletelyVisibleItemPosition() == currentList.size() - 1) {
-                        currentList.add(null);
-                        adapter.notifyItemInserted(currentList.size() - 1);
-                        presenter.loadMoreInfoArticles(currentList.get(itemCount - 1).getId(), buildingNumber, keyword);
-                        isLoading = true;
-                    }
-                }
-            }
-        };
-
-        binding.recyclerViewSearch.addOnScrollListener(scrollListener);
     }
 
     @Override
-    public void onSuccess(List<? extends BoardPreview> articles, String purpose) {
+    public void onInfoBoardSuccess(List<InfoBoardPreview> articles, String purpose) {
+        Toast.makeText(this, "Something went wrong..", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Override
+    public void onFreeBoardSuccess(List<FreeBoardPreview> articles, String purpose) {
         if (purpose.equals(INIT)){
-            adapter = new FreeBoardAdapter(presenter.convertToFreeBoard(articles), this);
+            if(articles.size() >= 20) addScrollListeners();
+            adapter = new FreeBoardAdapter(articles, this);
             binding.animBoardSearchLoading.setVisibility(View.INVISIBLE);
             binding.recyclerViewSearch.setVisibility(View.VISIBLE);
             binding.recyclerViewSearch.setAdapter(adapter);
@@ -96,7 +78,7 @@ public class ActivityFreeBoardSearch extends AppCompatActivity implements OnResp
             adapter.notifyItemRemoved(currentList.size()-1);
             isLoading = false;
             new Handler().postDelayed(()->{
-                if (adapter.insertFromTail(presenter.convertToFreeBoard(articles))) {
+                if (adapter.insertFromTail(articles)) {
                     adapter.notifyItemRangeInserted(adapter.getCurrentList().size(), articles.size());
                     binding.recyclerViewSearch.removeOnScrollListener(scrollListener);
                 } else {
@@ -109,5 +91,33 @@ public class ActivityFreeBoardSearch extends AppCompatActivity implements OnResp
     @Override
     public void onFailed() {
         Toast.makeText(this, "게시글 검색에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+    }
+
+    private void addScrollListeners(){
+        scrollListener = new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                Log.d(TAG, "onScrolled: scrolling");
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int itemCount = recyclerView.getAdapter().getItemCount();
+                if (!isLoading) {
+                    List<FreeBoardPreview> currentList = adapter.getCurrentList();
+                    if (layoutManager != null && layoutManager.findLastCompletelyVisibleItemPosition() == currentList.size() - 1) {
+                        currentList.add(null);
+                        binding.recyclerViewSearch.post(() -> adapter.notifyItemInserted(currentList.size() - 1));
+                        presenter.loadMoreFreeArticles(currentList.get(itemCount - 1).getId(), keyword);
+                        isLoading = true;
+                    }
+                }
+            }
+        };
+
+        binding.recyclerViewSearch.addOnScrollListener(scrollListener);
     }
 }

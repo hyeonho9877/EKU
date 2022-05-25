@@ -1,6 +1,7 @@
 package com.kyonggi.eku.presenter.signUp;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -28,11 +29,11 @@ public class GalleryPresenter {
         this.activity = activity;
     }
 
-    public void confirm(Uri uri, ContentResolver contentResolver) {
-        SendTool.requestForMultiPart("/signUp/ocr", uri, contentResolver, getHandler());
+    public void confirm(Uri uri, ContentResolver contentResolver, ProgressDialog dialog) {
+        SendTool.requestForMultiPart("/signUp/ocr", uri, contentResolver, getHandler(dialog));
     }
 
-    private Handler getHandler() {
+    private Handler getHandler(ProgressDialog dialog) {
         if (handler == null) {
             this.handler = new Handler(Looper.getMainLooper()) {
                 public void handleMessage(@NonNull Message msg) {
@@ -44,6 +45,7 @@ public class GalleryPresenter {
                             Toast.makeText(context, "connection failed", Toast.LENGTH_LONG).show();
                             break;
                         case SendTool.HTTP_OK:
+                            dialog.dismiss();
                             OCRForm OCRForm = SendTool.parseToSingleEntity(response, OCRForm.class);
                             Intent intent = new Intent(context, ActivityInputSignUpInfo.class);
                             intent.putExtra("studentInfo", OCRForm);

@@ -76,10 +76,7 @@
         <activity
             android:name=".TodoActivity"
             android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".MainBoard"
@@ -110,20 +107,21 @@
         <activity
             android:name=".findGang"
             android:exported="true">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".LectureMain"
-            android:exported="false" />
-        <activity
-            android:name=".LectureWrite"
             android:exported="false" />
         <activity
             android:name=".LectureDetail"
             android:exported="false" />
         <activity
             android:name=".ScheduleTable"
-            android:exported="true" />
+            android:exported="true" >
+        </activity>
 
         <receiver
             android:name=".BootReceiver"
@@ -136,7 +134,7 @@
         <receiver android:name=".AlarmReceiver"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBpr5Cq5Dbo9YAu5qHaDyaEoC7CTIH4rns" />
+            android:value="" />
     </application>
 
 </manifest>

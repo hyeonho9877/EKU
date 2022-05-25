@@ -27,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.kyonggi.eku.utils.UserInformation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,9 +64,12 @@ public class DetailAnnounce extends AppCompatActivity {
 
     Toolbar toolbar;
 
+    String id_text;
     String board_id;
     String writer_id;
     String building;
+
+    UserInformation userInformation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,9 @@ public class DetailAnnounce extends AppCompatActivity {
 
         Intent intent = getIntent();
         board_id = intent.getStringExtra("id");
+
+        userInformation = new UserInformation();
+        id_text = userInformation.fromPhoneStudentNo(getApplicationContext());
 
         toolbar     = (Toolbar)  findViewById(R.id.detail_toolbar);
         edit_layout = (LinearLayout) findViewById(R.id.detail_button_layout);
@@ -136,6 +143,7 @@ public class DetailAnnounce extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(id_text.equals(writer_id)){
         switch (item.getItemId()){
             case R.id.detail_Free_menu_modify:
                 Toast.makeText(getApplicationContext(),"수정",Toast.LENGTH_LONG).show();
@@ -161,6 +169,10 @@ public class DetailAnnounce extends AppCompatActivity {
             default:
 
                 return super.onOptionsItemSelected(item);
+        }
+    } else{
+            dialog_not_access();
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -347,4 +359,18 @@ public class DetailAnnounce extends AppCompatActivity {
                 });
         builder.show();
     }
+
+    public void dialog_not_access(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("작성자가 아닙니다.");
+        builder.setMessage("게시글을 삭제 및 수정 하실수 없습니다.");
+        builder.setPositiveButton("예",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.show();
+    }
+
 }

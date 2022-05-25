@@ -171,7 +171,7 @@ public class DonanBagGi extends AppCompatActivity {
                     } catch (Exception e) {
                         iRssi = 0;
                     }
-                    if (temp.equals("E2C56DB5-DFFB-48D2-B060-D0F5A71096E0") && iRssi < -80) {
+                    if (temp.equals("E2C56DB5-DFFB-48D2-B060-D0F5A71096E0") && iRssi < -90) {
                         if (stealing == true)
                         {
                         }
