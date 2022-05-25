@@ -70,6 +70,8 @@ public class BoardPresenter {
                             break;
                     }
                 } else {
+                    Log.d(TAG, "handleMessage: "+code);
+                    Log.d(TAG, "handleMessage: "+response);
                     listener.onFailed();
                 }
             }
