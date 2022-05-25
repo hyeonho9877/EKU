@@ -33,7 +33,6 @@ public class FragmentFreeBoard extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentFreeBoardBinding.inflate(inflater, container, false);
-
         activity = (ActivityBoard) getActivity();
 
         initListeners();
@@ -44,7 +43,7 @@ public class FragmentFreeBoard extends Fragment {
     private void initListeners() {
         binding.swipeLayoutFreeBoard.setOnRefreshListener(() -> {
             binding.swipeLayoutFreeBoard.setRefreshing(true);
-            activity.updateFreeBoard(adapter.getCurrentList().get(0).getId());
+            activity.getFreeBoardArticles();
             Log.d(TAG, "initListeners: " + adapter.getCurrentList().get(0).getId());
             binding.swipeLayoutFreeBoard.setRefreshing(false);
         });
@@ -58,6 +57,9 @@ public class FragmentFreeBoard extends Fragment {
 
     public void listArticles(List<FreeBoardPreview> articles) {
         if(articles.size() >= 20) addScrollListener();
+        else if(articles.size()==0) binding.textFreeBoardNoArticles.setVisibility(View.VISIBLE);
+        else binding.textFreeBoardNoArticles.setVisibility(View.INVISIBLE);
+
         adapter = new FreeBoardAdapter(articles, getContext());
         adapter.notifyItemRangeInserted(0, articles.size());
         binding.recyclerViewFreeBard.setAdapter(adapter);

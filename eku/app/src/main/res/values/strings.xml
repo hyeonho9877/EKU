@@ -46,6 +46,7 @@
     <string name="kyonggi_mail">\@ kyonggi.ac.kr</string>
     <string name="email_error_dialog">이메일을 확인해주세요.</string>
     <string name="password_guide_right">사용할 수 있는 비밀번호입니다.</string>
-    <string name="search_hint">글 제목, 내용을 입력해주세요</string>
+    <string name="search_hint_info">글 제목, 내용 혹은 학과를 입력해주세요</string>
     <string name="select">선택</string>
+    <string name="no_articles">작성된 글이 없습니다.</string>
 </resources>

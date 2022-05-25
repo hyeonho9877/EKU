@@ -115,14 +115,14 @@ public class MainBoard extends AppCompatActivity {
                     case R.id.Announce:
                         intent = new Intent(getApplicationContext(), ActivityBoard.class);
                         intent.putExtra("mode", BOARD_INFO);
-                        intent.putExtra("buildingNumber", buildingNumber);
+                        intent.putExtra("buildingNumber", name);
                         drawerLayout.closeDrawer(GravityCompat.START);
                         new Handler().postDelayed(() -> startActivity(intent), 260);
                         break;
                     case R.id.Free:
                         intent = new Intent(getApplicationContext(), ActivityBoard.class);
                         intent.putExtra("mode", BOARD_FREE);
-                        intent.putExtra("buildingNumber", buildingNumber);
+                        intent.putExtra("buildingNumber", name);
                         drawerLayout.closeDrawer(GravityCompat.START);
                         new Handler().postDelayed(() -> startActivity(intent), 260);
                         break;

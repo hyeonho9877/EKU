@@ -156,9 +156,6 @@ public class findGang extends AppCompatActivity {
                     if(temp.equals("61618")) {
                         intent.putExtra("GANG","6강의동");
                     }
-                    if(temp.equals("61511")) {
-                        intent.putExtra("GANG","5강의동");
-                    }
                     mMinewBeaconManager.stopScan();
                     startActivity(intent);
                     finish();
