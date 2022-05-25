@@ -38,7 +38,6 @@ public class FreeBoardService {
         FreeBoard board = freeBoardRepository.findById(form.getId()).orElseThrow();
         board.setView(board.getView() + 1);
         freeBoardRepository.save(board);
-
         return board;
     }
 
@@ -149,6 +148,11 @@ public class FreeBoardService {
 
     public List<FreeBoardListResponse> searchMoreBoard(String keyword, long id) {
         List<FreeBoard> result = freeBoardRepository.findByKeywordAndIdLessThanOrderByTimeDesc(keyword, id, Pageable.ofSize(20));
+        return result.stream().map(e-> new FreeBoardListResponse(e, e.getComments(), studentNo(e.getStudent().getStudNo())+" "+e.getDepartment())).toList();
+    }
+
+    public List<FreeBoardListResponse> previewFreeBoard() {
+        List<FreeBoard> result = freeBoardRepository.findByOrderByTimeDesc(Pageable.ofSize(3));
         return result.stream().map(e-> new FreeBoardListResponse(e, e.getComments(), studentNo(e.getStudent().getStudNo())+" "+e.getDepartment())).toList();
     }
 }

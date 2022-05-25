@@ -34,6 +34,8 @@ public class InfoBoardService {
      */
     public InfoBoard loadBoard(InfoBoardForm form)throws IllegalArgumentException, NoSuchElementException {
         InfoBoard board = infoBoardRepository.findById(form.getId()).get();
+        board.setView(board.getView() + 1);
+        infoBoardRepository.save(board);
         return board;
     }
     /**
@@ -137,6 +139,11 @@ public class InfoBoardService {
 
     public List<BoardListResponse> searchMoreBoard(int building, String keyword, long id) {
         List<InfoBoard> result = infoBoardRepository.findByBuildingAndKeywordAndIdLessThanOrderByWrittenTimeDesc(building, keyword, id, Pageable.ofSize(20));
+        return result.stream().map(BoardListResponse::new).toList();
+    }
+
+    public List<BoardListResponse> previewInfoBoard(int building) {
+        Page<InfoBoard> result = infoBoardRepository.findAllByBuildingOrderByWrittenTime(building, Pageable.ofSize(3));
         return result.stream().map(BoardListResponse::new).toList();
     }
 }
