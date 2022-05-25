@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/layoutconstraint"
     tools:context=".ScheduleTable">
 
 
@@ -12,20 +13,168 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="12dp"
-        android:gravity="center_vertical"
+        android:fontFamily="@font/noto_sans_kr_bold"
+        android:gravity="start|center_vertical"
         android:paddingLeft="25dp"
         android:text="시간표"
         android:textColor="#2A5189"
-        android:textSize="25dp"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="76dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toTopOf="@id/layoutconstraint"></View>
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="126dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toTopOf="@id/layoutconstraint"
+        tools:layout_editor_absoluteX="0dp"></View>
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="176dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toTopOf="@id/layoutconstraint"
+        tools:layout_editor_absoluteX="0dp"></View>
+
+    <View
+        android:id="@+id/view6"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="226dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toTopOf="@id/layoutconstraint"></View>
+
+    <View
+        android:id="@+id/view7"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="276dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toTopOf="@id/layoutconstraint"></View>
+
+    <View
+        android:id="@+id/view8"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="326dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toTopOf="@id/layoutconstraint"></View>
+
+    <View
+        android:id="@+id/view9"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="376dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toTopOf="@id/layoutconstraint"></View>
+
+    <View
+        android:id="@+id/view10"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="426dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toTopOf="@id/layoutconstraint"></View>
+
+    <View
+        android:id="@+id/view11"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="476dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toTopOf="@id/layoutconstraint"></View>
+
+    <View
+        android:id="@+id/view12"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="526dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toTopOf="@id/layoutconstraint"></View>
+
+    <View
+        android:id="@+id/view13"
+        android:layout_width="1dp"
+        android:layout_height="450dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="76dp"
+        android:background="@color/black"
+        app:layout_constraintStart_toStartOf="@id/layoutconstraint"
+        app:layout_constraintTop_toTopOf="@id/layoutconstraint"></View>
+
+    <View
+        android:id="@+id/view14"
+        android:layout_width="1dp"
+        android:layout_height="450dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="76dp"
+        android:background="@color/black"
+        app:layout_constraintStart_toStartOf="@id/layoutconstraint"
+        app:layout_constraintTop_toTopOf="@id/layoutconstraint"></View>
+
+    <View
+        android:id="@+id/view15"
+        android:layout_width="1dp"
+        android:layout_height="450dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="204dp"
+        android:layout_marginTop="76dp"
+        android:background="@color/black"
+        app:layout_constraintStart_toStartOf="@id/layoutconstraint"
+        app:layout_constraintTop_toTopOf="@id/layoutconstraint"></View>
+
+    <View
+        android:id="@+id/view16"
+        android:layout_width="1dp"
+        android:layout_height="450dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="272dp"
+        android:layout_marginTop="76dp"
+        android:background="@color/black"
+        app:layout_constraintStart_toStartOf="@id/layoutconstraint"
+        app:layout_constraintTop_toTopOf="@id/layoutconstraint"></View>
+
+    <View
+        android:id="@+id/view17"
+        android:layout_width="1dp"
+        android:layout_height="450dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="341dp"
+        android:layout_marginTop="76dp"
+        android:background="@color/black"
+        app:layout_constraintStart_toStartOf="@id/layoutconstraint"
+        app:layout_constraintTop_toTopOf="@id/layoutconstraint"></View>
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="match_parent"
         android:layout_height="450dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="17dp"
         android:backgroundTint="#00FFFFFF"
         app:alignmentMode="alignMargins"
         app:columnCount="6"
@@ -43,36 +192,42 @@
         <TextView
             android:layout_width="68dp"
             android:layout_height="50dp"
+            android:fontFamily="@font/noto_sans_kr_bold"
             android:gravity="center"
             android:text="월" />
 
         <TextView
             android:layout_width="68dp"
             android:layout_height="50dp"
+            android:fontFamily="@font/noto_sans_kr_bold"
             android:gravity="center"
             android:text="화" />
 
         <TextView
             android:layout_width="68dp"
             android:layout_height="50dp"
+            android:fontFamily="@font/noto_sans_kr_bold"
             android:gravity="center"
             android:text="수" />
 
         <TextView
             android:layout_width="68dp"
             android:layout_height="50dp"
+            android:fontFamily="@font/noto_sans_kr_bold"
             android:gravity="center"
             android:text="목" />
 
         <TextView
             android:layout_width="68dp"
             android:layout_height="50dp"
+            android:fontFamily="@font/noto_sans_kr_bold"
             android:gravity="center"
             android:text="금" />
 
         <TextView
             android:layout_width="69dp"
             android:layout_height="50dp"
+            android:fontFamily="@font/noto_sans_kr_bold"
             android:gravity="center"
             android:text="1교시"
             app:layout_column="0"
@@ -81,6 +236,7 @@
         <TextView
             android:layout_width="69dp"
             android:layout_height="50dp"
+            android:fontFamily="@font/noto_sans_kr_bold"
             android:gravity="center"
             android:text="2교시"
             app:layout_column="0"
@@ -89,6 +245,7 @@
         <TextView
             android:layout_width="69dp"
             android:layout_height="50dp"
+            android:fontFamily="@font/noto_sans_kr_bold"
             android:gravity="center"
             android:text="3교시"
             app:layout_column="0"
@@ -97,6 +254,7 @@
         <TextView
             android:layout_width="69dp"
             android:layout_height="50dp"
+            android:fontFamily="@font/noto_sans_kr_bold"
             android:gravity="center"
             android:text="4교시"
             app:layout_column="0"
@@ -105,6 +263,7 @@
         <TextView
             android:layout_width="69dp"
             android:layout_height="50dp"
+            android:fontFamily="@font/noto_sans_kr_bold"
             android:gravity="center"
             android:text="5교시"
             app:layout_column="0"
@@ -113,6 +272,7 @@
         <TextView
             android:layout_width="69dp"
             android:layout_height="50dp"
+            android:fontFamily="@font/noto_sans_kr_bold"
             android:gravity="center"
             android:text="6교시"
             app:layout_column="0"
@@ -121,6 +281,7 @@
         <TextView
             android:layout_width="69dp"
             android:layout_height="50dp"
+            android:fontFamily="@font/noto_sans_kr_bold"
             android:gravity="center"
             android:text="7교시"
             app:layout_column="0"
@@ -129,167 +290,13 @@
         <TextView
             android:layout_width="69dp"
             android:layout_height="50dp"
+            android:fontFamily="@font/noto_sans_kr_bold"
             android:gravity="center"
             android:text="8교시"
             app:layout_column="0"
             app:layout_row="8" />
 
     </androidx.gridlayout.widget.GridLayout>
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="76dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"></View>
-
-    <View
-        android:id="@+id/view10"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="428dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"></View>
-
-    <View
-        android:id="@+id/view6"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="224dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"></View>
-
-    <View
-        android:id="@+id/view4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="124dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"></View>
-
-    <View
-        android:id="@+id/view9"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="376dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"></View>
-
-    <View
-        android:id="@+id/view17"
-        android:layout_width="1dp"
-        android:layout_height="450dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="340dp"
-        android:layout_marginTop="76dp"
-        android:background="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></View>
-
-    <View
-        android:id="@+id/view15"
-        android:layout_width="1dp"
-        android:layout_height="450dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="204dp"
-        android:layout_marginTop="76dp"
-        android:background="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></View>
-
-    <View
-        android:id="@+id/view13"
-        android:layout_width="1dp"
-        android:layout_height="450dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="76dp"
-        android:background="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></View>
-
-    <View
-        android:id="@+id/view7"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="276dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"></View>
-
-    <View
-        android:id="@+id/view5"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="176dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"></View>
-
-    <View
-        android:id="@+id/view14"
-        android:layout_width="1dp"
-        android:layout_height="450dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="136dp"
-        android:layout_marginTop="76dp"
-        android:background="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></View>
-
-    <View
-        android:id="@+id/view12"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="524dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"></View>
-
-    <View
-        android:id="@+id/view16"
-        android:layout_width="1dp"
-        android:layout_height="450dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="272dp"
-        android:layout_marginTop="76dp"
-        android:background="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></View>
-
-    <View
-        android:id="@+id/view8"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="324dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"></View>
-
-    <View
-        android:id="@+id/view11"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="476dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"></View>
 
     <EditText
         android:id="@+id/Schedule_password"
@@ -300,6 +307,7 @@
         android:gravity="center"
         android:hint="시간표 공유 코드"
         android:inputType="number"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gridLayout" />

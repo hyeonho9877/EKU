@@ -1,14 +1,20 @@
 package com.kyonggi.eku;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.minew.beacon.BeaconValueIndex;
 import com.minew.beacon.BluetoothState;
@@ -44,6 +50,7 @@ public class findGang extends AppCompatActivity {
         permissionCheck();
         initManager();
         initListener();
+
         mMinewBeaconManager.startScan();
         Button b = findViewById(R.id.skipButton);
         b.setOnClickListener(new View.OnClickListener() {
@@ -57,13 +64,25 @@ public class findGang extends AppCompatActivity {
 
 
     }
-    private void bluetoothOn(){
+    private void bluetoothOn() {
         BluetoothAdapter ap = BluetoothAdapter.getDefaultAdapter();
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ap == null)
             showToast("bluetooth 를 지원하지 않습니다.");
-        else
-            showToast("bluetooth 를 지원합니다.");
-        ap.enable();
+        if (!ap.isEnabled())
+        {
+            Toast.makeText(getBaseContext(),"블루투스가 꺼져있습니다. 강의동 확인을 위해 블루투스를 켠 후 재실행 바랍니다.",Toast.LENGTH_LONG).show();
+            Intent blueIntent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
+            startActivity(blueIntent);
+            finish();
+        }
+        else if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            Toast.makeText(getBaseContext(),"위치정보가 꺼져있습니다. 강의동 확인을 위해 위치 정보를 켠 후 재실행 바랍니다.",Toast.LENGTH_LONG).show();
+            Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(gpsOptionsIntent);
+            finish();
+        }
+
     }
 
     private void showToast(String s) {
@@ -78,6 +97,14 @@ public class findGang extends AppCompatActivity {
             //권한 요청
             //후에 권한 요청 설명 필요할 꺼 같음
             permission.requestPermission();
+            showToast("EKU는 권한으로 위치정보와 근처기기가 필요합니다." +
+                    "권한부여 후 실행 해 주십시오.");
+            Intent gpsOptionsIntent = new Intent(Settings.ACTION_APPLICATION_SETTINGS);
+            startActivity(gpsOptionsIntent);
+            finish();
+        }
+        else{
+
         }
     }
 
