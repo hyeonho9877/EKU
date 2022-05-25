@@ -38,7 +38,6 @@ public class FreeBoardService {
         FreeBoard board = freeBoardRepository.findById(form.getId()).orElseThrow();
         board.setView(board.getView() + 1);
         freeBoardRepository.save(board);
-
         return board;
     }
 

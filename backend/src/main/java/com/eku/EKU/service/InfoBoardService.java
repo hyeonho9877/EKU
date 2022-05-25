@@ -34,6 +34,8 @@ public class InfoBoardService {
      */
     public InfoBoard loadBoard(InfoBoardForm form)throws IllegalArgumentException, NoSuchElementException {
         InfoBoard board = infoBoardRepository.findById(form.getId()).get();
+        board.setView(board.getView() + 1);
+        infoBoardRepository.save(board);
         return board;
     }
     /**
