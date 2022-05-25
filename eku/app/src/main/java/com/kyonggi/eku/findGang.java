@@ -47,7 +47,7 @@ public class findGang extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_gang);
         bluetoothOn();
-        permissionCheck();
+        //permissionCheck();
         initManager();
         initListener();
 

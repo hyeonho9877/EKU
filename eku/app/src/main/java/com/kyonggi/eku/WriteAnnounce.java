@@ -50,7 +50,7 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
     Button btn_cancle;
 
 
-    String name         = "고지웅";
+    String name = "고지웅";
     String writer_id;
     String department   = "소프트웨어공학과";
 
@@ -86,7 +86,7 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
 
 
     public String getBuilding(){
-        String building = "00000";
+        String building = "0000";
 
         building += building6.isChecked() ? "1" : "0";;
         building += building7.isChecked() ? "1" : "0";;
@@ -128,8 +128,6 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
             String content  = et_content.getText().toString();
 
             jsonBodyObj.put("writerNo", writer_id);
-            jsonBodyObj.put("department", department);
-            jsonBodyObj.put("name", name);
             jsonBodyObj.put("title", title);
             jsonBodyObj.put("content", content);
             jsonBodyObj.put("building",getBuilding());
