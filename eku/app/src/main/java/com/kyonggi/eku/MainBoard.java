@@ -2,6 +2,7 @@ package com.kyonggi.eku;
 
 import static com.kyonggi.eku.view.board.activity.ActivityBoard.BOARD_FREE;
 import static com.kyonggi.eku.view.board.activity.ActivityBoard.BOARD_INFO;
+import static com.kyonggi.eku.view.board.activity.ActivityBoard.INIT;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -293,95 +294,100 @@ public class MainBoard extends AppCompatActivity {
 
 
     public void PreviewCom(LinearLayout sc) {
-        ComminityItem[] listcom = new ComminityItem[3];
-        RequestQueue queue;
-        JSONObject jsonBodyObj;
-        String requestbody;
-        String url;
-        JsonArrayRequest request;
+        /*HashMap<String, Object> request = new HashMap<>();
+        request.put("lectureBuilding", buildingNumber);
+        SendTool.requestForJson("/board/info/lists", request, getHandler(BOARD_INFO, INIT));
+         */
 
-        queue = Volley.newRequestQueue(this);
-        // Body에 담을 JSON Object 생성 및 선언
-        jsonBodyObj = new JSONObject();
-        try {
-            jsonBodyObj.put("page", "0");
-            jsonBodyObj.put("lecture_building", now_building);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        // body String 선언
-        requestbody = String.valueOf(jsonBodyObj.toString());
-
-        url = "https://www.eku.kro.kr/board/info/lists";
-        request = new JsonArrayRequest(Request.Method.POST, url, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        // Request에 대한 reponse 받음
-                        Log.d("---", "---");
-                        Log.w("//===========//", "================================================");
-                        Log.d("", "\n" + "[FREE_COMMUNITY_BOARD > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 응답]");
-                        Log.d("", "\n" + "[" + "응답 전체 - " + String.valueOf(response.toString()) + "]");
-                        Log.w("//===========//", "================================================");
-                        Log.d("---", "---");
-
-                        try {
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject jsonObject = response.getJSONObject(i);
-                                String id = jsonObject.getString("id");
-                                String title = jsonObject.getString("title");
-                                listcom[i] = new ComminityItem(id, title);
-                                if (i == 2)
-                                    break;
-                            }
-                            mainitem = new MainItem(getApplicationContext(), "공지게시판", listcom[0], listcom[1], listcom[2], buildingNumber);
-                            sc.addView(mainitem);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                // Response Error 출력시,
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("---", "---");
-                        Log.e("//===========//", "================================================");
-                        Log.d("", "\n" + "[A_Main > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 실패]");
-                        Log.d("", "\n" + "[" + "에러 코드 - " + String.valueOf(error.toString()) + "]");
-                        Log.e("//===========//", "================================================");
-                        Log.d("---", "---");
-                    }
-                }
-        ) {
-            // Header Request 선언
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
-                return headers;
-            }
-
-            // Body Request 선언
-            @Override
-            public byte[] getBody() {
-                try {
-                    if (requestbody != null && requestbody.length() > 0 && !requestbody.equals("")) {
-                        return requestbody.getBytes("utf-8");
-                    } else {
-                        return null;
-                    }
-                } catch (UnsupportedEncodingException uee) {
-                    return null;
-                }
-            }
-        };
-
-        // 이전 결과가 있더도 새로 요청하여 응답을 보여줌 여부
-        // False
-        request.setShouldCache(false);
-        // Volley Request 큐에 request 삽입.
-        queue.add(request);
+//        ComminityItem[] listcom = new ComminityItem[3];
+//        RequestQueue queue;
+//        JSONObject jsonBodyObj;
+//        String requestbody;
+//        String url;
+//        JsonArrayRequest request;
+//
+//        queue = Volley.newRequestQueue(this);
+//        // Body에 담을 JSON Object 생성 및 선언
+//        jsonBodyObj = new JSONObject();
+//        try {
+//            jsonBodyObj.put("page", "0");
+//            jsonBodyObj.put("lecture_building", now_building);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        // body String 선언
+//        requestbody = String.valueOf(jsonBodyObj.toString());
+//
+//        url = "https://www.eku.kro.kr/board/info/lists";
+//        request = new JsonArrayRequest(Request.Method.POST, url, null,
+//                new Response.Listener<JSONArray>() {
+//                    @Override
+//                    public void onResponse(JSONArray response) {
+//                        // Request에 대한 reponse 받음
+//                        Log.d("---", "---");
+//                        Log.w("//===========//", "================================================");
+//                        Log.d("", "\n" + "[FREE_COMMUNITY_BOARD > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 응답]");
+//                        Log.d("", "\n" + "[" + "응답 전체 - " + String.valueOf(response.toString()) + "]");
+//                        Log.w("//===========//", "================================================");
+//                        Log.d("---", "---");
+//
+//                        try {
+//                            for (int i = 0; i < response.length(); i++) {
+//                                JSONObject jsonObject = response.getJSONObject(i);
+//                                String id = jsonObject.getString("id");
+//                                String title = jsonObject.getString("title");
+//                                listcom[i] = new ComminityItem(id, title);
+//                                if (i == 2)
+//                                    break;
+//                            }
+//                            mainitem = new MainItem(getApplicationContext(), "공지게시판", listcom[0], listcom[1], listcom[2], buildingNumber);
+//                            sc.addView(mainitem);
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                },
+//                // Response Error 출력시,
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Log.d("---", "---");
+//                        Log.e("//===========//", "================================================");
+//                        Log.d("", "\n" + "[A_Main > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 실패]");
+//                        Log.d("", "\n" + "[" + "에러 코드 - " + String.valueOf(error.toString()) + "]");
+//                        Log.e("//===========//", "================================================");
+//                        Log.d("---", "---");
+//                    }
+//                }
+//        ) {
+//            // Header Request 선언
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Content-Type", "application/json");
+//                return headers;
+//            }
+//
+//            // Body Request 선언
+//            @Override
+//            public byte[] getBody() {
+//                try {
+//                    if (requestbody != null && requestbody.length() > 0 && !requestbody.equals("")) {
+//                        return requestbody.getBytes("utf-8");
+//                    } else {
+//                        return null;
+//                    }
+//                } catch (UnsupportedEncodingException uee) {
+//                    return null;
+//                }
+//            }
+//        };
+//
+//        // 이전 결과가 있더도 새로 요청하여 응답을 보여줌 여부
+//        // False
+//        request.setShouldCache(false);
+//        // Volley Request 큐에 request 삽입.
+//        queue.add(request);
 
     }
 
