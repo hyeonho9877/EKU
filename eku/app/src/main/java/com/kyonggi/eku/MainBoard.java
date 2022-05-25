@@ -291,6 +291,7 @@ public class MainBoard extends AppCompatActivity {
 
 
     public void PreviewCom(LinearLayout sc) {
+        /*
         ComminityItem[] listcom = new ComminityItem[3];
         Handler handler = new Handler(getMainLooper()) {
             @Override
@@ -315,17 +316,15 @@ public class MainBoard extends AppCompatActivity {
         };
 
         HashMap<String, Object> temp = new HashMap<>();
+        temp.put("lectureBuilding",buildingNumber);
         try {
             SendTool.requestForJson("/board/free/preview", temp, handler);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+*/
 
 
-        /*HashMap<String, Object> request = new HashMap<>();
-        request.put("lectureBuilding", buildingNumber);
-        SendTool.requestForJson("/board/info/lists", request, getHandler(BOARD_INFO, INIT));
-         */
 
 //        ComminityItem[] listcom = new ComminityItem[3];
 //        RequestQueue queue;
@@ -429,9 +428,9 @@ public class MainBoard extends AppCompatActivity {
                 try {
                     JSONArray comArray = new JSONArray(responseResult);
                     for (int i = 0; i < comArray.length(); i++) {
-                        JSONObject LectureObject = comArray.getJSONObject(i);
-                        int id = LectureObject.getInt("id");
-                        String title = LectureObject.getString("title");
+                        JSONObject FreeObject = comArray.getJSONObject(i);
+                        int id = FreeObject.getInt("id");
+                        String title = FreeObject.getString("title");
                         listFree[i] = new FreeCommunityItem(String.valueOf(id), title);
                         mainitem = new MainItem(getApplicationContext(), " 자유게시판", listFree[0], listFree[1], listFree[2], buildingNumber);
                         sc.addView(mainitem);
@@ -443,13 +442,14 @@ public class MainBoard extends AppCompatActivity {
             }
         };
 
+
         HashMap<String, Object> temp = new HashMap<>();
-        temp.put("lectureBuilding",buildingNumber);
         try {
-            SendTool.requestForJson("/board/info/preview", temp, handler);
+            SendTool.requestForJson("/board/free/preview", temp, handler);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+
 
 //        FreeCommunityItem[] listFree = new FreeCommunityItem[3];
 //        RequestQueue queue;
@@ -544,6 +544,7 @@ public class MainBoard extends AppCompatActivity {
 //        request.setShouldCache(false);
 //        // Volley Request 큐에 request 삽입.
 //        queue.add(request);
+
     }
 
 
