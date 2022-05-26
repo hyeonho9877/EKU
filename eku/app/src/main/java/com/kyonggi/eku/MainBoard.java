@@ -58,11 +58,10 @@ import java.util.Map;
 
 public class MainBoard extends AppCompatActivity {
 
-    public static final int Minorcheck = 61686;
+    public int Minorcheck;
     String[] showBuilding = {"6강의동", "7강의동", "8강의동", "제2공학관", "종합강의동"};
     int[] minor = {61618, 61632, 61686, 61633, 61524};
     int buildingSelected = 5;
-    int[] building = {6, 7, 8, 10, 5};
     AlertDialog buildingSelectDialog;
     long backKeyPressedTime;
     static TextView BuildingButton;
@@ -71,7 +70,7 @@ public class MainBoard extends AppCompatActivity {
     MainItem mainitem;
     private String buildingNumber;
     int now_building = 8;
-    String name;
+    String name;;
     GridView gridView;
     int paramHeight;
 
@@ -163,8 +162,13 @@ public class MainBoard extends AppCompatActivity {
         Intent intent = getIntent();
         try {
             name = intent.getExtras().getString("GANG");
+            for (int i=0;i< showBuilding.length;i++) {
+                if (name.equals(showBuilding[i]))
+                    Minorcheck = minor[i];
+            }
         } catch (Exception e) {
-            name = "8강의동";
+                name = "8강의동";
+                Minorcheck = 61686;
         }
         BuildingButton.setText(name);
         BuildingButton.setOnClickListener(new Button.OnClickListener() {
@@ -186,33 +190,23 @@ public class MainBoard extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         name = showBuilding[buildingSelected];
                         BuildingButton.setText(showBuilding[buildingSelected]);
-                        ViewMemo(minor[buildingSelected]);
+                        Minorcheck = minor[buildingSelected];
+                        ViewMemo(Minorcheck);
                     }
                 })
                 .setNegativeButton("취소", null)
                 .create();
 
 
-        if (name.equals("EKU")){
-            GridView gridView = (GridView) findViewById(R.id.board_Memo);
-            gAdapter = new GridListAdapter();
-            gAdapter.addItem(new ListItem("기본 메시지입니다", "EKU"));
-            gAdapter.addItem(new ListItem("비콘을 연결하면 강의동 메시지를 확인하실 수 있습니다", "EKU"));
-            gridView.setAdapter(gAdapter);
-        }
-        else {
-            for (int i=0;i< showBuilding.length;i++){
-                if (name.equals(showBuilding[i]))
-                    ViewMemo(minor[i]);
-            }
-        }
+
+        ViewMemo(Minorcheck);
 
         sc = (LinearLayout) findViewById(R.id.board_linear);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-        //PreviewCom(sc);
-        //PreviewFree(sc);
+        PreviewCom(sc);
+        PreviewFree(sc);
         PreviewLec(sc);
 
 
@@ -233,6 +227,8 @@ public class MainBoard extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(getApplicationContext(), WriteBoard.class);
                     intent.putExtra("address", "MainBoard");
+                    intent.putExtra("GANG",name);
+                    intent.putExtra("checkMinor",Minorcheck);
                     startActivity(intent);
                     finish();
                 }
@@ -252,6 +248,7 @@ public class MainBoard extends AppCompatActivity {
                         String responseResult = (String) msg.obj;
                         JSONArray BoardArray = null;
                         try {
+
                             BoardArray = new JSONArray(responseResult);
                         } catch (JSONException jsonException) {
                             jsonException.printStackTrace();
@@ -291,13 +288,11 @@ public class MainBoard extends AppCompatActivity {
 
 
     public void PreviewCom(LinearLayout sc) {
-        /*
         ComminityItem[] listcom = new ComminityItem[3];
         Handler handler = new Handler(getMainLooper()) {
             @Override
             public void handleMessage(@NonNull Message msg) {
                 String responseResult = (String) msg.obj;
-                Log.i("ww", responseResult);
                 try {
                     JSONArray comArray = new JSONArray(responseResult);
                     for (int i = 0; i < comArray.length(); i++) {
@@ -305,117 +300,22 @@ public class MainBoard extends AppCompatActivity {
                         int id = LectureObject.getInt("id");
                         String title = LectureObject.getString("title");
                         listcom[i] = new ComminityItem(String.valueOf(id), title);
-                        mainitem = new MainItem(getApplicationContext(), "공지게시판", listcom[0], listcom[1], listcom[2], buildingNumber);
-                        sc.addView(mainitem);
                     }
+                    mainitem = new MainItem(getApplicationContext(), "공지게시판", listcom[0], listcom[1], listcom[2], buildingNumber);
+                    sc.addView(mainitem);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         };
 
         HashMap<String, Object> temp = new HashMap<>();
         temp.put("lectureBuilding",buildingNumber);
         try {
-            SendTool.requestForJson("/board/free/preview", temp, handler);
+            SendTool.requestForJson("/board/info/preview", temp, handler);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-*/
-
-
-
-//        ComminityItem[] listcom = new ComminityItem[3];
-//        RequestQueue queue;
-//        JSONObject jsonBodyObj;
-//        String requestbody;
-//        String url;
-//        JsonArrayRequest request;
-//
-//        queue = Volley.newRequestQueue(this);
-//        // Body에 담을 JSON Object 생성 및 선언
-//        jsonBodyObj = new JSONObject();
-//        try {
-//            jsonBodyObj.put("page", "0");
-//            jsonBodyObj.put("lecture_building", now_building);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        // body String 선언
-//        requestbody = String.valueOf(jsonBodyObj.toString());
-//
-//        url = "https://www.eku.kro.kr/board/info/lists";
-//        request = new JsonArrayRequest(Request.Method.POST, url, null,
-//                new Response.Listener<JSONArray>() {
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//                        // Request에 대한 reponse 받음
-//                        Log.d("---", "---");
-//                        Log.w("//===========//", "================================================");
-//                        Log.d("", "\n" + "[FREE_COMMUNITY_BOARD > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 응답]");
-//                        Log.d("", "\n" + "[" + "응답 전체 - " + String.valueOf(response.toString()) + "]");
-//                        Log.w("//===========//", "================================================");
-//                        Log.d("---", "---");
-//
-//                        try {
-//                            for (int i = 0; i < response.length(); i++) {
-//                                JSONObject jsonObject = response.getJSONObject(i);
-//                                String id = jsonObject.getString("id");
-//                                String title = jsonObject.getString("title");
-//                                listcom[i] = new ComminityItem(id, title);
-//                                if (i == 2)
-//                                    break;
-//                            }
-//                            mainitem = new MainItem(getApplicationContext(), "공지게시판", listcom[0], listcom[1], listcom[2], buildingNumber);
-//                            sc.addView(mainitem);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                },
-//                // Response Error 출력시,
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Log.d("---", "---");
-//                        Log.e("//===========//", "================================================");
-//                        Log.d("", "\n" + "[A_Main > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 실패]");
-//                        Log.d("", "\n" + "[" + "에러 코드 - " + String.valueOf(error.toString()) + "]");
-//                        Log.e("//===========//", "================================================");
-//                        Log.d("---", "---");
-//                    }
-//                }
-//        ) {
-//            // Header Request 선언
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                HashMap<String, String> headers = new HashMap<String, String>();
-//                headers.put("Content-Type", "application/json");
-//                return headers;
-//            }
-//
-//            // Body Request 선언
-//            @Override
-//            public byte[] getBody() {
-//                try {
-//                    if (requestbody != null && requestbody.length() > 0 && !requestbody.equals("")) {
-//                        return requestbody.getBytes("utf-8");
-//                    } else {
-//                        return null;
-//                    }
-//                } catch (UnsupportedEncodingException uee) {
-//                    return null;
-//                }
-//            }
-//        };
-//
-//        // 이전 결과가 있더도 새로 요청하여 응답을 보여줌 여부
-//        // False
-//        request.setShouldCache(false);
-//        // Volley Request 큐에 request 삽입.
-//        queue.add(request);
-
     }
 
     public void PreviewFree(LinearLayout sc) {
@@ -424,7 +324,6 @@ public class MainBoard extends AppCompatActivity {
             @Override
             public void handleMessage(@NonNull Message msg) {
                 String responseResult = (String) msg.obj;
-                Log.i("ww", responseResult);
                 try {
                     JSONArray comArray = new JSONArray(responseResult);
                     for (int i = 0; i < comArray.length(); i++) {
@@ -432,9 +331,9 @@ public class MainBoard extends AppCompatActivity {
                         int id = FreeObject.getInt("id");
                         String title = FreeObject.getString("title");
                         listFree[i] = new FreeCommunityItem(String.valueOf(id), title);
-                        mainitem = new MainItem(getApplicationContext(), " 자유게시판", listFree[0], listFree[1], listFree[2], buildingNumber);
-                        sc.addView(mainitem);
                     }
+                    mainitem = new MainItem(getApplicationContext(), " 자유게시판", listFree[0], listFree[1], listFree[2], buildingNumber);
+                    sc.addView(mainitem);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -449,102 +348,6 @@ public class MainBoard extends AppCompatActivity {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-
-
-//        FreeCommunityItem[] listFree = new FreeCommunityItem[3];
-//        RequestQueue queue;
-//        JSONObject jsonBodyObj;
-//        final String requestBody;
-//        String url;
-//        JsonArrayRequest request;
-//
-//        queue = Volley.newRequestQueue(this);
-//        // Body에 담을 JSON Object 생성 및 선언
-//        jsonBodyObj = new JSONObject();
-//        try {
-//            jsonBodyObj.put("", "");
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        // body String 선언
-//        requestBody = String.valueOf(jsonBodyObj.toString());
-//
-//        // Server 주소
-//        url = "https://www.eku.kro.kr/board/free/lists";
-//        // VOLLEY 라이브러리를 이용하여 Server에 JSON Array 요청
-//        request = new JsonArrayRequest(Request.Method.POST, url, null,
-//                new Response.Listener<JSONArray>() {
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//                        // Request에 대한 reponse 받음
-//                        Log.d("---", "---");
-//                        Log.w("//===========//", "================================================");
-//                        Log.d("", "\n" + "[FREE_COMMUNITY_BOARD > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 응답]");
-//                        Log.d("", "\n" + "[" + "응답 전체 - " + String.valueOf(response.toString()) + "]");
-//                        Log.w("//===========//", "================================================");
-//                        Log.d("---", "---");
-//
-//                        try {
-//                            // Json Array 의 각 데이터를 파싱
-//                            // Array List 에 삽입
-//                            // 리사이클러 뷰 어댑터 갱신
-//                            for (int i = 0; i < response.length(); i++) {
-//                                JSONObject jsonObject = response.getJSONObject(i);
-//                                String id = jsonObject.getString("id");
-//                                String title = jsonObject.getString("title");
-//                                listFree[i] = new FreeCommunityItem(id, title);
-//                                if (i == 2)
-//                                    break;
-//                            }
-//                            mainitem = new MainItem(getApplicationContext(), "자유게시판", listFree[0], listFree[1], listFree[2], buildingNumber);
-//                            sc.addView(mainitem);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                },
-//                // Response Error 출력시,
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Log.d("---", "---");
-//                        Log.e("//===========//", "================================================");
-//                        Log.d("", "\n" + "[A_Main > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 실패]");
-//                        Log.d("", "\n" + "[" + "에러 코드 - " + String.valueOf(error.toString()) + "]");
-//                        Log.e("//===========//", "================================================");
-//                        Log.d("---", "---");
-//                    }
-//                }
-//        ) {
-//            // Header Request 선언
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                HashMap<String, String> headers = new HashMap<String, String>();
-//                headers.put("Content-Type", "application/json");
-//                return headers;
-//            }
-//
-//            // Body Request 선언
-//            @Override
-//            public byte[] getBody() {
-//                try {
-//                    if (requestBody != null && requestBody.length() > 0 && !requestBody.equals("")) {
-//                        return requestBody.getBytes("utf-8");
-//                    } else {
-//                        return null;
-//                    }
-//                } catch (UnsupportedEncodingException uee) {
-//                    return null;
-//                }
-//            }
-//        };
-//
-//        // 이전 결과가 있더도 새로 요청하여 응답을 보여줌 여부
-//        // False
-//        request.setShouldCache(false);
-//        // Volley Request 큐에 request 삽입.
-//        queue.add(request);
-
     }
 
 

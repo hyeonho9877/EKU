@@ -31,6 +31,8 @@ public class WriteBoard extends AppCompatActivity {
      * 낙서하는 기능
      * */
     //작성 화면
+    int Minor;
+    String Name;
     ActivityResultLauncher<Intent> activityResultLauncher;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,11 @@ public class WriteBoard extends AppCompatActivity {
                     }
                 }
         );
+
+        Intent intent= getIntent();
+        Minor = intent.getIntExtra("checkMinor",61686);
+        Name = intent.getStringExtra("GANG");
+
 
         Handler handler = new Handler() {
             public void handleMessage(@NonNull Message msg) {
@@ -78,7 +85,7 @@ public class WriteBoard extends AppCompatActivity {
 
                 HashMap<String, Object> temp = new HashMap<>();
                 temp.put("content", memoText);
-                temp.put("minor","61686");
+                temp.put("minor",Minor);
 
 
                 try {
@@ -98,6 +105,7 @@ public class WriteBoard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),MainBoard.class);
+                intent.putExtra("GANG",Name);
                 startActivity(intent);
                 finish();
             }
