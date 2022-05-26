@@ -84,7 +84,7 @@ public class MainBoard extends AppCompatActivity {
         sc = (LinearLayout) findViewById(R.id.board_linear);
         Intent intent = getIntent();
         String checkmap = intent.getStringExtra("NoMap");
-       //if (!checkmap.equals("O")) {
+       if (!checkmap.equals("O")) {
             TextView txt = (TextView) findViewById(R.id.MapLocation);
             txt.setText(intent.getExtras().getString("GANG"));
             if (savedInstanceState == null) {
@@ -93,7 +93,7 @@ public class MainBoard extends AppCompatActivity {
                         .replace(R.id.board_ImageView, mapFragment, "main")
                         .commit();
             }
-        //}
+        }
 
         final DrawerLayout drawerLayout = findViewById(R.id.board_drawerLayout);
         findViewById(R.id.board_Menu).setOnClickListener(new View.OnClickListener() {

@@ -54,24 +54,19 @@ public class findGang extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MainBoard.class);
-                intent.putExtra("NoMap","O");
+                intent.putExtra("NoMap", "O");
                 startActivity(intent);
                 finish();
             }
         });
-        Toast.makeText(getApplicationContext(),"블루투스, 위치 권한을 허용하지 않으실 경우 EKU를 사용하실 수 없습니다.",Toast.LENGTH_LONG).show();
-        if(checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN)
-                == PackageManager.PERMISSION_GRANTED)
-        {
-            initListener();
+        Toast.makeText(getApplicationContext(), "블루투스, 위치 권한을 허용하지 않으실 경우 EKU를 사용하실 수 없습니다.", Toast.LENGTH_LONG).show();
+        while (true) {
+            if (checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN)
+                    == PackageManager.PERMISSION_GRANTED) {
+                initListener();
+                break;
+            }
         }
-
-
-
-
-
-
-
     }
     private void bluetoothOn() {
         BluetoothAdapter ap = BluetoothAdapter.getDefaultAdapter();
