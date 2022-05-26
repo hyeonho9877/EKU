@@ -43,7 +43,6 @@ public class GalleryObserver implements DefaultLifecycleObserver {
             public void handleMessage(@NonNull Message msg) {
                 int code = msg.what;
                 String response = (String) msg.obj;
-                Log.d(TAG, "handleMessage: " + code);
                 switch (code) {
                     case CONNECTION_FAILED | HTTP_BAD_REQUEST | HTTP_INTERNAL_SERVER_ERROR:
                         Toast.makeText(context, "네트워크 연결에 실패하였습니다.", Toast.LENGTH_LONG).show();

@@ -49,7 +49,6 @@ public class ActivityFreeBoardSearch extends AppCompatActivity implements OnBoar
         binding.editTextSearch.setOnKeyListener((view, i, keyEvent) -> {
             keyword = binding.editTextSearch.getText().toString();
             if (keyword.length() != 0 && i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
-                Log.d(TAG, "initListeners: searching..");
                 binding.animBoardSearchLoading.setVisibility(View.VISIBLE);
                 presenter.searchFreeBoard(keyword);
             }
@@ -103,7 +102,6 @@ public class ActivityFreeBoardSearch extends AppCompatActivity implements OnBoar
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                Log.d(TAG, "onScrolled: scrolling");
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 int itemCount = recyclerView.getAdapter().getItemCount();
                 if (!isLoading) {

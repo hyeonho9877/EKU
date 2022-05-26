@@ -66,7 +66,6 @@ public class ActivityBoard extends AppCompatActivity implements OnBoardResponseL
 
     private void setBoard() {
         String rawBuildingNumber = getIntent().getStringExtra("buildingNumber");
-        Log.d(TAG, "setBoard: "+rawBuildingNumber);
         if (rawBuildingNumber.contains("종합")) buildingNumber = "5";
         else if(rawBuildingNumber.contains("공학")) buildingNumber = "10";
         else if(rawBuildingNumber.equals("EKU")) buildingNumber = "0";
@@ -94,7 +93,6 @@ public class ActivityBoard extends AppCompatActivity implements OnBoardResponseL
     }
 
     private void switchBoard() {
-        Log.d(TAG, "switchBoard: " + currentMode);
         if (currentMode.equals(BOARD_FREE)) {
             String announce = buildingNumber + " 강의동 공지게시판입니다.";
             binding.textBuildingBoardAnnounce.setText(announce);

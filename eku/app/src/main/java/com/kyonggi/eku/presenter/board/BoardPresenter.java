@@ -57,7 +57,6 @@ public class BoardPresenter {
             public void handleMessage(@NonNull Message msg) {
                 int code = msg.what;
                 String response = (String) msg.obj;
-                Log.d(TAG, "handleMessage: " + code);
                 if (code == SendTool.HTTP_OK) {
                     switch (board) {
                         case BOARD_FREE:
@@ -70,8 +69,6 @@ public class BoardPresenter {
                             break;
                     }
                 } else {
-                    Log.d(TAG, "handleMessage: "+code);
-                    Log.d(TAG, "handleMessage: "+response);
                     listener.onFailed();
                 }
             }

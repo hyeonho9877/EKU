@@ -52,13 +52,11 @@ public final class SendTool {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.d(TAG, "onFailure: ");
                 handler.sendMessage(Message.obtain(handler, CONNECTION_FAILED));
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d(TAG, "onResponse: " + response.code());
                 handler.sendMessage(Message.obtain(handler, response.code(), response.body().string()));
             }
         });
@@ -90,14 +88,12 @@ public final class SendTool {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.d(TAG, "onFailure: ");
                 handler.sendMessage(Message.obtain(handler, CONNECTION_FAILED));
 
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d(TAG, "onResponse: " + response.code());
                 handler.sendMessage(Message.obtain(handler, response.code(), response.body().string()));
             }
         });
@@ -110,7 +106,6 @@ public final class SendTool {
         MediaType JSON = MediaType.parse("application/json");
         RequestBody requestBody = RequestBody.create(jsonObject, JSON);
 
-        Log.d(TAG, "requestForJson: " + jsonObject);
         Request request = new Request.Builder()
                 .url(baseUrl + url)
                 .post(requestBody)
@@ -119,14 +114,12 @@ public final class SendTool {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.d(TAG, "onFailure: ");
                 handler.sendMessage(Message.obtain(handler, CONNECTION_FAILED));
 
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d(TAG, "onResponse: " + response.code());
                 handler.sendMessage(Message.obtain(handler, response.code(), response.body().string()));
             }
         });
@@ -139,7 +132,6 @@ public final class SendTool {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(jsonObject, JSON);
 
-        Log.d(TAG, "requestForJson: " + jsonObject);
         Request request = new Request.Builder()
                 .url(baseUrl + url)
                 .post(requestBody)
@@ -148,14 +140,12 @@ public final class SendTool {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.d(TAG, "onFailure: ");
                 handler.sendMessage(Message.obtain(handler, CONNECTION_FAILED));
 
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d(TAG, "onResponse: " + response.code());
                 handler.sendMessage(Message.obtain(handler, response.code(), response.body().string()));
             }
         });
@@ -251,14 +241,12 @@ public final class SendTool {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.d(TAG, "onFailure: ");
                 handler.sendMessage(Message.obtain(handler, CONNECTION_FAILED));
 
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d(TAG, "onResponse: "+response.code());
                 handler.sendMessage(Message.obtain(handler, response.code(), response.body().string()));
             }
         });
@@ -276,14 +264,12 @@ public final class SendTool {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.d(TAG, "onFailure: ");
                 handler.sendMessage(Message.obtain(handler, CONNECTION_FAILED));
 
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d(TAG, "onResponse: "+response.code());
                 handler.sendMessage(Message.obtain(handler, response.code(), response.body().string()));
             }
         });
