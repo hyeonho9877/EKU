@@ -30,7 +30,7 @@
     <ScrollView
         android:id="@+id/detail_total_announceView"
         android:layout_width="413dp"
-        android:layout_height="550dp"
+        android:layout_height="676dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,15 +57,16 @@
                 android:id="@+id/detail_announce_writer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="41dp"
                 android:text="작성자"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_announce_edit_content" />
+                app:layout_constraintTop_toBottomOf="@+id/detail_announce_content" />
 
             <TextView
                 android:id="@+id/detail_announce_content"
-                android:layout_width="328dp"
+                android:layout_width="326dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="43dp"
                 android:layout_marginTop="20dp"
@@ -81,21 +82,19 @@
                 android:id="@+id/view18"
                 style="@style/Divider"
                 android:layout_width="380dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="17dp"
+                app:layout_constraintBottom_toBottomOf="@+id/detail_announce_button"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_announce_time" />
+                app:layout_constraintStart_toStartOf="@+id/detail_announce_button" />
 
             <EditText
                 android:id="@+id/detail_announce_edit_content"
                 android:layout_width="328dp"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="43dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="42dp"
                 android:background="@drawable/stroke_under"
+                android:maxHeight="200dp"
                 android:text="내용"
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -108,10 +107,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="41dp"
+                android:layout_marginTop="10dp"
+                android:maxHeight="200dp"
                 android:text="시간"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_announce_edit_content" />
+                app:layout_constraintTop_toBottomOf="@+id/detail_announce_content" />
 
 
             <LinearLayout
@@ -122,7 +123,7 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/detail_announce_time">
+                app:layout_constraintTop_toBottomOf="@+id/view18">
 
                 <Button
                     android:id="@+id/detail_edit_btn_submit"
@@ -159,6 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:background="@drawable/stroke_under"
+                android:maxLines="1"
                 android:text="제목"
                 android:textSize="25sp"
                 android:visibility="invisible"
@@ -179,7 +181,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="331dp"
                 android:layout_height="22dp"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="200dp"
                 android:gravity="center"
                 android:text="공지게시판에는 댓글을 입력할 수 없습니다"
                 android:textColor="@color/black"
