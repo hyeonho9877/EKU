@@ -57,6 +57,7 @@ public class findGang extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MainBoard.class);
+                intent.putExtra("NoMap","O");
                 startActivity(intent);
                 finish();
             }

@@ -133,7 +133,7 @@
         <receiver android:name=".AlarmReceiver" android:exported="true"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="" />
+            android:value="AIzaSyDHFmocGKCWg4D1_zZn7SkKq-9D8TS8Ojw"/>
     </application>
 
 </manifest>
