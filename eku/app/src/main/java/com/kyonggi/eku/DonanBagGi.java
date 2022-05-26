@@ -49,7 +49,7 @@ public class DonanBagGi extends AppCompatActivity {
 
     private void bluetoothOn(){
         BluetoothAdapter ap = BluetoothAdapter.getDefaultAdapter();
-        ap.enable();
+     //   ap.enable();
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             Toast.makeText(getBaseContext(),"위치정보가 꺼져있습니다. 알람 확인을 위해 위치 정보를 켜주세요",Toast.LENGTH_LONG).show();
@@ -178,22 +178,22 @@ public class DonanBagGi extends AppCompatActivity {
                         else{
                             stealing=true;
                             textView.setText("훔쳐진 디바이스 입니다!!!!!");
-                            //AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-                            //audio.setStreamVolume(AudioManager.STREAM_MUSIC,15,AudioManager.FLAG_PLAY_SOUND);
+                            AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                            audio.setStreamVolume(AudioManager.STREAM_MUSIC,15,AudioManager.FLAG_PLAY_SOUND);
                             Vibrator vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
                             vibrator.vibrate(new long[]{50,300},0); // 0.5초간 진동
-                            //player = MediaPlayer.create(getBaseContext(),R.raw.sirent);
-                            //player.setLooping(true);
-                            //player.start();
+                            player = MediaPlayer.create(getBaseContext(),R.raw.sirent);
+                            player.setLooping(true);
+                            player.start();
                             Button offButton = findViewById(R.id.Donan_Off);
                             offButton.setVisibility(View.VISIBLE);
                             offButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     offButton.setVisibility(View.INVISIBLE);
-                                    //player.stop();
+                                    player.stop();
                                     vibrator.cancel();
-                                    //player.release();
+                                    player.release();
                                     stealing=false;
                                     textView.setText("도난방지 해제됨");
                                     button.setBackgroundColor(Color.BLUE);

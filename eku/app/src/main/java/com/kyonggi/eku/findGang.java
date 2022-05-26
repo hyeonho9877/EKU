@@ -46,12 +46,18 @@ public class findGang extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_gang);
+        permissionCheck();
         bluetoothOn();
-        //permissionCheck();
         initManager();
+        while(true){
+            if(checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN)
+                    == PackageManager.PERMISSION_GRANTED)
+            break;
+        }
         initListener();
 
-        mMinewBeaconManager.startScan();
+
+
         Button b = findViewById(R.id.skipButton);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,26 +100,22 @@ public class findGang extends AppCompatActivity {
         // PermissionSupport.java 클래스 객체 생성
         permission = new PermissionSupport(this, this);
         // 권한 체크 후 리턴이 false로 들어오면
-        if (!permission.checkPermission()){
-            //권한 요청
-            //후에 권한 요청 설명 필요할 꺼 같음
-            permission.requestPermission();
-        }
-        else{
-            permission.requestPermission();
-        }
+
+        permission.requestPermission();
+
     }
 
     // Request Permission에 대한 결과 값 받아와
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         //여기서도 리턴이 false로 들어온다면 (사용자가 권한 허용 거부)
         if (!permission.permissionResult(requestCode, permissions, grantResults)) {
             // 다시 permission 요청
             permission.requestPermission();
             showToast("EKU는 권한이 모두 켜져있지 않을 경우 원활히 작동하지 않을 수 있습니다.");
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
     }
 
     //매니저 초기화
@@ -124,6 +126,7 @@ public class findGang extends AppCompatActivity {
 
 
     private void initListener() {
+        mMinewBeaconManager.startScan();
         mMinewBeaconManager.setDeviceManagerDelegateListener(new MinewBeaconManagerListener() {
             /**
              *   비콘 새로 등판시 하는일.
@@ -137,21 +140,26 @@ public class findGang extends AppCompatActivity {
                     if(temp.equals("61686"))
                     {
                         intent.putExtra("GANG","8강의동");
+                        intent.putExtra("NoMap","1");
                     }
                     if(temp.equals("61633"))
                     {
                         intent.putExtra("GANG","종합강의동");
+                        intent.putExtra("NoMap","1");
                     }
                     if(temp.equals("61524"))
                     {
                         intent.putExtra("GANG","제2공학관");
+                        intent.putExtra("NoMap","1");
                     }
                     if(temp.equals("61632"))
                     {
                         intent.putExtra("GANG","7강의동");
+                        intent.putExtra("NoMap","1");
                     }
                     if(temp.equals("61618")) {
                         intent.putExtra("GANG","6강의동");
+                        intent.putExtra("NoMap","1");
                     }
                     mMinewBeaconManager.stopScan();
                     startActivity(intent);
