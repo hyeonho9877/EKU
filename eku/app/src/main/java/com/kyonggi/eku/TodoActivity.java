@@ -51,24 +51,31 @@ public class TodoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_todo);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        int hour=8;
-        int minute=30;
-        int sec =00;
+        int hour=15;
+        int minute=54;
+        int sec =20;
         calendar.set(Calendar.HOUR_OF_DAY,hour);
         calendar.set(Calendar.MINUTE,minute);
         calendar.set(Calendar.SECOND,sec);
 
+        setInit();
+
+
+        /*
         AlarmManager alarmManager=(AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+
         if (alarmManager != null) {
             Intent intent = new Intent(this, AlarmReceiver.class);
-            PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_MUTABLE);
-
+            alarmManager.set
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), intent);*/
+           /* PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 6974, intent,PendingIntent.FLAG_MUTABLE);
+            Toast.makeText(getApplicationContext(),"전송완료",Toast.LENGTH_SHORT).show();
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                     AlarmManager.INTERVAL_DAY, alarmIntent);
 
             //Toast.makeText(TodoActivity.this, "알람이 저장되었습니다.", Toast.LENGTH_LONG).show();
         }
-
+*/
         /*
         final DrawerLayout drawerLayout = findViewById(R.id.ToDo_drawerLayout);
 
@@ -148,7 +155,7 @@ public class TodoActivity extends AppCompatActivity {
                 .create();
         */
 
-        setInit();
+
     }
 
     private void setInit() {
