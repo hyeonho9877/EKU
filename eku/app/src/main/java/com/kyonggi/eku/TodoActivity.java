@@ -49,113 +49,29 @@ public class TodoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo);
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        int hour=15;
-        int minute=54;
-        int sec =20;
+        int hour=8;
+        int minute=30;
+        int sec =0;
         calendar.set(Calendar.HOUR_OF_DAY,hour);
         calendar.set(Calendar.MINUTE,minute);
         calendar.set(Calendar.SECOND,sec);
 
-        setInit();
 
-
-        /*
         AlarmManager alarmManager=(AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
 
         if (alarmManager != null) {
             Intent intent = new Intent(this, AlarmReceiver.class);
-            alarmManager.set
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), intent);*/
-           /* PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 6974, intent,PendingIntent.FLAG_MUTABLE);
-            Toast.makeText(getApplicationContext(),"전송완료",Toast.LENGTH_SHORT).show();
+            PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 1, intent,PendingIntent.FLAG_IMMUTABLE);
+            Toast.makeText(getApplicationContext(),alarmManager+"",Toast.LENGTH_SHORT).show();
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                     AlarmManager.INTERVAL_DAY, alarmIntent);
 
             //Toast.makeText(TodoActivity.this, "알람이 저장되었습니다.", Toast.LENGTH_LONG).show();
         }
-*/
-        /*
-        final DrawerLayout drawerLayout = findViewById(R.id.ToDo_drawerLayout);
-
-        findViewById(R.id.ToDo_Menu).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-
-        NavigationView navigationView = findViewById(R.id.ToDo_navigationView);
-        navigationView.setItemIconTintList(null);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                Intent intent;
-                switch(id) {
-                    case R.id.Home:
-                        intent = new Intent(getApplicationContext(), MainBoard.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                    case R.id.Announce:
-                        intent = new Intent(getApplicationContext(), MainCommunity.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                    case R.id.Free:
-                        intent = new Intent(getApplicationContext(), MainFreeCommunity.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                    case R.id.lectureMain:
-                        intent = new Intent(getApplicationContext(), LectureMain.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                    case R.id.ToDo:
-                        intent = new Intent(getApplicationContext(), TodoActivity.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                    case R.id.TimeTable:
-                        intent = new Intent(getApplicationContext(), ScheduleTable.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                }
-                return false;
-            }
-        });
-
-        TextView BuildingButton = (TextView) findViewById(R.id.ToDo_spinner);
-        BuildingButton.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buildingSelectDialog.show();
-            }
-        });
-        buildingSelectDialog = new AlertDialog.Builder(TodoActivity.this)
-                .setSingleChoiceItems(showBuilding, buildingSelected, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        buildingSelected = i;
-                    }
-                })
-                .setTitle("강의동")
-                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        BuildingButton.setText(showBuilding[buildingSelected]);
-                    }
-                })
-                .setNegativeButton("취소", null)
-                .create();
-        */
-
-
+        setInit();
     }
 
     private void setInit() {
@@ -170,6 +86,7 @@ public class TodoActivity extends AppCompatActivity {
         mBtn_write.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Dialog dialog = new Dialog(TodoActivity.this, android.R.style.Theme_Material_Light_Dialog);
                 dialog.setContentView(R.layout.dialog_edit);
                 EditText et_title = dialog.findViewById(R.id.timeTableTitle);
