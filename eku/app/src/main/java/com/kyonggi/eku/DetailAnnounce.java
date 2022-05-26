@@ -228,8 +228,6 @@ public class DetailAnnounce extends AppCompatActivity {
                                 request_server(board_id , DETAIL_BOARD_REQUEST);
                             }else if( mode == DETAIL_BOARD_DELETE_REQUEST){
                                 finish();
-                                Intent intent = new Intent(getApplicationContext(), MainCommunity.class);
-                                startActivity(intent);
                             }
 
                         }

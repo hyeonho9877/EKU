@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -245,6 +244,16 @@ public class BoardController {
     @PostMapping("/board/free/search/load")
     public ResponseEntity<?> searchMoreFreeBoard(@RequestBody FreeBoardForm form) {
         return ResponseEntity.ok(freeBoardService.searchMoreBoard(form.getKeyword(), form.getId()));
+    }
+
+    @PostMapping("/board/info/preview")
+    public ResponseEntity<?> previewInfoBoard(@RequestBody InfoBoardForm form) {
+        return ResponseEntity.ok(infoBoardService.previewInfoBoard(form.getLectureBuilding()));
+    }
+
+    @PostMapping("/board/free/preview")
+    public ResponseEntity<?> previewFreeBoard() {
+        return ResponseEntity.ok(freeBoardService.previewFreeBoard());
     }
     /**
      * 자유 게시판 댓글 작성
