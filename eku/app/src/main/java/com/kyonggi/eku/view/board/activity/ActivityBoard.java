@@ -66,8 +66,10 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
 
     private void setBoard() {
         String rawBuildingNumber = getIntent().getStringExtra("buildingNumber");
+        Log.d(TAG, "setBoard: "+rawBuildingNumber);
         if (rawBuildingNumber.contains("종합")) buildingNumber = "5";
         else if(rawBuildingNumber.contains("공학")) buildingNumber = "10";
+        else if(rawBuildingNumber.equals("EKU")) buildingNumber = "0";
         else buildingNumber = rawBuildingNumber.substring(0, 1);
         currentMode = getIntent().getStringExtra("mode");
 
@@ -117,7 +119,8 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
     }
 
     public void getInfoBoardArticles() {
-        presenter.getInfoBoardArticles(buildingNumber);
+        if (buildingNumber.equals("0")) presenter.loadAllInfoArticles();
+        else presenter.getInfoBoardArticles(buildingNumber);
     }
 
     public void getFreeBoardArticles() {
@@ -159,8 +162,8 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
         presenter.loadMoreInfoArticles(no, buildingNumber);
     }
 
-    public void updateFreeBoard(long id) {
-        presenter.updateFreeBoard(id);
+    public void loadMoreAllInfoArticles(long id) {
+        presenter.loadMoreAllInfo(id);
     }
 
     public void loadMoreFreeArticles(Long id) {

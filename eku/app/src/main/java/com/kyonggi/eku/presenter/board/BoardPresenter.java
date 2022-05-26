@@ -173,4 +173,14 @@ public class BoardPresenter {
         request.put("keyword", keyword);
         SendTool.requestForJson("/board/free/search/load", request, getHandler(BOARD_FREE, LOAD_OLD));
     }
+
+    public void loadAllInfoArticles(){
+        SendTool.request("/board/info/all", getHandler(BOARD_INFO, INIT));
+    }
+
+    public void loadMoreAllInfo(long id) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        SendTool.requestForJson("/board/info/all/load", params, getHandler(BOARD_INFO, LOAD_OLD));
+    }
 }

@@ -25,4 +25,7 @@ public interface InfoBoardRepository extends JpaRepository<InfoBoard, Long> {
     List<InfoBoard> findByBuildingAndKeywordOrderByWrittenTimeDesc(@NonNull int building, @NonNull String keyword, Pageable pageable);
     @Query(value = "SELECT i FROM InfoBoard AS i where substring(i.building, :building, 1) = '1' and (i.title like %:keyword% or i.content like %:keyword% or i.department like %:keyword%) and i.id < :id order by i.writtenTime desc ")
     List<InfoBoard> findByBuildingAndKeywordAndIdLessThanOrderByWrittenTimeDesc(@NonNull int building, @NonNull String keyword, @NonNull long id, @NonNull Pageable pageable);
+    List<InfoBoard> findByOrderByWrittenTimeDesc(Pageable pageable);
+    List<InfoBoard> findAllByIdLessThanOrderByWrittenTimeDesc(long id, Pageable pageable);
+
 }

@@ -255,6 +255,17 @@ public class BoardController {
     public ResponseEntity<?> previewFreeBoard() {
         return ResponseEntity.ok(freeBoardService.previewFreeBoard());
     }
+
+    @PostMapping("/board/info/all")
+    public ResponseEntity<?> allInfo(){
+        return ResponseEntity.ok(infoBoardService.allInfoBoard());
+    }
+
+    @PostMapping("/board/info/all/load")
+    public ResponseEntity<?> allInfoMore(@RequestBody InfoBoardForm form) {
+        return ResponseEntity.ok(infoBoardService.allInfoBoardMore(form.getId()));
+    }
+
     /**
      * 자유 게시판 댓글 작성
      * @param form 작성하려는 댓글의 정보를 담고 있는 Form 객체
