@@ -40,7 +40,7 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
      */
 
     CheckBox building0, building6, building7, building8, building9;
-    String building1, building2, building3, building4, building5;
+    String building1, building2, building3, building4;
 
 
     EditText et_title;
