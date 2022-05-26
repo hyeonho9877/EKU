@@ -68,6 +68,7 @@ public class GalleryObserver implements DefaultLifecycleObserver {
                     if (result != null) {
                         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                         dialog.setMessage("사진을 분석중입니다..");
+                        dialog.show();
                         SendTool.requestForMultiPart("/signUp/ocr", result, contentResolver, handler);
                     }
                 });
