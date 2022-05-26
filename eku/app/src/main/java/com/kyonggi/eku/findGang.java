@@ -49,15 +49,6 @@ public class findGang extends AppCompatActivity {
         permissionCheck();
         bluetoothOn();
         initManager();
-        while(true){
-            if(checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN)
-                    == PackageManager.PERMISSION_GRANTED)
-            break;
-        }
-        initListener();
-
-
-
         Button b = findViewById(R.id.skipButton);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +59,19 @@ public class findGang extends AppCompatActivity {
                 finish();
             }
         });
+        int i=0;
+        while(true){
+            if(i==0){
+            Toast.makeText(getApplicationContext(),"블루투스 권한을 허용하지 않으실 경우 EKU를 사용하실 수 없습니다.",Toast.LENGTH_LONG).show();
+i++;}       if(checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN)
+                    == PackageManager.PERMISSION_GRANTED)
+            break;
+        }
+        initListener();
+
+
+
+
 
 
     }
