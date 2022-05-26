@@ -86,7 +86,7 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
 
 
     public String getBuilding(){
-        String building = "0000";
+        String building = "00000";
 
         building += building6.isChecked() ? "1" : "0";;
         building += building7.isChecked() ? "1" : "0";;
