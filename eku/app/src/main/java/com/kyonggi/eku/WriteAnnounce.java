@@ -50,9 +50,7 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
     Button btn_cancle;
 
 
-    String name = "고지웅";
     String writer_id;
-    String department   = "소프트웨어공학과";
 
     UserInformation userInformation;
 
@@ -79,9 +77,6 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
         userInformation = new UserInformation();
 
         writer_id = userInformation.fromPhoneStudentNo(getApplicationContext());
-        department = userInformation.fromPhoneDepartment(getApplicationContext());
-
-
     }
 
 
