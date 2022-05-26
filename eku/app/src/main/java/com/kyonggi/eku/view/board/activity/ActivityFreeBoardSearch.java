@@ -20,11 +20,11 @@ import com.kyonggi.eku.model.FreeBoardPreview;
 import com.kyonggi.eku.model.InfoBoardPreview;
 import com.kyonggi.eku.presenter.board.BoardPresenter;
 import com.kyonggi.eku.utils.adapters.FreeBoardAdapter;
-import com.kyonggi.eku.utils.callbacks.OnResponseListeners;
+import com.kyonggi.eku.utils.callbacks.OnBoardResponseListeners;
 
 import java.util.List;
 
-public class ActivityFreeBoardSearch extends AppCompatActivity implements OnResponseListeners {
+public class ActivityFreeBoardSearch extends AppCompatActivity implements OnBoardResponseListeners {
     private static final String TAG = "ActivityFreeBoardSearch";
     private ActivityBoardSearchBinding binding;
     private BoardPresenter presenter;

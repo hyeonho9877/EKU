@@ -27,7 +27,7 @@ import com.kyonggi.eku.R;
 import com.kyonggi.eku.databinding.FargmentSignupInfoBinding;
 import com.kyonggi.eku.model.OCRForm;
 import com.kyonggi.eku.model.SignUpForm;
-import com.kyonggi.eku.utils.callbacks.OnConfirmedListener;
+import com.kyonggi.eku.utils.callbacks.OnSignUpConfirmedListener;
 import com.kyonggi.eku.utils.exceptions.NoExtraDataException;
 import com.kyonggi.eku.view.signUp.OnDeptSelectedListener;
 import com.kyonggi.eku.view.signUp.activity.ActivityInputSignUpInfo;
@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
 public class FragmentSignupInfo extends Fragment implements OnDeptSelectedListener {
     private static final String TAG = "FragmentSignupInfo";
     private FargmentSignupInfoBinding binding;
-    private OnConfirmedListener listener;
+    private OnSignUpConfirmedListener listener;
     private ActivityInputSignUpInfo activity;
 
     @Nullable
@@ -67,7 +67,7 @@ public class FragmentSignupInfo extends Fragment implements OnDeptSelectedListen
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-            listener = (OnConfirmedListener) context;
+            listener = (OnSignUpConfirmedListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement OnArticleSelectedListener");
         }
