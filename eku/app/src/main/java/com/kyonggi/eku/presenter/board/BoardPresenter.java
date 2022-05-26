@@ -70,6 +70,8 @@ public class BoardPresenter {
                             break;
                     }
                 } else {
+                    Log.d(TAG, "handleMessage: "+code);
+                    Log.d(TAG, "handleMessage: "+response);
                     listener.onFailed();
                 }
             }
@@ -112,13 +114,24 @@ public class BoardPresenter {
     }
 
     public void writeInfoBoard() {
-        Intent intent = new Intent(context, WriteAnnounce.class);
-        context.startActivity(intent);
+        if (isAuthenticated()){
+            Intent intent = new Intent(context, WriteAnnounce.class);
+            context.startActivity(intent);
+        } else {
+            Intent intent = new Intent(context, ActivitySignIn.class);
+            context.startActivity(intent);
+        }
+
     }
 
     public void writeFreeBoard() {
-        Intent intent = new Intent(context, WriteFreeCommunity.class);
-        context.startActivity(intent);
+        if (isAuthenticated()){
+            Intent intent = new Intent(context, WriteFreeCommunity.class);
+            context.startActivity(intent);
+        } else {
+            Intent intent = new Intent(context, ActivitySignIn.class);
+            context.startActivity(intent);
+        }
     }
 
     public void search(String currentMode, String buildingNumber) {

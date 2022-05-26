@@ -41,7 +41,7 @@ public class FreeBoardCommentService {
      */
     @Transactional
     public void writeComment(CommentForm form) throws IllegalStateException, EntityNotFoundException {
-        FreeBoard article = freeBoardRepository.findById(form.getArticleID()).orElseThrow();
+        FreeBoard article = freeBoardRepository.findById(form.getArticleId()).orElseThrow();
         FreeBoardComment comment = FreeBoardComment.builder()
                 .content((form.getContent()))
                 .writer(studentRepository.getById(form.getWriter()))
@@ -60,7 +60,7 @@ public class FreeBoardCommentService {
     @Transactional
     public void deleteComment(CommentForm form) throws IllegalArgumentException, NoSuchElementException {
         freeBoardCommentRepository.deleteById(form.getCommentId());
-        FreeBoard article = freeBoardRepository.findById(form.getArticleID()).orElseThrow();
+        FreeBoard article = freeBoardRepository.findById(form.getArticleId()).orElseThrow();
         article.setComments(article.getComments()-1);
     }
 

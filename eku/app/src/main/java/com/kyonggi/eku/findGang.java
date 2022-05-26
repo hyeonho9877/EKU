@@ -2,9 +2,12 @@ package com.kyonggi.eku;
 
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -44,10 +47,9 @@ public class findGang extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_gang);
         bluetoothOn();
-        permissionCheck();
+        //permissionCheck();
         initManager();
         initListener();
-    
 
         mMinewBeaconManager.startScan();
         Button b = findViewById(R.id.skipButton);
@@ -62,13 +64,25 @@ public class findGang extends AppCompatActivity {
 
 
     }
-    private void bluetoothOn(){
+    private void bluetoothOn() {
         BluetoothAdapter ap = BluetoothAdapter.getDefaultAdapter();
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ap == null)
             showToast("bluetooth 를 지원하지 않습니다.");
-        else
-            showToast("bluetooth 를 지원합니다.");
-        ap.enable();
+        if (!ap.isEnabled())
+        {
+            Toast.makeText(getBaseContext(),"블루투스가 꺼져있습니다. 강의동 확인을 위해 블루투스를 켠 후 재실행 바랍니다.",Toast.LENGTH_LONG).show();
+            Intent blueIntent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
+            startActivity(blueIntent);
+            finish();
+        }
+        else if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            Toast.makeText(getBaseContext(),"위치정보가 꺼져있습니다. 강의동 확인을 위해 위치 정보를 켠 후 재실행 바랍니다.",Toast.LENGTH_LONG).show();
+            Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(gpsOptionsIntent);
+            finish();
+        }
+
     }
 
     private void showToast(String s) {
@@ -84,6 +98,9 @@ public class findGang extends AppCompatActivity {
             //후에 권한 요청 설명 필요할 꺼 같음
             permission.requestPermission();
         }
+        else{
+            permission.requestPermission();
+        }
     }
 
     // Request Permission에 대한 결과 값 받아와
@@ -93,6 +110,7 @@ public class findGang extends AppCompatActivity {
         if (!permission.permissionResult(requestCode, permissions, grantResults)) {
             // 다시 permission 요청
             permission.requestPermission();
+            showToast("EKU는 권한이 모두 켜져있지 않을 경우 원활히 작동하지 않을 수 있습니다.");
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
@@ -133,9 +151,6 @@ public class findGang extends AppCompatActivity {
                     }
                     if(temp.equals("61618")) {
                         intent.putExtra("GANG","6강의동");
-                    }
-                    if(temp.equals("61511")) {
-                        intent.putExtra("GANG","5강의동");
                     }
                     mMinewBeaconManager.stopScan();
                     startActivity(intent);

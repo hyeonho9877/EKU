@@ -2,11 +2,13 @@ package com.eku.EKU.service;
 
 import com.eku.EKU.domain.FreeBoard;
 import com.eku.EKU.domain.Student;
+import com.eku.EKU.exceptions.NoSuchBoardException;
 import com.eku.EKU.form.BoardListResponse;
 import com.eku.EKU.form.FreeBoardForm;
 import com.eku.EKU.form.FreeBoardListResponse;
 import com.eku.EKU.form.FreeBoardResponse;
 import com.eku.EKU.repository.FreeBoardRepository;
+import com.eku.EKU.repository.StudentRepository;
 import com.eku.EKU.utils.RelativeTimeConverter;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Pageable;
@@ -23,9 +25,11 @@ import java.util.NoSuchElementException;
 @Service
 public class FreeBoardService {
     private final FreeBoardRepository freeBoardRepository;
+    private final StudentRepository studentRepository;
 
-    public FreeBoardService(FreeBoardRepository freeBoardRepository) {
+    public FreeBoardService(FreeBoardRepository freeBoardRepository, StudentRepository studentRepository) {
         this.freeBoardRepository = freeBoardRepository;
+        this.studentRepository = studentRepository;
     }
 
     /**
@@ -38,7 +42,6 @@ public class FreeBoardService {
         FreeBoard board = freeBoardRepository.findById(form.getId()).orElseThrow();
         board.setView(board.getView() + 1);
         freeBoardRepository.save(board);
-
         return board;
     }
 
@@ -97,8 +100,9 @@ public class FreeBoardService {
      * @param form 삽입할 게시판의 정보
      * @return
      */
-    public FreeBoardResponse insertBoard(FreeBoardForm form) throws IllegalArgumentException, NoSuchElementException {
-        Student studNo = Student.builder().studNo(form.getWriterNo()).name("temp").email("temp").department("temp").build();
+    public FreeBoardResponse insertBoard(FreeBoardForm form) throws IllegalArgumentException, NoSuchBoardException {
+        Student studNo = studentRepository.getById(form.getId());
+
         FreeBoard freeBoard = FreeBoard.builder()
                 .student(studNo)
                 .department(form.getDepartment())
@@ -149,6 +153,11 @@ public class FreeBoardService {
 
     public List<FreeBoardListResponse> searchMoreBoard(String keyword, long id) {
         List<FreeBoard> result = freeBoardRepository.findByKeywordAndIdLessThanOrderByTimeDesc(keyword, id, Pageable.ofSize(20));
+        return result.stream().map(e-> new FreeBoardListResponse(e, e.getComments(), studentNo(e.getStudent().getStudNo())+" "+e.getDepartment())).toList();
+    }
+
+    public List<FreeBoardListResponse> previewFreeBoard() {
+        List<FreeBoard> result = freeBoardRepository.findByOrderByTimeDesc(Pageable.ofSize(3));
         return result.stream().map(e-> new FreeBoardListResponse(e, e.getComments(), studentNo(e.getStudent().getStudNo())+" "+e.getDepartment())).toList();
     }
 }

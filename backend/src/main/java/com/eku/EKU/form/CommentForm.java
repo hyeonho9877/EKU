@@ -10,5 +10,5 @@ public class CommentForm {
     private long commentId;
     private String content;
     private long writer;
-    private long articleID;
+    private long articleId;
 }

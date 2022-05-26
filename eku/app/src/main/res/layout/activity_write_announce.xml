@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -86,8 +87,17 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:text="제2공"
-        app:layout_constraintStart_toEndOf="@+id/building9"
-        app:layout_constraintTop_toTopOf="@+id/building9" />
+        app:layout_constraintStart_toEndOf="@+id/building5"
+        app:layout_constraintTop_toTopOf="@+id/building5" />
+
+    <CheckBox
+        android:id="@+id/building5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="종강"
+        app:layout_constraintStart_toEndOf="@+id/building8"
+        app:layout_constraintTop_toTopOf="@+id/building8" />
 
     <CheckBox
         android:id="@+id/building6"
@@ -115,15 +125,6 @@
         android:text="8강"
         app:layout_constraintStart_toEndOf="@+id/building7"
         app:layout_constraintTop_toTopOf="@+id/building7" />
-
-    <CheckBox
-        android:id="@+id/building9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="9강"
-        app:layout_constraintStart_toEndOf="@+id/building8"
-        app:layout_constraintTop_toTopOf="@+id/building8" />
 
     <TextView
         android:id="@+id/textView14"

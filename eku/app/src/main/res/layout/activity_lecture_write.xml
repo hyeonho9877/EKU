@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -84,15 +85,15 @@
         app:layout_constraintTop_toBottomOf="@+id/lecture_write_textView2" />
 
     <RatingBar
-            android:id="@+id/lecture_write_ratingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="12dp"
-            android:numStars="5"
-            android:stepSize="0.5"
-            app:layout_constraintStart_toEndOf="@+id/lecture_write_textView5"
-            app:layout_constraintTop_toBottomOf="@+id/gradeselect" />
+        android:id="@+id/lecture_write_ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="12dp"
+        android:numStars="5"
+        android:stepSize="0.5"
+        app:layout_constraintStart_toEndOf="@+id/lecture_write_textView5"
+        app:layout_constraintTop_toBottomOf="@+id/gradeselect" />
 
     <EditText
         android:id="@+id/lecture_write_ContentText"
@@ -139,24 +140,26 @@
         android:id="@+id/lecture_write_SaveButton"
         android:layout_width="170dp"
         android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/border_box_blue"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/rounded_blue"
         android:fontFamily="@font/noto_sans_kr_regular"
-        android:text="저장"
+        android:text="Submit"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/lecture_write_CloseButton"
         android:layout_width="170dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/border_box_black"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/rounded_blue"
         android:fontFamily="@font/noto_sans_kr_regular"
-        android:text="닫기"
+        android:text="Cancel"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

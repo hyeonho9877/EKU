@@ -8,6 +8,7 @@ import com.eku.EKU.form.BoardListResponse;
 import com.eku.EKU.form.InfoBoardForm;
 import com.eku.EKU.form.InfoBoardResponse;
 import com.eku.EKU.repository.InfoBoardRepository;
+import com.eku.EKU.repository.StudentRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,9 +23,11 @@ import static com.eku.EKU.utils.RelativeTimeConverter.convertToRelativeTime;
 @Service
 public class InfoBoardService {
     public final InfoBoardRepository infoBoardRepository;
+    private final StudentRepository studentRepository;
 
-    public InfoBoardService(InfoBoardRepository infoBoardRepository) {
+    public InfoBoardService(InfoBoardRepository infoBoardRepository, StudentRepository studentRepository) {
         this.infoBoardRepository = infoBoardRepository;
+        this.studentRepository = studentRepository;
     }
 
     /**
@@ -34,6 +37,8 @@ public class InfoBoardService {
      */
     public InfoBoard loadBoard(InfoBoardForm form)throws IllegalArgumentException, NoSuchElementException {
         InfoBoard board = infoBoardRepository.findById(form.getId()).get();
+        board.setView(board.getView() + 1);
+        infoBoardRepository.save(board);
         return board;
     }
     /**
@@ -64,11 +69,13 @@ public class InfoBoardService {
      * @return
      */
     public InfoBoardResponse insertBoard(InfoBoardForm form) throws IllegalArgumentException, NoSuchElementException {
-        Student studNo = Student.builder().studNo(form.getWriterNo()).name("temp").email("temp").department("temp").build();
+        if(!isCorrectBuilding(form.getBuilding()))
+            throw new IllegalArgumentException();
+        Student student = studentRepository.findById(form.getWriterNo()).orElseThrow();
         InfoBoard infoBoard = InfoBoard.builder()
-                .no(studNo)
-                .name(form.getName())
-                .department(form.getDepartment())
+                .no(student)
+                .name(student.getName())
+                .department(student.getDepartment())
                 .title(form.getTitle())
                 .content(form.getContent())
                 .writtenTime(currentTime())
@@ -81,6 +88,8 @@ public class InfoBoardService {
      * @param form 수정할 게시판의 정보
      */
     public void updateBoard(InfoBoardForm form) throws IllegalArgumentException, NoSuchElementException{
+        if(!isCorrectBuilding(form.getBuilding()))
+            throw new IllegalArgumentException();
         InfoBoard board = infoBoardRepository.findById(form.getId()).get();
         if(!form.getTitle().isEmpty()&&!form.getContent().isEmpty()) {
             board.setContent(form.getContent());
@@ -114,14 +123,16 @@ public class InfoBoardService {
         return sdf.format(dt);
     }
     /**
-     * 1011001010 이런식으로 오는 강의동코드와 목록이 표시되어야할 강의동 번호가 일치하는지 검사하는 함수
+     * building 코드가 맞는지 검사
      */
-    public boolean isCorrectBuilding(String code, int no) {
-        if(no<1||no>10)
+    public boolean isCorrectBuilding(String code) {
+        if(code.length()!=10)
             return false;
-        else if(code.substring(no-1,no).equals("1"))
-            return true;
-        return false;
+        for(int i=0;i<code.length();i++){
+            if(!code.substring(i,i+1).equals("0")&&!code.substring(i,i+1).equals("1"))
+                return false;
+        }
+        return true;
     }
 
     public List<BoardListResponse> loadBoardAfterId(int building, Long id) {
@@ -137,6 +148,11 @@ public class InfoBoardService {
 
     public List<BoardListResponse> searchMoreBoard(int building, String keyword, long id) {
         List<InfoBoard> result = infoBoardRepository.findByBuildingAndKeywordAndIdLessThanOrderByWrittenTimeDesc(building, keyword, id, Pageable.ofSize(20));
+        return result.stream().map(BoardListResponse::new).toList();
+    }
+
+    public List<BoardListResponse> previewInfoBoard(int building) {
+        Page<InfoBoard> result = infoBoardRepository.findAllByBuildingOrderByWrittenTime(building, Pageable.ofSize(3));
         return result.stream().map(BoardListResponse::new).toList();
     }
 }

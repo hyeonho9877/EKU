@@ -24,7 +24,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/rounded_gray"
-        android:hint="@string/search_hint"
+        android:hint="@string/search_hint_info"
         android:minHeight="48dp"
         android:maxLines="1"
         android:inputType="text"
