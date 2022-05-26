@@ -66,6 +66,8 @@ public class InfoBoardService {
      * @return
      */
     public InfoBoardResponse insertBoard(InfoBoardForm form) throws IllegalArgumentException, NoSuchElementException {
+        if(!isCorrectBuilding(form.getBuilding()))
+            throw new IllegalArgumentException();
         Student studNo = Student.builder().studNo(form.getWriterNo()).name("temp").email("temp").department("temp").build();
         InfoBoard infoBoard = InfoBoard.builder()
                 .no(studNo)
@@ -83,6 +85,8 @@ public class InfoBoardService {
      * @param form 수정할 게시판의 정보
      */
     public void updateBoard(InfoBoardForm form) throws IllegalArgumentException, NoSuchElementException{
+        if(!isCorrectBuilding(form.getBuilding()))
+            throw new IllegalArgumentException();
         InfoBoard board = infoBoardRepository.findById(form.getId()).get();
         if(!form.getTitle().isEmpty()&&!form.getContent().isEmpty()) {
             board.setContent(form.getContent());
@@ -116,14 +120,16 @@ public class InfoBoardService {
         return sdf.format(dt);
     }
     /**
-     * 1011001010 이런식으로 오는 강의동코드와 목록이 표시되어야할 강의동 번호가 일치하는지 검사하는 함수
+     * building 코드가 맞는지 검사
      */
-    public boolean isCorrectBuilding(String code, int no) {
-        if(no<1||no>10)
+    public boolean isCorrectBuilding(String code) {
+        if(code.length()!=10)
             return false;
-        else if(code.substring(no-1,no).equals("1"))
-            return true;
-        return false;
+        for(int i=0;i<code.length();i++){
+            if(!code.substring(i,i+1).equals("0")&&!code.substring(i,i+1).equals("1"))
+                return false;
+        }
+        return true;
     }
 
     public List<BoardListResponse> loadBoardAfterId(int building, Long id) {
