@@ -14,13 +14,13 @@ import com.kyonggi.eku.databinding.ActivityBoardBinding;
 import com.kyonggi.eku.model.FreeBoardPreview;
 import com.kyonggi.eku.model.InfoBoardPreview;
 import com.kyonggi.eku.presenter.board.BoardPresenter;
-import com.kyonggi.eku.utils.callbacks.OnResponseListeners;
+import com.kyonggi.eku.utils.callbacks.OnBoardResponseListeners;
 import com.kyonggi.eku.view.board.fragment.FragmentFreeBoard;
 import com.kyonggi.eku.view.board.fragment.FragmentInfoBoard;
 
 import java.util.List;
 
-public class ActivityBoard extends AppCompatActivity implements OnResponseListeners {
+public class ActivityBoard extends AppCompatActivity implements OnBoardResponseListeners {
 
     private static final String TAG = "ActivityBoard";
     private ActivityBoardBinding binding;

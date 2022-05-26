@@ -11,12 +11,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.kyonggi.eku.databinding.FragmentSignUpEndBinding;
-import com.kyonggi.eku.utils.callbacks.OnConfirmedListener;
+import com.kyonggi.eku.utils.callbacks.OnSignUpConfirmedListener;
 
 public class FragmentSignUpEnd extends Fragment {
     private static final String TAG = "FragmentSignUpEnd";
     private FragmentSignUpEndBinding binding;
-    private OnConfirmedListener listener;
+    private OnSignUpConfirmedListener listener;
 
     @Nullable
     @Override
@@ -30,7 +30,7 @@ public class FragmentSignUpEnd extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-            listener = (OnConfirmedListener) context;
+            listener = (OnSignUpConfirmedListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement OnArticleSelectedListener");
         }
