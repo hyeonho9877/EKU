@@ -149,4 +149,14 @@ public class InfoBoardService {
         Page<InfoBoard> result = infoBoardRepository.findAllByBuildingOrderByWrittenTime(building, Pageable.ofSize(3));
         return result.stream().map(BoardListResponse::new).toList();
     }
+
+    public List<BoardListResponse> allInfoBoard(){
+        List<InfoBoard> result = infoBoardRepository.findByOrderByWrittenTimeDesc(Pageable.ofSize(20));
+        return result.stream().map(BoardListResponse::new).toList();
+    }
+
+    public List<BoardListResponse> allInfoBoardMore(long id){
+        List<InfoBoard> result = infoBoardRepository.findAllByIdLessThanOrderByWrittenTimeDesc(id, Pageable.ofSize(20));
+        return result.stream().map(BoardListResponse::new).toList();
+    }
 }
