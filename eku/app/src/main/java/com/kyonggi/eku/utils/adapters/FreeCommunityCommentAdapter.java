@@ -98,6 +98,9 @@ public class FreeCommunityCommentAdapter extends BaseAdapter {
         if(!id_text.equals(writer)){
             btn_edit.setVisibility(View.GONE);
             btn_delete.setVisibility(View.GONE);
+        }else {
+            btn_edit.setVisibility(View.VISIBLE);
+            btn_delete.setVisibility(View.VISIBLE);
         }
 
         btn_edit.setOnClickListener(new View.OnClickListener() {

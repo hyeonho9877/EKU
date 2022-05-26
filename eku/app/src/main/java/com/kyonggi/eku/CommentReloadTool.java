@@ -1,7 +1,5 @@
 package com.kyonggi.eku;
 
-public class CommentReloadTool {
-    public void reload() {
-
-    }
+public interface CommentReloadTool {
+    public void reload();
 }
