@@ -52,10 +52,10 @@ public class BoardController {
             return ResponseEntity.ok(freeBoardService.insertBoard(form));
         }catch (NoSuchBoardException exception) {
             exception.printStackTrace();
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body("no such element");
         } catch (IllegalStateException e) {
             e.printStackTrace();
-            return ResponseEntity.internalServerError().body(null);
+            return ResponseEntity.internalServerError().body("illegal");
         }
     }
 
@@ -68,10 +68,10 @@ public class BoardController {
     public ResponseEntity<?> updateBoard(@RequestBody FreeBoardForm form){
         try {
             freeBoardService.updateBoard(form);
-            return ResponseEntity.ok(form.getId());
+            return ResponseEntity.ok("success");
         } catch (IllegalArgumentException | NoSuchElementException exception) {
             exception.printStackTrace();
-            return ResponseEntity.internalServerError().body(form.getId());
+            return ResponseEntity.internalServerError().body("article is not exist");
         }
     }
 
@@ -85,7 +85,7 @@ public class BoardController {
         if(!list.isEmpty())
             return ResponseEntity.ok(list);
         else
-            return ResponseEntity.badRequest().body("list is empty");
+            return ResponseEntity.ok("list is empty");
     }
 
     /**
@@ -102,7 +102,7 @@ public class BoardController {
             return ResponseEntity.ok(board);
         }catch (NoSuchElementException exception) {
             exception.printStackTrace();
-            return ResponseEntity.badRequest().body("no articles");
+            return ResponseEntity.ok("no articles");
         }
     }
     /**
@@ -117,7 +117,7 @@ public class BoardController {
             return ResponseEntity.ok(form.getId());
         } catch (IllegalArgumentException | EmptyResultDataAccessException | NoSuchElementException exception) {
             exception.printStackTrace();
-            return ResponseEntity.internalServerError().body(form.getId());
+            return ResponseEntity.ok("no articles");
         }
     }
     /**
@@ -131,10 +131,10 @@ public class BoardController {
             return ResponseEntity.ok(infoBoardService.insertBoard(form));
         }catch (NoSuchBoardException exception) {
             exception.printStackTrace();
-            return ResponseEntity.badRequest().body(null);
-        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body("no such board");
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            return ResponseEntity.internalServerError().body(null);
+            return ResponseEntity.badRequest().body("building code error");
         }
     }
     /**
@@ -184,7 +184,7 @@ public class BoardController {
         if(!list.isEmpty())
             return ResponseEntity.ok(list);
         else
-            return ResponseEntity.badRequest().body("list is empty");
+            return ResponseEntity.ok("list is empty");
     }
     /**
      * 공지 게시판 게시물을 불러오는 메소드
@@ -265,12 +265,12 @@ public class BoardController {
         try {
             freeBoardCommentService.writeComment(form);
             return ResponseEntity.ok(new FreeBoardCommentResponse(form));
-        } catch (NoSuchStudentException exception) {
-            exception.printStackTrace();
-            return ResponseEntity.badRequest().body(null);
+        } catch (NoSuchStudentException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("no such");
         } catch (IllegalStateException e) {
             e.printStackTrace();
-            return ResponseEntity.internalServerError().body(null);
+            return ResponseEntity.internalServerError().body("illegal");
         }
     }
 
