@@ -1,10 +1,8 @@
 package com.eku.EKU.service;
 
-import com.eku.EKU.domain.FreeBoardComment;
 import com.eku.EKU.domain.InfoBoardComment;
 import com.eku.EKU.exceptions.NoSuchCommentException;
 import com.eku.EKU.form.CommentForm;
-import com.eku.EKU.form.FreeBoardCommentResponse;
 import com.eku.EKU.form.InfoBoardCommentResponse;
 import com.eku.EKU.repository.InfoBoardCommentRepository;
 import com.eku.EKU.repository.InfoBoardRepository;
@@ -32,7 +30,7 @@ public class InfoBoardCommentService {
         InfoBoardComment comment = InfoBoardComment.builder()
                 .content(form.getContent())
                 .writer(studentRepository.getById(form.getWriter()))
-                .original(infoBoardRepository.getById(form.getArticleID()))
+                .original(infoBoardRepository.getById(form.getArticleId()))
                 .build();
 
         commentRepository.save(comment);

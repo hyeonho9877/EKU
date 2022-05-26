@@ -155,4 +155,9 @@ public class FreeBoardService {
         List<FreeBoard> result = freeBoardRepository.findByKeywordAndIdLessThanOrderByTimeDesc(keyword, id, Pageable.ofSize(20));
         return result.stream().map(e-> new FreeBoardListResponse(e, e.getComments(), studentNo(e.getStudent().getStudNo())+" "+e.getDepartment())).toList();
     }
+
+    public List<FreeBoardListResponse> previewFreeBoard() {
+        List<FreeBoard> result = freeBoardRepository.findByOrderByTimeDesc(Pageable.ofSize(3));
+        return result.stream().map(e-> new FreeBoardListResponse(e, e.getComments(), studentNo(e.getStudent().getStudNo())+" "+e.getDepartment())).toList();
+    }
 }

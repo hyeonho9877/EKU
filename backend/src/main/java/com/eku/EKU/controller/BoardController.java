@@ -245,6 +245,16 @@ public class BoardController {
     public ResponseEntity<?> searchMoreFreeBoard(@RequestBody FreeBoardForm form) {
         return ResponseEntity.ok(freeBoardService.searchMoreBoard(form.getKeyword(), form.getId()));
     }
+
+    @PostMapping("/board/info/preview")
+    public ResponseEntity<?> previewInfoBoard(@RequestBody InfoBoardForm form) {
+        return ResponseEntity.ok(infoBoardService.previewInfoBoard(form.getLectureBuilding()));
+    }
+
+    @PostMapping("/board/free/preview")
+    public ResponseEntity<?> previewFreeBoard() {
+        return ResponseEntity.ok(freeBoardService.previewFreeBoard());
+    }
     /**
      * 자유 게시판 댓글 작성
      * @param form 작성하려는 댓글의 정보를 담고 있는 Form 객체

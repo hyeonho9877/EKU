@@ -43,8 +43,8 @@ public class WriteFreeCommunity extends AppCompatActivity implements View.OnClic
     Button btn_save;
     Button btn_cancle;
 
-    String writer_id    = "201713924";
-    String department   = "소프트웨어공학과";
+    String writer_id;
+    String department;
     UserInformation userInformation;
 
     @Override
@@ -95,6 +95,8 @@ public class WriteFreeCommunity extends AppCompatActivity implements View.OnClic
         // Body에 담을 JSON Object 생성 및 선언
         JSONObject jsonBodyObj = new JSONObject();
         try{
+            writer_id = userInformation.fromPhoneStudentNo(this);
+            department = userInformation.fromPhoneDepartment(this);
             String title    = et_title.getText().toString();
             String content  = et_content.getText().toString();
             jsonBodyObj.put("writerNo", writer_id);

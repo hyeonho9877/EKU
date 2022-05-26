@@ -65,7 +65,10 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
     }
 
     private void setBoard() {
-        buildingNumber = getIntent().getStringExtra("buildingNumber");
+        String rawBuildingNumber = getIntent().getStringExtra("buildingNumber");
+        if (rawBuildingNumber.contains("종합")) buildingNumber = "5";
+        else if(rawBuildingNumber.contains("공학")) buildingNumber = "10";
+        else buildingNumber = rawBuildingNumber.substring(0, 1);
         currentMode = getIntent().getStringExtra("mode");
 
         if (currentMode.equals(BOARD_FREE)) {
@@ -76,12 +79,11 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
                     .replace(R.id.frame_layout_board, fragmentFreeBoard, BOARD_FREE)
                     .commit();
         } else if (currentMode.equals(BOARD_INFO)) {
-            String announce = buildingNumber + " 강의동 공지게시판입니다.";
+            String announce = rawBuildingNumber + " 공지 게시판 입니다.";
             binding.textBuildingBoardAnnounce.setText(announce);
             binding.buttonInfoBoard.setTextColor(Color.parseColor("#252525"));
             binding.buttonFreeBoard.setTextColor(Color.parseColor("#80252525"));
-            String boardName = buildingNumber + " 강의동";
-            binding.textBuildingName.setText(boardName);
+            binding.textBuildingName.setText(rawBuildingNumber);
 
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout_board, fragmentInfoBoard, BOARD_INFO)

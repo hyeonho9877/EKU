@@ -50,6 +50,8 @@ public class FragmentInfoBoard extends Fragment {
 
     public void listArticles(List<InfoBoardPreview> articles) {
         if(articles.size() >= 20) addScrollListener();
+        else if(articles.size()==0) binding.textInfoBoardNoArticles.setVisibility(View.VISIBLE);
+        else binding.textInfoBoardNoArticles.setVisibility(View.INVISIBLE);
         adapter = new InfoBoardAdapter(articles, getContext());
         adapter.notifyItemRangeInserted(0, articles.size());
         binding.recyclerViewInfoBard.setAdapter(adapter);

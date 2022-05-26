@@ -47,7 +47,7 @@ public class findGang extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_gang);
         bluetoothOn();
-        permissionCheck();
+        //permissionCheck();
         initManager();
         initListener();
 
@@ -97,14 +97,9 @@ public class findGang extends AppCompatActivity {
             //권한 요청
             //후에 권한 요청 설명 필요할 꺼 같음
             permission.requestPermission();
-            showToast("EKU는 권한으로 위치정보와 근처기기가 필요합니다." +
-                    "권한부여 후 실행 해 주십시오.");
-            Intent gpsOptionsIntent = new Intent(Settings.ACTION_APPLICATION_SETTINGS);
-            startActivity(gpsOptionsIntent);
-            finish();
         }
         else{
-
+            permission.requestPermission();
         }
     }
 
@@ -115,6 +110,7 @@ public class findGang extends AppCompatActivity {
         if (!permission.permissionResult(requestCode, permissions, grantResults)) {
             // 다시 permission 요청
             permission.requestPermission();
+            showToast("EKU는 권한이 모두 켜져있지 않을 경우 원활히 작동하지 않을 수 있습니다.");
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
@@ -155,9 +151,6 @@ public class findGang extends AppCompatActivity {
                     }
                     if(temp.equals("61618")) {
                         intent.putExtra("GANG","6강의동");
-                    }
-                    if(temp.equals("61511")) {
-                        intent.putExtra("GANG","5강의동");
                     }
                     mMinewBeaconManager.stopScan();
                     startActivity(intent);
