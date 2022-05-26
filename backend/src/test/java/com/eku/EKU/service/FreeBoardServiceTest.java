@@ -20,11 +20,15 @@ public class FreeBoardServiceTest {
     @Test
     public void testDB() {
         FreeBoardForm freeBoard = new FreeBoardForm();
-        freeBoard.setId((long)1);
+        //freeBoard.setId((long)1);
         //freeBoard.setTime(boardService.currentTime());
-        //System.out.println(boardController.insertBoard(freeBoard).getBody());
+        freeBoard.setContent("dd");
+        freeBoard.setDepartment("22");
+        freeBoard.setTitle("dd");
+        freeBoard.setWriterNo((long)20161183);
+        System.out.println(boardController.insertBoard(freeBoard).getBody());
         //System.out.println(boardController.updateBoard(freeBoard));
-        System.out.println(boardController.loadBoard(freeBoard).getBody());
+        //System.out.println(boardController.loadBoard(freeBoard).getBody());
         //System.out.println(boardController.boardList().getBody());
         //System.out.println(boardController.deleteBoard(freeBoard));
     }
