@@ -164,7 +164,7 @@ public class MainBoard extends AppCompatActivity {
         try {
             name = intent.getExtras().getString("GANG");
         } catch (Exception e) {
-            name = "EKU";
+            name = "8강의동";
         }
         BuildingButton.setText(name);
         BuildingButton.setOnClickListener(new Button.OnClickListener() {
@@ -211,8 +211,8 @@ public class MainBoard extends AppCompatActivity {
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-        PreviewCom(sc);
-        PreviewFree(sc);
+        //PreviewCom(sc);
+        //PreviewFree(sc);
         PreviewLec(sc);
 
 
