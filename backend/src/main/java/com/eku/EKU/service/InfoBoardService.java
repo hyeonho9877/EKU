@@ -69,6 +69,8 @@ public class InfoBoardService {
      * @return
      */
     public InfoBoardResponse insertBoard(InfoBoardForm form) throws IllegalArgumentException, NoSuchElementException {
+        if(!isCorrectBuilding(form.getBuilding()))
+            throw new IllegalArgumentException();
         Student student = studentRepository.findById(form.getWriterNo()).orElseThrow();
         InfoBoard infoBoard = InfoBoard.builder()
                 .no(student)
