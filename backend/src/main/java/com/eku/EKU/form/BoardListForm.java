@@ -4,6 +4,5 @@ import lombok.Data;
 
 @Data
 public class BoardListForm {
-    private int page;
     private int lectureBuilding;
 }
