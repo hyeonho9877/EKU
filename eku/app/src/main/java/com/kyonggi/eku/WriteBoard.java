@@ -69,7 +69,7 @@ public class WriteBoard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MainBoard.class);
-
+                intent.putExtra("GANG",Name);
                 EditText text = findViewById(R.id.memo_write);
                 String memoText = text.getText().toString();
 

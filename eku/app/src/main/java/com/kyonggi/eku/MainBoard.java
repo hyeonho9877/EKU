@@ -61,6 +61,7 @@ public class MainBoard extends AppCompatActivity {
     public int Minorcheck;
     String[] showBuilding = {"6강의동", "7강의동", "8강의동", "제2공학관", "종합강의동"};
     int[] minor = {61618, 61632, 61686, 61633, 61524};
+    int[] building = {6,7,8,10,5};
     int buildingSelected = 5;
     AlertDialog buildingSelectDialog;
     long backKeyPressedTime;
@@ -68,8 +69,6 @@ public class MainBoard extends AppCompatActivity {
     GridListAdapter gAdapter;
     LinearLayout sc;
     MainItem mainitem;
-    private String buildingNumber;
-    int now_building = 8;
     String name;;
     GridView gridView;
     int paramHeight;
@@ -80,19 +79,23 @@ public class MainBoard extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_board);
-        buildingNumber = String.valueOf(now_building);
         gridView = (GridView) findViewById(R.id.board_Memo);
         paramHeight = gridView.getLayoutParams().height;
-/*
-        if (savedInstanceState == null) {
-            MapFragment mapFragment = new MapFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.board_ImageView, mapFragment, "main")
-                    .commit();
+        sc = (LinearLayout) findViewById(R.id.board_linear);
+        Intent intent = getIntent();
+        String checkmap = intent.getStringExtra("NoMap");
+       if (!checkmap.equals("O")) {
+            TextView txt = (TextView) findViewById(R.id.MapLocation);
+            txt.setText(intent.getExtras().getString("GANG"));
+            if (savedInstanceState == null) {
+                MapFragment mapFragment = new MapFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.board_ImageView, mapFragment, "main")
+                        .commit();
+            }
         }
- */
-        final DrawerLayout drawerLayout = findViewById(R.id.board_drawerLayout);
 
+        final DrawerLayout drawerLayout = findViewById(R.id.board_drawerLayout);
         findViewById(R.id.board_Menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,6 +155,10 @@ public class MainBoard extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (checkmap.equals("O")){
+                    Toast.makeText(getApplicationContext(), "비콘을 연결하셔야 합니다", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(getApplicationContext(), DonanBagGi.class);
                 startActivity(intent);
             }
@@ -159,16 +166,20 @@ public class MainBoard extends AppCompatActivity {
 
         BuildingButton = (TextView) findViewById(R.id.go_Donan);
         BuildingButton.setText("불러오는중");
-        Intent intent = getIntent();
         try {
             name = intent.getExtras().getString("GANG");
+            Log.i("dd",name);
             for (int i=0;i< showBuilding.length;i++) {
-                if (name.equals(showBuilding[i]))
+                if (name.equals(showBuilding[i])) {
                     Minorcheck = minor[i];
+                    buildingSelected = i;
+                }
             }
+
         } catch (Exception e) {
                 name = "8강의동";
                 Minorcheck = 61686;
+                buildingSelected = 2;
         }
         BuildingButton.setText(name);
         BuildingButton.setOnClickListener(new Button.OnClickListener() {
@@ -189,9 +200,13 @@ public class MainBoard extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         name = showBuilding[buildingSelected];
-                        BuildingButton.setText(showBuilding[buildingSelected]);
+                        BuildingButton.setText(name);
                         Minorcheck = minor[buildingSelected];
+                        sc.removeAllViews();
                         ViewMemo(Minorcheck);
+                        PreviewCom(sc);
+                        PreviewFree(sc);
+                        PreviewLec(sc);
                     }
                 })
                 .setNegativeButton("취소", null)
@@ -301,7 +316,7 @@ public class MainBoard extends AppCompatActivity {
                         String title = LectureObject.getString("title");
                         listcom[i] = new ComminityItem(String.valueOf(id), title);
                     }
-                    mainitem = new MainItem(getApplicationContext(), "공지게시판", listcom[0], listcom[1], listcom[2], buildingNumber);
+                    mainitem = new MainItem(getApplicationContext(), "공지게시판", listcom[0], listcom[1], listcom[2], name);
                     sc.addView(mainitem);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -310,7 +325,7 @@ public class MainBoard extends AppCompatActivity {
         };
 
         HashMap<String, Object> temp = new HashMap<>();
-        temp.put("lectureBuilding",buildingNumber);
+        temp.put("lectureBuilding",building[buildingSelected]);
         try {
             SendTool.requestForJson("/board/info/preview", temp, handler);
         } catch (NullPointerException e) {
@@ -332,7 +347,7 @@ public class MainBoard extends AppCompatActivity {
                         String title = FreeObject.getString("title");
                         listFree[i] = new FreeCommunityItem(String.valueOf(id), title);
                     }
-                    mainitem = new MainItem(getApplicationContext(), " 자유게시판", listFree[0], listFree[1], listFree[2], buildingNumber);
+                    mainitem = new MainItem(getApplicationContext(), " 자유게시판", listFree[0], listFree[1], listFree[2], name);
                     sc.addView(mainitem);
                 } catch (JSONException e) {
                     e.printStackTrace();
