@@ -21,7 +21,7 @@ import com.kyonggi.eku.WriteFreeCommunity;
 import com.kyonggi.eku.model.FreeBoardPreview;
 import com.kyonggi.eku.model.InfoBoardPreview;
 import com.kyonggi.eku.utils.SendTool;
-import com.kyonggi.eku.utils.callbacks.OnResponseListeners;
+import com.kyonggi.eku.utils.callbacks.OnBoardResponseListeners;
 import com.kyonggi.eku.view.board.activity.ActivityFreeBoardSearch;
 import com.kyonggi.eku.view.board.activity.ActivityInfoBoardSearch;
 import com.kyonggi.eku.view.signIn.ActivitySignIn;
@@ -32,11 +32,11 @@ import java.util.HashMap;
 public class BoardPresenter {
     private static final String TAG = "FreeBoardPresenter";
     private final Context context;
-    private final OnResponseListeners listener;
+    private final OnBoardResponseListeners listener;
     private UserInformation userInformation;
     private Handler handler;
 
-    public BoardPresenter(Context context, OnResponseListeners listener) {
+    public BoardPresenter(Context context, OnBoardResponseListeners listener) {
         this.context = context;
         this.listener = listener;
         userInformation = new UserInformation(context);
@@ -172,5 +172,15 @@ public class BoardPresenter {
         request.put("id", id);
         request.put("keyword", keyword);
         SendTool.requestForJson("/board/free/search/load", request, getHandler(BOARD_FREE, LOAD_OLD));
+    }
+
+    public void loadAllInfoArticles(){
+        SendTool.request("/board/info/all", getHandler(BOARD_INFO, INIT));
+    }
+
+    public void loadMoreAllInfo(long id) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        SendTool.requestForJson("/board/info/all/load", params, getHandler(BOARD_INFO, LOAD_OLD));
     }
 }
