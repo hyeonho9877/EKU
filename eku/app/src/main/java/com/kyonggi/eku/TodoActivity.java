@@ -65,7 +65,6 @@ public class TodoActivity extends AppCompatActivity {
         if (alarmManager != null) {
             Intent intent = new Intent(this, AlarmReceiver.class);
             PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 1, intent,PendingIntent.FLAG_IMMUTABLE);
-            Toast.makeText(getApplicationContext(),alarmManager+"",Toast.LENGTH_SHORT).show();
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                     AlarmManager.INTERVAL_DAY, alarmIntent);
 
