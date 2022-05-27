@@ -52,8 +52,8 @@ public class TodoActivity extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        int hour=8;
-        int minute=30;
+        int hour=20;
+        int minute=20;
         int sec =0;
         calendar.set(Calendar.HOUR_OF_DAY,hour);
         calendar.set(Calendar.MINUTE,minute);

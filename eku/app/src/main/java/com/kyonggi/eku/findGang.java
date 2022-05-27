@@ -30,7 +30,7 @@ public class findGang extends AppCompatActivity {
     /**
      * 비콘
      */
-    private PermissionSupport permission;
+
     private MinewBeaconManager mMinewBeaconManager;
     private BeaconListAdapter mAdapter;
     private static final int REQUEST_ENABLE_BT = 2;
@@ -38,7 +38,7 @@ public class findGang extends AppCompatActivity {
     UserRssi comp = new UserRssi();
     private int state;
     boolean stealing=false;
-
+    int gone=0;
     /*
      **
      *  비콘
@@ -47,84 +47,31 @@ public class findGang extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_gang);
-        permissionCheck();
-        bluetoothOn();
+
         initManager();
         Button b = findViewById(R.id.skipButton);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainBoard.class);
-                intent.putExtra("NoMap", "O");
-                startActivity(intent);
-                finish();
+                if(gone==0) {
+                    Intent intent = new Intent(getApplicationContext(), MainBoard.class);
+                    intent.putExtra("NoMap", "O");
+                    gone++;
+                    startActivity(intent);
+                    finish();
+
+                }
             }
         });
-        Toast.makeText(getApplicationContext(), "블루투스, 위치 권한을 허용하지 않으실 경우 EKU를 사용하실 수 없습니다.", Toast.LENGTH_LONG).show();
-        Handler handler = new Handler();
-        if (checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN)
-                == PackageManager.PERMISSION_GRANTED) {
-            initListener();
-        }
-        if (savedInstanceState == null) {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(), "게이", Toast.LENGTH_SHORT).show();
-                    if (checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN)
-                            == PackageManager.PERMISSION_GRANTED) {
-                        initListener();
-                    }
-                }
-            }, 10000);
-        }
-   
-    }
-    private void bluetoothOn() {
-        BluetoothAdapter ap = BluetoothAdapter.getDefaultAdapter();
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ap == null)
-            showToast("bluetooth 를 지원하지 않습니다.");
-        if (!ap.isEnabled())
-        {
-            Toast.makeText(getBaseContext(),"블루투스가 꺼져있습니다. 강의동 확인을 위해 블루투스를 켠 후 재실행 바랍니다.",Toast.LENGTH_LONG).show();
-            Intent blueIntent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
-            startActivity(blueIntent);
-            finish();
-        }
-        else if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            Toast.makeText(getBaseContext(),"위치정보가 꺼져있습니다. 강의동 확인을 위해 위치 정보를 켠 후 재실행 바랍니다.",Toast.LENGTH_LONG).show();
-            Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(gpsOptionsIntent);
-            finish();
-        }
+        mMinewBeaconManager.startScan();
+        initListener();
+
+
 
     }
 
-    private void showToast(String s) {
-        Toast.makeText(this,s, Toast.LENGTH_SHORT).show();
-    }
 
-    private void permissionCheck() {
-        // PermissionSupport.java 클래스 객체 생성
-        permission = new PermissionSupport(this, this);
-        // 권한 체크 후 리턴이 false로 들어오면
 
-        permission.requestPermission();
-
-    }
-
-    // Request Permission에 대한 결과 값 받아와
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        //여기서도 리턴이 false로 들어온다면 (사용자가 권한 허용 거부)
-        if (!permission.permissionResult(requestCode, permissions, grantResults)) {
-            // 다시 permission 요청
-            permission.requestPermission();
-        }
-
-    }
 
     //매니저 초기화
     private void initManager() {
@@ -134,7 +81,7 @@ public class findGang extends AppCompatActivity {
 
 
     private void initListener() {
-        mMinewBeaconManager.startScan();
+
         mMinewBeaconManager.setDeviceManagerDelegateListener(new MinewBeaconManagerListener() {
             /**
              *   비콘 새로 등판시 하는일.
@@ -142,36 +89,98 @@ public class findGang extends AppCompatActivity {
              */
             @Override
             public void onAppearBeacons(List<MinewBeacon> minewBeacons) {
+
                 for(MinewBeacon m :minewBeacons) {
+
                     String temp = m.getBeaconValue(BeaconValueIndex.MinewBeaconValueIndex_Minor).getStringValue();
                     Intent intent = new Intent(getApplicationContext(), MainBoard.class);
                     if(temp.equals("61686"))
                     {
                         intent.putExtra("GANG","8강의동");
                         intent.putExtra("NoMap","1");
+                        if(gone==0)
+                        {
+                            Toast.makeText(getApplicationContext(),temp,Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
+
+                            gone++;
+                            mMinewBeaconManager.stopScan();
+                            finish();
+                        }
+                        else{
+                        }
+
                     }
-                    if(temp.equals("61633"))
+                    else if(temp.equals("61633"))
                     {
                         intent.putExtra("GANG","종합강의동");
                         intent.putExtra("NoMap","1");
+                        if(gone==0)
+                        {
+                            Toast.makeText(getApplicationContext(),temp,Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
+
+                            gone++;
+                            mMinewBeaconManager.stopScan();
+                            finish();
+                        }
+                        else{
+                        }
+
                     }
-                    if(temp.equals("61524"))
+                    else if(temp.equals("61524"))
                     {
                         intent.putExtra("GANG","제2공학관");
                         intent.putExtra("NoMap","1");
+                        if(gone==0)
+                        {
+                            Toast.makeText(getApplicationContext(),temp,Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
+
+                            gone++;
+                            mMinewBeaconManager.stopScan();
+                            finish();
+                        }
+                        else{
+                        }
+
                     }
-                    if(temp.equals("61632"))
+                    else if(temp.equals("61632"))
                     {
                         intent.putExtra("GANG","7강의동");
                         intent.putExtra("NoMap","1");
+                        if(gone==0)
+                        {
+                            Toast.makeText(getApplicationContext(),temp,Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
+
+                            gone++;
+                            mMinewBeaconManager.stopScan();
+                            finish();
+                        }
+                        else{
+                        }
+
                     }
-                    if(temp.equals("61618")) {
+                    else if(temp.equals("61618")) {
                         intent.putExtra("GANG","6강의동");
                         intent.putExtra("NoMap","1");
+                        if(gone==0)
+                        {
+                            Toast.makeText(getApplicationContext(),temp,Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
+
+                            gone++;
+                            mMinewBeaconManager.stopScan();
+                            finish();
+                        }
+                        else{
+                        }
+
                     }
-                    mMinewBeaconManager.stopScan();
-                    startActivity(intent);
-                    finish();
+
+
+
                 }
 
 
