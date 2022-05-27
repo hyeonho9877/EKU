@@ -54,26 +54,19 @@ public class findGang extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MainBoard.class);
-                intent.putExtra("NoMap","O");
+                intent.putExtra("NoMap", "O");
                 startActivity(intent);
                 finish();
             }
         });
-        int i=0;
-        while(true){
-            if(i==0){
-            Toast.makeText(getApplicationContext(),"블루투스 권한을 허용하지 않으실 경우 EKU를 사용하실 수 없습니다.",Toast.LENGTH_LONG).show();
-i++;}       if(checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN)
-                    == PackageManager.PERMISSION_GRANTED)
-            break;
+        Toast.makeText(getApplicationContext(), "블루투스, 위치 권한을 허용하지 않으실 경우 EKU를 사용하실 수 없습니다.", Toast.LENGTH_LONG).show();
+        while (true) {
+            if (checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN)
+                    == PackageManager.PERMISSION_GRANTED) {
+                initListener();
+                break;
+            }
         }
-        initListener();
-
-
-
-
-
-
     }
     private void bluetoothOn() {
         BluetoothAdapter ap = BluetoothAdapter.getDefaultAdapter();
@@ -117,7 +110,6 @@ i++;}       if(checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN)
         if (!permission.permissionResult(requestCode, permissions, grantResults)) {
             // 다시 permission 요청
             permission.requestPermission();
-            showToast("EKU는 권한이 모두 켜져있지 않을 경우 원활히 작동하지 않을 수 있습니다.");
         }
 
     }
@@ -212,9 +204,9 @@ i++;}       if(checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN)
     /*
     BLE다이어로그를 보여준다.
     * */
-    private void showBLEDialog() {
+    /*private void showBLEDialog() {
         Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-       // startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-    }
+        startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+    }*/
 
 }
