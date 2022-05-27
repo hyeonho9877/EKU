@@ -136,7 +136,6 @@
         <receiver android:name=".AlarmReceiver" android:exported="true"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCIWk1C49JxDPCs-2lrHSaLBik8MzL1HmQ"/>
+            android:value="${MAPS_API_KEY}" />
     </application>
-
 </manifest>
