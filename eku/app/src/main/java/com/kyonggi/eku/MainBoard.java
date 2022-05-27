@@ -265,35 +265,33 @@ public class MainBoard extends AppCompatActivity {
         gAdapter = new GridListAdapter();
         Handler handler = new Handler(Looper.getMainLooper()) {
             public void handleMessage(@NonNull Message msg) {
-                Log.i("a", String.valueOf(msg.what));
-                switch (msg.what) {
-                    case 200:
-                        String responseResult = (String) msg.obj;
-                        JSONArray BoardArray = null;
-                        try {
+                String responseResult = (String) msg.obj;
+                Log.e(".", responseResult);
+                JSONArray BoardArray = null;
+                try {
 
-                            BoardArray = new JSONArray(responseResult);
-                        } catch (JSONException jsonException) {
-                            jsonException.printStackTrace();
+                    BoardArray = new JSONArray(responseResult);
+                } catch (JSONException jsonException) {
+                    jsonException.printStackTrace();
+                }
+                int length = BoardArray.length();
+                for (int i = 0; i < length; i++) {
+                    try {
+                        JSONObject BoardObject = BoardArray.getJSONObject(i);
+                        int minor = BoardObject.getInt("minor");
+                        if (minor == checkMinor) {
+                            String content = BoardObject.getString("content");
+                            String time = BoardObject.getString("writtenTime");
+                            gAdapter.addItem(new ListItem(content, time));
+                            gridView.setAdapter(gAdapter);
                         }
-                        int length = BoardArray.length();
-                        for (int i = 0; i < length; i++) {
-                            try {
-                                JSONObject BoardObject = BoardArray.getJSONObject(i);
-                                int minor = BoardObject.getInt("minor");
-                                if (minor == checkMinor) {
-                                    String content = BoardObject.getString("content");
-                                    String time = BoardObject.getString("writtenTime");
-                                    gAdapter.addItem(new ListItem(content, time));
-                                    gridView.setAdapter(gAdapter);
-                                }
-                            } catch (JSONException jsonException) {
-                                jsonException.printStackTrace();
-                            }
-                        }
-                        ViewGroup.LayoutParams params = gridView.getLayoutParams();
-                        params.height = paramHeight * ((length + 1) / 2);
-                        gridView.setLayoutParams(params);
+                    } catch (JSONException jsonException) {
+                        jsonException.printStackTrace();
+                    }
+
+                    ViewGroup.LayoutParams params = gridView.getLayoutParams();
+                    params.height = paramHeight * ((length + 1) / 2);
+                    gridView.setLayoutParams(params);
                 }
             }
         };
