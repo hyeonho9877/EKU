@@ -72,7 +72,7 @@ public class MainBoard extends AppCompatActivity {
     String name;;
     GridView gridView;
     int paramHeight;
-
+    String checkmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,17 +83,21 @@ public class MainBoard extends AppCompatActivity {
         paramHeight = gridView.getLayoutParams().height;
         sc = (LinearLayout) findViewById(R.id.board_linear);
         Intent intent = getIntent();
-        String checkmap = intent.getStringExtra("NoMap");
-       //if (!checkmap.equals("O")) {
+        checkmap = intent.getStringExtra("NoMap");
+        if(checkmap==null)
+        {
+            checkmap="";
+        }
+       if (!checkmap.equals("O")) {
             TextView txt = (TextView) findViewById(R.id.MapLocation);
-            txt.setText(intent.getExtras().getString("GANG"));
+            txt.setText("현재 위치 : "+intent.getExtras().getString("GANG"));
             if (savedInstanceState == null) {
                 MapFragment mapFragment = new MapFragment();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.board_ImageView, mapFragment, "main")
                         .commit();
             }
-        //}
+        }
 
         final DrawerLayout drawerLayout = findViewById(R.id.board_drawerLayout);
         findViewById(R.id.board_Menu).setOnClickListener(new View.OnClickListener() {
@@ -155,6 +159,10 @@ public class MainBoard extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(checkmap==null)
+                {
+                    checkmap="";
+                }
                 if (checkmap.equals("O")){
                     Toast.makeText(getApplicationContext(), "비콘을 연결하셔야 합니다", Toast.LENGTH_SHORT).show();
                     return;

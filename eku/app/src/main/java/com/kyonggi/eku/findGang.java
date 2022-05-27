@@ -214,7 +214,7 @@ i++;}       if(checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN)
     * */
     private void showBLEDialog() {
         Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-        startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+       // startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
     }
 
 }
