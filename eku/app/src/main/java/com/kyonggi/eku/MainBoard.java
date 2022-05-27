@@ -86,7 +86,7 @@ public class MainBoard extends AppCompatActivity {
         checkmap = intent.getStringExtra("NoMap");
         if(checkmap==null)
         {
-            checkmap="";
+            checkmap="O";
         }
        if (!checkmap.equals("O")) {
             TextView txt = (TextView) findViewById(R.id.MapLocation);

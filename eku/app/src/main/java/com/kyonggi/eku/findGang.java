@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
@@ -60,13 +61,24 @@ public class findGang extends AppCompatActivity {
             }
         });
         Toast.makeText(getApplicationContext(), "블루투스, 위치 권한을 허용하지 않으실 경우 EKU를 사용하실 수 없습니다.", Toast.LENGTH_LONG).show();
-        while (true) {
-            if (checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN)
-                    == PackageManager.PERMISSION_GRANTED) {
-                initListener();
-                break;
-            }
+        Handler handler = new Handler();
+        if (checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN)
+                == PackageManager.PERMISSION_GRANTED) {
+            initListener();
         }
+        if (savedInstanceState == null) {
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "게이", Toast.LENGTH_SHORT).show();
+                    if (checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        initListener();
+                    }
+                }
+            }, 10000);
+        }
+   
     }
     private void bluetoothOn() {
         BluetoothAdapter ap = BluetoothAdapter.getDefaultAdapter();
