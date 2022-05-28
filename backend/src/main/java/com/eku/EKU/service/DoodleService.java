@@ -47,7 +47,7 @@ public class DoodleService {
     }
 
     public List<DoodleResponse> getRecentDoodle(String minor) throws NoSuchElementException {
-        return doodleRepository.findByBuilding_BeaconIdIsOrderByWrittenTimeDesc(minor, Pageable.ofSize(10))
+        return doodleRepository.findByBuilding_BeaconIdIsOrderByDoodleIdDesc(minor, Pageable.ofSize(10))
                 .stream()
                 .map(DoodleResponse::new)
                 .collect(Collectors.toList());
