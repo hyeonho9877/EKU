@@ -35,6 +35,7 @@ public class DonanBagGi extends AppCompatActivity {
     Button button;
     Button b;
     ImageView s;
+    MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class DonanBagGi extends AppCompatActivity {
 
     private void bluetoothOn(){
         BluetoothAdapter ap = BluetoothAdapter.getDefaultAdapter();
-        ap.enable();
+     //   ap.enable();
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             Toast.makeText(getBaseContext(),"위치정보가 꺼져있습니다. 알람 확인을 위해 위치 정보를 켜주세요",Toast.LENGTH_LONG).show();
@@ -89,9 +90,8 @@ public class DonanBagGi extends AppCompatActivity {
         textView = findViewById(R.id.Donan_TextView);
         b = findViewById(R.id.BackButton);
         s = findViewById(R.id.Donan_ImageView);
-
         mMinewBeaconManager = MinewBeaconManager.getInstance(this);
-        Toast.makeText(this,"켜짐",Toast.LENGTH_SHORT).show();
+
     }
 
 
@@ -125,7 +125,7 @@ public class DonanBagGi extends AppCompatActivity {
                     button.setBackgroundColor(Color.RED);
                     //아니었으면 멈춰싿고 함
                     isScanning = true;
-                    textView.setText("도난방지가 켜져있습니다");
+                    textView.setText("비콘 주위에 있으면 도난방지가 작동을 시작합니다.");
                     s.setColorFilter(Color.RED);
 
                     try {
@@ -162,8 +162,8 @@ public class DonanBagGi extends AppCompatActivity {
             @Override
             public void onRangeBeacons(List<MinewBeacon> minewBeacons) {
                 for(MinewBeacon m :minewBeacons) {
-                    Toast.makeText(getApplicationContext(),   m.getBeaconValue(BeaconValueIndex.MinewBeaconValueIndex_RSSI).getStringValue()+"", Toast.LENGTH_SHORT).show();
-                    String temp = m.getBeaconValue(BeaconValueIndex.MinewBeaconValueIndex_UUID).getStringValue();
+                    Toast.makeText(getApplicationContext(),"도난 방지 기능이 작동되었습니다.",Toast.LENGTH_SHORT).show();
+                    String temp = m.getBeaconValue(BeaconValueIndex.MinewBeaconValueIndex_Major).getStringValue();
                     String rssi = m.getBeaconValue(BeaconValueIndex.MinewBeaconValueIndex_RSSI).getStringValue();
                     double iRssi = 0;
                     try {
@@ -171,7 +171,7 @@ public class DonanBagGi extends AppCompatActivity {
                     } catch (Exception e) {
                         iRssi = 0;
                     }
-                    if (temp.equals("E2C56DB5-DFFB-48D2-B060-D0F5A71096E0") && iRssi < -90) {
+                    if (temp.equals("40010") && iRssi < -85) {
                         if (stealing == true)
                         {
                         }
@@ -182,7 +182,7 @@ public class DonanBagGi extends AppCompatActivity {
                             audio.setStreamVolume(AudioManager.STREAM_MUSIC,15,AudioManager.FLAG_PLAY_SOUND);
                             Vibrator vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
                             vibrator.vibrate(new long[]{50,300},0); // 0.5초간 진동
-                            MediaPlayer player = MediaPlayer.create(getBaseContext(),R.raw.sirent);
+                            player = MediaPlayer.create(getBaseContext(),R.raw.sirent);
                             player.setLooping(true);
                             player.start();
                             Button offButton = findViewById(R.id.Donan_Off);
@@ -228,6 +228,26 @@ public class DonanBagGi extends AppCompatActivity {
 
         });
 
+    }
+    @Override
+    public void onBackPressed() {
+        long backKeyPressedTime=0;
+        if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
+            backKeyPressedTime = System.currentTimeMillis();
+            Button offButton = findViewById(R.id.Donan_Off);
+            offButton.setVisibility(View.VISIBLE);
+            offButton.setVisibility(View.INVISIBLE);
+            Vibrator vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+            vibrator.cancel();
+            player.release();
+            stealing=false;
+            isScanning = false;
+            if (mMinewBeaconManager != null) {
+                mMinewBeaconManager.stopScan();
+            }
+            Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
     }
     /*
      * 블루투스 스캔을 때려쳤을 때쓰는 코드

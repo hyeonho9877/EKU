@@ -125,7 +125,6 @@ public class DetailFreeCommunity extends AppCompatActivity {
         board_id = intent.getStringExtra("id");
         userInformation = new UserInformation();
         id_text = userInformation.fromPhoneStudentNo(getApplicationContext());
-        Log.d("LoginID :",id_text);
 
 
         arrayList = new ArrayList<FreeCommunityCommentItem>();
@@ -291,12 +290,6 @@ public class DetailFreeCommunity extends AppCompatActivity {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Log.d("---","---");
-                            Log.w("//===========//","================================================");
-                            Log.d("","\n"+"[FREE_COMMUNITY_BOARD_DETAIL > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 응답]");
-                            Log.d("","\n"+"["+"응답 전체 - "+String.valueOf(response.toString())+"]");
-                            Log.w("//===========//","================================================");
-                            Log.d("---","---");
 
                             if (mode == DETAIL_BOARD_MODIFY_REQUEST){
                                 getBoardDetail(board_id , DETAIL_BOARD_REQUEST);
@@ -311,12 +304,7 @@ public class DetailFreeCommunity extends AppCompatActivity {
                     new Response.ErrorListener(){
                         @Override
                         public void onErrorResponse(VolleyError error){
-                            Log.d("---","---");
-                            Log.e("//===========//","================================================");
-                            Log.d("","\n"+"[A_Main > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 실패]");
-                            Log.d("","\n"+"["+"에러 코드 - "+String.valueOf(error.toString())+"]");
-                            Log.e("//===========//","================================================");
-                            Log.d("---","---");
+
                         }
                     }
             ){
@@ -348,12 +336,6 @@ public class DetailFreeCommunity extends AppCompatActivity {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            Log.d("---","---");
-                            Log.w("//===========//","================================================");
-                            Log.d("","\n"+"[FREE_COMMUNITY_BOARD_DETAIL > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 응답]");
-                            Log.d("","\n"+"["+"응답 전체 - "+String.valueOf(response.toString())+"]");
-                            Log.w("//===========//","================================================");
-                            Log.d("---","---");
                             if (mode == DETAIL_BOARD_REQUEST){
                                 try {
                                     arrayList.clear();
@@ -394,12 +376,7 @@ public class DetailFreeCommunity extends AppCompatActivity {
                     new Response.ErrorListener(){
                         @Override
                         public void onErrorResponse(VolleyError error){
-                            Log.d("---","---");
-                            Log.e("//===========//","================================================");
-                            Log.d("","\n"+"[A_Main > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 실패]");
-                            Log.d("","\n"+"["+"에러 코드 - "+String.valueOf(error.toString())+"]");
-                            Log.e("//===========//","================================================");
-                            Log.d("---","---");
+
                         }
                     }
             ){

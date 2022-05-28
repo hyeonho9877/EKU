@@ -20,11 +20,11 @@ import com.kyonggi.eku.model.FreeBoardPreview;
 import com.kyonggi.eku.model.InfoBoardPreview;
 import com.kyonggi.eku.presenter.board.BoardPresenter;
 import com.kyonggi.eku.utils.adapters.InfoBoardAdapter;
-import com.kyonggi.eku.utils.callbacks.OnResponseListeners;
+import com.kyonggi.eku.utils.callbacks.OnBoardResponseListeners;
 
 import java.util.List;
 
-public class ActivityInfoBoardSearch extends AppCompatActivity implements OnResponseListeners {
+public class ActivityInfoBoardSearch extends AppCompatActivity implements OnBoardResponseListeners {
     private static final String TAG = "ActivityInfoBoardSearch";
     private ActivityBoardSearchBinding binding;
     private BoardPresenter presenter;
@@ -49,7 +49,6 @@ public class ActivityInfoBoardSearch extends AppCompatActivity implements OnResp
         binding.editTextSearch.setOnKeyListener((view, i, keyEvent) -> {
             keyword = binding.editTextSearch.getText().toString();
             if (keyword.length() != 0 && i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
-                Log.d(TAG, "initListeners: searching..");
                 binding.animBoardSearchLoading.setVisibility(View.VISIBLE);
                 presenter.searchInfoBoard(keyword, buildingNumber);
             }
@@ -103,7 +102,6 @@ public class ActivityInfoBoardSearch extends AppCompatActivity implements OnResp
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                Log.d(TAG, "onScrolled: scrolling");
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 int itemCount = recyclerView.getAdapter().getItemCount();
                 if (!isLoading) {

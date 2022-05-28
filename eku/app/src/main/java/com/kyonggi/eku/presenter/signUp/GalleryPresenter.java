@@ -39,7 +39,6 @@ public class GalleryPresenter {
                 public void handleMessage(@NonNull Message msg) {
                     int code = msg.what;
                     String response = (String) msg.obj;
-                    Log.d(TAG, "handleMessage: " + code);
                     switch (code) {
                         case SendTool.CONNECTION_FAILED:
                             Toast.makeText(context, "connection failed", Toast.LENGTH_LONG).show();

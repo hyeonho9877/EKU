@@ -64,7 +64,8 @@
                 android:layout_width="325dp"
                 android:layout_height="214dp"
                 android:layout_marginTop="8dp"
-                android:scaleType="fitXY"
+                android:background="@drawable/logo"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/go_Donan" />
@@ -73,7 +74,6 @@
                 android:id="@+id/board_Memo"
                 android:layout_width="387dp"
                 android:layout_height="140dp"
-                android:layout_marginTop="12dp"
                 android:background="#00FDFDFD"
                 android:horizontalSpacing="10dp"
                 android:isScrollContainer="false"
@@ -83,7 +83,7 @@
                 android:verticalSpacing="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/board_ImageView"></GridView>
+                app:layout_constraintTop_toBottomOf="@+id/MapLocation"></GridView>
 
             <ImageButton
                 android:id="@+id/board_Write"
@@ -105,6 +105,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/board_Write"></LinearLayout>
+
+            <TextView
+                android:id="@+id/MapLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:fontFamily="@font/noto_sans_kr_bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/board_ImageView" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

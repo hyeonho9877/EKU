@@ -44,7 +44,6 @@ public class FragmentFreeBoard extends Fragment {
         binding.swipeLayoutFreeBoard.setOnRefreshListener(() -> {
             binding.swipeLayoutFreeBoard.setRefreshing(true);
             activity.getFreeBoardArticles();
-            Log.d(TAG, "initListeners: " + adapter.getCurrentList().get(0).getId());
             binding.swipeLayoutFreeBoard.setRefreshing(false);
         });
 
@@ -77,12 +76,14 @@ public class FragmentFreeBoard extends Fragment {
         currentList.remove(currentList.size() - 1);
         adapter.notifyItemRemoved(currentList.size()-1);
         isLoading = false;
-        if (adapter.insertFromTail(oldArticles)) {
-            adapter.notifyItemRangeInserted(adapter.getCurrentList().size(), oldArticles.size());
-            binding.recyclerViewFreeBard.removeOnScrollListener(scrollListener);
-        } else {
-            adapter.notifyItemRangeInserted(adapter.getCurrentList().size(), oldArticles.size());
-        }
+        new Handler().postDelayed(()->{
+            if (adapter.insertFromTail(oldArticles)) {
+                adapter.notifyItemRangeInserted(adapter.getCurrentList().size(), oldArticles.size());
+                binding.recyclerViewFreeBard.removeOnScrollListener(scrollListener);
+            } else {
+                adapter.notifyItemRangeInserted(adapter.getCurrentList().size(), oldArticles.size());
+            }
+        }, 200);
     }
 
     private void addScrollListener(){

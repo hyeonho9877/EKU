@@ -20,7 +20,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.kyonggi.eku.view.signIn.ActivitySignIn;
 import com.kyonggi.eku.utils.UserInformation;
-import com.kyonggi.eku.PreferenceManagers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,14 +31,14 @@ import java.util.Map;
 
 public class WriteAnnounce extends AppCompatActivity implements View.OnClickListener {
 
-     /*
+    /*
      * 제목
      * 공지 게시판 작성
      * 기능
      * ㅈㄱㄴ
      */
 
-    CheckBox building0, building6, building7, building8, building9;
+    CheckBox building0, building6, building7, building8, building5;
     String building1, building2, building3, building4;
 
 
@@ -50,9 +49,7 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
     Button btn_cancle;
 
 
-    String name = "고지웅";
     String writer_id;
-    String department   = "소프트웨어공학과";
 
     UserInformation userInformation;
 
@@ -62,16 +59,16 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_announce);
 
-        building0   = findViewById(R.id.building0);
-        building6   = findViewById(R.id.building6);
-        building7   = findViewById(R.id.building7);
-        building8   = findViewById(R.id.building8);
-        building9   = findViewById(R.id.building9);
+        building0 = findViewById(R.id.building0);
+        building6 = findViewById(R.id.building6);
+        building7 = findViewById(R.id.building7);
+        building8 = findViewById(R.id.building8);
+        building5 = findViewById(R.id.building5);
 
-        et_title    = findViewById(R.id.write_announce_title);
-        et_content  = findViewById(R.id.write_announce_content);
-        btn_save    = findViewById(R.id.write_announce_save);
-        btn_cancle  = findViewById(R.id.write_announce_close);
+        et_title = findViewById(R.id.write_announce_title);
+        et_content = findViewById(R.id.write_announce_content);
+        btn_save = findViewById(R.id.write_announce_save);
+        btn_cancle = findViewById(R.id.write_announce_close);
 
         btn_save.setOnClickListener(this::onClick);
         btn_cancle.setOnClickListener(this::onClick);
@@ -79,32 +76,34 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
         userInformation = new UserInformation();
 
         writer_id = userInformation.fromPhoneStudentNo(getApplicationContext());
-        department = userInformation.fromPhoneDepartment(getApplicationContext());
-
-
     }
 
 
-    public String getBuilding(){
-        String building = "0000";
+    public String getBuilding() {
+        String building = "00000";
 
-        building += building6.isChecked() ? "1" : "0";;
-        building += building7.isChecked() ? "1" : "0";;
-        building += building8.isChecked() ? "1" : "0";;
-        building += building9.isChecked() ? "1" : "0";;
-        building += building0.isChecked() ? "1" : "0";;
+        building += building6.isChecked() ? "1" : "0";
+        ;
+        building += building7.isChecked() ? "1" : "0";
+        ;
+        building += building8.isChecked() ? "1" : "0";
+        ;
+        building += building5.isChecked() ? "1" : "0";
+        ;
+        building += building0.isChecked() ? "1" : "0";
+        ;
 
         return building;
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.write_announce_save:
                 UserInformation info = new UserInformation(getApplicationContext());
                 if (!info.fromPhoneVerify(getApplicationContext())) {
                     Intent intent = new Intent(getApplicationContext(), ActivitySignIn.class);
-                    intent.putExtra("address","WriteAnnounce");
+                    intent.putExtra("address", "WriteAnnounce");
                     startActivity(intent);
                     finish();
                 } else {
@@ -118,21 +117,21 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    public void addBoard(){
+    public void addBoard() {
         // volley 큐 선언 및 생성
         RequestQueue queue = Volley.newRequestQueue(this);
         // Body에 담을 JSON Object 생성 및 선언
         JSONObject jsonBodyObj = new JSONObject();
-        try{
-            String title    = et_title.getText().toString();
-            String content  = et_content.getText().toString();
+        try {
+            String title = et_title.getText().toString();
+            String content = et_content.getText().toString();
 
             jsonBodyObj.put("writerNo", writer_id);
             jsonBodyObj.put("title", title);
             jsonBodyObj.put("content", content);
-            jsonBodyObj.put("building",getBuilding());
+            jsonBodyObj.put("building", getBuilding());
 
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         // body String 선언
@@ -145,28 +144,17 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        // Request에 대한 response 받음
-                        Log.d("---","---");
-                        Log.w("//===========//","================================================");
-                        Log.d("","\n"+"[FREE_COMMUNITY_BOARD > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 응답]");
-                        Log.d("","\n"+"["+"응답 전체 - "+String.valueOf(response.toString())+"]");
-                        Log.w("//===========//","================================================");
-                        Log.d("---","---");
+
                     }
                 },
                 // Response Error 출력시,
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error){
-                        Log.d("---","---");
-                        Log.e("//===========//","================================================");
-                        Log.d("","\n"+"[A_Main > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 실패]");
-                        Log.d("","\n"+"["+"에러 코드 - "+String.valueOf(error.toString())+"]");
-                        Log.e("//===========//","================================================");
-                        Log.d("---","---");
+                    public void onErrorResponse(VolleyError error) {
+
                     }
                 }
-        ){
+        ) {
             // Header Request 선언
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -174,14 +162,14 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
                 headers.put("Content-Type", "application/json");
                 return headers;
             }
+
             // Body Request 선언
             @Override
             public byte[] getBody() {
                 try {
-                    if (requestBody != null && requestBody.length()>0 && !requestBody.equals("")){
+                    if (requestBody != null && requestBody.length() > 0 && !requestBody.equals("")) {
                         return requestBody.getBytes("utf-8");
-                    }
-                    else {
+                    } else {
                         return null;
                     }
                 } catch (UnsupportedEncodingException uee) {

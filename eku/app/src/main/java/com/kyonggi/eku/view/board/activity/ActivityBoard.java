@@ -14,13 +14,13 @@ import com.kyonggi.eku.databinding.ActivityBoardBinding;
 import com.kyonggi.eku.model.FreeBoardPreview;
 import com.kyonggi.eku.model.InfoBoardPreview;
 import com.kyonggi.eku.presenter.board.BoardPresenter;
-import com.kyonggi.eku.utils.callbacks.OnResponseListeners;
+import com.kyonggi.eku.utils.callbacks.OnBoardResponseListeners;
 import com.kyonggi.eku.view.board.fragment.FragmentFreeBoard;
 import com.kyonggi.eku.view.board.fragment.FragmentInfoBoard;
 
 import java.util.List;
 
-public class ActivityBoard extends AppCompatActivity implements OnResponseListeners {
+public class ActivityBoard extends AppCompatActivity implements OnBoardResponseListeners {
 
     private static final String TAG = "ActivityBoard";
     private ActivityBoardBinding binding;
@@ -68,6 +68,7 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
         String rawBuildingNumber = getIntent().getStringExtra("buildingNumber");
         if (rawBuildingNumber.contains("종합")) buildingNumber = "5";
         else if(rawBuildingNumber.contains("공학")) buildingNumber = "10";
+        else if(rawBuildingNumber.equals("EKU")) buildingNumber = "0";
         else buildingNumber = rawBuildingNumber.substring(0, 1);
         currentMode = getIntent().getStringExtra("mode");
 
@@ -92,7 +93,6 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
     }
 
     private void switchBoard() {
-        Log.d(TAG, "switchBoard: " + currentMode);
         if (currentMode.equals(BOARD_FREE)) {
             String announce = buildingNumber + " 강의동 공지게시판입니다.";
             binding.textBuildingBoardAnnounce.setText(announce);
@@ -117,7 +117,8 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
     }
 
     public void getInfoBoardArticles() {
-        presenter.getInfoBoardArticles(buildingNumber);
+        if (buildingNumber.equals("0")) presenter.loadAllInfoArticles();
+        else presenter.getInfoBoardArticles(buildingNumber);
     }
 
     public void getFreeBoardArticles() {
@@ -159,8 +160,8 @@ public class ActivityBoard extends AppCompatActivity implements OnResponseListen
         presenter.loadMoreInfoArticles(no, buildingNumber);
     }
 
-    public void updateFreeBoard(long id) {
-        presenter.updateFreeBoard(id);
+    public void loadMoreAllInfoArticles(long id) {
+        presenter.loadMoreAllInfo(id);
     }
 
     public void loadMoreFreeArticles(Long id) {

@@ -217,12 +217,6 @@ public class DetailAnnounce extends AppCompatActivity {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Log.d("---","---");
-                            Log.w("//===========//","================================================");
-                            Log.d("","\n"+"[COMMUNITY_BOARD_DETAIL > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 응답]");
-                            Log.d("","\n"+"["+"응답 전체 - "+String.valueOf(response.toString())+"]");
-                            Log.w("//===========//","================================================");
-                            Log.d("---","---");
 
                             if (mode == DETAIL_BOARD_MODIFY_REQUEST){
                                 request_server(board_id , DETAIL_BOARD_REQUEST);
@@ -235,12 +229,7 @@ public class DetailAnnounce extends AppCompatActivity {
                     new Response.ErrorListener(){
                         @Override
                         public void onErrorResponse(VolleyError error){
-                            Log.d("---","---");
-                            Log.e("//===========//","================================================");
-                            Log.d("","\n"+"[COMMUNITY_BOARD_DETAIL > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 실패]");
-                            Log.d("","\n"+"["+"에러 코드 - "+String.valueOf(error.toString())+"]");
-                            Log.e("//===========//","================================================");
-                            Log.d("---","---");
+
                         }
                     }
             ){
@@ -272,12 +261,6 @@ public class DetailAnnounce extends AppCompatActivity {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            Log.d("---","---");
-                            Log.w("//===========//","================================================");
-                            Log.d("","\n"+"[COMMUNITY_BOARD_DETAIL > DETAIL_BOARD_DELETE_REQUEST 모드드 : Volly POST_BODY_JSON 요청 응답]");
-                            Log.d("","\n"+"["+"응답 전체 - "+String.valueOf(response.toString())+"]");
-                            Log.w("//===========//","================================================");
-                            Log.d("---","---");
 
                             try {
                                 String title    = response.getString("title");
@@ -301,12 +284,7 @@ public class DetailAnnounce extends AppCompatActivity {
                     new Response.ErrorListener(){
                         @Override
                         public void onErrorResponse(VolleyError error){
-                            Log.d("---","---");
-                            Log.e("//===========//","================================================");
-                            Log.d("","\n"+"[COMMUNITY_BOARD_DETAIL > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 실패]");
-                            Log.d("","\n"+"["+"에러 코드 - "+String.valueOf(error.toString())+"]");
-                            Log.e("//===========//","================================================");
-                            Log.d("---","---");
+
                         }
                     }
             ){

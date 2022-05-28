@@ -42,8 +42,7 @@ public class FragmentInfoBoard extends Fragment {
     private void initListeners() {
         binding.swipeLayoutInfoBoard.setOnRefreshListener(() -> {
             binding.swipeLayoutInfoBoard.setRefreshing(true);
-            activity.updateInfoBoard(adapter.getCurrentList().get(0).getId());
-            Log.d(TAG, "initListeners: " + adapter.getCurrentList().get(0).getId());
+            activity.getInfoBoardArticles();
             binding.swipeLayoutInfoBoard.setRefreshing(false);
         });
     }

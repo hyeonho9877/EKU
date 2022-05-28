@@ -98,6 +98,9 @@ public class FreeCommunityCommentAdapter extends BaseAdapter {
         if(!id_text.equals(writer)){
             btn_edit.setVisibility(View.GONE);
             btn_delete.setVisibility(View.GONE);
+        }else {
+            btn_edit.setVisibility(View.VISIBLE);
+            btn_delete.setVisibility(View.VISIBLE);
         }
 
         btn_edit.setOnClickListener(new View.OnClickListener() {
@@ -188,23 +191,13 @@ public class FreeCommunityCommentAdapter extends BaseAdapter {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("---","---");
-                        Log.w("//===========//","================================================");
-                        Log.d("","\n"+"[FREE_COMMUNITY_COMMENT > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 응답]");
-                        Log.d("","\n"+"["+"응답 전체 - "+String.valueOf(response.toString())+"]");
-                        Log.w("//===========//","================================================");
-                        Log.d("---","---");
+
                     }
                 },
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error){
-                        Log.d("---","---");
-                        Log.e("//===========//","================================================");
-                        Log.d("","\n"+"[A_Main > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 실패]");
-                        Log.d("","\n"+"["+"에러 코드 - "+String.valueOf(error.toString())+"]");
-                        Log.e("//===========//","================================================");
-                        Log.d("---","---");
+
                     }
                 }
         ){

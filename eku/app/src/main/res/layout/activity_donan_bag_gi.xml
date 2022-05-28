@@ -41,13 +41,14 @@
         android:id="@+id/Donan_Off"
         android:layout_width="349dp"
         android:layout_height="51dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="@color/kyonggi_color4"
         android:fontFamily="@font/noto_sans_kr_regular"
         android:text="알림끄기"
         android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@+id/Donan_TextView"
-        tools:layout_editor_absoluteX="32dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Donan_TextView" />
 
     <Button
         android:id="@+id/BackButton"
@@ -66,8 +67,8 @@
 
     <TextView
         android:id="@+id/Donan_TextView"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
+        android:layout_width="359dp"
+        android:layout_height="106dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/noto_sans_kr_regular"
         android:gravity="center"

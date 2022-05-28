@@ -3,37 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:padding="10dp"><![CDATA[
-    //android:background="@drawable/back">
-
-
-
-
-
-
-
-    ]]>
-
-    <TextView
-        android:id="@+id/k_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="12dp"
-        android:text="K"
-        android:textColor="@color/kyonggi_color3"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/verywhere_text"
-        app:layout_constraintTop_toBottomOf="@+id/K_text" />
+    android:padding="10dp">
 
     <ImageView
         android:id="@+id/eku_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="257dp"
+        android:layout_height="110dp"
         android:layout_marginTop="35dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/turtle"
+        android:src="@drawable/logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,103 +23,5 @@
         app:layout_constraintEnd_toEndOf="@id/eku_image"
         app:layout_constraintStart_toStartOf="@id/eku_image"
         app:layout_constraintTop_toTopOf="@id/eku_image" />
-
-    <TextView
-        android:id="@+id/e_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
-        android:text="E"
-        android:textColor="@color/kyonggi_color4"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/eku_image"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/E_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:text="E"
-        android:textColor="@color/kyonggi_color4"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/eku_image"
-        app:layout_constraintTop_toBottomOf="@+id/e_text" />
-
-    <TextView
-        android:id="@+id/verywhere_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="verywhere"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/E_text"
-        app:layout_constraintTop_toBottomOf="@+id/e_text" />
-
-    <TextView
-        android:id="@+id/K_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="36dp"
-        android:text="K"
-        android:textColor="@color/kyonggi_color3"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/e_text"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/yonggi_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="yonggi"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/k_text"
-        app:layout_constraintTop_toBottomOf="@+id/K_text" />
-
-    <TextView
-        android:id="@+id/U_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="12dp"
-        android:text="U"
-        android:textColor="@color/kyonggi_color2"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/yonggi_text"
-        app:layout_constraintTop_toBottomOf="@+id/u_text" />
-
-    <TextView
-        android:id="@+id/u_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="36dp"
-        android:text="U"
-        android:textColor="@color/kyonggi_color2"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/K_text"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/p_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="p"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/U_text"
-        app:layout_constraintTop_toBottomOf="@+id/u_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
