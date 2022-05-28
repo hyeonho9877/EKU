@@ -31,7 +31,6 @@ public class InfoBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public boolean insertFromHead(List<InfoBoardPreview> newList) {
-        Log.d(TAG, "insert: " + newList);
         if (newList.size() != 0 && !(newList.get(0) == list.get(0))) {
             list.addAll(0, newList);
             return true;
@@ -40,7 +39,6 @@ public class InfoBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public boolean insertFromTail(List<InfoBoardPreview> oldList) {
-        Log.d(TAG, "insertFromTail: " + oldList.size());
         if (oldList.size() < 20) {
             list.addAll(oldList);
             return true;

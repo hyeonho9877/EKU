@@ -47,7 +47,6 @@ public class SignInPresenter {
             this.handler = new Handler(Looper.getMainLooper()) {
                 public void handleMessage(@NonNull Message msg) {
                     String response = (String) msg.obj;
-                    Log.d(TAG, "handleMessage: "+response);
                     switch (response) {
                         case SERVER_ERROR:
                             Toast.makeText(context, "서버 에러 발생", Toast.LENGTH_SHORT).show();

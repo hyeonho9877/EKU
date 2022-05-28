@@ -59,7 +59,6 @@ public class ActivityInputSignUpInfo extends AppCompatActivity implements OnSign
         NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
         int downSpeed = capabilities.getLinkDownstreamBandwidthKbps()/1000;
         int delays = (2*downSpeed+300)/downSpeed*100;
-        Log.d(TAG, "onCreate: "+delays);
 
         new Handler().postDelayed(()->{
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

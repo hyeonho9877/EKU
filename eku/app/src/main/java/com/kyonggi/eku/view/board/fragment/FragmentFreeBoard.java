@@ -44,7 +44,6 @@ public class FragmentFreeBoard extends Fragment {
         binding.swipeLayoutFreeBoard.setOnRefreshListener(() -> {
             binding.swipeLayoutFreeBoard.setRefreshing(true);
             activity.getFreeBoardArticles();
-            Log.d(TAG, "initListeners: " + adapter.getCurrentList().get(0).getId());
             binding.swipeLayoutFreeBoard.setRefreshing(false);
         });
 

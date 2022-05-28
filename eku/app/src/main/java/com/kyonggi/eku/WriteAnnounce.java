@@ -144,25 +144,14 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        // Request에 대한 response 받음
-                        Log.d("---", "---");
-                        Log.w("//===========//", "================================================");
-                        Log.d("", "\n" + "[FREE_COMMUNITY_BOARD > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 응답]");
-                        Log.d("", "\n" + "[" + "응답 전체 - " + String.valueOf(response.toString()) + "]");
-                        Log.w("//===========//", "================================================");
-                        Log.d("---", "---");
+
                     }
                 },
                 // Response Error 출력시,
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("---", "---");
-                        Log.e("//===========//", "================================================");
-                        Log.d("", "\n" + "[A_Main > getRequestVolleyPOST_BODY_JSON() 메소드 : Volley POST_BODY_JSON 요청 실패]");
-                        Log.d("", "\n" + "[" + "에러 코드 - " + String.valueOf(error.toString()) + "]");
-                        Log.e("//===========//", "================================================");
-                        Log.d("---", "---");
+
                     }
                 }
         ) {

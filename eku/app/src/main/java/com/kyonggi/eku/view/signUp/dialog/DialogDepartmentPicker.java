@@ -27,7 +27,6 @@ public class DialogDepartmentPicker extends DialogFragment {
     public DialogDepartmentPicker(List<String> deptList, FragmentSignupInfo fragmentSignupInfo) {
         this.deptList = deptList;
         listener = fragmentSignupInfo;
-        Log.d(TAG, "DialogDepartmentPicker: "+deptList);
     }
 
     @NonNull
