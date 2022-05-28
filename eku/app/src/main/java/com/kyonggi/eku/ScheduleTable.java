@@ -512,8 +512,11 @@ public class ScheduleTable extends AppCompatActivity {
                         } else if (i == R.id.TimeTableThu) {
                             day = "목";
                         }
-                        if (i == R.id.TimeTableFri) {
+                        else if (i == R.id.TimeTableFri) {
                             day = "금";
+                        }
+                        else{
+                            day="";
                         }
                     }
                 });
@@ -616,13 +619,154 @@ public class ScheduleTable extends AppCompatActivity {
                 btn_ok.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        int testInt = 0;
+                        for(int i :input_time)
+                        {
+                            if(i==1)
+                                testInt++;
+
+                        }
+                        if(testInt==0)
+                        {
+                            dialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        else if(testInt==1)
+                        {
+
+                        }
+                        else if(testInt==2){
+                           if(input_time[0]==1&&input_time[1]==1)
+                           {
+
+                           }
+                            else if(input_time[1]==1&&input_time[2]==1)
+                            {
+
+                            }
+                           else if(input_time[2]==1&&input_time[3]==1)
+                           {
+
+                           }
+                           else if(input_time[3]==1&&input_time[4]==1)
+                           {
+
+                           }
+                           else if(input_time[4]==1&&input_time[5]==1)
+                           {
+
+                           }
+                           else if(input_time[5]==1&&input_time[6]==1)
+                           {
+
+                           }
+                           else if(input_time[6]==1&&input_time[7]==1)
+                           {
+
+                           }
+                           else{
+                               dialog.dismiss();
+                               Toast.makeText(getApplicationContext(), "ㅈ됨.", Toast.LENGTH_LONG).show();
+                               return;
+                           }
+
+                        }
+                        else if(testInt==3)
+                        {
+                            if(input_time[0]==1&&input_time[1]==1&&input_time[2]==1)
+                            {
+
+                            }
+                            else if(input_time[1]==1&&input_time[2]==1&&input_time[3]==1)
+                            {
+
+                            }
+                            else if(input_time[2]==1&&input_time[3]==1&&input_time[4]==1)
+                            {
+
+                            }
+                            else if(input_time[3]==1&&input_time[4]==1&&input_time[5]==1)
+                            {
+
+                            }
+                            else if(input_time[4]==1&&input_time[5]==1&&input_time[6]==1)
+                            {
+
+                            }
+                            else if(input_time[5]==1&&input_time[6]==1&&input_time[7]==1)
+                            {
+
+                            }
+                            else{
+                                dialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                        }
+                        else if(testInt==4){
+                            if(input_time[0]==1&&input_time[1]==1&&input_time[2]==1&&input_time[3]==1)
+                            {
+
+                            }
+                            else if(input_time[1]==1&&input_time[2]==1&&input_time[3]==1&&input_time[4]==1)
+                            {
+
+                            }
+                            else if(input_time[2]==1&&input_time[3]==1&&input_time[4]==1&&input_time[5]==1)
+                            {
+
+                            }
+                            else if(input_time[3]==1&&input_time[4]==1&&input_time[5]==1&&input_time[6]==1)
+                            {
+
+                            }
+                            else if(input_time[4]==1&&input_time[5]==1&&input_time[6]==1&&input_time[7]==1)
+                            {
+
+                            }
+                            else{
+                                dialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                        }
+                        else{
+                            dialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
                         String temp = "";
                         for (int i : input_time) {
                             temp += i;
                         }
+                        if(dialog_title.getText().toString().equals(""))
+                        {
+                            dialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         temp += dialog_title.getText().toString();
+                        if(dialog_Building.getText().toString().equals(""))
+                        {
+                            dialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         temp += dialog_Building.getText().toString();
+                        if(dialog_Professor.getText().toString().equals(""))
+                        {
+                            dialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         temp += dialog_Professor.getText().toString();
+                        if(day.equals("")) {
+                            dialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         temp += day;
                         dialog.dismiss();
 
@@ -659,6 +803,9 @@ public class ScheduleTable extends AppCompatActivity {
                                     checked = true;
                                 }
                             }
+                        }else{
+                            Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                            return;
                         }
 
                         if (checked) {
