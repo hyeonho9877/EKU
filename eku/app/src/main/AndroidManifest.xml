@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kyonggi.eku">
+    package="com.kyonggi.eku" >
     <!-- permission ! -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -37,10 +37,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true" >
+        <activity
+            android:name=".StartActivity"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <uses-library
             android:name="org.apache.http.legacy"
-            android:required="false"/>
+            android:required="false" />
+
         <activity
             android:name=".AccountActivity"
             android:exported="false" />
@@ -78,20 +89,18 @@
         <activity
             android:name=".TodoActivity"
             android:exported="true" >
-
         </activity>
         <activity
             android:name=".MainBoard"
-            android:exported="true">
-
+            android:exported="true" >
         </activity>
         <activity android:name=".view.signUp.activity.ActivitySignUpCamera" />
         <activity android:name=".view.signUp.activity.ActivityGallery" />
         <activity android:name=".view.signUp.activity.ActivityInputSignUpInfo" />
         <activity android:name=".view.board.activity.ActivityBoard" />
         <activity android:name=".view.signIn.ActivitySignIn" />
-        <activity android:name=".view.board.activity.ActivityFreeBoardSearch"/>
-        <activity android:name=".view.board.activity.ActivityInfoBoardSearch"/>
+        <activity android:name=".view.board.activity.ActivityFreeBoardSearch" />
+        <activity android:name=".view.board.activity.ActivityInfoBoardSearch" />
 
         <service
             android:name="com.minew.beacon.ScanService"
@@ -99,7 +108,7 @@
 
         <receiver
             android:name="com.minew.beacon.BluetoothChangedReceiver"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
             </intent-filter>
@@ -108,11 +117,7 @@
         <activity android:name=".WriteBoard" />
         <activity
             android:name=".findGang"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="true" >
         </activity>
         <activity
             android:name=".LectureMain"
@@ -133,9 +138,13 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".AlarmReceiver" android:exported="true"/>
+        <receiver
+            android:name=".AlarmReceiver"
+            android:exported="true" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
     </application>
+
 </manifest>
