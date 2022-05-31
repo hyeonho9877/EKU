@@ -1,5 +1,7 @@
 package com.kyonggi.eku;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +9,7 @@ import android.graphics.Color;
 import android.location.LocationManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
@@ -64,23 +67,47 @@ public class DonanBagGi extends AppCompatActivity {
     }
     // 권한 체크
     private void permissionCheck() {
-        // PermissionSupport.java 클래스 객체 생성
-        permission = new PermissionSupport(this, this);
-        // 권한 체크 후 리턴이 false로 들어오면
-        if (!permission.checkPermission()){
-            //권한 요청
-            permission.requestPermission();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            // PermissionSupport.java 클래스 객체 생성
+            permission = new PermissionSupport(this, this);
+            // 권한 체크 후 리턴이 false로 들어오면
+            if (!permission.checkPermission()){
+                //권한 요청
+                permission.requestPermission();
+            }
+        }
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(
+                    new String[]{
+                            Manifest.permission.BLUETOOTH,
+                            Manifest.permission.BLUETOOTH_ADMIN,
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                    },
+                    888);
+            //Toast.makeText(getApplicationContext(),(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION))+"",Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"너무 하위 기종입니다.",Toast.LENGTH_LONG).show();
+
         }
     }
 
     // Request Permission에 대한 결과 값 받아와
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        //여기서도 리턴이 false로 들어온다면 (사용자가 권한 허용 거부)
-        if (!permission.permissionResult(requestCode, permissions, grantResults)) {
-            // 다시 permission 요청
-            permission.requestPermission();
+        if(requestCode!=888)
+        {
+            if (!permission.permissionResult(requestCode, permissions, grantResults)) {
+                // 다시 permission 요청
+                permission.requestPermission();
+            }
         }
+        else{
+
+        }
+        //여기서도 리턴이 false로 들어온다면 (사용자가 권한 허용 거부)
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
@@ -159,12 +186,14 @@ public class DonanBagGi extends AppCompatActivity {
 
             }
 
+
             @Override
             public void onRangeBeacons(List<MinewBeacon> minewBeacons) {
                 for(MinewBeacon m :minewBeacons) {
-                    Toast.makeText(getApplicationContext(),"도난 방지 기능이 작동되었습니다.",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"도난 방지 기능이 작동되었습니다.",Toast.LENGTH_SHORT).show();
                     String temp = m.getBeaconValue(BeaconValueIndex.MinewBeaconValueIndex_Major).getStringValue();
                     String rssi = m.getBeaconValue(BeaconValueIndex.MinewBeaconValueIndex_RSSI).getStringValue();
+                    Toast.makeText(getApplicationContext(),rssi,Toast.LENGTH_SHORT).show();
                     double iRssi = 0;
                     try {
                         iRssi = Double.valueOf(rssi);
@@ -184,7 +213,7 @@ public class DonanBagGi extends AppCompatActivity {
                             vibrator.vibrate(new long[]{50,300},0); // 0.5초간 진동
                             player = MediaPlayer.create(getBaseContext(),R.raw.sirent);
                             player.setLooping(true);
-                            player.start();
+                            //player.start();
                             Button offButton = findViewById(R.id.Donan_Off);
                             offButton.setVisibility(View.VISIBLE);
                             offButton.setOnClickListener(new View.OnClickListener() {
