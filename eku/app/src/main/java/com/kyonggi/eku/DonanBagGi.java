@@ -11,6 +11,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
@@ -39,11 +40,16 @@ public class DonanBagGi extends AppCompatActivity {
     Button b;
     ImageView s;
     MediaPlayer player;
-
+    PowerManager powerManager;
+    PowerManager.WakeLock wakeLock;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donan_bag_gi);
+        powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                "MyApp::MyWakelockTag");
+        wakeLock.acquire();
         bluetoothOn();
         permissionCheck();
         initManager();
@@ -231,6 +237,7 @@ public class DonanBagGi extends AppCompatActivity {
                                     if (mMinewBeaconManager != null) {
                                         mMinewBeaconManager.stopScan();
                                     }
+                                    wakeLock.release();
                                     return;
                                 }
                             });
