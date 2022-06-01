@@ -124,7 +124,6 @@ public class MainBoard extends AppCompatActivity {
                         intent.putExtra("buildingNumber", name);
                         drawerLayout.closeDrawer(GravityCompat.START);
                         new Handler().postDelayed(() -> startActivity(intent), 260);
-                        //finish();
                         break;
                     case R.id.Free:
                         intent = new Intent(getApplicationContext(), ActivityBoard.class);
@@ -132,12 +131,10 @@ public class MainBoard extends AppCompatActivity {
                         intent.putExtra("buildingNumber", name);
                         drawerLayout.closeDrawer(GravityCompat.START);
                         new Handler().postDelayed(() -> startActivity(intent), 260);
-                        //finish();
                         break;
                     case R.id.lectureMain:
                         intent = new Intent(getApplicationContext(), LectureMain.class);
                         drawerLayout.closeDrawer(GravityCompat.START);
-                        //intent.putExtra("GANG",name);
                         new Handler().postDelayed(() -> startActivity(intent), 260);
                         break;
                     case R.id.ToDo:
@@ -394,9 +391,8 @@ public class MainBoard extends AppCompatActivity {
         Handler handler = new Handler(getMainLooper()) {
             @Override
             public void handleMessage(@NonNull Message msg) {
-                ResponseBody obj = (ResponseBody) msg.obj;
                 try {
-                String responseResult = obj.string();
+                    String responseResult = ((ResponseBody) msg.obj).string();
                     JSONArray LectureArray = new JSONArray(responseResult);
                     for (int i = 0; i < LectureArray.length(); i++) {
                         JSONObject LectureObject = LectureArray.getJSONObject(i);
@@ -409,7 +405,7 @@ public class MainBoard extends AppCompatActivity {
                         if (i == 2)
                             break;
                     }
-                    mainitem = new MainItem(getApplicationContext(), "강의게시판", listLecture[0], listLecture[1], listLecture[2],name);
+                    mainitem = new MainItem(getApplicationContext(), "강의게시판", listLecture[0], listLecture[1], listLecture[2]);
                     sc.addView(mainitem);
                 } catch (JSONException | IOException e) {
                     e.printStackTrace();

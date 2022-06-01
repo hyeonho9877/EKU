@@ -15,9 +15,9 @@ import com.kyonggi.eku.view.board.activity.ActivityBoard;
 
 public class MainItem extends LinearLayout {
 
-    public MainItem(Context context, String title, Lecture L1, Lecture L2, Lecture L3, String buildingNumber) {
+    public MainItem(Context context, String title, Lecture L1, Lecture L2, Lecture L3) {
         super(context);
-        init(context, title, L1, L2, L3, buildingNumber);
+        init(context, title, L1, L2, L3);
     }
 
     public MainItem(Context context, String title, FreeCommunityItem F1, FreeCommunityItem F2, FreeCommunityItem F3, String buildingNumber) {
@@ -30,7 +30,7 @@ public class MainItem extends LinearLayout {
         init(context, title, C1, C2, C3, buildingNumber);
     }
 
-    private void init(Context context, String title, Lecture L1, Lecture L2, Lecture L3, String buildingNumber){
+    private void init(Context context, String title, Lecture L1, Lecture L2, Lecture L3){
         LayoutInflater inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.item_board,this,true);
         TextView textView = findViewById(R.id.MainItem_title);
@@ -40,7 +40,6 @@ public class MainItem extends LinearLayout {
             public void onClick(View view) {
                 Intent intent = new Intent(context, LectureMain.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                //intent.putExtra("GANG",buildingNumber);
                 context.startActivity(intent);
             }
         });
@@ -50,7 +49,6 @@ public class MainItem extends LinearLayout {
             public void onClick(View view) {
                 Intent intent = new Intent(context, LectureMain.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                //intent.putExtra("GANG",buildingNumber);
                 context.startActivity(intent);
             }
         });
@@ -64,7 +62,6 @@ public class MainItem extends LinearLayout {
                 Intent intent = new Intent(context, LectureDetail.class);
                 intent.putExtra("Name", L1.getLectureName());
                 intent.putExtra("Prof", L1.getProfessor());
-                //intent.putExtra("GANG",buildingNumber);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -79,7 +76,6 @@ public class MainItem extends LinearLayout {
                 Intent intent = new Intent(context, LectureDetail.class);
                 intent.putExtra("Name", L2.getLectureName());
                 intent.putExtra("Prof", L2.getProfessor());
-                //intent.putExtra("GANG",buildingNumber);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -94,7 +90,6 @@ public class MainItem extends LinearLayout {
                 Intent intent = new Intent(context, LectureDetail.class);
                 intent.putExtra("Name", L3.getLectureName());
                 intent.putExtra("Prof", L3.getProfessor());
-                //intent.putExtra("GANG",buildingNumber);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -134,10 +129,15 @@ public class MainItem extends LinearLayout {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, DetailFreeCommunity.class);
-                intent.putExtra("id",F1.getFc_id());
+                Intent intent = new Intent(context, ActivityBoard.class);
+                intent.putExtra("mode", BOARD_FREE);
+                intent.putExtra("buildingNumber", buildingNumber);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
+                Intent intent2 = new Intent(context, DetailFreeCommunity.class);
+                intent2.putExtra("id",F1.getFc_id());
+                intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent2);
             }
         });
         if (F2 == null)
@@ -147,10 +147,15 @@ public class MainItem extends LinearLayout {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, DetailFreeCommunity.class);
-                intent.putExtra("id",F2.getFc_id());
+                Intent intent = new Intent(context, ActivityBoard.class);
+                intent.putExtra("mode", BOARD_FREE);
+                intent.putExtra("buildingNumber", buildingNumber);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
+                Intent intent2 = new Intent(context, DetailFreeCommunity.class);
+                intent2.putExtra("id",F2.getFc_id());
+                intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent2);
             }
         });
         if (F3 == null)
@@ -160,10 +165,15 @@ public class MainItem extends LinearLayout {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, DetailFreeCommunity.class);
-                intent.putExtra("id",F3.getFc_id());
+                Intent intent = new Intent(context, ActivityBoard.class);
+                intent.putExtra("mode", BOARD_FREE);
+                intent.putExtra("buildingNumber", buildingNumber);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
+                Intent intent2 = new Intent(context, DetailFreeCommunity.class);
+                intent2.putExtra("id",F3.getFc_id());
+                intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent2);
             }
         });
     }
@@ -201,9 +211,14 @@ public class MainItem extends LinearLayout {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, DetailAnnounce.class);
-                intent.putExtra("id",C1.getc_id());
+                Intent intent = new Intent(context, ActivityBoard.class);
+                intent.putExtra("mode", BOARD_INFO);
+                intent.putExtra("buildingNumber", name);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+                Intent intent2 = new Intent(context, DetailAnnounce.class);
+                intent2.putExtra("id",C1.getc_id());
+                intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });
@@ -214,9 +229,14 @@ public class MainItem extends LinearLayout {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, DetailAnnounce.class);
-                intent.putExtra("id",C2.getc_id());
+                Intent intent = new Intent(context, ActivityBoard.class);
+                intent.putExtra("mode", BOARD_INFO);
+                intent.putExtra("buildingNumber", name);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+                Intent intent2 = new Intent(context, DetailAnnounce.class);
+                intent2.putExtra("id",C2.getc_id());
+                intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });
@@ -227,9 +247,14 @@ public class MainItem extends LinearLayout {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, DetailAnnounce.class);
-                intent.putExtra("id",C3.getc_id());
+                Intent intent = new Intent(context, ActivityBoard.class);
+                intent.putExtra("mode", BOARD_INFO);
+                intent.putExtra("buildingNumber", name);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+                Intent intent2 = new Intent(context, DetailAnnounce.class);
+                intent2.putExtra("id",C3.getc_id());
+                intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });

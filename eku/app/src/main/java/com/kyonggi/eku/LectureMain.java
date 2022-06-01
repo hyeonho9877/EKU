@@ -77,8 +77,8 @@ public class LectureMain extends AppCompatActivity {
                 Handler handler = new Handler(getMainLooper()){
                     @Override
                     public void handleMessage(@NonNull Message msg) {
-                        String responseResult = (String) msg.obj;
                         try {
+                            String responseResult = ((ResponseBody) msg.obj).string();
                             JSONArray LectureArray = new JSONArray(responseResult);
                             for (int i = 0; i < LectureArray.length(); i++) {
                                 JSONObject LectureObject = LectureArray.getJSONObject(i);
@@ -88,7 +88,7 @@ public class LectureMain extends AppCompatActivity {
                                 search_Lecture(title, professor, rating);
                             }
 
-                        } catch (JSONException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
                     }
@@ -147,9 +147,6 @@ public class LectureMain extends AppCompatActivity {
     public void onBackPressed() {
         if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
             backKeyPressedTime = System.currentTimeMillis();
-            //Intent intent = new Intent(getApplicationContext(),MainBoard.class);
-            //startActivity(intent);
-            //finish();
             //Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
             return;
         }
