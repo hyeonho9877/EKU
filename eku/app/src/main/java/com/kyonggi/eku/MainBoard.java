@@ -309,6 +309,17 @@ public class MainBoard extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        sc.removeAllViews();
+        ViewMemo(Minorcheck);
+        PreviewCom(sc);
+        PreviewFree(sc);
+        PreviewLec(sc);
+
+
+    }
 
     public void PreviewCom(LinearLayout sc) {
         ComminityItem[] listcom = new ComminityItem[3];
@@ -380,9 +391,8 @@ public class MainBoard extends AppCompatActivity {
         Handler handler = new Handler(getMainLooper()) {
             @Override
             public void handleMessage(@NonNull Message msg) {
-                ResponseBody obj = (ResponseBody) msg.obj;
                 try {
-                String responseResult = obj.string();
+                    String responseResult = ((ResponseBody) msg.obj).string();
                     JSONArray LectureArray = new JSONArray(responseResult);
                     for (int i = 0; i < LectureArray.length(); i++) {
                         JSONObject LectureObject = LectureArray.getJSONObject(i);

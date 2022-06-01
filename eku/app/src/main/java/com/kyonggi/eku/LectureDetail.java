@@ -61,7 +61,7 @@ public class LectureDetail extends AppCompatActivity {
                     Gson a = new Gson();
                     Critics[] critics = a.fromJson(LectureObject.getString("critics"), Critics[].class);
                     count = critics.length;
-                    for (int i = 0; i < count; i++){
+                    for (int i = (count-1); i >= 0; i--){
                         int cid = critics[i].getcid();
                         String content = critics[i].getContent();
                         float star = critics[i].getStar();
@@ -126,18 +126,8 @@ public class LectureDetail extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
-            backKeyPressedTime = System.currentTimeMillis();
-            Intent intent = new Intent(getApplicationContext(),LectureMain.class);
-            startActivity(intent);
-            finish();
-            //Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
-            finish();
-        }
+        Intent intent = new Intent(getApplicationContext(), LectureMain.class);
+        startActivity(intent);
+        finish();
     }
-
-
 }
