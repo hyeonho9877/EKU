@@ -79,32 +79,20 @@ public class WriteBoard extends AppCompatActivity {
                 intent.putExtra("GANG",Name);
                 EditText text = findViewById(R.id.memo_write);
                 String memoText = text.getText().toString();
-
-                /*
-                long now = System.currentTimeMillis();
-                Date date = new Date(now);
-                SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                String time = timeFormat.format(date);
-                Log.i("a",time);
-                temp.put("writtenTime", time);
-                */
+                if(!memoText.equals("")){
+                    HashMap<String, Object> temp = new HashMap<>();
+                    temp.put("content", memoText);
+                    temp.put("minor", Minor);
 
 
-                HashMap<String, Object> temp = new HashMap<>();
-                temp.put("content", memoText);
-                temp.put("minor",Minor);
-
-
-                try {
-                    SendTool.requestForPost(SendTool.APPLICATION_JSON, "/doodle/write",temp,handler);
+                    try {
+                        SendTool.requestForPost(SendTool.APPLICATION_JSON, "/doodle/write", temp, handler);
+                    } catch (IOException | NullPointerException e) {
+                        e.printStackTrace();
+                    }
                 }
-                catch (IOException | NullPointerException e) {
-                    e.printStackTrace();
-                }
-
                 activityResultLauncher.launch(intent);
                 finish();
-
             }
         });
         Button closeButton = (Button) findViewById(R.id.memo_close);
@@ -118,7 +106,12 @@ public class WriteBoard extends AppCompatActivity {
             }
         });
 
-
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MainBoard.class);
+        startActivity(intent);
+        finish();
     }
 }
 
