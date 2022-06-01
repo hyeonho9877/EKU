@@ -43,8 +43,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
         android:layout_marginTop="112dp"
-        android:backgroundTint="#3F51B5"
-        android:text="건너뛰기"
+        android:background="@drawable/rounded_blue"
+        android:backgroundTint="@color/kyonggi_color"
+        android:text="skip"
         android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
