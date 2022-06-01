@@ -23,9 +23,13 @@ import com.kyonggi.eku.utils.EditDistance;
 import com.kyonggi.eku.utils.SendTool;
 import com.kyonggi.eku.view.signUp.activity.ActivityInputSignUpInfo;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
+
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class SignUpInfoPresenter {
 
@@ -135,16 +139,20 @@ public class SignUpInfoPresenter {
         if (deptHandler == null) {
             this.deptHandler = new Handler(Looper.getMainLooper()) {
                 public void handleMessage(@NonNull Message msg) {
-                    int code = msg.what;
-                    String response = (String) msg.obj;
-                    switch (code) {
-                        case SendTool.CONNECTION_FAILED | SendTool.HTTP_BAD_REQUEST | SendTool.HTTP_INTERNAL_SERVER_ERROR:
-                            Toast.makeText(context, "네트워크 연결에 실패하였습니다.", Toast.LENGTH_LONG).show();
-                            break;
-                        case SendTool.HTTP_OK:
-                            List<String> deptList = SendTool.parseToString(response);
-                            activity.onDeptResponseSuccess(deptList);
-                            break;
+                    try {
+                        int code = msg.what;
+                        String response = ((ResponseBody) msg.obj).string();
+                        switch (code) {
+                            case SendTool.CONNECTION_FAILED | SendTool.HTTP_BAD_REQUEST | SendTool.HTTP_INTERNAL_SERVER_ERROR:
+                                Toast.makeText(context, "네트워크 연결에 실패하였습니다.", Toast.LENGTH_LONG).show();
+                                break;
+                            case SendTool.HTTP_OK:
+                                List<String> deptList = SendTool.parseToString(response);
+                                activity.onDeptResponseSuccess(deptList);
+                                break;
+                        }
+                    } catch (IOException e) {
+                        Toast.makeText(context, "네트워크 연결에 실패하였습니다.", Toast.LENGTH_LONG).show();
                     }
                 }
             };
