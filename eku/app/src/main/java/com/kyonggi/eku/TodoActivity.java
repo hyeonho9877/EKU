@@ -61,7 +61,7 @@ public class TodoActivity extends AppCompatActivity {
         calendar.set(Calendar.MINUTE,minute);
         calendar.set(Calendar.SECOND,sec);
 
-
+        /*
         AlarmManager alarmManager=(AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null) {
             Intent intent = new Intent(this, AlarmReceiver.class);
@@ -75,6 +75,7 @@ public class TodoActivity extends AppCompatActivity {
 
             //Toast.makeText(TodoActivity.this, "알람이 저장되었습니다.", Toast.LENGTH_LONG).show();
         }
+         */
         setInit();
     }
 
