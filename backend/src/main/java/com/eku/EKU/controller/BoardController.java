@@ -181,10 +181,7 @@ public class BoardController {
     @PostMapping("/board/info/lists")
     public ResponseEntity<?> infoBoardList(@RequestBody BoardListForm form){
         List<BoardListResponse> list = infoBoardService.boardList(form);
-        if(!list.isEmpty())
-            return ResponseEntity.ok(list);
-        else
-            return ResponseEntity.ok("list is empty");
+        return ResponseEntity.ok(list);
     }
     /**
      * 공지 게시판 게시물을 불러오는 메소드
@@ -203,7 +200,6 @@ public class BoardController {
             exception.printStackTrace();
             return ResponseEntity.badRequest().body("no article");
         }
-
     }
 
     @PostMapping("/board/info/recent")

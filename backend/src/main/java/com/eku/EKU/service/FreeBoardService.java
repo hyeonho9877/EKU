@@ -101,8 +101,7 @@ public class FreeBoardService {
      * @return
      */
     public FreeBoardResponse insertBoard(FreeBoardForm form) throws IllegalArgumentException, NoSuchBoardException {
-        Student studNo = studentRepository.getById(form.getId());
-
+        Student studNo = studentRepository.getById(form.getWriterNo());
         FreeBoard freeBoard = FreeBoard.builder()
                 .student(studNo)
                 .department(form.getDepartment())

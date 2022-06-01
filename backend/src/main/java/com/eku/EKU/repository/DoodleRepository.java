@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface DoodleRepository extends JpaRepository<Doodle, Long> {
-    List<Doodle> findByBuilding_BeaconIdIsOrderByWrittenTimeDesc(String beaconId, Pageable pageable);
+    List<Doodle> findByBuilding_BeaconIdIsOrderByDoodleIdDesc(String beaconId, Pageable pageable);
 
 }

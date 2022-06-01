@@ -1,12 +1,14 @@
 package com.eku.EKU.service;
 
 
+import com.eku.EKU.domain.Image;
 import com.eku.EKU.domain.InfoBoard;
 import com.eku.EKU.domain.Student;
 import com.eku.EKU.form.BoardListForm;
 import com.eku.EKU.form.BoardListResponse;
 import com.eku.EKU.form.InfoBoardForm;
 import com.eku.EKU.form.InfoBoardResponse;
+import com.eku.EKU.repository.ImageRepository;
 import com.eku.EKU.repository.InfoBoardRepository;
 import com.eku.EKU.repository.StudentRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.eku.EKU.utils.RelativeTimeConverter.convertToRelativeTime;
 
@@ -24,10 +27,12 @@ import static com.eku.EKU.utils.RelativeTimeConverter.convertToRelativeTime;
 public class InfoBoardService {
     public final InfoBoardRepository infoBoardRepository;
     private final StudentRepository studentRepository;
+    private final ImageRepository imageRepository;
 
-    public InfoBoardService(InfoBoardRepository infoBoardRepository, StudentRepository studentRepository) {
+    public InfoBoardService(InfoBoardRepository infoBoardRepository, StudentRepository studentRepository, ImageRepository imageRepository) {
         this.infoBoardRepository = infoBoardRepository;
         this.studentRepository = studentRepository;
+        this.imageRepository = imageRepository;
     }
 
     /**
@@ -58,6 +63,7 @@ public class InfoBoardService {
                     .time(convertToRelativeTime(i.getWrittenTime()))
                     .view(i.getView())
                     .no(i.getNo().getStudNo())
+                    .images(imageURL(i.getId()))
                     .build();
             newList.add(form);
         }
@@ -137,8 +143,9 @@ public class InfoBoardService {
 
     public List<BoardListResponse> loadBoardAfterId(int building, Long id) {
         List<InfoBoard> result = infoBoardRepository.findByBuildingAndIdIsLessThanOrderByWrittenTimeDesc(building, id, Pageable.ofSize(20));
-        return result.stream().map(BoardListResponse::new)
-                .toList();
+        List<BoardListResponse> response = result.stream().map(BoardListResponse::new).toList();
+        response.forEach(r->r.setImages(imageURL(r.getId())));
+        return response;
     }
 
     public List<BoardListResponse> searchBoard(int building, String keyword) {
@@ -164,5 +171,11 @@ public class InfoBoardService {
     public List<BoardListResponse> allInfoBoardMore(long id){
         List<InfoBoard> result = infoBoardRepository.findAllByIdLessThanOrderByWrittenTimeDesc(id, Pageable.ofSize(20));
         return result.stream().map(BoardListResponse::new).toList();
+    }
+
+    public List<String> imageURL(Long articleId)throws IllegalArgumentException, NoSuchElementException{
+        List<Image> imageList = imageRepository.findAllByInfoBoard_Id(articleId);
+        AtomicInteger i = new AtomicInteger();
+        return imageList.stream().map(c->"/board/info/image?id="+articleId+"&imageNo="+ i.getAndIncrement()).toList();
     }
 }

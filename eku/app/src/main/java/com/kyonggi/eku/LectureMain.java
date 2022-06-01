@@ -22,7 +22,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
+
+import okhttp3.ResponseBody;
 
 public class LectureMain extends AppCompatActivity {
 
@@ -175,8 +178,8 @@ public class LectureMain extends AppCompatActivity {
         Handler handler =  new Handler(getMainLooper()){
             @Override
             public void handleMessage(@NonNull Message msg) {
-                String responseResult = (String) msg.obj;
                 try {
+                    String responseResult = ((ResponseBody) msg.obj).string();
                     JSONArray LectureArray = new JSONArray(responseResult);
                     for (int i = 0; i < LectureArray.length(); i++) {
                         JSONObject LectureObject = LectureArray.getJSONObject(i);
@@ -192,7 +195,7 @@ public class LectureMain extends AppCompatActivity {
 
                         write_Lecture(title, professor, rating, writer, LectureId);
                     }
-                } catch (JSONException e) {
+                } catch (JSONException | IOException e) {
                     e.printStackTrace();
                 }
 

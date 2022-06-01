@@ -109,7 +109,6 @@ public class SignUpCameraPresenter {
                         Intent intent = new Intent(context, ActivityGallery.class);
                         intent.putExtra("photo", outputFileResults.getSavedUri());
                         activity.startActivity(intent);
-                        Log.d(TAG, "onImageSaved: " + msg);
                     }
 
                     @Override
