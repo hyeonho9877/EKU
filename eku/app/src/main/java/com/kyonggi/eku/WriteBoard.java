@@ -21,8 +21,11 @@ import com.kyonggi.eku.utils.SendTool;
 import java.io.IOException;
 import java.util.HashMap;
 
+import okhttp3.ResponseBody;
+
 
 public class WriteBoard extends AppCompatActivity {
+    private static final String TAG = "WriteBoard";
     /*
      *
      * 제목
@@ -57,8 +60,12 @@ public class WriteBoard extends AppCompatActivity {
             public void handleMessage(@NonNull Message msg) {
                 switch (msg.what) {
                     case 0:
-                        String responseResult = (String) msg.obj;
-                        Log.i("a", "무" + responseResult);
+                        try {
+                            String responseResult = ((ResponseBody) msg.obj).string();
+                            Log.i("a", "무" + responseResult);
+                        } catch (IOException e) {
+                            Log.e(TAG, "handleMessage: ");
+                        }
                 }
             }
         };
