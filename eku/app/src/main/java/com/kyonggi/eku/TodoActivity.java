@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -95,6 +96,9 @@ public class TodoActivity extends AppCompatActivity {
                 btn_ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if(et_title.toString().length() <=0 ){
+                            dialog_not_access();
+                        }
                         String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
                         mDBHelper.InsertTodo(et_title.getText().toString(), et_content.getText().toString(), currentTime);
 
@@ -140,5 +144,17 @@ public class TodoActivity extends AppCompatActivity {
         if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
             finish();
         }
+    }
+    private void dialog_not_access() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("내용이 너무 짧습니다.");
+        builder.setMessage("할일 목록에 추가할 수 없습니다.");
+        builder.setPositiveButton("예",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.show();
     }
 }
