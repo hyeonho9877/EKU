@@ -71,7 +71,6 @@ public class TodoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String value;
                 if(PreferenceManagers.getString(getApplicationContext(),"TODO").equals("1")&&alarmManager!=null){
-                    Toast.makeText(getApplicationContext(),"여기옸수",Toast.LENGTH_SHORT).show();
                     alarmManager=(AlarmManager)TodoActivity.this.getSystemService(Context.ALARM_SERVICE);
                     Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
                     PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 1, intent,PendingIntent.FLAG_IMMUTABLE);
@@ -83,8 +82,6 @@ public class TodoActivity extends AppCompatActivity {
                     button.setText("오전 8:30분 알람등록");
                     //Toast.makeText(getApplicationContext(),"알람 취소가 완료되었습니다.",Toast.LENGTH_SHORT).show();
                     PreferenceManagers.setString(getApplicationContext(),"TODO","가나다라마바사");
-
-                    Toast.makeText(getApplicationContext(),PreferenceManagers.getString(getApplicationContext(),"TODO"),Toast.LENGTH_SHORT).show();
                     pm.setComponentEnabledSetting(receiver,PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
                 }
                 else{
