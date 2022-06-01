@@ -9,7 +9,9 @@ import com.eku.EKU.form.CriticForm;
 import com.eku.EKU.form.CriticLectureSearchResponse;
 import com.eku.EKU.form.CriticResponse;
 import com.eku.EKU.form.CriticSearchResponse;
-import com.eku.EKU.repository.*;
+import com.eku.EKU.repository.CriticRepository;
+import com.eku.EKU.repository.LecturePrototypeRepository;
+import com.eku.EKU.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Pageable;
@@ -29,9 +31,6 @@ public class CriticService {
 
     private final StudentRepository studentRepository;
     private final CriticRepository criticRepository;
-    private final LectureRepository lectureRepository;
-    private final MajorLectureRepository majorLectureRepository;
-    private final GELectureRepository geLectureRepository;
     private final LecturePrototypeRepository prototypeRepository;
 
 
@@ -100,10 +99,10 @@ public class CriticService {
      * @return 최근 10개의 강의평가 리스트
      */
     public List<CriticResponse> readRecentCritic() {
-        return criticRepository.findAll(Pageable.ofSize(10)).getContent()
+        return criticRepository.findByOrderByCriticIdDesc(Pageable.ofSize(10))
                 .stream()
                 .map(CriticResponse::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<CriticLectureSearchResponse> searchLectures(String keyword) {
