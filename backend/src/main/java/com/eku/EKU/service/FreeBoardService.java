@@ -7,6 +7,7 @@ import com.eku.EKU.form.BoardListResponse;
 import com.eku.EKU.form.FreeBoardForm;
 import com.eku.EKU.form.FreeBoardListResponse;
 import com.eku.EKU.form.FreeBoardResponse;
+import com.eku.EKU.repository.FreeBoardCommentRepository;
 import com.eku.EKU.repository.FreeBoardRepository;
 import com.eku.EKU.repository.StudentRepository;
 import com.eku.EKU.utils.RelativeTimeConverter;
@@ -25,10 +26,12 @@ import java.util.NoSuchElementException;
 @Service
 public class FreeBoardService {
     private final FreeBoardRepository freeBoardRepository;
+    private final FreeBoardCommentRepository commentRepository;
     private final StudentRepository studentRepository;
 
-    public FreeBoardService(FreeBoardRepository freeBoardRepository, StudentRepository studentRepository) {
+    public FreeBoardService(FreeBoardRepository freeBoardRepository, FreeBoardCommentRepository commentRepository, StudentRepository studentRepository) {
         this.freeBoardRepository = freeBoardRepository;
+        this.commentRepository = commentRepository;
         this.studentRepository = studentRepository;
     }
 
@@ -91,6 +94,7 @@ public class FreeBoardService {
      * @param id 해당 게시물 번호
      */
     public void deleteBoard(Long id) throws IllegalArgumentException, NoSuchElementException, EmptyResultDataAccessException {
+        commentRepository.findAllByOriginalId(id).forEach(comment -> commentRepository.deleteById(comment.getFId()));
         freeBoardRepository.deleteById(id);
     }
 

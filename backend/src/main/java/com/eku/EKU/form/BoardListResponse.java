@@ -4,6 +4,7 @@ import com.eku.EKU.domain.FreeBoard;
 import com.eku.EKU.domain.InfoBoard;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
+import org.springframework.core.io.FileSystemResource;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class BoardListResponse {
     private Long no;
     private String time;
     private Integer view;
-    private List<String> images;
+    private List<FileSystemResource> images;
 
     public BoardListResponse(InfoBoard board) {
         this.id = board.getId();

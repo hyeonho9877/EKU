@@ -13,7 +13,6 @@ import java.util.List;
  */
 public interface FreeBoardRepository extends JpaRepository<FreeBoard, Long> {
     List<FreeBoard> findByOrderByTimeDesc(Pageable pageable);
-
     List<FreeBoard> findByIdIsGreaterThanOrderByTimeDesc(Long id);
     List<FreeBoard> findByIdIsLessThanOrderByTimeDesc(Long id, Pageable ofSize);
     @Query(value = "SELECT i FROM FreeBoard AS i where i.content like %:keyword% or i.title like %:keyword% or i.content like %:keyword% or i.student.department like %:keyword% order by i.time desc ")
