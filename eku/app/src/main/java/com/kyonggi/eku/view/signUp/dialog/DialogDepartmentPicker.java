@@ -2,7 +2,6 @@ package com.kyonggi.eku.view.signUp.dialog;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,7 @@ import androidx.fragment.app.DialogFragment;
 import com.kyonggi.eku.R;
 import com.kyonggi.eku.databinding.DialogDeptBinding;
 import com.kyonggi.eku.utils.adapters.DeptAdapter;
-import com.kyonggi.eku.view.signUp.OnDeptSelectedListener;
+import com.kyonggi.eku.utils.callbacks.OnDeptSelectedListener;
 import com.kyonggi.eku.view.signUp.fragment.FragmentSignupInfo;
 
 import java.util.List;

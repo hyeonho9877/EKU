@@ -29,7 +29,7 @@ import com.kyonggi.eku.model.OCRForm;
 import com.kyonggi.eku.model.SignUpForm;
 import com.kyonggi.eku.utils.callbacks.OnSignUpConfirmedListener;
 import com.kyonggi.eku.utils.exceptions.NoExtraDataException;
-import com.kyonggi.eku.view.signUp.OnDeptSelectedListener;
+import com.kyonggi.eku.utils.callbacks.OnDeptSelectedListener;
 import com.kyonggi.eku.view.signUp.activity.ActivityInputSignUpInfo;
 import com.kyonggi.eku.view.signUp.dialog.DialogDepartmentPicker;
 import com.kyonggi.eku.view.signUp.dialog.SignUpErrorDialogFragment;

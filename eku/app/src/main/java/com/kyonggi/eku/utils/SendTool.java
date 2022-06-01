@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.OpenableColumns;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -57,7 +56,7 @@ public final class SendTool {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                handler.sendMessage(Message.obtain(handler, response.code(), response.body().string()));
+                handler.sendMessage(Message.obtain(handler, response.code(), response.body()));
             }
         });
     }
@@ -119,8 +118,8 @@ public final class SendTool {
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                handler.sendMessage(Message.obtain(handler, response.code(), response.body().string()));
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
+                handler.sendMessage(Message.obtain(handler, response.code(), response.body()));
             }
         });
     }

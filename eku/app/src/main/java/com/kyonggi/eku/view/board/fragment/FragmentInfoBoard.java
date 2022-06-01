@@ -2,7 +2,6 @@ package com.kyonggi.eku.view.board.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,14 +88,15 @@ public class FragmentInfoBoard extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                int itemCount = recyclerView.getAdapter().getItemCount();
                 if (!isLoading) {
                     List<InfoBoardPreview> currentList = adapter.getCurrentList();
                     if (layoutManager != null && layoutManager.findLastCompletelyVisibleItemPosition() == currentList.size() - 1) {
                         currentList.add(null);
-                        binding.recyclerViewInfoBard.post(() -> adapter.notifyItemInserted(currentList.size() - 1));
-                        activity.loadMoreInfoArticles(currentList.get(itemCount - 1).getId());
-                        isLoading = true;
+                        binding.recyclerViewInfoBard.post(() -> {
+                            adapter.notifyItemInserted(currentList.size() - 1);
+                            activity.loadMoreInfoArticles(currentList.get(currentList.size() - 2).getId());
+                            isLoading = true;
+                        });
                     }
                 }
             }

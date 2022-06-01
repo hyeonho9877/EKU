@@ -4,7 +4,6 @@ import static com.kyonggi.eku.view.board.activity.ActivityBoard.INIT;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;

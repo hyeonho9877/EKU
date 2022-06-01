@@ -20,8 +20,9 @@
 
     <TextView
         android:id="@+id/text_info_board_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
         android:ellipsize="end"
         android:fontFamily="@font/font_noto_sans_kr"
         android:maxEms="10"
@@ -30,17 +31,19 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/image_board_info"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_info_board_writer"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/text_info_board_time"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/font_noto_sans_kr"
+        android:gravity="end"
         android:maxHeight="25dp"
-        android:text="3분 전"
+        android:text="2022/05/28"
         android:textColor="@color/black_75"
         android:textSize="11sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,8 +60,20 @@
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="@+id/text_info_board_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_info_board_title"
         app:layout_constraintTop_toTopOf="@+id/text_info_board_title" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/image_board_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/rounded_transparent"
+        android:maxWidth="64dp"
+        android:maxHeight="64dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/text_info_board_time"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

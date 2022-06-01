@@ -1,11 +1,11 @@
 package com.kyonggi.eku.model;
 
+import android.graphics.Bitmap;
+
 import androidx.annotation.NonNull;
 
-import java.util.List;
-
 public class InfoBoardPreview extends BoardPreview{
-    private List<String> imageList;
+    private Bitmap representativeImage;
     public InfoBoardPreview(BoardPreview preview) {
         super(preview.getId(), preview.getWriter(), preview.getTitle(), preview.getNo(), preview.getTime(), preview.getView());
     }
@@ -16,11 +16,11 @@ public class InfoBoardPreview extends BoardPreview{
         return "InfoBoardPreview(id="+getId()+", writer="+getWriter()+", title="+getTitle()+", no="+getNo()+", time="+getTime()+", view="+getView();
     }
 
-    public List<String> getImageList() {
-        return imageList;
+    public Bitmap getRepresentativeImage() {
+        return representativeImage;
     }
 
-    public void setImageList(List<String> imageList) {
-        this.imageList = imageList;
+    public void setRepresentativeImage(Bitmap representativeImage) {
+        this.representativeImage = representativeImage;
     }
 }

@@ -2,12 +2,10 @@ package com.kyonggi.eku.utils.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kyonggi.eku.DetailFreeCommunity;
@@ -16,7 +14,6 @@ import com.kyonggi.eku.databinding.FreeBoardItemBinding;
 import com.kyonggi.eku.model.FreeBoardPreview;
 
 import java.util.List;
-import java.util.Objects;
 
 public class FreeBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -71,7 +68,7 @@ public class FreeBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof FreeBoardAdapter.FreeBoardViewHolder) {
+        if (holder instanceof FreeBoardAdapter.FreeBoardViewHolder && list.get(position) != null) {
             ((FreeBoardAdapter.FreeBoardViewHolder) holder).bind(list.get(position));
         } else if (holder instanceof FreeBoardAdapter.LoadingViewHolder) {
             showLoadingView((FreeBoardAdapter.LoadingViewHolder) holder, position);
@@ -121,21 +118,6 @@ public class FreeBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public LoadingViewHolder(@NonNull BoardLoadingBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-        }
-    }
-
-    static class DiffUtilCallback extends DiffUtil.ItemCallback<FreeBoardPreview> {
-
-
-        @Override
-        public boolean areItemsTheSame(@NonNull FreeBoardPreview oldItem, @NonNull FreeBoardPreview newItem) {
-            // 두 알람의 아이디가 같으면 같은 아이디로 간주한다
-            return Objects.equals(oldItem.getId(), newItem.getId());
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull FreeBoardPreview oldItem, @NonNull FreeBoardPreview newItem) {
-            return oldItem.equals(newItem);
         }
     }
 }

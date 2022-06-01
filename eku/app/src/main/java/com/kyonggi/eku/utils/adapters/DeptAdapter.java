@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kyonggi.eku.databinding.ItemDeptBinding;
-import com.kyonggi.eku.view.signUp.OnDeptSelectedListener;
+import com.kyonggi.eku.utils.callbacks.OnDeptSelectedListener;
 import com.kyonggi.eku.view.signUp.dialog.DialogDepartmentPicker;
 
 import java.util.List;
