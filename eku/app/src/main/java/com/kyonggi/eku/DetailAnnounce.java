@@ -27,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.kyonggi.eku.presenter.board.BoardPresenter;
 import com.kyonggi.eku.utils.UserInformation;
 
 import org.json.JSONException;
@@ -322,14 +323,13 @@ public class DetailAnnounce extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         request_server(board_id, DETAIL_BOARD_DELETE_REQUEST);
-                        Toast.makeText(getApplicationContext(),"예를 선택했습니다.",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"삭제되었습니다.",Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }
                 });
         builder.setNegativeButton("아니오",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(),"아니오를 선택했습니다.",Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }
                 });

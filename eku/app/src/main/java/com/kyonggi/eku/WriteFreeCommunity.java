@@ -35,7 +35,7 @@ public class WriteFreeCommunity extends AppCompatActivity implements View.OnClic
      * 자유게시판 작성
      * 기능
      * ㅈㄱㄴ
-     * */
+     */
 
     EditText et_title;
     EditText et_content;
