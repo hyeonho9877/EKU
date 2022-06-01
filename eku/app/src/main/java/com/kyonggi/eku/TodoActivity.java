@@ -3,8 +3,10 @@ package com.kyonggi.eku;
 import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -12,8 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.os.BuildCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,36 +48,78 @@ public class TodoActivity extends AppCompatActivity {
     private ArrayList<TodoItem> mTodoItems;
     private DBHelper mDBHelper;
     private CustomAdapter mAdapter;
-
+    AlarmManager alarmManager=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        int hour=8;
-        int minute=30;
-        int sec =0;
-        calendar.set(Calendar.HOUR_OF_DAY,hour);
-        calendar.set(Calendar.MINUTE,minute);
-        calendar.set(Calendar.SECOND,sec);
-
-
-        AlarmManager alarmManager=(AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
-        if (alarmManager != null) {
-            Intent intent = new Intent(this, AlarmReceiver.class);
-            PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 1, intent,PendingIntent.FLAG_IMMUTABLE);
-            Toast.makeText(getApplicationContext(),calendar.getTime().toString(),Toast.LENGTH_SHORT).show();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, calendar.getTimeInMillis()+AlarmManager.INTERVAL_DAY, alarmIntent);
-            } else {
-                alarmManager.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY, alarmIntent);
-            }
-
-            //Toast.makeText(TodoActivity.this, "알람이 저장되었습니다.", Toast.LENGTH_LONG).show();
+        PackageManager pm = this.getPackageManager();
+        ComponentName receiver = new ComponentName(this,BootReceiver.class);
+        Button button = findViewById(R.id.TodoAlarmButton);
+        if(PreferenceManagers.getString(getApplicationContext(),"TODO").equals("1")){
+            button.setText("오전 8:30분 알람취소");
         }
+        else{
+            button.setText("오전 8:30분 알람등록");
+        }
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                String value;
+                if(PreferenceManagers.getString(getApplicationContext(),"TODO").equals("1")&&alarmManager!=null){
+                    Toast.makeText(getApplicationContext(),"여기옸수",Toast.LENGTH_SHORT).show();
+                    alarmManager=(AlarmManager)TodoActivity.this.getSystemService(Context.ALARM_SERVICE);
+                    Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
+                    PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 1, intent,PendingIntent.FLAG_IMMUTABLE);
+                    alarmManager.cancel(alarmIntent);
+                    if(alarmIntent !=null)
+                    {
+                        alarmIntent.cancel();
+                    }
+                    button.setText("오전 8:30분 알람등록");
+                    //Toast.makeText(getApplicationContext(),"알람 취소가 완료되었습니다.",Toast.LENGTH_SHORT).show();
+                    PreferenceManagers.setString(getApplicationContext(),"TODO","가나다라마바사");
+
+                    Toast.makeText(getApplicationContext(),PreferenceManagers.getString(getApplicationContext(),"TODO"),Toast.LENGTH_SHORT).show();
+                    pm.setComponentEnabledSetting(receiver,PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+                }
+                else{
+                    button.setText("오전 8:30분 알람취소");
+                    PreferenceManagers.setString(getApplicationContext(),"TODO","1");
+                    //Toast.makeText(getApplicationContext(),"알람 등록이 완료되었습니다.",Toast.LENGTH_SHORT).show();
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(System.currentTimeMillis());
+                    int hour=8;
+                    int minute=30;
+                    int sec =0;
+                    calendar.set(Calendar.HOUR_OF_DAY,hour);
+                    calendar.set(Calendar.MINUTE,minute);
+                    calendar.set(Calendar.SECOND,sec);
+                    PendingIntent alarmIntent;
+                    alarmManager=(AlarmManager)TodoActivity.this.getSystemService(Context.ALARM_SERVICE);
+
+                    if (alarmManager != null) {
+                        Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
+                        alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 1, intent,PendingIntent.FLAG_IMMUTABLE);
+                        Toast.makeText(getApplicationContext(),calendar.getTime().toString(),Toast.LENGTH_SHORT).show();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            alarmManager.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, calendar.getTimeInMillis()+AlarmManager.INTERVAL_DAY, alarmIntent);
+                        } else {
+                            alarmManager.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY, alarmIntent);
+                        }
+
+                        //Toast.makeText(TodoActivity.this, "알람이 저장되었습니다.", Toast.LENGTH_LONG).show();
+                    }
+                    Toast.makeText(getApplicationContext(),PreferenceManagers.getString(getApplicationContext(),"TODO"),Toast.LENGTH_SHORT).show();
+                    pm.setComponentEnabledSetting(receiver,PackageManager.COMPONENT_ENABLED_STATE_ENABLED,PackageManager.DONT_KILL_APP);
+                }
+
+
+            }
+        });
         setInit();
     }
 
