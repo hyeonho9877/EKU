@@ -25,6 +25,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 
+import okhttp3.ResponseBody;
+
 public class LectureDetail extends AppCompatActivity {
 
     /**
@@ -53,9 +55,8 @@ public class LectureDetail extends AppCompatActivity {
         Handler handler = new Handler(getMainLooper()){
             @Override
             public void handleMessage(@NonNull Message msg) {
-
-                String responseResult = (String) msg.obj;
                 try {
+                    String responseResult = ((ResponseBody) msg.obj).string();
                     JSONObject LectureObject = new JSONObject(responseResult);
                     Gson a = new Gson();
                     Critics[] critics = a.fromJson(LectureObject.getString("critics"), Critics[].class);
@@ -74,9 +75,7 @@ public class LectureDetail extends AppCompatActivity {
                     RatingBar ratingStar = findViewById(R.id.lecture_detail_rating);
                     total = total/count;
                     ratingStar.setRating(total);
-
-
-                } catch (JSONException e) {
+                } catch (JSONException |IOException e) {
                     e.printStackTrace();
                 }
 
