@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
 import java.util.GregorianCalendar;
 
@@ -24,7 +25,12 @@ public class BootReceiver extends BroadcastReceiver {
             }
             PendingIntent alarmReceiver;
             alarmReceiver = PendingIntent.getBroadcast(context,1, new Intent(context,AlarmReceiver.class),0);
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, twopm.getTimeInMillis(), 1000*60*60*24, alarmReceiver);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, twopm.getTimeInMillis()+(1000*60*60*24), alarmReceiver);
+            } else {
+                alarmManager.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, twopm.getTimeInMillis()+(1000*60*60*24), alarmReceiver);
+            }
+
         }
     }
 
