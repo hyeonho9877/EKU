@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -53,8 +54,8 @@ public class TodoActivity extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        int hour=20;
-        int minute=20;
+        int hour=8;
+        int minute=30;
         int sec =0;
         calendar.set(Calendar.HOUR_OF_DAY,hour);
         calendar.set(Calendar.MINUTE,minute);
@@ -62,12 +63,15 @@ public class TodoActivity extends AppCompatActivity {
 
 
         AlarmManager alarmManager=(AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
-
         if (alarmManager != null) {
             Intent intent = new Intent(this, AlarmReceiver.class);
             PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 1, intent,PendingIntent.FLAG_IMMUTABLE);
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                    AlarmManager.INTERVAL_DAY, alarmIntent);
+            Toast.makeText(getApplicationContext(),calendar.getTime().toString(),Toast.LENGTH_SHORT).show();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, calendar.getTimeInMillis()+AlarmManager.INTERVAL_DAY, alarmIntent);
+            } else {
+                alarmManager.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY, alarmIntent);
+            }
 
             //Toast.makeText(TodoActivity.this, "알람이 저장되었습니다.", Toast.LENGTH_LONG).show();
         }

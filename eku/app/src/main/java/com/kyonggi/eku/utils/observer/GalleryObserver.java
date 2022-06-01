@@ -14,7 +14,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -43,7 +42,6 @@ public class GalleryObserver implements DefaultLifecycleObserver {
             public void handleMessage(@NonNull Message msg) {
                 int code = msg.what;
                 String response = (String) msg.obj;
-                Log.d(TAG, "handleMessage: " + code);
                 switch (code) {
                     case CONNECTION_FAILED | HTTP_BAD_REQUEST | HTTP_INTERNAL_SERVER_ERROR:
                         Toast.makeText(context, "네트워크 연결에 실패하였습니다.", Toast.LENGTH_LONG).show();
@@ -68,6 +66,7 @@ public class GalleryObserver implements DefaultLifecycleObserver {
                     if (result != null) {
                         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                         dialog.setMessage("사진을 분석중입니다..");
+                        dialog.show();
                         SendTool.requestForMultiPart("/signUp/ocr", result, contentResolver, handler);
                     }
                 });

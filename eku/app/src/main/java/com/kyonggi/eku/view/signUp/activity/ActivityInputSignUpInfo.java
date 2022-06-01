@@ -6,7 +6,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -59,7 +58,6 @@ public class ActivityInputSignUpInfo extends AppCompatActivity implements OnSign
         NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
         int downSpeed = capabilities.getLinkDownstreamBandwidthKbps()/1000;
         int delays = (2*downSpeed+300)/downSpeed*100;
-        Log.d(TAG, "onCreate: "+delays);
 
         new Handler().postDelayed(()->{
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

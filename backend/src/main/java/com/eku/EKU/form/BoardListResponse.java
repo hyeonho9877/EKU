@@ -5,6 +5,8 @@ import com.eku.EKU.domain.InfoBoard;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 import static com.eku.EKU.utils.RelativeTimeConverter.convertToRelativeTime;
 
 @SuperBuilder
@@ -16,6 +18,7 @@ public class BoardListResponse {
     private Long no;
     private String time;
     private Integer view;
+    private List<String> images;
 
     public BoardListResponse(InfoBoard board) {
         this.id = board.getId();

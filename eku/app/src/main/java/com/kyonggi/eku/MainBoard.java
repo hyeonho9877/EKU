@@ -49,6 +49,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
+
 
 /*
  * 강의동 낙서게시판
@@ -313,8 +315,8 @@ public class MainBoard extends AppCompatActivity {
         Handler handler = new Handler(getMainLooper()) {
             @Override
             public void handleMessage(@NonNull Message msg) {
-                String responseResult = (String) msg.obj;
                 try {
+                String responseResult = ((ResponseBody) msg.obj).string();
                     JSONArray comArray = new JSONArray(responseResult);
                     for (int i = 0; i < comArray.length(); i++) {
                         JSONObject LectureObject = comArray.getJSONObject(i);
@@ -324,7 +326,7 @@ public class MainBoard extends AppCompatActivity {
                     }
                     mainitem = new MainItem(getApplicationContext(), "공지게시판", listcom[0], listcom[1], listcom[2], name);
                     sc.addView(mainitem);
-                } catch (JSONException e) {
+                } catch (JSONException | IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -344,8 +346,8 @@ public class MainBoard extends AppCompatActivity {
         Handler handler = new Handler(getMainLooper()) {
             @Override
             public void handleMessage(@NonNull Message msg) {
-                String responseResult = (String) msg.obj;
                 try {
+                    String responseResult = ((ResponseBody) msg.obj).string();
                     JSONArray comArray = new JSONArray(responseResult);
                     for (int i = 0; i < comArray.length(); i++) {
                         JSONObject FreeObject = comArray.getJSONObject(i);
@@ -355,7 +357,7 @@ public class MainBoard extends AppCompatActivity {
                     }
                     mainitem = new MainItem(getApplicationContext(), " 자유게시판", listFree[0], listFree[1], listFree[2], name);
                     sc.addView(mainitem);
-                } catch (JSONException e) {
+                } catch (JSONException |IOException e) {
                     e.printStackTrace();
                 }
 
@@ -378,8 +380,9 @@ public class MainBoard extends AppCompatActivity {
         Handler handler = new Handler(getMainLooper()) {
             @Override
             public void handleMessage(@NonNull Message msg) {
-                String responseResult = (String) msg.obj;
+                ResponseBody obj = (ResponseBody) msg.obj;
                 try {
+                String responseResult = obj.string();
                     JSONArray LectureArray = new JSONArray(responseResult);
                     for (int i = 0; i < LectureArray.length(); i++) {
                         JSONObject LectureObject = LectureArray.getJSONObject(i);
@@ -394,7 +397,7 @@ public class MainBoard extends AppCompatActivity {
                     }
                     mainitem = new MainItem(getApplicationContext(), "강의게시판", listLecture[0], listLecture[1], listLecture[2]);
                     sc.addView(mainitem);
-                } catch (JSONException e) {
+                } catch (JSONException | IOException e) {
                     e.printStackTrace();
                 }
 

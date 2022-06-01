@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kyonggi.eku.DetailAnnounce;
@@ -16,7 +15,6 @@ import com.kyonggi.eku.databinding.InfoBoardItemBinding;
 import com.kyonggi.eku.model.InfoBoardPreview;
 
 import java.util.List;
-import java.util.Objects;
 
 public class InfoBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int VIEW_TYPE_ITEM = 0;
@@ -31,7 +29,6 @@ public class InfoBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public boolean insertFromHead(List<InfoBoardPreview> newList) {
-        Log.d(TAG, "insert: " + newList);
         if (newList.size() != 0 && !(newList.get(0) == list.get(0))) {
             list.addAll(0, newList);
             return true;
@@ -40,7 +37,6 @@ public class InfoBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public boolean insertFromTail(List<InfoBoardPreview> oldList) {
-        Log.d(TAG, "insertFromTail: " + oldList.size());
         if (oldList.size() < 20) {
             list.addAll(oldList);
             return true;
@@ -73,7 +69,10 @@ public class InfoBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof InfoBoardViewHolder) {
-            ((InfoBoardViewHolder) holder).bind(list.get(position));
+            Log.d(TAG, "onBindViewHolder: list size "+list.size());
+            Log.d(TAG, "onBindViewHolder: position "+position);
+            Log.d(TAG, "onBindViewHolder: element "+list.get(position));
+            if(list.get(position) != null) ((InfoBoardViewHolder) holder).bind(list.get(position));
         } else if (holder instanceof LoadingViewHolder) {
             showLoadingView((LoadingViewHolder) holder, position);
         }
@@ -107,6 +106,7 @@ public class InfoBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             binding.textInfoBoardTime.setText(item.getTime());
             String view = "조회 " + item.getView();
             binding.textInfoBoardView.setText(view);
+            binding.imageBoardInfo.setImageBitmap(item.getRepresentativeImage());
             binding.constraintLayoutInfoBoard.setOnClickListener(v -> {
                         Intent intent = new Intent(context, DetailAnnounce.class);
                         intent.putExtra("id", String.valueOf(id));
@@ -122,21 +122,6 @@ public class InfoBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public LoadingViewHolder(@NonNull BoardLoadingBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-        }
-    }
-
-    static class DiffUtilCallback extends DiffUtil.ItemCallback<InfoBoardPreview> {
-
-
-        @Override
-        public boolean areItemsTheSame(@NonNull InfoBoardPreview oldItem, @NonNull InfoBoardPreview newItem) {
-            // 두 알람의 아이디가 같으면 같은 아이디로 간주한다
-            return Objects.equals(oldItem.getId(), newItem.getId());
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull InfoBoardPreview oldItem, @NonNull InfoBoardPreview newItem) {
-            return oldItem.equals(newItem);
         }
     }
 }

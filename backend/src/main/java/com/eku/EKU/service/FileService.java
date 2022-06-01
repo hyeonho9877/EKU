@@ -4,15 +4,14 @@ import com.eku.EKU.domain.Image;
 import com.eku.EKU.domain.InfoBoard;
 import com.eku.EKU.repository.ImageRepository;
 import com.eku.EKU.repository.InfoBoardRepository;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -100,7 +99,7 @@ public class FileService {
         List<Image> imageList = imageRepository.findAllByInfoBoard(infoBoard);
         List<String> urlList = new ArrayList<>();
         for(int i=0;i<imageList.size();i++){
-            String url = "https://eku.kro.kr/board/info/image?id="+articleId+"&imageNo="+i;
+            String url = "/board/info/image?id="+articleId+"&imageNo="+i;
             urlList.add(url);
         }
         return urlList;
