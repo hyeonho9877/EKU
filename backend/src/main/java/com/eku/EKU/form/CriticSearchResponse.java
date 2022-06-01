@@ -41,7 +41,7 @@ public class CriticSearchResponse {
             this.content = critic.getContent();
             this.star = critic.getStar();
             this.grade = critic.getGrade();
-            this.cId = critic.getCId();
+            this.cId = critic.getCriticId();
         }
     }
 }
