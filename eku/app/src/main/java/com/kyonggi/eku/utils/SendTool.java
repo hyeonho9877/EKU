@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -215,6 +216,7 @@ public final class SendTool {
     }
 
     public static <T> List<T> parseToList(String targetText, Class<T[]> t) {
+        if(targetText.equals("list is empty")) return Collections.emptyList();
         return Arrays.asList(gson.fromJson(targetText, t));
     }
 

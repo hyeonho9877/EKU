@@ -2,6 +2,7 @@ package com.kyonggi.eku.view.board.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class ActivityBoard extends AppCompatActivity implements OnBoardResponseL
     private final FragmentFreeBoard fragmentFreeBoard = new FragmentFreeBoard();
     private final FragmentInfoBoard fragmentInfoBoard = new FragmentInfoBoard();
     private String buildingNumber;
+    private String rawBuildingNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,8 @@ public class ActivityBoard extends AppCompatActivity implements OnBoardResponseL
         binding = ActivityBoardBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        String buildingNumber = getIntent().getStringExtra("buildingNumber");
+        Log.d(TAG, "onCreate: " + buildingNumber);
         setBoard();
 
         presenter = new BoardPresenter(this, this);
@@ -64,11 +68,12 @@ public class ActivityBoard extends AppCompatActivity implements OnBoardResponseL
     }
 
     private void setBoard() {
-        String rawBuildingNumber = getIntent().getStringExtra("buildingNumber");
+        rawBuildingNumber = getIntent().getStringExtra("buildingNumber");
         if (rawBuildingNumber.contains("종합")) buildingNumber = "5";
         else if(rawBuildingNumber.contains("공학")) buildingNumber = "10";
         else if(rawBuildingNumber.equals("EKU")) buildingNumber = "0";
         else buildingNumber = rawBuildingNumber.substring(0, 1);
+        binding.textBuildingName.setText(rawBuildingNumber);
         currentMode = getIntent().getStringExtra("mode");
 
         if (currentMode.equals(BOARD_FREE)) {
@@ -83,7 +88,6 @@ public class ActivityBoard extends AppCompatActivity implements OnBoardResponseL
             binding.textBuildingBoardAnnounce.setText(announce);
             binding.buttonInfoBoard.setTextColor(Color.parseColor("#F7941E"));
             binding.buttonFreeBoard.setTextColor(Color.parseColor("#80252525"));
-            binding.textBuildingName.setText(rawBuildingNumber);
 
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_layout_board, fragmentInfoBoard, BOARD_INFO)
@@ -93,7 +97,7 @@ public class ActivityBoard extends AppCompatActivity implements OnBoardResponseL
 
     private void switchBoard() {
         if (currentMode.equals(BOARD_FREE)) {
-            String announce = buildingNumber + " 강의동 공지게시판입니다.";
+            String announce = rawBuildingNumber + " 공지게시판입니다.";
             binding.textBuildingBoardAnnounce.setText(announce);
             binding.buttonFreeBoard.setTextColor(Color.parseColor("#80252525"));
             binding.buttonInfoBoard.setTextColor(Color.parseColor("#F7941E"));
