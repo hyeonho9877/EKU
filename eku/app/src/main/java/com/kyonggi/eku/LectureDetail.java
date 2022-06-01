@@ -61,7 +61,7 @@ public class LectureDetail extends AppCompatActivity {
                     Gson a = new Gson();
                     Critics[] critics = a.fromJson(LectureObject.getString("critics"), Critics[].class);
                     count = critics.length;
-                    for (int i = 0; i < count; i++){
+                    for (int i = (count-1); i >= 0; i--){
                         int cid = critics[i].getcid();
                         String content = critics[i].getContent();
                         float star = critics[i].getStar();
