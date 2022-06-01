@@ -27,8 +27,11 @@ import com.kyonggi.eku.utils.SendTool;
 import java.io.IOException;
 import java.util.HashMap;
 
+import okhttp3.ResponseBody;
+
 public class LectureDetailWrite extends AppCompatActivity {
 
+    private static final String TAG = "LectureDetail";
     /**
      * 강의 평가 상세 작성 기능
      */
@@ -39,7 +42,7 @@ public class LectureDetailWrite extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityResultLauncher;
     AlertDialog gradeSelectDialog;
     long backKeyPressedTime;
-    String intentLetureName,intentProfessor;
+    String intentLetureName, intentProfessor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +64,12 @@ public class LectureDetailWrite extends AppCompatActivity {
             public void handleMessage(@NonNull Message msg) {
                 switch (msg.what) {
                     case 0:
-                        String responseResult = (String) msg.obj;
-                        Log.i("a", responseResult);
+                        try {
+                            String responseResult = ((ResponseBody) msg.obj).string();
+                            Log.i("a", responseResult);
+                        } catch (IOException e) {
+                            Log.e(TAG, "handleMessage: ");
+                        }
                 }
             }
         };
@@ -88,14 +95,13 @@ public class LectureDetailWrite extends AppCompatActivity {
                 String professor = professorview.getText().toString();
                 String content = contentview.getText().toString();
                 float rating = ratingview.getRating();
-                if(title.equals("")||professor.equals("")||
-                        content.equals("")||rating == 0||gradeSelected==10){
-                    Toast.makeText(getApplicationContext(),"항목을 모두 입력해주세요", Toast.LENGTH_SHORT).show();
-                    Log.i("a","항목입력해주세요");
+                if (title.equals("") || professor.equals("") ||
+                        content.equals("") || rating == 0 || gradeSelected == 10) {
+                    Toast.makeText(getApplicationContext(), "항목을 모두 입력해주세요", Toast.LENGTH_SHORT).show();
+                    Log.i("a", "항목입력해주세요");
                     return;
                 }
                 String score = grade[gradeSelected];
-
 
 
                 HashMap<String, Object> temp = new HashMap<>();
@@ -106,18 +112,17 @@ public class LectureDetailWrite extends AppCompatActivity {
                 temp.put("grade", score);
                 temp.put("star", rating);
                 Lecture lecture = new Lecture(title, professor);
-                temp.put("lecture",lecture);
+                temp.put("lecture", lecture);
 
                 try {
-                    SendTool.requestForPost(SendTool.APPLICATION_JSON, "/critic/apply",temp, handler);
-                }
-                catch (IOException | NullPointerException e) {
+                    SendTool.requestForPost(SendTool.APPLICATION_JSON, "/critic/apply", temp, handler);
+                } catch (IOException | NullPointerException e) {
                     e.printStackTrace();
                 }
 
                 Intent intent = new Intent(getApplicationContext(), LectureDetail.class);
-                intent.putExtra("Name",intentLetureName);
-                intent.putExtra("Prof",intentProfessor);
+                intent.putExtra("Name", intentLetureName);
+                intent.putExtra("Prof", intentProfessor);
                 startActivity(intent);
                 finish();
             }
@@ -162,7 +167,7 @@ public class LectureDetailWrite extends AppCompatActivity {
     public void onBackPressed() {
         if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
             backKeyPressedTime = System.currentTimeMillis();
-            Intent intent = new Intent(getApplicationContext(),LectureDetail.class);
+            Intent intent = new Intent(getApplicationContext(), LectureDetail.class);
             intent.putExtra("Name", intentLetureName);
             intent.putExtra("Prof", intentProfessor);
             startActivity(intent);
