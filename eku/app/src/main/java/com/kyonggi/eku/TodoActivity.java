@@ -96,21 +96,26 @@ public class TodoActivity extends AppCompatActivity {
                 btn_ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(et_title.toString().length() <=0 ){
-                            dialog_not_access();
+                        if(et_title.getText().toString().length() <=0 ){
+                            dialog_not_access_title();
                         }
-                        String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-                        mDBHelper.InsertTodo(et_title.getText().toString(), et_content.getText().toString(), currentTime);
+                        else if(et_content.getText().toString().length() <=0){
+                            dialog_not_access_content();
+                        }
+                        else {
+                            String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                            mDBHelper.InsertTodo(et_title.getText().toString(), et_content.getText().toString(), currentTime);
 
-                        TodoItem item = new TodoItem();
-                        item.setTitle(et_title.getText().toString());
-                        item.setContent(et_content.getText().toString());
-                        item.setWriteDate(currentTime);
+                            TodoItem item = new TodoItem();
+                            item.setTitle(et_title.getText().toString());
+                            item.setContent(et_content.getText().toString());
+                            item.setWriteDate(currentTime);
 
-                        mAdapter.addItem(item);
-                        mRv_todo.smoothScrollToPosition(0);
-                        dialog.dismiss();
-                        Toast.makeText(TodoActivity.this, "할일 목록에 추가되었습니다.", Toast.LENGTH_SHORT).show();
+                            mAdapter.addItem(item);
+                            mRv_todo.smoothScrollToPosition(0);
+                            dialog.dismiss();
+                            Toast.makeText(TodoActivity.this, "할일 목록에 추가되었습니다.", Toast.LENGTH_SHORT).show();
+                        }
 
                     }
                 });
@@ -145,9 +150,21 @@ public class TodoActivity extends AppCompatActivity {
             finish();
         }
     }
-    private void dialog_not_access() {
+    private void dialog_not_access_title() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("내용이 너무 짧습니다.");
+        builder.setTitle("해야할 일이 너무 짧습니다.");
+        builder.setMessage("할일 목록에 추가할 수 없습니다.");
+        builder.setPositiveButton("예",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.show();
+    }
+    private void dialog_not_access_content() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("상세내용이 너무 짧습니다.");
         builder.setMessage("할일 목록에 추가할 수 없습니다.");
         builder.setPositiveButton("예",
                 new DialogInterface.OnClickListener() {
