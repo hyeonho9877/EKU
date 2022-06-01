@@ -219,7 +219,7 @@ public class MainItem extends LinearLayout {
                 Intent intent2 = new Intent(context, DetailAnnounce.class);
                 intent2.putExtra("id",C1.getc_id());
                 intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                context.startActivity(intent2);
             }
         });
         if (C2 == null)
@@ -237,7 +237,7 @@ public class MainItem extends LinearLayout {
                 Intent intent2 = new Intent(context, DetailAnnounce.class);
                 intent2.putExtra("id",C2.getc_id());
                 intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                context.startActivity(intent2);
             }
         });
         if (C3 == null)
@@ -255,7 +255,7 @@ public class MainItem extends LinearLayout {
                 Intent intent2 = new Intent(context, DetailAnnounce.class);
                 intent2.putExtra("id",C3.getc_id());
                 intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                context.startActivity(intent2);
             }
         });
     }
