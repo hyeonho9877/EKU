@@ -19,7 +19,7 @@ public class Critic {
     @Id
     @Column(name = "c_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cId;
+    private Long criticId;
     @Column(name = "content", nullable = false)
     private String content;
     @Column(name = "grade", nullable = false)

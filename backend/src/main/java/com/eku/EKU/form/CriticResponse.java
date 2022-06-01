@@ -20,7 +20,7 @@ public class CriticResponse {
     private LectureResponse lecture;
 
     public CriticResponse(Critic critic) {
-        this.cId = critic.getCId();
+        this.cId = critic.getCriticId();
         this.content = critic.getContent();
         this.grade = GradeResponseConverter.convert(critic.getGrade());
         this.studNo = String.valueOf(critic.getWriter().getStudNo()).substring(2, 4);

@@ -11,15 +11,14 @@ import com.eku.EKU.form.InfoBoardResponse;
 import com.eku.EKU.repository.ImageRepository;
 import com.eku.EKU.repository.InfoBoardRepository;
 import com.eku.EKU.repository.StudentRepository;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.io.IOException;
+import java.util.*;
 
 import static com.eku.EKU.utils.RelativeTimeConverter.convertToRelativeTime;
 
@@ -63,7 +62,6 @@ public class InfoBoardService {
                     .time(convertToRelativeTime(i.getWrittenTime()))
                     .view(i.getView())
                     .no(i.getNo().getStudNo())
-                    .images(imageURL(i.getId()))
                     .build();
             newList.add(form);
         }
@@ -144,7 +142,6 @@ public class InfoBoardService {
     public List<BoardListResponse> loadBoardAfterId(int building, Long id) {
         List<InfoBoard> result = infoBoardRepository.findByBuildingAndIdIsLessThanOrderByWrittenTimeDesc(building, id, Pageable.ofSize(20));
         List<BoardListResponse> response = result.stream().map(BoardListResponse::new).toList();
-        response.forEach(r->r.setImages(imageURL(r.getId())));
         return response;
     }
 
@@ -173,9 +170,19 @@ public class InfoBoardService {
         return result.stream().map(BoardListResponse::new).toList();
     }
 
-    public List<String> imageURL(Long articleId)throws IllegalArgumentException, NoSuchElementException{
-        List<Image> imageList = imageRepository.findAllByInfoBoard_Id(articleId);
-        AtomicInteger i = new AtomicInteger();
-        return imageList.stream().map(c->"/board/info/image?id="+articleId+"&imageNo="+ i.getAndIncrement()).toList();
+    public HashMap<Long, List<byte[]>> imageURL(List<BoardListResponse> articles)throws IllegalArgumentException, NoSuchElementException, IOException {
+        HashMap<Long, List<byte[]>> images = new HashMap<>();
+        for (BoardListResponse response : articles) {
+            long id = response.getId();
+            List<Image> imageList = imageRepository.findAllByInfoBoard_Id(id);
+            ArrayList<byte[]> bytes = new ArrayList<>();
+            for (Image image : imageList) {
+                byte[] tempBytes = new FileSystemResource(image.getPath() + image.getFileName()).getInputStream().readAllBytes();
+                System.out.println(Arrays.toString(tempBytes));
+                bytes.add(tempBytes);
+            }
+            images.put(id, bytes);
+        }
+        return images;
     }
 }

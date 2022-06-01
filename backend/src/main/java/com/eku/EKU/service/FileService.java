@@ -94,7 +94,7 @@ public class FileService {
      * @throws IllegalArgumentException
      * @throws NoSuchElementException
      */
-    public List<String> imageURL(Long articleId)throws IllegalArgumentException, NoSuchElementException{
+    public List<String> imageURL(long articleId)throws IllegalArgumentException, NoSuchElementException{
         InfoBoard infoBoard = infoBoardRepository.getById(articleId);
         List<Image> imageList = imageRepository.findAllByInfoBoard(infoBoard);
         List<String> urlList = new ArrayList<>();
