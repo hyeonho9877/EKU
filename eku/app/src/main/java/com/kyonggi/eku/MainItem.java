@@ -15,9 +15,9 @@ import com.kyonggi.eku.view.board.activity.ActivityBoard;
 
 public class MainItem extends LinearLayout {
 
-    public MainItem(Context context, String title, Lecture L1, Lecture L2, Lecture L3) {
+    public MainItem(Context context, String title, Lecture L1, Lecture L2, Lecture L3, String buildingNumber) {
         super(context);
-        init(context, title, L1, L2, L3);
+        init(context, title, L1, L2, L3, buildingNumber);
     }
 
     public MainItem(Context context, String title, FreeCommunityItem F1, FreeCommunityItem F2, FreeCommunityItem F3, String buildingNumber) {
@@ -30,7 +30,7 @@ public class MainItem extends LinearLayout {
         init(context, title, C1, C2, C3, buildingNumber);
     }
 
-    private void init(Context context, String title, Lecture L1, Lecture L2, Lecture L3){
+    private void init(Context context, String title, Lecture L1, Lecture L2, Lecture L3, String buildingNumber){
         LayoutInflater inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.item_board,this,true);
         TextView textView = findViewById(R.id.MainItem_title);
@@ -40,6 +40,7 @@ public class MainItem extends LinearLayout {
             public void onClick(View view) {
                 Intent intent = new Intent(context, LectureMain.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                //intent.putExtra("GANG",buildingNumber);
                 context.startActivity(intent);
             }
         });
@@ -49,6 +50,7 @@ public class MainItem extends LinearLayout {
             public void onClick(View view) {
                 Intent intent = new Intent(context, LectureMain.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                //intent.putExtra("GANG",buildingNumber);
                 context.startActivity(intent);
             }
         });
@@ -62,6 +64,7 @@ public class MainItem extends LinearLayout {
                 Intent intent = new Intent(context, LectureDetail.class);
                 intent.putExtra("Name", L1.getLectureName());
                 intent.putExtra("Prof", L1.getProfessor());
+                //intent.putExtra("GANG",buildingNumber);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -76,6 +79,7 @@ public class MainItem extends LinearLayout {
                 Intent intent = new Intent(context, LectureDetail.class);
                 intent.putExtra("Name", L2.getLectureName());
                 intent.putExtra("Prof", L2.getProfessor());
+                //intent.putExtra("GANG",buildingNumber);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -90,6 +94,7 @@ public class MainItem extends LinearLayout {
                 Intent intent = new Intent(context, LectureDetail.class);
                 intent.putExtra("Name", L3.getLectureName());
                 intent.putExtra("Prof", L3.getProfessor());
+                //intent.putExtra("GANG",buildingNumber);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

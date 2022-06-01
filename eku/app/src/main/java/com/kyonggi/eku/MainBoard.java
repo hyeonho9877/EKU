@@ -124,6 +124,7 @@ public class MainBoard extends AppCompatActivity {
                         intent.putExtra("buildingNumber", name);
                         drawerLayout.closeDrawer(GravityCompat.START);
                         new Handler().postDelayed(() -> startActivity(intent), 260);
+                        //finish();
                         break;
                     case R.id.Free:
                         intent = new Intent(getApplicationContext(), ActivityBoard.class);
@@ -131,10 +132,12 @@ public class MainBoard extends AppCompatActivity {
                         intent.putExtra("buildingNumber", name);
                         drawerLayout.closeDrawer(GravityCompat.START);
                         new Handler().postDelayed(() -> startActivity(intent), 260);
+                        //finish();
                         break;
                     case R.id.lectureMain:
                         intent = new Intent(getApplicationContext(), LectureMain.class);
                         drawerLayout.closeDrawer(GravityCompat.START);
+                        //intent.putExtra("GANG",name);
                         new Handler().postDelayed(() -> startActivity(intent), 260);
                         break;
                     case R.id.ToDo:
@@ -309,6 +312,17 @@ public class MainBoard extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        sc.removeAllViews();
+        ViewMemo(Minorcheck);
+        PreviewCom(sc);
+        PreviewFree(sc);
+        PreviewLec(sc);
+
+
+    }
 
     public void PreviewCom(LinearLayout sc) {
         ComminityItem[] listcom = new ComminityItem[3];
@@ -395,7 +409,7 @@ public class MainBoard extends AppCompatActivity {
                         if (i == 2)
                             break;
                     }
-                    mainitem = new MainItem(getApplicationContext(), "강의게시판", listLecture[0], listLecture[1], listLecture[2]);
+                    mainitem = new MainItem(getApplicationContext(), "강의게시판", listLecture[0], listLecture[1], listLecture[2],name);
                     sc.addView(mainitem);
                 } catch (JSONException | IOException e) {
                     e.printStackTrace();

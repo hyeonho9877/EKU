@@ -33,13 +33,9 @@ public class LectureMain extends AppCompatActivity {
      * 강의평가 메인
      *
      */
-    ImageButton imageButton;
+
     ImageButton imageButton1;
     LinearLayout sc;
-    String[] showBuilding = {"1강의동", "2강의동", "3강의동", "4강의동", "5강의동", "6강의동", "7강의동", "8강의동", "9강의동", "제2공학관"};
-    int buildingSelected = 0;
-    int[] building = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
-    AlertDialog buildingSelectDialog;
     long backKeyPressedTime;
     private LecturePresenter presenter;
 
@@ -47,6 +43,7 @@ public class LectureMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lecture_main);
+
 
         presenter = new LecturePresenter(this, this);
 
@@ -65,21 +62,6 @@ public class LectureMain extends AppCompatActivity {
                     }, 500);
                 });
 
-        /*
-        imageButton = (ImageButton) findViewById(R.id.Lecture_Main_WriteButton);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UserInformation info = new UserInformation(getApplicationContext());
-                if (!info.fromPhoneVerify(getApplicationContext())) {
-                    //presenter.signIn();
-                } else {
-                    Intent intent = new Intent(getApplicationContext(), LectureWrite.class);
-                    startActivity(intent);
-                }
-            }
-        });
-         */
 
         EditText searchText = (EditText) findViewById(R.id.Lecture_Main_searchtext);
         LoadMain();
@@ -165,7 +147,9 @@ public class LectureMain extends AppCompatActivity {
     public void onBackPressed() {
         if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
             backKeyPressedTime = System.currentTimeMillis();
-            finish();
+            //Intent intent = new Intent(getApplicationContext(),MainBoard.class);
+            //startActivity(intent);
+            //finish();
             //Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
             return;
         }
