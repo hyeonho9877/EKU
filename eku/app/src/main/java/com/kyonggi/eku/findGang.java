@@ -89,7 +89,7 @@ public class findGang extends AppCompatActivity {
              */
             @Override
             public void onAppearBeacons(List<MinewBeacon> minewBeacons) {
-
+                Toast.makeText(getApplicationContext(),"탐색 중..",Toast.LENGTH_LONG).show();
                 for(MinewBeacon m :minewBeacons) {
 
                     String temp = m.getBeaconValue(BeaconValueIndex.MinewBeaconValueIndex_Minor).getStringValue();
