@@ -70,7 +70,7 @@ public class TodoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String value;
-                if(PreferenceManagers.getString(getApplicationContext(),"TODO").equals("1")&&alarmManager!=null){
+                if(PreferenceManagers.getString(getApplicationContext(),"TODO").equals("1")){
                     alarmManager=(AlarmManager)TodoActivity.this.getSystemService(Context.ALARM_SERVICE);
                     Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
                     PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 1, intent,PendingIntent.FLAG_IMMUTABLE);
@@ -80,14 +80,14 @@ public class TodoActivity extends AppCompatActivity {
                         alarmIntent.cancel();
                     }
                     button.setText("오전 알람등록");
-                    //Toast.makeText(getApplicationContext(),"알람 취소가 완료되었습니다.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"알람 취소가 완료되었습니다.",Toast.LENGTH_SHORT).show();
                     PreferenceManagers.setString(getApplicationContext(),"TODO","가나다라마바사");
                     pm.setComponentEnabledSetting(receiver,PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
                 }
                 else{
                     button.setText("오전 알람취소");
                     PreferenceManagers.setString(getApplicationContext(),"TODO","1");
-                    //Toast.makeText(getApplicationContext(),"알람 등록이 완료되었습니다.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"알람 등록이 완료되었습니다.",Toast.LENGTH_SHORT).show();
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTimeInMillis(System.currentTimeMillis());
                     int hour=8;
