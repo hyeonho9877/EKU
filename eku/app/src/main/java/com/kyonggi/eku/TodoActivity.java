@@ -60,13 +60,12 @@ public class TodoActivity extends AppCompatActivity {
         ComponentName receiver = new ComponentName(this,BootReceiver.class);
         Button button = findViewById(R.id.TodoAlarmButton);
         if(PreferenceManagers.getString(getApplicationContext(),"TODO").equals("1")){
-            button.setText("오전 알람취소");
+            button.setText("알람 기능 시작");
         }
         else{
-            button.setText("오전 알람등록");
+            button.setText("알람 기능 시작");
         }
         button.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 String value;
@@ -102,16 +101,9 @@ public class TodoActivity extends AppCompatActivity {
                     if (alarmManager != null) {
                         Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
                         alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 1, intent,PendingIntent.FLAG_IMMUTABLE);
-                        Toast.makeText(getApplicationContext(),calendar.getTime().toString(),Toast.LENGTH_SHORT).show();
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            alarmManager.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, calendar.getTimeInMillis()+AlarmManager.INTERVAL_DAY, alarmIntent);
-                        } else {
-                            alarmManager.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY, alarmIntent);
-                        }
-
+                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarmIntent);
                         //Toast.makeText(TodoActivity.this, "알람이 저장되었습니다.", Toast.LENGTH_LONG).show();
                     }
-                    Toast.makeText(getApplicationContext(),PreferenceManagers.getString(getApplicationContext(),"TODO"),Toast.LENGTH_SHORT).show();
                     pm.setComponentEnabledSetting(receiver,PackageManager.COMPONENT_ENABLED_STATE_ENABLED,PackageManager.DONT_KILL_APP);
                 }
 
