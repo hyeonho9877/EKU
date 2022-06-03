@@ -60,10 +60,10 @@ public class TodoActivity extends AppCompatActivity {
         ComponentName receiver = new ComponentName(this,BootReceiver.class);
         Button button = findViewById(R.id.TodoAlarmButton);
         if(PreferenceManagers.getString(getApplicationContext(),"TODO").equals("1")){
-            button.setText("오전 알람취소");
+            button.setText("알람 기능 시작");
         }
         else{
-            button.setText("오전 알람등록");
+            button.setText("알람 기능 시작");
         }
         button.setOnClickListener(new View.OnClickListener() {
             @Override

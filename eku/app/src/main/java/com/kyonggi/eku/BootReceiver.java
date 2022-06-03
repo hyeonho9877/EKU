@@ -26,7 +26,6 @@ public class BootReceiver extends BroadcastReceiver {
             PendingIntent alarmReceiver;
             alarmReceiver = PendingIntent.getBroadcast(context,1, new Intent(context,AlarmReceiver.class),0);
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,twopm.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarmReceiver);
-
         }
     }
 
