@@ -25,11 +25,7 @@ public class BootReceiver extends BroadcastReceiver {
             }
             PendingIntent alarmReceiver;
             alarmReceiver = PendingIntent.getBroadcast(context,1, new Intent(context,AlarmReceiver.class),0);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, twopm.getTimeInMillis()+(1000*60*60*24), alarmReceiver);
-            } else {
-                alarmManager.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, twopm.getTimeInMillis()+(1000*60*60*24), alarmReceiver);
-            }
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,twopm.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarmReceiver);
 
         }
     }
