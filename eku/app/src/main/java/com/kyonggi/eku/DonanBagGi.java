@@ -219,7 +219,7 @@ public class DonanBagGi extends AppCompatActivity {
                             vibrator.vibrate(new long[]{50,300},0); // 0.5초간 진동
                             player = MediaPlayer.create(getBaseContext(),R.raw.sirent);
                             player.setLooping(true);
-                            //player.start();
+                            player.start();
                             Button offButton = findViewById(R.id.Donan_Off);
                             offButton.setVisibility(View.VISIBLE);
                             offButton.setOnClickListener(new View.OnClickListener() {
