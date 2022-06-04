@@ -21,6 +21,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     private String channelId="alarm_channel";
     @Override
     public void onReceive(Context context, Intent intent) {
+
         this.context = context;
         Intent goIntent = new Intent(context, TodoActivity.class);
 

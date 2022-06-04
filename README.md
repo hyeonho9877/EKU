@@ -4,49 +4,37 @@ EKU Capstone
 
 
 # 0.README.md 다.
-We Make this
+Front ANDROID
+Back Spring
 
-# 1. 제목 
+We Are Java
+
+# 1. 만든이 소개 
 ##     201611771 
-###    201611843
-####   201713924
-#####  201611772
-###### 201713883
+##    201611843
+##   201713924
+##  201611772
+## 201713883
 
 
-# 2. 내용 
-```c
-#include <stdio.h>
-int main(void) {
-  printf("Hell World so i use C");
-}
+# 2. 현재 issue
+```
+아직 없음
 ```
 
-# 3. 위 USE SCRUM
-*힘냅시다 캡스톤 9주차*
+# 3. SCRUM 방식으로 매주 2회 최소 12시간 이상 코딩
+**힘냅시다 캡스톤 13주차**
 
-**BOLD**
 
-~~학점을 향해 뛰어가는 우리들~~
 
 # 4. WE USE 
 > BLUETOOTH BEACON
 > > NAVER OCR
 > > > GOOGLE CLOUD
 
-# 5. 목록
-* 준비중
-  * 준비중
-    * 준비중
+# how to run
 
-# 6. 수평선 
-***
-
-# 7. 우리의 결의
-![우린 최고야](https://user-images.githubusercontent.com/29910948/154222496-8075894c-6287-4069-ac2a-3a9a1f6a9115.png)
-최고다
-
-
+run StartActivity.java
 
 
 
