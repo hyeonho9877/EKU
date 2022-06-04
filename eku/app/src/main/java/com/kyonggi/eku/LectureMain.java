@@ -72,6 +72,8 @@ public class LectureMain extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String search = searchText.getText().toString();
+                if (search.equals(""))
+                    return;
                 sc = (LinearLayout) findViewById(R.id.Lecture_Main_scroll);
                 sc.removeAllViews();
                 Handler handler = new Handler(getMainLooper()){
