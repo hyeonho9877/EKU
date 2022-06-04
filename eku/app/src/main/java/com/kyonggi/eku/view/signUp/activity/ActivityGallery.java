@@ -11,12 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.kyonggi.eku.databinding.ActivityGalleryBinding;
 import com.kyonggi.eku.presenter.signUp.GalleryPresenter;
+import com.kyonggi.eku.presenter.signUp.SignUpCameraPresenter;
 
 public class ActivityGallery extends AppCompatActivity {
 
     private static final String TAG = "ActivityGallery";
     private ActivityGalleryBinding binding;
     private GalleryPresenter presenter;
+    private SignUpCameraPresenter cameraPresenter;
     private Uri photo;
 
     @Override
@@ -27,6 +29,7 @@ public class ActivityGallery extends AppCompatActivity {
         setContentView(view);
 
         presenter = new GalleryPresenter(this, this);
+        cameraPresenter = SignUpCameraPresenter.INSTANCE;
 
         replacePhoto();
         initListeners();
@@ -38,6 +41,7 @@ public class ActivityGallery extends AppCompatActivity {
             dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             dialog.setMessage("사진을 분석중입니다..");
             dialog.show();
+            cameraPresenter.photoConfirmed();
             presenter.confirm(photo, getContentResolver(), dialog);
         });
         binding.buttonCancel.setOnClickListener(v->{

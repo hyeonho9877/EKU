@@ -1,5 +1,6 @@
 package com.kyonggi.eku.presenter.signUp;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -35,17 +36,19 @@ import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 public class SignUpCameraPresenter {
+    public static final SignUpCameraPresenter INSTANCE = new SignUpCameraPresenter();
     private static final String TAG = "SignUpPresenter";
-    private final Context context;
+    private ActivitySignUpCamera activity;
+    private Context context;
     private ImageCapture imageCapture;
-    private final ActivitySignUpCamera activity;
-    private Handler handler;
     private MediaPlayer mediaPlayer;
 
+    private SignUpCameraPresenter() {
+    }
 
-    public SignUpCameraPresenter(Context context, ActivitySignUpCamera activity) {
-        this.context = context;
+    public void initAttributes(ActivitySignUpCamera activity, Context context) {
         this.activity = activity;
+        this.context = context;
     }
 
     public void startCamera(ActivitySignupPhotoBinding binding) {
@@ -119,7 +122,7 @@ public class SignUpCameraPresenter {
         );
     }
 
-    public void skipPhoto(){
+    public void skipPhoto() {
         Intent intent = new Intent(context, ActivityInputSignUpInfo.class);
         activity.startActivity(intent);
         activity.finish();
@@ -130,6 +133,10 @@ public class SignUpCameraPresenter {
             mediaPlayer.release();
             mediaPlayer = null;
         }
+    }
+
+    public void photoConfirmed(){
+        this.activity.finish();
     }
 
     private final int REQUEST_CODE = 0;
