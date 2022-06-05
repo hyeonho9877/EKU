@@ -1,5 +1,5 @@
 # EKU - Everywhere Kyonggi Up
-#### Bluetooth Beacon Based Kyonggi University Mobile Campus
+### Bluetooth Beacon Based Kyonggi University Mobile Campus
 
 # 0. Contributor
  - [Polite-Jehu](https://github.com/Polite-Jehu) - Leader, Android, Bluetooth
@@ -19,15 +19,15 @@
 > NaverClovaOCR Service
 
 # 2. Features
-##### 1. Bluetooth Beacon Based Building Recognition
-##### 2. Bluetooth Beacon Based Anti-Theft
-##### 3. SignIn & SignUp with OCR
-##### 4. Notice Board for each building
-##### 5. Free Board for entire user
-##### 6. Simple Memo for each building
-##### 7. Lecture evaluation for each lecture
-##### 8. Todo List & Notification
-##### 9. Timetable & Sharing
+#### 1. Bluetooth Beacon Based Building Recognition
+#### 2. Bluetooth Beacon Based Anti-Theft
+#### 3. SignIn & SignUp with OCR
+#### 4. Notice Board for each building
+#### 5. Free Board for entire user
+#### 6. Simple Memo for each building
+#### 7. Lecture evaluation for each lecture
+#### 8. Todo List & Notification
+#### 9. Timetable & Sharing
 
 
 
