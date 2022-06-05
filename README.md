@@ -1,40 +1,42 @@
-# EKU and Start Git & Github Repository
-안녕하세요 
-EKU Capstone 
+# EKU - Everywhere Kyonggi Up
+---
+##### Bluetooth Beacon Based Kyonggi University Mobile Campus
+
+# 0. Contributor
+---
+ - [Polite-Jehu](https://github.com/Polite-Jehu) - Leader, Android, Bluetooth
+ - [ldongyeop2](https://github.com/ldongyeop2) - Android PM
+ - [hyeonho9877](https://github.com/hyeonho9877) - Spring PM, Android
+ - [jiyko7](https://github.com/jiyko7) - Android
+ - [iz100412](https://github.com/iz100412) - Spring
+
+# 1. Used
+---
+####  - Application Server
+>> NaverCloud Server with Ubuntu 18.04
+####   - Database Server
+>> NaverCloud DBServer with MySQL
+#### - HTTPS
+>> Thank for Let's Encrypt
+#### - OCR
+>> NaverClovaOCR Service
+
+# 2. Features
+---
+##### 1. Bluetooth Beacon Based Building Recognition
+##### 2. Bluetooth Beacon Based Anti-Theft
+##### 3. SignIn & SignUp with OCR
+##### 4. Notice Board for each building
+##### 5. Free Board for entire user
+##### 6. Simple Memo for each building
+##### 7. Lecture evaluation for each lecture
+##### 8. Todo List & Notification
+##### 9. Timetable & Sharing
 
 
-# 0.README.md 다.
-Front ANDROID
-Back Spring
-
-We Are Java
-
-# 1. 만든이 소개 
-##     201611771 
-##    201611843
-##   201713924
-##  201611772
-## 201713883
-
-
-# 2. 현재 issue
-```
-아직 없음
-```
-
-# 3. SCRUM 방식으로 매주 2회 최소 12시간 이상 코딩
-**힘냅시다 캡스톤 13주차**
 
 
 
-# 4. WE USE 
-> BLUETOOTH BEACON
-> > NAVER OCR
-> > > GOOGLE CLOUD
-
-# how to run
-
-run StartActivity.java
 
 
 
