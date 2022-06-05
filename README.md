@@ -14,7 +14,7 @@
 ####   - Database Server
 > NaverCloud DBServer with MySQL
 #### - HTTPS
-> Thank for Let's Encrypt
+> Thank for [Let's Encrypt](https://letsencrypt.org/)
 #### - OCR
 > NaverClovaOCR Service
 
