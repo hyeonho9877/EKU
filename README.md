@@ -1,5 +1,5 @@
 # EKU - Everywhere Kyonggi Up
-##### Bluetooth Beacon Based Kyonggi University Mobile Campus
+#### Bluetooth Beacon Based Kyonggi University Mobile Campus
 
 # 0. Contributor
  - [Polite-Jehu](https://github.com/Polite-Jehu) - Leader, Android, Bluetooth
