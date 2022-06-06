@@ -363,6 +363,7 @@ public class DetailFreeCommunity extends AppCompatActivity {
 
                                     tv_title.setText(title);
                                     tv_content.setText(content);
+                                    writer = writer.substring(2,3);
                                     tv_writer.setText(writer);
                                     tv_time.setText(time);
 
