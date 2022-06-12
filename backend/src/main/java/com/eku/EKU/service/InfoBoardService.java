@@ -1,23 +1,20 @@
 package com.eku.EKU.service;
 
 
-import com.eku.EKU.domain.Image;
 import com.eku.EKU.domain.InfoBoard;
 import com.eku.EKU.domain.Student;
 import com.eku.EKU.form.BoardListForm;
 import com.eku.EKU.form.BoardListResponse;
 import com.eku.EKU.form.InfoBoardForm;
 import com.eku.EKU.form.InfoBoardResponse;
-import com.eku.EKU.repository.ImageRepository;
+
 import com.eku.EKU.repository.InfoBoardRepository;
 import com.eku.EKU.repository.StudentRepository;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.*;
 
 import static com.eku.EKU.utils.RelativeTimeConverter.convertToRelativeTime;
@@ -26,34 +23,37 @@ import static com.eku.EKU.utils.RelativeTimeConverter.convertToRelativeTime;
 public class InfoBoardService {
     public final InfoBoardRepository infoBoardRepository;
     private final StudentRepository studentRepository;
-    private final ImageRepository imageRepository;
 
-    public InfoBoardService(InfoBoardRepository infoBoardRepository, StudentRepository studentRepository, ImageRepository imageRepository) {
+
+    public InfoBoardService(InfoBoardRepository infoBoardRepository, StudentRepository studentRepository) {
         this.infoBoardRepository = infoBoardRepository;
         this.studentRepository = studentRepository;
-        this.imageRepository = imageRepository;
+
     }
 
     /**
      * 게시물 불러오기
+     *
      * @param form
      * @return
      */
-    public InfoBoard loadBoard(InfoBoardForm form)throws IllegalArgumentException, NoSuchElementException {
+    public InfoBoard loadBoard(InfoBoardForm form) throws IllegalArgumentException, NoSuchElementException {
         InfoBoard board = infoBoardRepository.findById(form.getId()).get();
         board.setView(board.getView() + 1);
         infoBoardRepository.save(board);
         return board;
     }
+
     /**
      * 게시물 목록
+     *
      * @param listForm 해당 강의동 + page번호
      * @return List<InfoBoard>로 목록을 반환
      */
-    public List<BoardListResponse> boardList(BoardListForm listForm)throws IllegalArgumentException, NoSuchElementException{
+    public List<BoardListResponse> boardList(BoardListForm listForm) throws IllegalArgumentException, NoSuchElementException {
         Page<InfoBoard> list = infoBoardRepository.findAllByBuildingOrderByWrittenTime(listForm.getLectureBuilding(), Pageable.ofSize(20));
         List<BoardListResponse> newList = new ArrayList<BoardListResponse>();
-        for(InfoBoard i : list){
+        for (InfoBoard i : list) {
             String writer = i.getDepartment() + " " + i.getName();
             BoardListResponse form = BoardListResponse.builder()
                     .id(i.getId())
@@ -67,13 +67,15 @@ public class InfoBoardService {
         }
         return newList;
     }
+
     /**
      * 게시판정보 삽입
+     *
      * @param form 삽입할 게시판의 정보
      * @return
      */
     public InfoBoardResponse insertBoard(InfoBoardForm form) throws IllegalArgumentException, NoSuchElementException {
-        if(!isCorrectBuilding(form.getBuilding()))
+        if (!isCorrectBuilding(form.getBuilding()))
             throw new IllegalArgumentException();
         Student student = studentRepository.findById(form.getWriterNo()).orElseThrow();
         InfoBoard infoBoard = InfoBoard.builder()
@@ -87,15 +89,17 @@ public class InfoBoardService {
                 .build();
         return new InfoBoardResponse(infoBoardRepository.save(infoBoard));
     }
+
     /**
      * 게시판정보 수정
+     *
      * @param form 수정할 게시판의 정보
      */
-    public void updateBoard(InfoBoardForm form) throws IllegalArgumentException, NoSuchElementException{
-        if(!isCorrectBuilding(form.getBuilding()))
+    public void updateBoard(InfoBoardForm form) throws IllegalArgumentException, NoSuchElementException {
+        if (!isCorrectBuilding(form.getBuilding()))
             throw new IllegalArgumentException();
         InfoBoard board = infoBoardRepository.findById(form.getId()).get();
-        if(!form.getTitle().isEmpty()&&!form.getContent().isEmpty()) {
+        if (!form.getTitle().isEmpty() && !form.getContent().isEmpty()) {
             board.setContent(form.getContent());
             board.setTitle(form.getTitle());
             board.setBuilding(form.getBuilding());
@@ -108,32 +112,36 @@ public class InfoBoardService {
         return result.stream().map(BoardListResponse::new)
                 .toList();
     }
+
     /**
      * 게시물 삭제
+     *
      * @param id 해당 게시물 번호
      */
-    public void deleteBoard(Long id) throws EmptyResultDataAccessException,IllegalArgumentException, NoSuchElementException {
+    public void deleteBoard(Long id) throws EmptyResultDataAccessException, IllegalArgumentException, NoSuchElementException {
         infoBoardRepository.deleteById(id);
     }
 
     /**
      * 시간함수
+     *
      * @return 현재시간
      */
-    public String currentTime(){
+    public String currentTime() {
         java.util.Date dt = new java.util.Date();
         java.text.SimpleDateFormat sdf =
                 new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(dt);
     }
+
     /**
      * building 코드가 맞는지 검사
      */
     public boolean isCorrectBuilding(String code) {
-        if(code.length()!=10)
+        if (code.length() != 10)
             return false;
-        for(int i=0;i<code.length();i++){
-            if(!code.substring(i,i+1).equals("0")&&!code.substring(i,i+1).equals("1"))
+        for (int i = 0; i < code.length(); i++) {
+            if (!code.substring(i, i + 1).equals("0") && !code.substring(i, i + 1).equals("1"))
                 return false;
         }
         return true;
@@ -160,29 +168,13 @@ public class InfoBoardService {
         return result.stream().map(BoardListResponse::new).toList();
     }
 
-    public List<BoardListResponse> allInfoBoard(){
+    public List<BoardListResponse> allInfoBoard() {
         List<InfoBoard> result = infoBoardRepository.findByOrderByWrittenTimeDesc(Pageable.ofSize(20));
         return result.stream().map(BoardListResponse::new).toList();
     }
 
-    public List<BoardListResponse> allInfoBoardMore(long id){
+    public List<BoardListResponse> allInfoBoardMore(long id) {
         List<InfoBoard> result = infoBoardRepository.findAllByIdLessThanOrderByWrittenTimeDesc(id, Pageable.ofSize(20));
         return result.stream().map(BoardListResponse::new).toList();
-    }
-
-    public HashMap<Long, List<byte[]>> imageURL(List<BoardListResponse> articles)throws IllegalArgumentException, NoSuchElementException, IOException {
-        HashMap<Long, List<byte[]>> images = new HashMap<>();
-        for (BoardListResponse response : articles) {
-            long id = response.getId();
-            List<Image> imageList = imageRepository.findAllByInfoBoard_Id(id);
-            ArrayList<byte[]> bytes = new ArrayList<>();
-            for (Image image : imageList) {
-                byte[] tempBytes = new FileSystemResource(image.getPath() + image.getFileName()).getInputStream().readAllBytes();
-                System.out.println(Arrays.toString(tempBytes));
-                bytes.add(tempBytes);
-            }
-            images.put(id, bytes);
-        }
-        return images;
     }
 }
