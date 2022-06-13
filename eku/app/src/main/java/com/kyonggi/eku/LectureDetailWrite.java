@@ -41,7 +41,6 @@ public class LectureDetailWrite extends AppCompatActivity {
     String[] grade = {"AP", "A", "BP", "B", "CP", "C", "DP", "D", "F"};
     ActivityResultLauncher<Intent> activityResultLauncher;
     AlertDialog gradeSelectDialog;
-    long backKeyPressedTime;
     String intentLetureName, intentProfessor;
 
     @Override
@@ -66,7 +65,6 @@ public class LectureDetailWrite extends AppCompatActivity {
                     case 0:
                         try {
                             String responseResult = ((ResponseBody) msg.obj).string();
-                            Log.i("a", responseResult);
                         } catch (IOException e) {
                             Log.e(TAG, "handleMessage: ");
                         }
@@ -98,7 +96,6 @@ public class LectureDetailWrite extends AppCompatActivity {
                 if (title.equals("") || professor.equals("") ||
                         content.equals("") || rating == 0 || gradeSelected == 10) {
                     Toast.makeText(getApplicationContext(), "항목을 모두 입력해주세요", Toast.LENGTH_SHORT).show();
-                    Log.i("a", "항목입력해주세요");
                     return;
                 }
                 String score = grade[gradeSelected];
