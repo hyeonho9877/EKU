@@ -24,11 +24,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     String[] buildingList= {"6강의동","7강의동","8강의동","종합강의동","제2공학관"};
     double[] Latitude = {37.300993099700044,37.30130605532382,37.30081483134132,37.301432678670224,37.30031004517468};
     double[] Longitude = {127.03836020691885,127.03883408985836,127.03931601750516,127.03734812542022,127.03993045991801};
-    //6강의동 - 37.300993099700044, 127.03836020691885
-    //7강의동 - 37.30130605532382, 127.03883408985836
-    //8강의동 - 37.30081483134132, 127.03931601750516
-    //종강 - 37.301432678670224, 127.03734812542022
-    //제2공 - 37.30031004517468, 127.03993045991801
 
     public MapFragment() {
 
@@ -93,8 +88,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 break;
             }
         }
-        //googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-
     }
 
 }
