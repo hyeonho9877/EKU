@@ -1,3 +1,4 @@
+/*
 package com.kyonggi.eku;
 
 
@@ -15,39 +16,47 @@ import java.util.List;
 
 
 public class BeaconListAdapter extends RecyclerView.Adapter<BeaconListAdapter.MyViewHolder> {
-    /**
+    */
+/**
      * 리사이클뷰를 확장한 어댑터
      *
      * 블투 더미코드
      * 건들지마세요
      * 괜히 터집니다 ㅡㅡ
-     */
+     *//*
+
     private List<MinewBeacon> mMinewBeacons = new ArrayList<>();
 
-    /**
+    */
+/**
      *
      *  뷰 1개를 리턴함
      *  main_item의 뷰 한개를 리턴하게됨
-     */
+     *//*
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = View.inflate(parent.getContext(), R.layout.main_item, null);
         return new MyViewHolder(view);
     }
 
-    /**
+    */
+/**
      *
      *  holder로 받아온 MyViewHolder 객체의 데이터를 저장한다.
-     */
+     *//*
+
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.setDataAndUi(mMinewBeacons.get(position));
     }
 
-    /**
+    */
+/**
 
      * 아마 주변에 있는 비콘들의 개수를 반환해 주는 듯?
-     */
+     *//*
+
     @Override
     public int getItemCount() {
         if (mMinewBeacons != null) {
@@ -56,10 +65,12 @@ public class BeaconListAdapter extends RecyclerView.Adapter<BeaconListAdapter.My
         return 0;
     }
 
-    /**
+    */
+/**
      *
      * 클래스 변수에다가 지금 불러온 객체를 저장하는 메소드
-     */
+     *//*
+
     public void setData(List<MinewBeacon> minewBeacons) {
         this.mMinewBeacons = minewBeacons;
 
@@ -68,10 +79,12 @@ public class BeaconListAdapter extends RecyclerView.Adapter<BeaconListAdapter.My
 
     }
 
-    /**
+    */
+/**
      *
      * 리스트뷰에 있는것을 업데이트하는 듯?
-     */
+     *//*
+
     public void setItems(List<MinewBeacon> newItems) {
 //        validateItems(newItems);
 
@@ -93,13 +106,15 @@ public class BeaconListAdapter extends RecyclerView.Adapter<BeaconListAdapter.My
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
 
-        /**
+        */
+/**
          * ViewHolder의 확장판
          * ViewHolder는 그 우리가 밑으로 슥슥 내릴때 보는 화면을 많이 생성하지 않고
          * 화면에 표시 되는 만큼만 생성해서 관리함
          * 즉 야구장가면 점수판이 바뀌잖슴? 그거인듯?
          *
-         **/
+         **//*
+
         private final TextView mDevice_mac;
         //연결된 기계의 맥주소
         private MinewBeacon mMinewBeacon;
@@ -125,10 +140,12 @@ public class BeaconListAdapter extends RecyclerView.Adapter<BeaconListAdapter.My
 
         }
 
-        /**
+        */
+/**
          * 비컨컨의 배터리 온도 습도을 가지고 오는듯?
          *
-         */
+         *//*
+
         public void setDataAndUi(MinewBeacon minewBeacon) {
 
             mMinewBeacon = minewBeacon;
@@ -163,3 +180,4 @@ public class BeaconListAdapter extends RecyclerView.Adapter<BeaconListAdapter.My
         }
     }
 }
+*/

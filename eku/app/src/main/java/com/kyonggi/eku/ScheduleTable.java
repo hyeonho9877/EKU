@@ -630,6 +630,9 @@ public class ScheduleTable extends AppCompatActivity {
                         {
                             dialog.dismiss();
                             Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                            for (int i = 0; i < input_time.length; i++) {
+                                input_time[i] = 0;
+                            }
                             return;
                         }
                         else if(testInt==1)
@@ -667,6 +670,9 @@ public class ScheduleTable extends AppCompatActivity {
                            }
                            else{
                                dialog.dismiss();
+                               for (int i = 0; i < input_time.length; i++) {
+                                   input_time[i] = 0;
+                               }
                                return;
                            }
 
@@ -700,6 +706,9 @@ public class ScheduleTable extends AppCompatActivity {
                             else{
                                 dialog.dismiss();
                                 Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                                for (int i = 0; i < input_time.length; i++) {
+                                    input_time[i] = 0;
+                                }
                                 return;
                             }
                         }
@@ -727,12 +736,18 @@ public class ScheduleTable extends AppCompatActivity {
                             else{
                                 dialog.dismiss();
                                 Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                                for (int i = 0; i < input_time.length; i++) {
+                                    input_time[i] = 0;
+                                }
                                 return;
                             }
                         }
                         else{
                             dialog.dismiss();
                             Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                            for (int i = 0; i < input_time.length; i++) {
+                                input_time[i] = 0;
+                            }
                             return;
                         }
 
@@ -744,6 +759,9 @@ public class ScheduleTable extends AppCompatActivity {
                         {
                             dialog.dismiss();
                             Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                            for (int i = 0; i < input_time.length; i++) {
+                                input_time[i] = 0;
+                            }
                             return;
                         }
                         temp += dialog_title.getText().toString();
@@ -751,6 +769,9 @@ public class ScheduleTable extends AppCompatActivity {
                         {
                             dialog.dismiss();
                             Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                            for (int i = 0; i < input_time.length; i++) {
+                                input_time[i] = 0;
+                            }
                             return;
                         }
                         temp += dialog_Building.getText().toString();
@@ -758,12 +779,18 @@ public class ScheduleTable extends AppCompatActivity {
                         {
                             dialog.dismiss();
                             Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                            for (int i = 0; i < input_time.length; i++) {
+                                input_time[i] = 0;
+                            }
                             return;
                         }
                         temp += dialog_Professor.getText().toString();
                         if(day.equals("")) {
                             dialog.dismiss();
                             Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                            for (int i = 0; i < input_time.length; i++) {
+                                input_time[i] = 0;
+                            }
                             return;
                         }
                         temp += day;
@@ -804,11 +831,17 @@ public class ScheduleTable extends AppCompatActivity {
                             }
                         }else{
                             Toast.makeText(getApplicationContext(), "누락되거나 맞지않은 형식입니다.", Toast.LENGTH_LONG).show();
+                            for (int i = 0; i < input_time.length; i++) {
+                                input_time[i] = 0;
+                            }
                             return;
                         }
 
                         if (checked) {
                             Toast.makeText(getApplicationContext(), "중복되는 값이 있습니다.", Toast.LENGTH_LONG).show();
+                            for (int i = 0; i < input_time.length; i++) {
+                                input_time[i] = 0;
+                            }
                         } else {
                             JSONObject jsonObject = new JSONObject();
                             try {
@@ -862,6 +895,9 @@ public class ScheduleTable extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         dialog.dismiss();
+                        for (int i = 0; i < input_time.length; i++) {
+                            input_time[i] = 0;
+                        }
                     }
                 });
 

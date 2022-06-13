@@ -428,7 +428,9 @@ public class MainBoard extends AppCompatActivity {
             return;
         }
         if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
-            finish();
+            moveTaskToBack(true); // 태스크를 백그라운드로 이동
+            finishAndRemoveTask(); // 액티비티 종료 + 태스크 리스트에서 지우기
+            System.exit(0);
         }
     }
 }

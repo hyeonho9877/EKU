@@ -27,7 +27,7 @@
         android:fontFamily="@font/font_noto_sans_kr"
         android:maxEms="10"
         android:maxLines="1"
-        android:text="복사가된다고? 돈이복사가되는데zzz"
+        android:text="test test"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

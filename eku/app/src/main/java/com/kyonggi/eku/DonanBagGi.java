@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.Vibrator;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,10 +47,11 @@ public class DonanBagGi extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donan_bag_gi);
-        powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+        powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(  PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE|
+                PowerManager.PARTIAL_WAKE_LOCK,
                 "MyApp::MyWakelockTag");
-        wakeLock.acquire();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         bluetoothOn();
         permissionCheck();
         initManager();
@@ -196,6 +198,7 @@ public class DonanBagGi extends AppCompatActivity {
             @Override
             public void onRangeBeacons(List<MinewBeacon> minewBeacons) {
                 for(MinewBeacon m :minewBeacons) {
+                    wakeLock.acquire();
                     //Toast.makeText(getApplicationContext(),"도난 방지 기능이 작동되었습니다.",Toast.LENGTH_SHORT).show();
                     String temp = m.getBeaconValue(BeaconValueIndex.MinewBeaconValueIndex_Major).getStringValue();
                     String rssi = m.getBeaconValue(BeaconValueIndex.MinewBeaconValueIndex_RSSI).getStringValue();
@@ -237,7 +240,9 @@ public class DonanBagGi extends AppCompatActivity {
                                     if (mMinewBeaconManager != null) {
                                         mMinewBeaconManager.stopScan();
                                     }
-                                    wakeLock.release();
+                                    if (wakeLock.isHeld())
+                                        wakeLock.release();
+
                                     return;
                                 }
                             });
@@ -281,7 +286,9 @@ public class DonanBagGi extends AppCompatActivity {
             if (mMinewBeaconManager != null) {
                 mMinewBeaconManager.stopScan();
             }
-            Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            moveTaskToBack(true); // 태스크를 백그라운드로 이동
+            finishAndRemoveTask(); // 액티비티 종료 + 태스크 리스트에서 지우기
+            System.exit(0);
             return;
         }
     }
@@ -291,7 +298,6 @@ public class DonanBagGi extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //stop scan
         if (isScanning) {
             mMinewBeaconManager.stopScan();
         }

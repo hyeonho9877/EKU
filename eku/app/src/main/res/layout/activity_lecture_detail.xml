@@ -65,20 +65,11 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/lecture_detail_textView"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:fontFamily="@font/noto_sans_kr_bold"
-        android:text="교수님"
-        app:layout_constraintStart_toEndOf="@+id/lecture_detail_professor"
-        app:layout_constraintTop_toBottomOf="@+id/lecture_detail_name" />
-
-    <TextView
         android:id="@+id/lecture_detail_professor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="155dp"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="48dp"
         android:fontFamily="@font/noto_sans_kr_bold"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"

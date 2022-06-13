@@ -32,7 +32,6 @@ public class findGang extends AppCompatActivity {
      */
 
     private MinewBeaconManager mMinewBeaconManager;
-    private BeaconListAdapter mAdapter;
     private static final int REQUEST_ENABLE_BT = 2;
     private boolean isScanning;
     UserRssi comp = new UserRssi();
@@ -63,8 +62,9 @@ public class findGang extends AppCompatActivity {
                 }
             }
         });
-        mMinewBeaconManager.startScan();
         initListener();
+        mMinewBeaconManager.startScan();
+
 
 
 
