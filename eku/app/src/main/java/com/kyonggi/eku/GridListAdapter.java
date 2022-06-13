@@ -44,8 +44,8 @@ public class GridListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        context = parent.getContext(); //context정보 가져오기
-        ListItem listItem = items.get(position); //item 불러오기
+        context = parent.getContext();
+        ListItem listItem = items.get(position);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate((R.layout.list_item), parent, false);

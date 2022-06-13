@@ -46,7 +46,6 @@ public class WriteBoard extends AppCompatActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        // Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -62,7 +61,6 @@ public class WriteBoard extends AppCompatActivity {
                     case 0:
                         try {
                             String responseResult = ((ResponseBody) msg.obj).string();
-                            Log.i("a", "무" + responseResult);
                         } catch (IOException e) {
                             Log.e(TAG, "handleMessage: ");
                         }

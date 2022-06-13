@@ -2,11 +2,7 @@ package com.kyonggi.eku;
 
 public class ListItem {
     /**
-     * 제작자 : 지웅 지웅이한테 물어보셈 <--
-     * 제목
-     * 잘모르겠습니다.
-     * 내용
-     * 스피너 아님 그리드뷰에서 씀
+     그리드뷰에서 씀
      **/
     String content;
     String time;

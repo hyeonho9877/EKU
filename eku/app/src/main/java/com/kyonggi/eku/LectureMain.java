@@ -36,7 +36,6 @@ public class LectureMain extends AppCompatActivity {
 
     ImageButton imageButton1;
     LinearLayout sc;
-    long backKeyPressedTime;
     private LecturePresenter presenter;
 
     @Override
