@@ -52,7 +52,6 @@ public class LectureDetailWrite extends AppCompatActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        // Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
                     }
                 }
         );

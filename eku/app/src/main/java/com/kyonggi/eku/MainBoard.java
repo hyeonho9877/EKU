@@ -244,11 +244,9 @@ public class MainBoard extends AppCompatActivity {
                 if (check.equals("needLogin")) {
                     Intent intent = new Intent(getApplicationContext(), ActivitySignIn.class);
                     startActivity(intent);
-                    //finish();
                 } else if (check.equals("needVerify")) {
                     Intent intent = new Intent(getApplicationContext(), VerfityActivity.class);
                     startActivity(intent);
-                    //finish();
                 } else {
                     Intent intent = new Intent(getApplicationContext(), WriteBoard.class);
                     intent.putExtra("address", "MainBoard");
@@ -268,7 +266,6 @@ public class MainBoard extends AppCompatActivity {
         Handler handler = new Handler(Looper.getMainLooper()) {
             public void handleMessage(@NonNull Message msg) {
                 String responseResult = (String) msg.obj;
-                Log.e(".", responseResult);
                 JSONArray BoardArray = null;
                 try {
 
