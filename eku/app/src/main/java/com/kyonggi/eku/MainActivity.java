@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
 
     */
 /*
-     * 블루투스 스캔을 때려쳤을 때쓰는 코드
+     * 블루투스 스캔을
      * *//*
 
     @Override
