@@ -170,6 +170,8 @@ public class MainBoard extends AppCompatActivity {
                     return;
                 }
                 Intent intent = new Intent(getApplicationContext(), DonanBagGi.class);
+                intent.putExtra("GANG", getIntent().getStringExtra("GANG"));
+                intent.putExtra("NoMap", checkmap);
                 startActivity(intent);
             }
         });
