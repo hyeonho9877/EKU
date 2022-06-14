@@ -35,7 +35,7 @@ public class WriteAnnounce extends AppCompatActivity implements View.OnClickList
      * 제목
      * 공지 게시판 작성
      * 기능
-     * ㅈㄱㄴ
+
      */
 
     CheckBox building0, building6, building7, building8, building5;
