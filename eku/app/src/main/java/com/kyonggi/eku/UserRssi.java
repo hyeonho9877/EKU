@@ -9,7 +9,7 @@ public class UserRssi implements Comparator<MinewBeacon> {
 
     /*
      * 블루투스 Legacy
-     * 지우지 마세요 ㅠㅠ
+     * 
      *
      * */
     @Override

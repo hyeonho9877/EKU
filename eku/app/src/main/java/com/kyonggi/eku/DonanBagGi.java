@@ -69,7 +69,7 @@ public class DonanBagGi extends AppCompatActivity {
             startActivity(gpsOptionsIntent);
         }
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            Toast.makeText(getBaseContext(), "불루투스와 위치를 켜지 않아 작동을 중지합니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "블루투스와 위치를 켜지 않아 작동을 중지합니다.", Toast.LENGTH_SHORT).show();
             return;
         }
     }
@@ -157,7 +157,7 @@ public class DonanBagGi extends AppCompatActivity {
                 } else {
                     button.setText("도난방지 기능 끄기");
                     button.setBackgroundColor(Color.RED);
-                    //아니었으면 멈춰싿고 함
+                    //아니었으면 멈춰
                     isScanning = true;
                     textView.setText("비콘 주위에 있으면 도난방지가 작동을 시작합니다.");
                     s.setColorFilter(Color.RED);
@@ -174,7 +174,7 @@ public class DonanBagGi extends AppCompatActivity {
 
         mMinewBeaconManager.setDeviceManagerDelegateListener(new MinewBeaconManagerListener() {
             /**
-             *   비콘 새로 등판시 하는일.
+             *   비콘 새로  하는일.
              *  @param minewBeacons  new beacons the manager scanned
              */
             @Override

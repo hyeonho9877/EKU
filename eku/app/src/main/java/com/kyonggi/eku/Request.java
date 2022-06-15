@@ -27,9 +27,9 @@ public class Request extends AppCompatActivity {
     EditText edt_1;
     EditText edt_2;
     */
-/*      샷다 내릴예정
-    * 더미코드
-    * 버리세요
+/*      
+    * 
+    * 
      *//*
 
     @Override

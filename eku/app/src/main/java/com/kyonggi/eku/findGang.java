@@ -84,7 +84,7 @@ public class findGang extends AppCompatActivity {
 
         mMinewBeaconManager.setDeviceManagerDelegateListener(new MinewBeaconManagerListener() {
             /**
-             *   비콘 새로 등판시 하는일.
+             *   비콘 새로 하는일.
              *  @param minewBeacons  new beacons the manager scanned
              */
             @Override

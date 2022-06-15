@@ -21,8 +21,8 @@ public class BeaconListAdapter extends RecyclerView.Adapter<BeaconListAdapter.My
      * 리사이클뷰를 확장한 어댑터
      *
      * 블투 더미코드
-     * 건들지마세요
-     * 괜히 터집니다 ㅡㅡ
+     * 
+     * 
      *//*
 
     private List<MinewBeacon> mMinewBeacons = new ArrayList<>();
@@ -54,7 +54,7 @@ public class BeaconListAdapter extends RecyclerView.Adapter<BeaconListAdapter.My
     */
 /**
 
-     * 아마 주변에 있는 비콘들의 개수를 반환해 주는 듯?
+     * 아마 주변에 있는 비콘들의 개수를 반환
      *//*
 
     @Override
@@ -82,7 +82,7 @@ public class BeaconListAdapter extends RecyclerView.Adapter<BeaconListAdapter.My
     */
 /**
      *
-     * 리스트뷰에 있는것을 업데이트하는 듯?
+     * 리스트뷰에 있는것을 업데이트
      *//*
 
     public void setItems(List<MinewBeacon> newItems) {
@@ -111,7 +111,7 @@ public class BeaconListAdapter extends RecyclerView.Adapter<BeaconListAdapter.My
          * ViewHolder의 확장판
          * ViewHolder는 그 우리가 밑으로 슥슥 내릴때 보는 화면을 많이 생성하지 않고
          * 화면에 표시 되는 만큼만 생성해서 관리함
-         * 즉 야구장가면 점수판이 바뀌잖슴? 그거인듯?
+         * 
          *
          **//*
 
@@ -120,7 +120,7 @@ public class BeaconListAdapter extends RecyclerView.Adapter<BeaconListAdapter.My
         private MinewBeacon mMinewBeacon;
         // 비콘
         private final TextView mDevice_temphumi;
-        // 템프 후미..? 이건 모르겠네
+        // 템프 
         private final TextView mDevice_name;
         // 기계이름
         private final TextView mDevice_uuid;
@@ -142,7 +142,7 @@ public class BeaconListAdapter extends RecyclerView.Adapter<BeaconListAdapter.My
 
         */
 /**
-         * 비컨컨의 배터리 온도 습도을 가지고 오는듯?
+         * 비컨컨의 배터리 온도 습도을 가지고
          *
          *//*
 
