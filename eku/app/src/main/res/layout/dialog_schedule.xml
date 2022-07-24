@@ -230,7 +230,7 @@
                     android:layout_marginTop="20dp"
                     android:background="@drawable/rounded_orange"
                     android:fontFamily="@font/font_noto_sans_kr"
-                    android:text="cancle"
+                    android:text="cancel"
                     android:textColor="@color/white" />
 
             </LinearLayout>

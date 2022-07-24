@@ -23,8 +23,8 @@
 
     <EditText
         android:id="@+id/write_announce_title"
-        android:layout_width="256dp"
-        android:layout_height="40dp"
+        android:layout_width="280dp"
+        android:layout_height="53dp"
         android:layout_marginStart="20dp"
         android:ems="10"
         android:gravity="start|top"
@@ -35,14 +35,14 @@
 
     <TextView
         android:id="@+id/write_announce_building"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_width="74dp"
+        android:layout_height="36dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/font_noto_sans_kr"
         android:includeFontPadding="false"
         android:text="강의동"
         android:textColor="@color/black"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/textView14"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
@@ -79,7 +79,7 @@
         android:layout_marginEnd="208dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/rounded_blue"
-        android:text="cancle"
+        android:text="cancel"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

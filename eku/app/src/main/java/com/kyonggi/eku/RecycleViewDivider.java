@@ -23,8 +23,8 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
     /**
      *
      * 비콘 코드
-     * 절대 건들지마세요
-     * 괜히 에러남
+     * 
+     * s
      *
      */
     /**
@@ -112,7 +112,7 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
         outRect.set(0, 0, 0, mDividerHeight);
     }
 
-    //분할선을 그림 가로 혹은 세로 (내가봤을때는 크기차이로 가져오는 거 가틍ㅁ)
+    //분할선을 그림 가로 혹은 세로
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         super.onDraw(c, parent, state);

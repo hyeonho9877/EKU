@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         //setSupportActionBar(toolbar);
         //mstart_scan은 textView임..
         mStart_scan = (TextView) findViewById(R.id.start_scan);
-        //리사이클 뷰 생성 리사이클 뷰는 수평으로 나오게 만들어서 데이터를 준내 표시하는 놈임
+        //리사이클 뷰 생성 리사이클 뷰는 수평으로 나오게 만들어서 데이터를 표시하는 것
         mRecycle = (RecyclerView) findViewById(R.id.recyeler);
         // 리사이클 뷰에 레이아웃 삽입
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                         mMinewBeaconManager.stopScan();
                     }
                 } else {
-                    //아니었으면 멈춰싿고 함
+                    //아니었으면 멈춰
                     isScanning = true;
                     mStart_scan.setText("Stop");
                     try {
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //리사이클 뷰 값을 바꿔놓는다.
+        //리사이클 뷰 값을 바꿈
         mRecycle.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -201,14 +201,14 @@ public class MainActivity extends AppCompatActivity {
         mMinewBeaconManager.setDeviceManagerDelegateListener(new MinewBeaconManagerListener() {
             */
 /**
-             *   비콘 새로 등판시 하는일.
+             *   비콘 새로  하는일.
              *
              *  @param minewBeacons  new beacons the manager scanned
              *//*
 
             @Override
             public void onAppearBeacons(List<MinewBeacon> minewBeacons) {
-                Toast.makeText(getApplicationContext(),  "비콘나타났슈", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),  "비콘나타남", Toast.LENGTH_SHORT).show();
             }
 
             */
@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDisappearBeacons(List<MinewBeacon> minewBeacons) {
 
-                Toast.makeText(getApplicationContext(),  "비콘디졌수", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),  "비콘사라짐", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
 
     */
 /*
-     * 블루투스 스캔을 때려쳤을 때쓰는 코드
+     * 블루투스 스캔을
      * *//*
 
     @Override

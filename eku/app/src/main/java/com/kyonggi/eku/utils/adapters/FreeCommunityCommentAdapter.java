@@ -86,11 +86,12 @@ public class FreeCommunityCommentAdapter extends BaseAdapter {
         LinearLayout linear_edit= view.findViewById(R.id.detail_Free_comment_edit_layout);
 
         String writer   = freeCommunityCommentItem.getWriter();
+        String writer_no = freeCommunityCommentItem.getWriter_no();
         String time     = freeCommunityCommentItem.getTime();
         String comment  = freeCommunityCommentItem.getComment();
         String id       = freeCommunityCommentItem.getComment_id();
 
-        tv_writer.setText(writer);
+        tv_writer.setText(writer_no);
         tv_time.setText(time);
         tv_content.setText(comment);
 

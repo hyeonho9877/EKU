@@ -74,6 +74,7 @@ public class DetailFreeCommunity extends AppCompatActivity {
     private final int DETAIL_COMMENT_WRITE_REQUEST = 1;
     private final int DETAIL_BOARD_MODIFY_REQUEST = 2;
     private final int DETAIL_BOARD_DELETE_REQUEST = 3;
+    private final String hakbun = "학번";
 
     private int mode = VIEW_MODE;
 
@@ -345,6 +346,7 @@ public class DetailFreeCommunity extends AppCompatActivity {
                                     String title = response.getString("title");
                                     String content = response.getString("content");
                                     String writer = response.getString("department") + " " + response.getString("writerNo");
+                                    String writer_no =response.getString("writerNo").substring(2,4)+hakbun;
                                     String time = response.getString("time");
                                     JSONArray jsonArray = response.getJSONArray("commentList");
                                     for (int x = 0; x < jsonArray.length(); x++) {
@@ -363,8 +365,7 @@ public class DetailFreeCommunity extends AppCompatActivity {
 
                                     tv_title.setText(title);
                                     tv_content.setText(content);
-                                    writer = writer.substring(2,3);
-                                    tv_writer.setText(writer);
+                                    tv_writer.setText(writer_no);
                                     tv_time.setText(time);
 
 

@@ -3,12 +3,14 @@ package com.kyonggi.eku;
 public class FreeCommunityCommentItem {
     private String comment_id;
     private String writer;
+    private String writer_no;
     private String comment;
     private String time;
 
     public FreeCommunityCommentItem(String comment_id, String writer, String comment, String time){
         this.comment_id = comment_id;
         this.writer = writer;
+        this.writer_no = writer.substring(2,4) + "학번";
         this.comment = comment;
         this.time = time;
     }
@@ -48,4 +50,6 @@ public class FreeCommunityCommentItem {
     public String getWriter() {
         return writer;
     }
+
+    public String getWriter_no() { return writer_no; }
 }

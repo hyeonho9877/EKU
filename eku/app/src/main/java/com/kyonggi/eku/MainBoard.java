@@ -170,6 +170,8 @@ public class MainBoard extends AppCompatActivity {
                     return;
                 }
                 Intent intent = new Intent(getApplicationContext(), DonanBagGi.class);
+                intent.putExtra("GANG", getIntent().getStringExtra("GANG"));
+                intent.putExtra("NoMap", checkmap);
                 startActivity(intent);
             }
         });
@@ -244,11 +246,9 @@ public class MainBoard extends AppCompatActivity {
                 if (check.equals("needLogin")) {
                     Intent intent = new Intent(getApplicationContext(), ActivitySignIn.class);
                     startActivity(intent);
-                    //finish();
                 } else if (check.equals("needVerify")) {
                     Intent intent = new Intent(getApplicationContext(), VerfityActivity.class);
                     startActivity(intent);
-                    //finish();
                 } else {
                     Intent intent = new Intent(getApplicationContext(), WriteBoard.class);
                     intent.putExtra("address", "MainBoard");
@@ -268,7 +268,6 @@ public class MainBoard extends AppCompatActivity {
         Handler handler = new Handler(Looper.getMainLooper()) {
             public void handleMessage(@NonNull Message msg) {
                 String responseResult = (String) msg.obj;
-                Log.e(".", responseResult);
                 JSONArray BoardArray = null;
                 try {
 
@@ -431,7 +430,9 @@ public class MainBoard extends AppCompatActivity {
             return;
         }
         if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
-            finish();
+            moveTaskToBack(true); // 태스크를 백그라운드로 이동
+            finishAndRemoveTask(); // 액티비티 종료 + 태스크 리스트에서 지우기
+            System.exit(0);
         }
     }
 }
