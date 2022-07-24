@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kyonggi.eku" >
     <!-- permission ! -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,7 +11,6 @@
     <uses-permission android:name="android.permission.ACCEPT_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" android:required="true" />
     <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
@@ -20,10 +20,10 @@
     <uses-feature android:name="android.hardware.bluetooth" android:required="false" />
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
     <uses-feature android:name="android.hardware.camera.any" />
-
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_foreground"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -31,7 +31,8 @@
         android:usesCleartextTraffic="true" >
         <activity
             android:name=".StartActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -43,53 +44,74 @@
 
         <activity
             android:name=".AccountActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MapsActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LectureDetailWrite"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainFreeCommunity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".VerfityActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".DetailFreeCommunity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".DetailAnnounce"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".WriteFreeCommunity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".WriteAnnounce"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".DonanBagGi"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainCommunity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".TodoActivity"
-            android:exported="true" >
+            android:exported="true"
+            android:screenOrientation="portrait">
+
         </activity>
         <activity
             android:name=".MainBoard"
-            android:exported="true" >
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.signUp.activity.ActivitySignUpCamera" />
-        <activity android:name=".view.signUp.activity.ActivityGallery" />
-        <activity android:name=".view.signUp.activity.ActivityInputSignUpInfo" />
-        <activity android:name=".view.board.activity.ActivityBoard" />
-        <activity android:name=".view.signIn.ActivitySignIn" />
-        <activity android:name=".view.board.activity.ActivityFreeBoardSearch" />
-        <activity android:name=".view.board.activity.ActivityInfoBoardSearch" />
+        <activity android:name=".view.signUp.activity.ActivitySignUpCamera"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.signUp.activity.ActivityGallery"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.signUp.activity.ActivityInputSignUpInfo"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.board.activity.ActivityBoard"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.signIn.ActivitySignIn"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.board.activity.ActivityFreeBoardSearch"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.board.activity.ActivityInfoBoardSearch"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name="com.minew.beacon.ScanService"
@@ -103,20 +125,25 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".WriteBoard" />
+        <activity android:name=".WriteBoard"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".findGang"
-            android:exported="true" >
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".LectureMain"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LectureDetail"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ScheduleTable"
-            android:exported="true" >
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
 
         <receiver
@@ -129,7 +156,8 @@
         </receiver>
         <receiver
             android:name=".AlarmReceiver"
-            android:exported="true" />
+            android:exported="true"
+            />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />

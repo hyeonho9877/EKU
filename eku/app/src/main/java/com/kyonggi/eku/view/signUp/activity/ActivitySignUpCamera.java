@@ -30,7 +30,8 @@ public class ActivitySignUpCamera extends AppCompatActivity {
         binding = ActivitySignupPhotoBinding.inflate(getLayoutInflater()); // 뷰 바인딩
         View view = binding.getRoot();
         setContentView(view); // 할당
-        presenter = new SignUpCameraPresenter(this, this);
+        presenter = SignUpCameraPresenter.INSTANCE;
+        presenter.initAttributes(this, this);
 
         observer = new GalleryObserver(getActivityResultRegistry(), getContentResolver(), this, this);
         getLifecycle().addObserver(observer);

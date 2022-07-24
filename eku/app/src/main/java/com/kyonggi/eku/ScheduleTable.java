@@ -108,7 +108,7 @@ public class ScheduleTable extends AppCompatActivity {
 
     //   PreferenceManagers.removeKey(getApplicationContext(),"list");
         String tableString = PreferenceManagers.getString(getApplicationContext(), "list");
-        Toast.makeText(getApplicationContext(),tableString,Toast.LENGTH_LONG).show();
+
         try {
             getLecture = new JSONArray(tableString);
 
@@ -667,7 +667,6 @@ public class ScheduleTable extends AppCompatActivity {
                            }
                            else{
                                dialog.dismiss();
-                               Toast.makeText(getApplicationContext(), "ㅈ됨.", Toast.LENGTH_LONG).show();
                                return;
                            }
 
@@ -848,7 +847,7 @@ public class ScheduleTable extends AppCompatActivity {
                         for (int i = 0; i < input_time.length; i++) {
                             input_time[i] = 0;
                         }
-                        Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_LONG).show();
+
                         HashMap hashMap = new HashMap();
                         hashMap.put("list", getLecture);
                      //   SendTool.requestForJson("/schedule/write", hashMap, new Handler());

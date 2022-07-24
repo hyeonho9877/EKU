@@ -69,9 +69,6 @@ public class InfoBoardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof InfoBoardViewHolder) {
-            Log.d(TAG, "onBindViewHolder: list size "+list.size());
-            Log.d(TAG, "onBindViewHolder: position "+position);
-            Log.d(TAG, "onBindViewHolder: element "+list.get(position));
             if(list.get(position) != null) ((InfoBoardViewHolder) holder).bind(list.get(position));
         } else if (holder instanceof LoadingViewHolder) {
             showLoadingView((LoadingViewHolder) holder, position);

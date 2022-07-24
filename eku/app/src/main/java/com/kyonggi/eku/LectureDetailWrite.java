@@ -165,18 +165,10 @@ public class LectureDetailWrite extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (System.currentTimeMillis() > backKeyPressedTime + 2500) {
-            backKeyPressedTime = System.currentTimeMillis();
-            Intent intent = new Intent(getApplicationContext(), LectureDetail.class);
-            intent.putExtra("Name", intentLetureName);
-            intent.putExtra("Prof", intentProfessor);
-            startActivity(intent);
-            finish();
-            //Toast.makeText(this, "뒤로 가기 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (System.currentTimeMillis() <= backKeyPressedTime + 2500) {
-            finish();
-        }
+        Intent intent = new Intent(getApplicationContext(), LectureDetail.class);
+        intent.putExtra("Name", intentLetureName);
+        intent.putExtra("Prof", intentProfessor);
+        startActivity(intent);
+        finish();
     }
 }

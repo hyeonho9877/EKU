@@ -108,6 +108,7 @@ public class ActivityInputSignUpInfo extends AppCompatActivity implements OnSign
     }
 
     public void onSignUpResponseFailed() {
+        dialog.dismiss();
         new SignUpErrorDialogFragment(SignUpErrorDialogFragment.DUPLICATED_ACCOUNT).show(getSupportFragmentManager(), "error");
     }
 
