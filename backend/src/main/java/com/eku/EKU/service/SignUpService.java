@@ -192,7 +192,7 @@ public class SignUpService {
      * @return 파싱된 String
      */
     public String parseOcrResponse(OcrResponseForm responseForm) {
-        Pattern namePattern = Pattern.compile("^[김|신|박|이|정|고|방|][가-힣]{1,4}");
+        Pattern namePattern = Pattern.compile("^[김|신|박|이|정|고|방|주|권|허|송|전][가-힣]{1,4}");
         Pattern deptPattern = Pattern.compile("[가-힣]{4,8}학[과|부]$");
         Pattern studNoPattern = Pattern.compile("20\\d{7}");
 
