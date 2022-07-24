@@ -110,4 +110,10 @@ public class FragmentFreeBoard extends Fragment {
         };
         binding.recyclerViewFreeBard.addOnScrollListener(scrollListener);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        new Handler().postDelayed(() -> activity.getFreeBoardArticles(), 200);
+    }
 }

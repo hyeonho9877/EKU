@@ -32,7 +32,6 @@ public class findGang extends AppCompatActivity {
      */
 
     private MinewBeaconManager mMinewBeaconManager;
-    private BeaconListAdapter mAdapter;
     private static final int REQUEST_ENABLE_BT = 2;
     private boolean isScanning;
     UserRssi comp = new UserRssi();
@@ -63,8 +62,9 @@ public class findGang extends AppCompatActivity {
                 }
             }
         });
-        mMinewBeaconManager.startScan();
         initListener();
+        mMinewBeaconManager.startScan();
+
 
 
 
@@ -84,7 +84,7 @@ public class findGang extends AppCompatActivity {
 
         mMinewBeaconManager.setDeviceManagerDelegateListener(new MinewBeaconManagerListener() {
             /**
-             *   비콘 새로 등판시 하는일.
+             *   비콘 새로 하는일.
              *  @param minewBeacons  new beacons the manager scanned
              */
             @Override
@@ -210,7 +210,7 @@ public class findGang extends AppCompatActivity {
         });
     }
     /*
-     * 블루투스 스캔을 때려쳤을 때쓰는 코드
+     * 블루투스 스캔을
      * */
     @Override
     protected void onDestroy() {
