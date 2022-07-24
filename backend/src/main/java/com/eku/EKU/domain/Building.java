@@ -16,6 +16,6 @@ public class Building {
     @Id
     @Column(name = "beacon_id", nullable = false)
     private String beaconId;
-    @Column(name = "desc", nullable = false)
+    @Column(name = "description", nullable = false)
     private String desc;
 }
