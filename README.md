@@ -10,9 +10,9 @@
 
 # 1. Used
 ####  - Application Server
-> NaverCloud Server with Ubuntu 18.04
+> AWS EC2 with Ubuntu 20.04
 ####   - Database Server
-> NaverCloud DBServer with MySQL
+> AWS RDB with MySQL
 #### - HTTPS
 > Thanks to [Let's Encrypt](https://letsencrypt.org/)
 #### - OCR
